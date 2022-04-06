@@ -1,0 +1,13 @@
+main: de.carina.thehunter.TheHunter
+version: 1.0.0
+description: The TheHunter minigame but in a remastered version in kotlin for papermc servers
+api-version: 1.18
+author: Carina Sophie Schoppe
+name: TheHunter-Remaster
+commands:
+  theHunter:
+    description: The base command of the entire minigame
+    usage: /theHunter <command> <arguments>
+    aliases:
+      - th
+      - hunter

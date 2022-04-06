@@ -1,0 +1,55 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    java
+    `java-library`
+    idea
+    id("io.papermc.paperweight.userdev") version "1.3.5"
+    kotlin("jvm") version "1.6.20-RC"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("xyz.jpenilla.run-paper") version "1.0.6" // Adds runServer and runMojangMappedServer tasks for testing
+}
+
+group = "de.carina"
+version = "1.0.0"
+description = "The theHunter minigame but in a kotlin project remake"
+
+
+repositories {
+    maven ("https://repo.codemc.io/repository/maven-snapshots/")
+}
+
+dependencies {
+    paperDevBundle("1.18.2-R0.1-SNAPSHOT")
+    testImplementation(kotlin("test"))
+    testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    implementation("net.wesjd:anvilgui:1.5.3-SNAPSHOT")
+}
+
+
+
+tasks {
+    runServer {
+        minecraftVersion("1.18.2")
+    }
+    compileJava {
+        options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
+        options.release.set(17)
+    }
+    javadoc {
+        options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
+    }
+    processResources {
+        filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
+    }
+    test {
+        useJUnitPlatform()
+    }
+}
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "16"
+}
