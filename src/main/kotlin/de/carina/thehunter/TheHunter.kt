@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 06.04.22, 19:05 by Carina The Latest changes made by Carina on 06.04.22, 19:05 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 07.04.22, 13:16 by Carina The Latest changes made by Carina on 07.04.22, 12:05 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -24,6 +24,10 @@ class TheHunter : JavaPlugin() {
     TODO: player Join event
     TODO: player leave event
     TODO: player death event
+    TODO: Map event
+    TODO: Gun event
+    TODO: Cluster event
+    TODO: EntityDamage event
     TODO: StatsSystem
     TODO: MultiGameMode
     TODO: CommandManager
@@ -42,6 +46,10 @@ class TheHunter : JavaPlugin() {
     TODO: AutoUpdater
     TODO: Map Reset
     TODO: CleanUp
+    TODO: Utility classes
+    TODO: ItemChest
+    TODO: Items (Eyespy, Knife, tracker, swapper, medipack, grenade, food, energydrink, Ammo)
+    TODO: PlayerDropping
      */
 
 }
