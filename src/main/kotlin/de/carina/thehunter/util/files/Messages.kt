@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 07.04.22, 20:18 by Carina The Latest changes made by Carina on 07.04.22, 20:18 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 07.04.22, 23:06 by Carina The Latest changes made by Carina on 07.04.22, 23:06 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -31,6 +31,9 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("player-is-invited", "&aYou are invited to join the team of &6%leader%&7!")
         yml.addDefault("player-joined-team-all", "&aThe player &6%player% &ajoined the team!")
         yml.addDefault("player-left-team-all", "&cThe player &6%player% &cleft the team!")
+        yml.addDefault("game-waiting-for-players", "&7Waiting for players to join the game [&6%current%&7/&6%max%&7]!")
+        yml.addDefault("game-starting-in", "&7The game will start in &6%time%&7 seconds!")
+        yml.addDefault("game-starting", "&aThe game starts!")
         super.addData()
     }
 

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 07.04.22, 20:18 by Carina The Latest changes made by Carina on 07.04.22, 20:18 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 07.04.22, 23:06 by Carina The Latest changes made by Carina on 07.04.22, 23:06 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -29,8 +29,8 @@ class Game(private var gameName: String) {
     lateinit var currentCountdown: Countdown
 
     val countdowns = mutableListOf<Countdown>()
-    var MAX_PLAYERS: Int = 0
-    var MIN_PLAYERS: Int = 0
+    var MAX_PLAYERS: Int = 20
+    var MIN_PLAYERS: Int = 2
     var currentPlayers: Int = 0
     var gameStarted: Boolean = false
     val players = mutableSetOf<Player>()
@@ -67,7 +67,17 @@ class Game(private var gameName: String) {
     }
 
 
-    fun saveGameToConfig() {
+    fun saveGameToConfig(): Boolean {
+        if (gameName == null)
+            return false
+        if (arenaCenter == null)
+            return false
+        if (backLocation == null)
+            return false
+        if (lobbyLocation == null)
+            return false
+        if (endLocation == null)
+            return false
         val fileSettings = File("${BaseFile.gameFolder}/arenas/$gameName/settings.yml")
         val ymlSettings = YamlConfiguration.loadConfiguration(fileSettings)
 
@@ -85,12 +95,14 @@ class Game(private var gameName: String) {
         val fileLocations = File("${BaseFile.gameFolder}/arenas/$gameName/locations.yml")
         val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
 
-        ymlLocations.set("spawn-locations", playerSpawns)
+        if (playerSpawns.isNotEmpty())
+            ymlLocations.set("spawn-locations", playerSpawns)
         ymlLocations.set("arena-center", arenaCenter)
         ymlLocations.set("lobby-location", lobbyLocation)
         ymlLocations.set("back-location", backLocation)
         ymlLocations.set("end-location", endLocation)
 
+        return true
     }
 
     companion object {
@@ -120,8 +132,9 @@ class Game(private var gameName: String) {
             game.arenaCenter = ymlLocations.getLocation("arena-center")!!
             game.countdowns.addAll(listOf(LobbyCountdown(game), IngameCountdown(game), EndCountdown(game)))
             game.gameStates.addAll(listOf(LobbyState(game), IngameState(game), EndState(game)))
-            game.currentGameState = game.gameStates[GameStates.LOBBY_STATE]
+            game.currentGameState = game.gameStates[GameStates.LOBBY_STATE.id]
             game.worldBoarderController = WorldboarderController(game)
+            game.currentGameState.start()
             GamesHandler.games.add(game)
         }
     }

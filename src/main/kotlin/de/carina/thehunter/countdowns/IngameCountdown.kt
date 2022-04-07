@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 07.04.22, 20:18 by Carina The Latest changes made by Carina on 07.04.22, 20:18 All contents of "IngameCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 07.04.22, 23:06 by Carina The Latest changes made by Carina on 07.04.22, 23:06 All contents of "IngameCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -16,12 +16,13 @@ class IngameCountdown(game: Game) : Countdown(game) {
 
     override var duration: Int = 60
 
+
     override fun idle() {
-        TODO("Not yet implemented")
+
     }
 
     override fun start() {
-        TODO("Not yet implemented")
+
     }
 
     override fun stop() {
@@ -29,4 +30,5 @@ class IngameCountdown(game: Game) : Countdown(game) {
     }
 
     override var isIdle: Boolean = false
+    override val id: Int = Countdowns.INGAME_COUNTDOWN.id
 }

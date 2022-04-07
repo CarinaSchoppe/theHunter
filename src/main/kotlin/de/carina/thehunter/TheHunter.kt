@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 07.04.22, 17:07 by Carina The Latest changes made by Carina on 07.04.22, 17:07 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 07.04.22, 23:06 by Carina The Latest changes made by Carina on 07.04.22, 23:06 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -10,6 +10,7 @@
 
 package de.carina.thehunter
 
+import de.carina.thehunter.countdowns.LobbyCountdown
 import de.carina.thehunter.util.files.Messages
 import de.carina.thehunter.util.files.Settings
 import org.bukkit.Bukkit
@@ -76,7 +77,12 @@ class TheHunter : JavaPlugin() {
     }
 
     private fun initialize(pluginManager: PluginManager) {
-        TODO("not implemented")
+        LobbyCountdown.durationConfig = settings.yml.getInt("duration-lobby")
+        LobbyCountdown.durationIdle = settings.yml.getInt("duration-idle")
+        LobbyCountdown.durationSpeedup = settings.yml.getInt(
+            "duration-speedup" +
+                    ""
+        )
 
     }
 
