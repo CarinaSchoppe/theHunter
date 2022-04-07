@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 07.04.22, 15:06 by Carina The Latest changes made by Carina on 07.04.22, 15:06 All contents of "BaseFile.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 07.04.22, 17:07 by Carina The Latest changes made by Carina on 07.04.22, 17:07 All contents of "BaseFile.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -15,14 +15,17 @@ import org.bukkit.ChatColor
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 
-open class BaseFile(val filePath: String) {
+open class BaseFile(filePath: String) {
 
     val yml: YamlConfiguration
     private val file: File
-    private val gameFolder = "theHunterRemastered"
+
+    companion object {
+        const val gameFolder = "plugins/theHunterRemastered"
+    }
 
     init {
-        file = File("plugins/$gameFolder/$filePath")
+        file = File("$gameFolder/$filePath")
         yml = YamlConfiguration.loadConfiguration(file)
     }
 
