@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 13.04.22, 14:11 by Carina The Latest changes made by Carina on 13.04.22, 14:11 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 13.04.22, 22:09 by Carina The Latest changes made by Carina on 13.04.22, 22:09 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -19,11 +19,6 @@ class LobbyCountdown(game: Game) : Countdown(game) {
 
     override var duration: Int = 60
 
-    companion object {
-        var durationConfig: Int = 60
-        var durationIdle: Int = 10
-        var durationSpeedup: Int = 5
-    }
 
     override fun idle() {
         isIdle = true
@@ -35,7 +30,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
                 return@Runnable
             }
             if (duration == 0) {
-                duration = durationConfig
+                duration = TheHunter.instance.settings.settingsMap["duration-idle"] as Int
                 game.players.forEach(Consumer { player ->
                     player.sendMessage(TheHunter.instance.messages.messagesMap["game-waiting-for-players"]!!.replace("%current%", game.players.size.toString()).replace("%max%", game.MAX_PLAYERS.toString()))
                 })
@@ -45,7 +40,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
     }
 
     override fun start() {
-        duration = durationConfig
+        duration = TheHunter.instance.settings.settingsMap["duration-lobby"] as Int
         if (game.players.size < game.MIN_PLAYERS) {
             idle()
             return
@@ -60,7 +55,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
             }
 
             when (duration) {
-                in 1..durationSpeedup -> {
+                in 1..TheHunter.instance.settings.settingsMap["duration-speedup"] as Int -> {
                     game.players.forEach(Consumer { player ->
                         player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
                     })
