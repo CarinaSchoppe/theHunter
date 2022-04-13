@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 14.04.22, 00:24 by Carina The Latest changes made by Carina on 14.04.22, 00:24 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 14.04.22, 00:30 by Carina The Latest changes made by Carina on 14.04.22, 00:30 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -29,27 +29,29 @@ class Game(private var gameName: String) {
 
     lateinit var currentGameState: GameState
     lateinit var currentCountdown: Countdown
+    lateinit var lobbyLocation: Location
+    lateinit var backLocation: Location
+    lateinit var endLocation: Location
+    lateinit var worldBoarderController: WorldboarderController
+    lateinit var mapResetter: MapResetter
+    lateinit var arenaCenter: Location
+
 
     val countdowns = mutableListOf<Countdown>()
+    val players = mutableSetOf<Player>()
+    val spectators = mutableSetOf<Player>()
+    val playerSpawns = mutableListOf<Location>()
+    val teams = mutableSetOf<Team>()
+    val gameStates = mutableListOf<GameState>()
+    var randomDrop = true
+    var teamsAllowed = true
+    var arenaRadius = 1000
     var MAX_PLAYERS: Int = 20
     var MIN_PLAYERS: Int = 2
     var currentPlayers: Int = 0
     var gameStarted: Boolean = false
-    val players = mutableSetOf<Player>()
-    val spectators = mutableSetOf<Player>()
-    val playerSpawns = mutableListOf<Location>()
-    var randomDrop = true
-    lateinit var lobbyLocation: Location
-    lateinit var backLocation: Location
-    lateinit var endLocation: Location
-    var teamsAllowed = true
     val gameEntities = mutableSetOf<Entity>()
-    lateinit var arenaCenter: Location
-    val teams = mutableSetOf<Team>()
-    lateinit var worldBoarderController: WorldboarderController
-    var arenaRadius = 1000
-    val gameStates = mutableListOf<GameState>()
-    lateinit var mapResetter: MapResetter
+
     fun start() {
         TODO("not implemented")
     }

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 14.04.22, 00:24 by Carina The Latest changes made by Carina on 14.04.22, 00:24 All contents of "BlocksFlyEvent.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 14.04.22, 00:30 by Carina The Latest changes made by Carina on 14.04.22, 00:27 All contents of "BlocksFlyEvent.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -37,6 +37,7 @@ class BlocksFlyEvent : Listener {
         EggBomb.bombs.remove(tnt)
         val player = (tnt.source as Egg).shooter as org.bukkit.entity.Player
         val game = GamesHandler.playerInGames[player]!!
+
         for (block in event.blockList()) {
 
             game.mapResetter.blocks.add(MapResetter.createBlockString(block))
@@ -49,6 +50,7 @@ class BlocksFlyEvent : Listener {
             fallingBlock.velocity = Vector(x / 1.5, y / 1.5, z / 1.5)
             fallingBlock.dropItem = false
             block.type = Material.AIR
+
             GamesHandler.entitiesInGames[fallingBlock] = game
             game.gameEntities.add(fallingBlock)
         }
@@ -59,9 +61,10 @@ class BlocksFlyEvent : Listener {
         if (event.entity !is FallingBlock)
             return
         val game = GamesHandler.entitiesInGames[event.entity] ?: return
-        val block = event.block
         if (game.currentGameState !is IngameState)
             return
+        val block = event.block
+
         val blockString = Material.AIR.toString() + ":" + block.world.name + ":" + block.x + ":" + block.y + ":" + block.z
         game.mapResetter.blocks.add(blockString)
     }
