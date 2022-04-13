@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 06.04.22, 19:05 by Carina The Latest changes made by Carina on 06.04.22, 19:05 All contents of "build.gradle.kts" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 13.04.22, 10:33 by Carina The Latest changes made by Carina on 13.04.22, 10:32 All contents of "build.gradle.kts" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -61,5 +61,5 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "16"
+    kotlinOptions.jvmTarget = "17"
 }
