@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 14.04.22, 00:30 by Carina The Latest changes made by Carina on 14.04.22, 00:30 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 14.04.22, 00:31 by Carina The Latest changes made by Carina on 14.04.22, 00:31 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -10,10 +10,7 @@
 
 package de.carina.thehunter.util.game
 
-import de.carina.thehunter.countdowns.Countdown
-import de.carina.thehunter.countdowns.EndCountdown
-import de.carina.thehunter.countdowns.IngameCountdown
-import de.carina.thehunter.countdowns.LobbyCountdown
+import de.carina.thehunter.countdowns.*
 import de.carina.thehunter.gamestates.*
 import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.misc.MapResetter
@@ -43,6 +40,7 @@ class Game(private var gameName: String) {
     val playerSpawns = mutableListOf<Location>()
     val teams = mutableSetOf<Team>()
     val gameStates = mutableListOf<GameState>()
+    val gameEntities = mutableSetOf<Entity>()
     var randomDrop = true
     var teamsAllowed = true
     var arenaRadius = 1000
@@ -50,7 +48,6 @@ class Game(private var gameName: String) {
     var MIN_PLAYERS: Int = 2
     var currentPlayers: Int = 0
     var gameStarted: Boolean = false
-    val gameEntities = mutableSetOf<Entity>()
 
     fun start() {
         TODO("not implemented")
@@ -150,6 +147,7 @@ class Game(private var gameName: String) {
         currentGameState = gameStates[GameStates.LOBBY_STATE.id]
         worldBoarderController = WorldboarderController(this)
         mapResetter = MapResetter(this)
+        currentCountdown = countdowns[Countdowns.LOBBY_COUNTDOWN.id]
     }
 
 }
