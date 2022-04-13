@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 14.04.22, 00:31 by Carina The Latest changes made by Carina on 14.04.22, 00:31 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 14.04.22, 00:33 by Carina The Latest changes made by Carina on 14.04.22, 00:33 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -41,6 +41,7 @@ class Game(private var gameName: String) {
     val teams = mutableSetOf<Team>()
     val gameStates = mutableListOf<GameState>()
     val gameEntities = mutableSetOf<Entity>()
+
     var randomDrop = true
     var teamsAllowed = true
     var arenaRadius = 1000
@@ -134,8 +135,6 @@ class Game(private var gameName: String) {
             game.arenaCenter = ymlLocations.getLocation("arena-center")!!
             game.create()
             game.currentGameState.start()
-            GamesHandler.games.add(game)
-
         }
 
 
@@ -145,9 +144,10 @@ class Game(private var gameName: String) {
         countdowns.addAll(listOf(LobbyCountdown(this), IngameCountdown(this), EndCountdown(this)))
         gameStates.addAll(listOf(LobbyState(this), IngameState(this), EndState(this)))
         currentGameState = gameStates[GameStates.LOBBY_STATE.id]
+        currentCountdown = countdowns[Countdowns.LOBBY_COUNTDOWN.id]
         worldBoarderController = WorldboarderController(this)
         mapResetter = MapResetter(this)
-        currentCountdown = countdowns[Countdowns.LOBBY_COUNTDOWN.id]
+        GamesHandler.games.add(this)
     }
 
 }
