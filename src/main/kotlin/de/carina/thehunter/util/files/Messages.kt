@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 07.04.22, 23:06 by Carina The Latest changes made by Carina on 07.04.22, 23:06 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 13.04.22, 14:11 by Carina The Latest changes made by Carina on 13.04.22, 14:11 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -10,11 +10,13 @@
 
 package de.carina.thehunter.util.files
 
+import de.carina.thehunter.TheHunter
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
 class Messages(filePath: String) : BaseFile(filePath) {
 
+    val messagesMap = mutableMapOf<String, String>()
     override fun addData() {
         yml.addDefault("start-up-message-successfully", "&aThe Plugin was successfully loaded!")
         yml.addDefault("shutdown-message-successfully", "&cThe Plugin was successfully unloaded!")
@@ -34,7 +36,18 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("game-waiting-for-players", "&7Waiting for players to join the game [&6%current%&7/&6%max%&7]!")
         yml.addDefault("game-starting-in", "&7The game will start in &6%time%&7 seconds!")
         yml.addDefault("game-starting", "&aThe game starts!")
+        yml.addDefault("no-permission", "&cYou don't have the permissions to do this!")
+        yml.addDefault("not-enough-arguments", "&cYou need at least %arguments% arguments!")
+        yml.addDefault("no-command-found", "&cThe command &6%command% &cwas not found!")
+        yml.addDefault("not-a-player", "&cYou must be a player to do this!")
         super.addData()
+        loadMessagesToMap()
+    }
+
+    private fun loadMessagesToMap() {
+        for (key in yml.getKeys(false)) {
+            messagesMap[key] = getMessageWithPrefix(key)
+        }
     }
 
     fun sendMessageToPlayer(player: Player, messagePath: String) {
@@ -45,5 +58,10 @@ class Messages(filePath: String) : BaseFile(filePath) {
         Bukkit.getConsoleSender().sendMessage(getMessageWithPrefix(messagePath))
     }
 
+
+    private fun getMessageWithPrefix(path: String): String {
+        return TheHunter.PREFIX + getColorCodedString(path)
+
+    }
 
 }

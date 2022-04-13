@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 07.04.22, 17:07 by Carina The Latest changes made by Carina on 07.04.22, 17:07 All contents of "BaseFile.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 13.04.22, 14:11 by Carina The Latest changes made by Carina on 13.04.22, 14:11 All contents of "BaseFile.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -10,7 +10,6 @@
 
 package de.carina.thehunter.util.files
 
-import de.carina.thehunter.TheHunter
 import org.bukkit.ChatColor
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
@@ -41,15 +40,10 @@ open class BaseFile(filePath: String) {
     open fun addData() {
         saveFile()
     }
-
     fun getColorCodedString(path: String): String {
         return ChatColor.translateAlternateColorCodes('&', yml.getString(path) ?: "")
     }
 
-    fun getMessageWithPrefix(path: String): String {
-        return TheHunter.PREFIX + getColorCodedString(path)
-
-    }
 
 
 }

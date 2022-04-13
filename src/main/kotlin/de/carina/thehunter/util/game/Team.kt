@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 07.04.22, 23:39 by Carina The Latest changes made by Carina on 07.04.22, 23:39 All contents of "Team.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 13.04.22, 14:11 by Carina The Latest changes made by Carina on 13.04.22, 14:11 All contents of "Team.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -32,7 +32,7 @@ class Team(var teamLeader: Player) {
         GamesHandler.games.forEach(Consumer { game ->
             game.teams.forEach {
                 if (it.teamMembers.contains(playerToAdd)) {
-                    leader.sendMessage(TheHunter.instance.messages.getMessageWithPrefix("team-player-already-in-other-team").replace("%player%", playerToAdd.name))
+                    leader.sendMessage(TheHunter.instance.messages.messagesMap["team-player-already-in-other-team"]!!.replace("%player%", playerToAdd.name))
                     return@Consumer
                 }
             }
@@ -44,13 +44,13 @@ class Team(var teamLeader: Player) {
 
 
         if (invites.contains(playerToAdd)) {
-            leader.sendMessage(TheHunter.instance.messages.getMessageWithPrefix("player-allready-inivited").replace("%player%", playerToAdd.name))
+            leader.sendMessage(TheHunter.instance.messages.messagesMap["player-allready-inivited"]!!.replace("%player%", playerToAdd.name))
             return false
         }
 
         invites.add(playerToAdd)
-        playerToAdd.sendMessage(TheHunter.instance.messages.getMessageWithPrefix("player-is-invited").replace("%leader%", leader.name))
-        leader.sendMessage(TheHunter.instance.messages.getMessageWithPrefix("player-invited").replace("%player%", playerToAdd.name))
+        playerToAdd.sendMessage(TheHunter.instance.messages.messagesMap["player-is-invited"]!!.replace("%leader%", leader.name))
+        leader.sendMessage(TheHunter.instance.messages.messagesMap["player-invited"]!!.replace("%player%", playerToAdd.name))
 
         return true
     }
