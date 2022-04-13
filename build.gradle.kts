@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 13.04.22, 10:33 by Carina The Latest changes made by Carina on 13.04.22, 10:32 All contents of "build.gradle.kts" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 13.04.22, 13:35 by Carina The Latest changes made by Carina on 13.04.22, 13:35 All contents of "build.gradle.kts" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -15,7 +15,7 @@ plugins {
     `java-library`
     idea
     id("io.papermc.paperweight.userdev") version "1.3.5"
-    kotlin("jvm") version "1.6.20-RC"
+    kotlin("jvm") version "1.6.20"
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("xyz.jpenilla.run-paper") version "1.0.6" // Adds runServer and runMojangMappedServer tasks for testing
 }
