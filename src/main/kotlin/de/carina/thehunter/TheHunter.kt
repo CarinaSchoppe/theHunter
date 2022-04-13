@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 13.04.22, 22:09 by Carina The Latest changes made by Carina on 13.04.22, 22:09 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 14.04.22, 00:24 by Carina The Latest changes made by Carina on 14.04.22, 00:24 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -11,6 +11,8 @@
 package de.carina.thehunter
 
 import de.carina.thehunter.commands.BaseCommand
+import de.carina.thehunter.events.misc.BlocksFlyEvent
+import de.carina.thehunter.items.chest.EggBomb
 
 import de.carina.thehunter.util.files.Messages
 import de.carina.thehunter.util.files.Settings
@@ -63,11 +65,15 @@ class TheHunter : JavaPlugin() {
         lateinit var instance: TheHunter
     }
 
-    val settings = Settings("config.yml")
-    val messages = Messages("messages.yml")
+    var settings: Settings = Settings("config.yml")
+    var messages: Messages = Messages("messages.yml")
 
     override fun onEnable() {
         instance = this
+        settings = Settings("config.yml")
+        settings.addData()
+        messages = Messages("messages.yml")
+        messages.addData()
         initialize(Bukkit.getPluginManager())
         PREFIX = settings.getColorCodedString("prefix")
         messages.sendMessageToConsole("start-up-message-successfully")
@@ -78,8 +84,13 @@ class TheHunter : JavaPlugin() {
     }
 
     private fun initialize(pluginManager: PluginManager) {
+
+        //Commands:
         getCommand("theHunter")!!.setExecutor(BaseCommand())
 
+        //Events:
+        pluginManager.registerEvents(EggBomb(), this)
+        pluginManager.registerEvents(BlocksFlyEvent(), this)
     }
 
 

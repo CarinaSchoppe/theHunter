@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 13.04.22, 14:11 by Carina The Latest changes made by Carina on 13.04.22, 14:11 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 14.04.22, 00:24 by Carina The Latest changes made by Carina on 14.04.22, 00:24 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -26,7 +26,7 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("player-not-permissions", "&cYou don't have the permissions to do this!")
         yml.addDefault("player-not-online", "&cThe player &6%player% &cis not online!")
         yml.addDefault("player-not-in-game", "&cThe player &6%player%&c is not in the game!")
-        yml.addDefault("player-allready-inivited", "&cThe player &6%player%&c is already invited!")
+        yml.addDefault("player-already-inivited", "&cThe player &6%player%&c is already invited!")
         yml.addDefault("player-invited", "&aThe player &6%player% &agot invited!")
         yml.addDefault("player-joined-team", "&aYou joined the team &6%team%&a!")
         yml.addDefault("player-left-team", "&aYou left the team &6%team%&a!")
@@ -40,6 +40,7 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("not-enough-arguments", "&cYou need at least %arguments% arguments!")
         yml.addDefault("no-command-found", "&cThe command &6%command% &cwas not found!")
         yml.addDefault("not-a-player", "&cYou must be a player to do this!")
+        yml.addDefault("egg-bomb-message", "&7Egg createsa an explosion with &6%power%&7 power!")
         super.addData()
         loadMessagesToMap()
     }
@@ -51,11 +52,11 @@ class Messages(filePath: String) : BaseFile(filePath) {
     }
 
     fun sendMessageToPlayer(player: Player, messagePath: String) {
-        player.sendMessage(getMessageWithPrefix(messagePath))
+        player.sendMessage(messagesMap[messagePath]!!)
     }
 
     fun sendMessageToConsole(messagePath: String) {
-        Bukkit.getConsoleSender().sendMessage(getMessageWithPrefix(messagePath))
+        Bukkit.getConsoleSender().sendMessage(messagesMap[messagePath]!!)
     }
 
 
