@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 13.04.22, 22:09 by Carina The Latest changes made by Carina on 13.04.22, 22:09 All contents of "BaseFile.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 14.04.22, 00:26 by Carina The Latest changes made by Carina on 14.04.22, 00:26 All contents of "BaseFile.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -20,7 +20,7 @@ open class BaseFile(filePath: String) {
     private val file: File
 
     companion object {
-        const val gameFolder = "plugins/theHunterRemastered"
+        const val gameFolder = "/plugins/theHunterRemastered"
     }
 
     init {
@@ -28,7 +28,7 @@ open class BaseFile(filePath: String) {
         yml = YamlConfiguration.loadConfiguration(file)
     }
 
-    fun saveFile() {
+    protected fun saveFile() {
         try {
             yml.options().copyDefaults(true)
             yml.save(file)
@@ -37,9 +37,11 @@ open class BaseFile(filePath: String) {
         }
     }
 
-    open fun addData() {
+    open fun addData(): BaseFile {
         saveFile()
+        return this
     }
+
     fun getColorCodedString(path: String): String {
         return ChatColor.translateAlternateColorCodes('&', yml.getString(path) ?: "")
     }

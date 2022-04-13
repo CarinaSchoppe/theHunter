@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 14.04.22, 00:24 by Carina The Latest changes made by Carina on 14.04.22, 00:24 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 14.04.22, 00:26 by Carina The Latest changes made by Carina on 14.04.22, 00:26 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -17,7 +17,7 @@ import org.bukkit.entity.Player
 class Messages(filePath: String) : BaseFile(filePath) {
 
     val messagesMap = mutableMapOf<String, String>()
-    override fun addData() {
+    override fun addData(): Messages {
         yml.addDefault("start-up-message-successfully", "&aThe Plugin was successfully loaded!")
         yml.addDefault("shutdown-message-successfully", "&cThe Plugin was successfully unloaded!")
         yml.addDefault("team-player-not-leader", "&cYou are not the leader of a team!")
@@ -43,6 +43,7 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("egg-bomb-message", "&7Egg createsa an explosion with &6%power%&7 power!")
         super.addData()
         loadMessagesToMap()
+        return this
     }
 
     private fun loadMessagesToMap() {

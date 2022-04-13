@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 14.04.22, 00:24 by Carina The Latest changes made by Carina on 14.04.22, 00:24 All contents of "Settings.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 14.04.22, 00:26 by Carina The Latest changes made by Carina on 14.04.22, 00:26 All contents of "Settings.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -21,7 +21,7 @@ class Settings(filePath: String) : BaseFile(filePath) {
         }
     }
 
-    override fun addData() {
+    override fun addData(): Settings {
         yml.addDefault("prefix", "&7[&bTheHunter&7] &f")
         yml.addDefault("debug", false)
         yml.addDefault("duration-lobby", 60)
@@ -32,5 +32,6 @@ class Settings(filePath: String) : BaseFile(filePath) {
         yml.addDefault("egg-bomb-delay", 1)
         super.addData()
         fillSettingsMap()
+        return this
     }
 }
