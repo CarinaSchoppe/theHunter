@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 16.04.22, 12:02 by Carina The Latest changes made by Carina on 16.04.22, 12:02 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 16.04.22, 12:24 by Carina The Latest changes made by Carina on 16.04.22, 12:24 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -34,6 +34,23 @@ class StatsSystem : BaseFile("stats.yml") {
                 TheHunter.instance.statsSystem.yml.set("$player.Games", playerStats[player]!!.games)
                 TheHunter.instance.statsSystem.saveFile()
                 TheHunter.instance.messages.sendMessageToConsole("stats-system-saved")
+            }
+        }
+
+        fun loadStatsPlayersFromFile() {
+            for (uuid in TheHunter.instance.statsSystem.yml.getKeys(false)) {
+                val player = UUID.fromString(uuid)
+                if (player != null) {
+                    playerStats[player] = StatsPlayer(
+                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Kills"),
+                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Deaths"),
+                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Points"),
+                        TheHunter.instance.statsSystem.yml.getDouble("$uuid.KDR"),
+                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Wins"),
+                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Loses"),
+                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Games")
+                    )
+                }
             }
         }
     }

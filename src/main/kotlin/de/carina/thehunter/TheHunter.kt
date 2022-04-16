@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 16.04.22, 12:17 by Carina The Latest changes made by Carina on 16.04.22, 12:17 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 16.04.22, 12:24 by Carina The Latest changes made by Carina on 16.04.22, 12:24 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -65,14 +65,16 @@ class TheHunter : JavaPlugin() {
         lateinit var instance: TheHunter
     }
 
-    var settings: Settings = Settings("config.yml")
-    var messages: Messages = Messages("messages.yml")
-    var statsSystem: StatsSystem = StatsSystem()
+    lateinit var settings: Settings
+    lateinit var messages: Messages
+    lateinit var statsSystem: StatsSystem
 
     override fun onEnable() {
         instance = this
         settings = Settings("config.yml").addData()
         messages = Messages("messages.yml").addData()
+        statsSystem = StatsSystem()
+        StatsSystem.loadStatsPlayersFromFile()
         initialize(Bukkit.getPluginManager())
         PREFIX = settings.getColorCodedString("prefix")
         messages.sendMessageToConsole("start-up-message-successfully")
