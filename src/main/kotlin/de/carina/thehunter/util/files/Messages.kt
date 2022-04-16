@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 14.04.22, 00:26 by Carina The Latest changes made by Carina on 14.04.22, 00:26 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 16.04.22, 11:27 by Carina The Latest changes made by Carina on 16.04.22, 11:27 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -38,9 +38,12 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("game-starting", "&aThe game starts!")
         yml.addDefault("no-permission", "&cYou don't have the permissions to do this!")
         yml.addDefault("not-enough-arguments", "&cYou need at least %arguments% arguments!")
+        yml.addDefault("stats-not-found", "&cThe stats of the player &6%player% &cwas not found!")
         yml.addDefault("no-command-found", "&cThe command &6%command% &cwas not found!")
         yml.addDefault("not-a-player", "&cYou must be a player to do this!")
         yml.addDefault("egg-bomb-message", "&7Egg createsa an explosion with &6%power%&7 power!")
+        yml.addDefault("stats-message-own", "&7Your stats: &6%kills% &7Kills, &6%deaths% &7Deaths, &6%kd% &7K/D, &6%wins% &7Wins, &6%losses% &7Losses, &6%points% &7Points, &6%games% &7Games!")
+        yml.addDefault("stats-message-other", "&7The stats of &6%player% &7: &6%kills% &7Kills, &6%deaths% &7Deaths, &6%kd% &7K/D, &6%wins% &7Wins, &6%losses% &7Losses, &6%points% &7Points, &6%games% &7Games!")
         super.addData()
         loadMessagesToMap()
         return this
