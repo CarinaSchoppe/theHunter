@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 16.04.22, 12:01 by Carina The Latest changes made by Carina on 16.04.22, 12:01 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 16.04.22, 12:02 by Carina The Latest changes made by Carina on 16.04.22, 12:02 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -25,14 +25,14 @@ class StatsSystem : BaseFile("stats.yml") {
         val playerStats = mutableMapOf<UUID, StatsPlayer>()
         fun saveAllStatsPlayerToFiles() {
             for (player in playerStats.keys) {
-                yml.set("$player.Kills", playerStats[player]!!.kills)
-                yml.set("$player.Deaths", playerStats[player]!!.deaths)
-                yml.set("$player.KDR", playerStats[player]!!.KDR)
-                yml.set("$player.Wins", playerStats[player]!!.wins)
-                yml.set("$player.Loses", playerStats[player]!!.loses)
-                yml.set("$player.Points", playerStats[player]!!.points)
-                yml.set("$player.Games", playerStats[player]!!.games)
-                saveFile()
+                TheHunter.instance.statsSystem.yml.set("$player.Kills", playerStats[player]!!.kills)
+                TheHunter.instance.statsSystem.yml.set("$player.Deaths", playerStats[player]!!.deaths)
+                TheHunter.instance.statsSystem.yml.set("$player.KDR", playerStats[player]!!.KDR)
+                TheHunter.instance.statsSystem.yml.set("$player.Wins", playerStats[player]!!.wins)
+                TheHunter.instance.statsSystem.yml.set("$player.Loses", playerStats[player]!!.loses)
+                TheHunter.instance.statsSystem.yml.set("$player.Points", playerStats[player]!!.points)
+                TheHunter.instance.statsSystem.yml.set("$player.Games", playerStats[player]!!.games)
+                TheHunter.instance.statsSystem.saveFile()
                 TheHunter.instance.messages.sendMessageToConsole("stats-system-saved")
             }
         }

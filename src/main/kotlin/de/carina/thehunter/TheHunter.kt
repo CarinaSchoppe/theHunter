@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 16.04.22, 12:01 by Carina The Latest changes made by Carina on 16.04.22, 12:01 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 16.04.22, 12:02 by Carina The Latest changes made by Carina on 16.04.22, 12:02 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -68,6 +68,7 @@ class TheHunter : JavaPlugin() {
 
     var settings: Settings = Settings("config.yml")
     var messages: Messages = Messages("messages.yml")
+    var statsSystem: StatsSystem = StatsSystem()
 
     override fun onEnable() {
         instance = this
