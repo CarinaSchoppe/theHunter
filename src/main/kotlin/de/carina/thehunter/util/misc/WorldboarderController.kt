@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 07.04.22, 20:18 by Carina The Latest changes made by Carina on 07.04.22, 20:18 All contents of "WorldboarderController.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 16.04.22, 12:01 by Carina The Latest changes made by Carina on 16.04.22, 11:33 All contents of "WorldboarderController.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitTask
 class WorldboarderController(private val game: Game) {
 
     var shrinkSpeed = 10
-    private val worldBoarder = game.arenaCenter.world.worldBorder
+    private val worldBoarder = game.arenaCenter!!.world.worldBorder
     var minBorderSize = 100
     var worldBoarderSize = 50000
     var shrinkBoarder = true
@@ -37,7 +37,7 @@ class WorldboarderController(private val game: Game) {
     }
 
     fun resetWorldBoarder() {
-        worldBoarder.center = game.arenaCenter
+        worldBoarder.center = game.arenaCenter!!
         worldBoarder.size = game.arenaRadius.toDouble()
     }
 

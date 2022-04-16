@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 14.04.22, 00:33 by Carina The Latest changes made by Carina on 14.04.22, 00:33 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 16.04.22, 12:01 by Carina The Latest changes made by Carina on 16.04.22, 12:01 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -24,14 +24,15 @@ import java.io.File
 class Game(private var gameName: String) {
 
 
-    lateinit var currentGameState: GameState
-    lateinit var currentCountdown: Countdown
-    lateinit var lobbyLocation: Location
-    lateinit var backLocation: Location
-    lateinit var endLocation: Location
-    lateinit var worldBoarderController: WorldboarderController
-    lateinit var mapResetter: MapResetter
-    lateinit var arenaCenter: Location
+    var currentGameState: GameState? = null
+    var currentCountdown: Countdown? = null
+    var lobbyLocation: Location? = null
+    var backLocation: Location? = null
+    var endLocation: Location? = null
+    var worldBoarderController: WorldboarderController? = null
+    var mapResetter: MapResetter? = null
+    var arenaCenter: Location? = null
+    var scoreBoard: Scoreboard? = null
 
 
     val countdowns = mutableListOf<Countdown>()
@@ -44,6 +45,7 @@ class Game(private var gameName: String) {
 
     var randomDrop = true
     var teamsAllowed = true
+    var teamMaxSize = 4
     var arenaRadius = 1000
     var MAX_PLAYERS: Int = 20
     var MIN_PLAYERS: Int = 2
@@ -59,13 +61,13 @@ class Game(private var gameName: String) {
     }
 
     fun nextGameState() {
-        currentGameState.stop()
+        currentGameState!!.stop()
         if (currentGameState is EndState) {
             GamesHandler.games.remove(this)
             loadGameFromConfig(gameName)
         } else {
             currentGameState = gameStates[gameStates.indexOf(currentGameState) + 1]
-            currentGameState.start()
+            currentGameState!!.start()
         }
     }
 
@@ -88,12 +90,13 @@ class Game(private var gameName: String) {
         ymlSettings.set("random-drop", randomDrop)
         ymlSettings.set("max-players", MAX_PLAYERS)
         ymlSettings.set("min-players", MIN_PLAYERS)
-        ymlSettings.set("world-boarder-size", worldBoarderController.worldBoarderSize)
+        ymlSettings.set("world-boarder-size", worldBoarderController!!.worldBoarderSize)
         ymlSettings.set("teams-allowed", teamsAllowed)
-        ymlSettings.set("worldboarder-shrinkspeed", worldBoarderController.shrinkSpeed)
+        ymlSettings.set("team-max-size", teamMaxSize)
+        ymlSettings.set("worldboarder-shrinkspeed", worldBoarderController!!.shrinkSpeed)
         ymlSettings.set("arena-radius", arenaRadius)
-        ymlSettings.set("worldboarder-min-border-size", worldBoarderController.minBorderSize)
-        ymlSettings.set("worldboarder-shrinkboarder", worldBoarderController.shrinkBoarder)
+        ymlSettings.set("worldboarder-min-border-size", worldBoarderController!!.minBorderSize)
+        ymlSettings.set("worldboarder-shrinkboarder", worldBoarderController!!.shrinkBoarder)
 
         val fileLocations = File("${BaseFile.gameFolder}/arenas/$gameName/locations.yml")
         val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
@@ -118,23 +121,24 @@ class Game(private var gameName: String) {
             game.randomDrop = ymlSettings.getBoolean("random-drop")
             game.MAX_PLAYERS = ymlSettings.getInt("max-players")
             game.MIN_PLAYERS = ymlSettings.getInt("min-players")
-            game.worldBoarderController.worldBoarderSize = ymlSettings.getInt("world-boarder-size")
+            game.worldBoarderController!!.worldBoarderSize = ymlSettings.getInt("world-boarder-size")
             game.teamsAllowed = ymlSettings.getBoolean("teams-allowed")
+            game.teamMaxSize = ymlSettings.getInt("team-max-size")
             game.arenaRadius = ymlSettings.getInt("arena-radius")
-            game.worldBoarderController.shrinkSpeed = ymlSettings.getInt("worldboarder-shrinkspeed")
-            game.worldBoarderController.minBorderSize = ymlSettings.getInt("worldboarder-min-border-size")
-            game.worldBoarderController.shrinkBoarder = ymlSettings.getBoolean("worldboarder-shrinkboarder")
+            game.worldBoarderController!!.shrinkSpeed = ymlSettings.getInt("worldboarder-shrinkspeed")
+            game.worldBoarderController!!.minBorderSize = ymlSettings.getInt("worldboarder-min-border-size")
+            game.worldBoarderController!!.shrinkBoarder = ymlSettings.getBoolean("worldboarder-shrinkboarder")
 
             val fileLocations = File("${BaseFile.gameFolder}/arenas/$fileName/locations.yml")
             val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
 
-            game.playerSpawns.addAll(ymlLocations.getList("spawn-locations") as List<Location>)
+            game.playerSpawns.addAll(ymlLocations.getList("spawn-locations") as MutableList<Location>)
             game.lobbyLocation = ymlLocations.getLocation("lobby-location")!!
             game.backLocation = ymlLocations.getLocation("back-location")!!
             game.endLocation = ymlLocations.getLocation("end-location")!!
             game.arenaCenter = ymlLocations.getLocation("arena-center")!!
             game.create()
-            game.currentGameState.start()
+            game.currentGameState!!.start()
         }
 
 

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 16.04.22, 11:27 by Carina The Latest changes made by Carina on 16.04.22, 11:27 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 16.04.22, 12:01 by Carina The Latest changes made by Carina on 16.04.22, 12:01 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -23,6 +23,19 @@ class StatsSystem : BaseFile("stats.yml") {
 
     companion object {
         val playerStats = mutableMapOf<UUID, StatsPlayer>()
+        fun saveAllStatsPlayerToFiles() {
+            for (player in playerStats.keys) {
+                yml.set("$player.Kills", playerStats[player]!!.kills)
+                yml.set("$player.Deaths", playerStats[player]!!.deaths)
+                yml.set("$player.KDR", playerStats[player]!!.KDR)
+                yml.set("$player.Wins", playerStats[player]!!.wins)
+                yml.set("$player.Loses", playerStats[player]!!.loses)
+                yml.set("$player.Points", playerStats[player]!!.points)
+                yml.set("$player.Games", playerStats[player]!!.games)
+                saveFile()
+                TheHunter.instance.messages.sendMessageToConsole("stats-system-saved")
+            }
+        }
     }
 
     fun generateNewStatsPlayer(player: Player) {
@@ -39,11 +52,6 @@ class StatsSystem : BaseFile("stats.yml") {
 
 
     fun playerKilledOtherPlayer(killer: Player, dead: Player) {
-        yml.set(killer.uniqueId.toString() + ".Kills", yml.getInt(killer.uniqueId.toString() + ".Kills") + 1)
-        yml.set(dead.uniqueId.toString() + ".Deaths", yml.getInt(dead.uniqueId.toString() + ".Deaths") + 1)
-        yml.set(killer.uniqueId.toString() + ".KDR", yml.getInt(killer.uniqueId.toString() + ".Kills") / yml.getInt(killer.uniqueId.toString() + ".Deaths"))
-        yml.set(dead.uniqueId.toString() + ".KDR", yml.getInt(dead.uniqueId.toString() + ".Kills") / yml.getInt(dead.uniqueId.toString() + ".Deaths"))
-        yml.set(killer.uniqueId.toString() + ".Points", yml.getInt(killer.uniqueId.toString() + ".Points") + 5)
         removePointsIfPossible(dead)
         playerStats[killer.uniqueId]!!.kills += 1
         playerStats[killer.uniqueId]!!.points += 5
@@ -63,8 +71,6 @@ class StatsSystem : BaseFile("stats.yml") {
     }
 
     fun playerDied(player: Player) {
-        yml.set(player.uniqueId.toString() + ".Loses", yml.getInt(player.uniqueId.toString() + ".Loses") + 1)
-        yml.set(player.uniqueId.toString() + ".KDR", yml.getInt(player.uniqueId.toString() + ".Kills") / yml.getInt(player.uniqueId.toString() + ".Deaths"))
         removePointsIfPossible(player)
         playerStats[player.uniqueId]!!.deaths += 1
         playerStats[player.uniqueId]!!.KDR = playerStats[player.uniqueId]!!.kills.toDouble() / playerStats[player.uniqueId]!!.deaths.toDouble()
@@ -72,14 +78,12 @@ class StatsSystem : BaseFile("stats.yml") {
     }
 
     private fun removePointsIfPossible(player: Player) {
-        if (yml.getInt(player.uniqueId.toString() + ".Points") >= 5) {
-            yml.set(player.uniqueId.toString() + ".Points", yml.getInt(player.uniqueId.toString() + ".Points") - 5)
+        if (playerStats[player.uniqueId]!!.points >= 5) {
             playerStats[player.uniqueId]!!.points -= 5
         }
     }
 
     fun playerPlaysGame(player: Player) {
-        yml.set(player.uniqueId.toString() + ".Games", yml.getInt(player.uniqueId.toString() + ".Games") + 1)
         playerStats[player.uniqueId]!!.games += 1
         saveFile()
     }
@@ -92,17 +96,23 @@ class StatsSystem : BaseFile("stats.yml") {
 
         if (sender.uniqueId == player.uniqueId)
             sender.sendMessage(
-                TheHunter.instance.messages.messagesMap["stats-message-own"]!!.replace("%kills%", playerStats[player.uniqueId]!!.kills.toString()).replace("%deaths%", playerStats[player.uniqueId]!!.deaths.toString()).replace("%wins%", playerStats[player.uniqueId]!!.wins.toString()).replace("%games%", playerStats[player.uniqueId]!!.games.toString()).replace("%points%", playerStats[player.uniqueId]!!.points.toString()).replace(
-                    "%kdr%", playerStats[player.uniqueId]!!.KDR.toString
-                        ()
-                ).replace("%losses%", playerStats[player.uniqueId]!!.loses.toString())
+                TheHunter.instance.messages.messagesMap["stats-message-own"]!!.replace("%kills%", playerStats[player.uniqueId]!!.kills.toString())
+                    .replace("%deaths%", playerStats[player.uniqueId]!!.deaths.toString()).replace("%wins%", playerStats[player.uniqueId]!!.wins.toString())
+                    .replace("%games%", playerStats[player.uniqueId]!!.games.toString()).replace("%points%", playerStats[player.uniqueId]!!.points.toString())
+                    .replace("%kdr%", playerStats[player.uniqueId]!!.KDR.toString())
+                    .replace("%losses%", playerStats[player.uniqueId]!!.loses.toString())
             )
         else
             sender.sendMessage(
-                TheHunter.instance.messages.messagesMap["stats-message-other"]!!.replace("%kills%", playerStats[player.uniqueId]!!.kills.toString()).replace("%deaths%", playerStats[player.uniqueId]!!.deaths.toString()).replace("%wins%", playerStats[player.uniqueId]!!.wins.toString()).replace("%games%", playerStats[player.uniqueId]!!.games.toString()).replace("%points%", playerStats[player.uniqueId]!!.points.toString()).replace(
-                    "%kdr%", playerStats[player.uniqueId]!!.KDR.toString
-                        ()
-                ).replace("%losses%", playerStats[player.uniqueId]!!.loses.toString()).replace("%player%", player.name)
+                TheHunter.instance.messages.messagesMap["stats-message-other"]!!
+                    .replace("%kills%", playerStats[player.uniqueId]!!.kills.toString())
+                    .replace("%deaths%", playerStats[player.uniqueId]!!.deaths.toString())
+                    .replace("%wins%", playerStats[player.uniqueId]!!.wins.toString())
+                    .replace("%games%", playerStats[player.uniqueId]!!.games.toString())
+                    .replace("%points%", playerStats[player.uniqueId]!!.points.toString())
+                    .replace("%kdr%", playerStats[player.uniqueId]!!.KDR.toString())
+                    .replace("%losses%", playerStats[player.uniqueId]!!.loses.toString())
+                    .replace("%player%", player.name)
             )
 
 

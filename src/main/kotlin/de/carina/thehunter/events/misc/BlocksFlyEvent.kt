@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 14.04.22, 00:33 by Carina The Latest changes made by Carina on 14.04.22, 00:33 All contents of "BlocksFlyEvent.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 16.04.22, 12:01 by Carina The Latest changes made by Carina on 16.04.22, 11:33 All contents of "BlocksFlyEvent.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -40,7 +40,7 @@ class BlocksFlyEvent : Listener {
 
         for (block in event.blockList()) {
 
-            game.mapResetter.blocks.add(MapResetter.createBlockString(block))
+            game.mapResetter!!.blocks.add(MapResetter.createBlockString(block))
             event.yield = 0f
 
             val x = -5f + (Math.random() * (5 + 5 + 1)).toFloat()
@@ -66,7 +66,7 @@ class BlocksFlyEvent : Listener {
         val block = event.block
 
         val blockString = Material.AIR.toString() + ":" + block.world.name + ":" + block.x + ":" + block.y + ":" + block.z
-        game.mapResetter.blocks.add(blockString)
+        game.mapResetter!!.blocks.add(blockString)
     }
 
 }
