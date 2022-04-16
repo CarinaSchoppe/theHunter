@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 16.04.22, 12:01 by Carina The Latest changes made by Carina on 16.04.22, 12:01 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 16.04.22, 12:17 by Carina The Latest changes made by Carina on 16.04.22, 12:17 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -21,7 +21,7 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import java.io.File
 
-class Game(private var gameName: String) {
+class Game(var gameName: String) {
 
 
     var currentGameState: GameState? = null
@@ -150,6 +150,7 @@ class Game(private var gameName: String) {
         currentGameState = gameStates[GameStates.LOBBY_STATE.id]
         currentCountdown = countdowns[Countdowns.LOBBY_COUNTDOWN.id]
         worldBoarderController = WorldboarderController(this)
+        scoreBoard = Scoreboard(this)
         mapResetter = MapResetter(this)
         GamesHandler.games.add(this)
     }
