@@ -16,7 +16,7 @@ import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemStack
 
-class ItemBuilder(private val material: Material) {
+class ItemBuilder(material: Material) {
 
 
     private var itemStack = ItemStack(material)
@@ -36,6 +36,14 @@ class ItemBuilder(private val material: Material) {
 
     fun addLore(lore: List<String>): ItemBuilder {
         itemMeta.lore(lore.map { LegacyComponentSerializer.legacySection().deserialize(it) })
+        itemStack.itemMeta = itemMeta
+        return this
+    }
+
+    fun addLore(text: String): ItemBuilder {
+        var lore = itemMeta.lore()
+        lore!!.add(LegacyComponentSerializer.legacySection().deserialize(text))
+        itemMeta.lore(lore)
         itemStack.itemMeta = itemMeta
         return this
     }

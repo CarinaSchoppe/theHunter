@@ -32,9 +32,9 @@ class EggBomb : Listener {
     }
 
     fun createEggBomb(): ItemStack {
-        return ItemBuilder(Material.EGG).addDisplayName(TheHunter.PREFIX + "§eEggBomb").addAmount(Random().nextInt(1, (TheHunter.instance.settings.settingsMap["egg-bomb-amount"] as Int) + 1)).addEnchantment(Enchantment.DURABILITY, 1).addLore(
+        return ItemBuilder(Material.EGG).addDisplayName(TheHunter.PREFIX + "§eEggBomb").addAmount(Random().nextInt(1, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-amount"] as Int) + 1)).addEnchantment(Enchantment.DURABILITY, 1).addLore(
             listOf(
-                TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace("%power%", TheHunter.instance.settings.settingsMap["egg-bomb-radius"].toString())
+                TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace("%power%", TheHunter.instance.itemSettings.settingsMap["egg-bomb-radius"].toString())
             )
         ).build()
     }
@@ -71,7 +71,7 @@ class EggBomb : Listener {
             tnt.fuseTicks = 0
             tnt.source = egg
             bombs.add(tnt)
-        }, (TheHunter.instance.settings.settingsMap["egg-bomb-delay"] as Int) * 20L)
+        }, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-delay"] as Int) * 20L)
     }
 
 

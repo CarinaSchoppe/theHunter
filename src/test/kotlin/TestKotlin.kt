@@ -8,5 +8,4 @@
  * requires the express written consent of Carina Sophie Schoppe.
  */
 
-class TestKotlin {
-}
+class TestKotlin

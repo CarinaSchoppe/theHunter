@@ -52,6 +52,9 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("stats-message-own", "&7Your stats: &6%kills% &7Kills, &6%deaths% &7Deaths, &6%kd% &7K/D, &6%wins% &7Wins, &6%losses% &7Losses, &6%points% &7Points, &6%games% &7Games!")
         yml.addDefault("stats-message-other", "&7The stats of &6%player% &7: &6%kills% &7Kills, &6%deaths% &7Deaths, &6%kd% &7K/D, &6%wins% &7Wins, &6%losses% &7Losses, &6%points% &7Points, &6%games% &7Games!")
         yml.addDefault("stats-system-saved", "&7The stats of all players were saved!")
+        yml.addDefault("healer-message", "&7You have been healed with &6%heal%&7!")
+        yml.addDefault("eye-spy-message", "&7You are now spying on &6%player%&7!")
+        yml.addDefault("eye-spy-message-back", "&7You are now back in your view!")
         super.addData()
         loadMessagesToMap()
         return this

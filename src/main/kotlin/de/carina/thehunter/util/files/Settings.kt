@@ -13,11 +13,11 @@ package de.carina.thehunter.util.files
 class Settings(filePath: String) : BaseFile(filePath) {
 
 
-    val settingsMap = mutableMapOf<String, Object>()
+    val settingsMap = mutableMapOf<String, Any>()
 
     private fun fillSettingsMap() {
         for (key in yml.getKeys(false)) {
-            settingsMap[key] = yml.get(key) as Object
+            settingsMap[key] = yml.get(key) as Any
         }
     }
 
@@ -27,11 +27,9 @@ class Settings(filePath: String) : BaseFile(filePath) {
         yml.addDefault("duration-lobby", 60)
         yml.addDefault("duration-speedup", 5)
         yml.addDefault("duration-idle", 10)
-        yml.addDefault("egg-bomb-amount", 4)
-        yml.addDefault("egg-bomb-radius", 5)
-        yml.addDefault("egg-bomb-delay", 1)
         yml.addDefault("server-name", "TheHunter")
         yml.addDefault("server-ip", "localhost")
+
         super.addData()
         fillSettingsMap()
         return this

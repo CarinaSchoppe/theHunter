@@ -47,8 +47,8 @@ class Game(var gameName: String) {
     var teamsAllowed = true
     var teamMaxSize = 4
     var arenaRadius = 1000
-    var MAX_PLAYERS: Int = 20
-    var MIN_PLAYERS: Int = 2
+    var maxPlayers: Int = 20
+    var minPlayers: Int = 2
     var currentPlayers: Int = 0
     var gameStarted: Boolean = false
 
@@ -88,8 +88,8 @@ class Game(var gameName: String) {
 
         ymlSettings.set("game-name", gameName)
         ymlSettings.set("random-drop", randomDrop)
-        ymlSettings.set("max-players", MAX_PLAYERS)
-        ymlSettings.set("min-players", MIN_PLAYERS)
+        ymlSettings.set("max-players", maxPlayers)
+        ymlSettings.set("min-players", minPlayers)
         ymlSettings.set("world-boarder-size", worldBoarderController!!.worldBoarderSize)
         ymlSettings.set("teams-allowed", teamsAllowed)
         ymlSettings.set("team-max-size", teamMaxSize)
@@ -119,8 +119,8 @@ class Game(var gameName: String) {
             val game = Game(ymlSettings.getString("game-name")!!)
 
             game.randomDrop = ymlSettings.getBoolean("random-drop")
-            game.MAX_PLAYERS = ymlSettings.getInt("max-players")
-            game.MIN_PLAYERS = ymlSettings.getInt("min-players")
+            game.maxPlayers = ymlSettings.getInt("max-players")
+            game.minPlayers = ymlSettings.getInt("min-players")
             game.worldBoarderController!!.worldBoarderSize = ymlSettings.getInt("world-boarder-size")
             game.teamsAllowed = ymlSettings.getBoolean("teams-allowed")
             game.teamMaxSize = ymlSettings.getInt("team-max-size")

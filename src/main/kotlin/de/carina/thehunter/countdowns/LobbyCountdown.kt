@@ -24,7 +24,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
         isIdle = true
         duration = 10
         Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
-            if (game.players.size >= game.MIN_PLAYERS) {
+            if (game.players.size >= game.minPlayers) {
                 isIdle = false
                 start()
                 return@Runnable
@@ -32,7 +32,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
             if (duration == 0) {
                 duration = TheHunter.instance.settings.settingsMap["duration-idle"] as Int
                 game.players.forEach(Consumer { player ->
-                    player.sendMessage(TheHunter.instance.messages.messagesMap["game-waiting-for-players"]!!.replace("%current%", game.players.size.toString()).replace("%max%", game.MAX_PLAYERS.toString()))
+                    player.sendMessage(TheHunter.instance.messages.messagesMap["game-waiting-for-players"]!!.replace("%current%", game.players.size.toString()).replace("%max%", game.maxPlayers.toString()))
                 })
             }
             duration--
@@ -41,7 +41,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
 
     override fun start() {
         duration = TheHunter.instance.settings.settingsMap["duration-lobby"] as Int
-        if (game.players.size < game.MIN_PLAYERS) {
+        if (game.players.size < game.minPlayers) {
             idle()
             return
         }

@@ -20,6 +20,6 @@ abstract class BaseGun {
 
 
     fun shoot(player: Player) {
-
+        TODO("Implement")
     }
 }

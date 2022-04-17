@@ -14,6 +14,10 @@ import de.carina.thehunter.commands.BaseCommand
 import de.carina.thehunter.events.misc.BlocksFlyEvent
 import de.carina.thehunter.events.misc.PlayerJoinsServer
 import de.carina.thehunter.items.chest.EggBomb
+import de.carina.thehunter.items.chest.EyeSpy
+import de.carina.thehunter.items.chest.Healer
+import de.carina.thehunter.items.chest.Knife
+import de.carina.thehunter.util.files.ItemSettings
 
 import de.carina.thehunter.util.files.Messages
 import de.carina.thehunter.util.files.Settings
@@ -67,11 +71,13 @@ class TheHunter : JavaPlugin() {
 
     lateinit var settings: Settings
     lateinit var messages: Messages
+    lateinit var itemSettings: ItemSettings
     lateinit var statsSystem: StatsSystem
 
     override fun onEnable() {
         instance = this
         settings = Settings("config.yml").addData()
+        itemSettings = ItemSettings().addData()
         messages = Messages("messages.yml").addData()
         statsSystem = StatsSystem()
         StatsSystem.loadStatsPlayersFromFile()
@@ -94,6 +100,9 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(EggBomb(), this)
         pluginManager.registerEvents(BlocksFlyEvent(), this)
         pluginManager.registerEvents(PlayerJoinsServer(), this)
+        pluginManager.registerEvents(Knife(), this)
+        pluginManager.registerEvents(EyeSpy(), this)
+        pluginManager.registerEvents(Healer(), this)
     }
 
 
