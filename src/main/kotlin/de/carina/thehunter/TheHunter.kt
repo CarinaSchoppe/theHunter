@@ -11,6 +11,7 @@
 package de.carina.thehunter
 
 import de.carina.thehunter.commands.BaseCommand
+import de.carina.thehunter.events.game.ChestHandler
 import de.carina.thehunter.events.misc.BlocksFlyEvent
 import de.carina.thehunter.events.misc.PlayerJoinsServer
 import de.carina.thehunter.items.chest.special.*
@@ -113,6 +114,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(Food(), this)
         pluginManager.registerEvents(EnergyDrink(), this)
         pluginManager.registerEvents(JumpStick(), this)
+        pluginManager.registerEvents(ChestHandler(), this)
     }
 
 
