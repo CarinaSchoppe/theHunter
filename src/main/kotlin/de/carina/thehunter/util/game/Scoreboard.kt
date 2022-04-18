@@ -35,7 +35,7 @@ class Scoreboard(val game: Game) {
         val five = objective.getScore("§aAlive Players:")
         val four = objective.getScore("§f" + game.players.size)
         val three = objective.getScore("§eMap Name:")
-        val two = objective.getScore("§f" + game.gameName)
+        val two = objective.getScore("§f" + game.name)
         val one = objective.getScore("§cTeamspeak: ")
         val zero: Score = objective.getScore(tsIP)
         four.score = 4

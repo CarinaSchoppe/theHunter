@@ -6,9 +6,9 @@ import java.io.File
 
 class GameItems(game: Game) {
 
-    private val fileItems = File("${BaseFile.gameFolder}/arenas/${game.gameName}/items.yml")
+    private val fileItems = File("${BaseFile.gameFolder}/arenas/${game.name}/items.yml")
     private val ymlItems = YamlConfiguration.loadConfiguration(fileItems)
-    private val fileGuns = File("${BaseFile.gameFolder}/arenas/${game.gameName}/guns.yml")
+    private val fileGuns = File("${BaseFile.gameFolder}/arenas/${game.name}/guns.yml")
     private val ymlGuns = YamlConfiguration.loadConfiguration(fileGuns)
     val items = mutableMapOf<String, Any>()
     val guns = mutableMapOf<String, Int>()

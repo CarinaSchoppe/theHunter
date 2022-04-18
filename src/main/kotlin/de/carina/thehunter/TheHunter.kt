@@ -58,8 +58,6 @@ class TheHunter : JavaPlugin() {
     TODO: Map Reset
     TODO: CleanUp
     TODO: Utility classes
-    TODO: ItemChest
-    TODO: Items (Eyespy, Knife, tracker, swapper, medipack, grenade, food, energydrink, Ammo)
     TODO: PlayerDropping
      */
 

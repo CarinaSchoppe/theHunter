@@ -10,19 +10,21 @@
 
 package de.carina.thehunter.util.game
 
+import de.carina.thehunter.TheHunter
 import de.carina.thehunter.countdowns.*
 import de.carina.thehunter.gamestates.*
 import de.carina.thehunter.items.chest.special.ItemChest
 import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.misc.MapResetter
 import de.carina.thehunter.util.misc.WorldboarderController
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import java.io.File
 
-class Game(var gameName: String) {
+class Game(var name: String) {
 
 
     var lobbyLocation: Location? = null
@@ -56,13 +58,13 @@ class Game(var gameName: String) {
     var maxPlayers: Int = 20
     var minPlayers: Int = 2
     var currentPlayers: Int = 0
-    var gameStarted: Boolean = false
 
     fun isGameValidConfigured(): Boolean {
         if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null) return false
         if (minPlayers > maxPlayers) return false
         if (maxPlayers == 0) return false
         if (worldBoarderController.worldBoarderSize < 50) return false
+        if (worldBoarderController.worldBoarderSize < worldBoarderController.minBorderSize) return false
         return true
     }
 
@@ -78,7 +80,7 @@ class Game(var gameName: String) {
         currentGameState.stop()
         if (currentGameState is EndState) {
             GamesHandler.games.remove(this)
-            loadGameFromConfig(gameName)
+            loadGameFromConfig(name)
         } else {
             currentGameState = gameStates[gameStates.indexOf(currentGameState) + 1]
             currentGameState.start()
@@ -87,15 +89,15 @@ class Game(var gameName: String) {
 
 
     fun saveGameToConfig(): Boolean {
-        if (gameName == null) return false
+        if (name == null) return false
         if (arenaCenter == null) return false
         if (backLocation == null) return false
         if (lobbyLocation == null) return false
         if (endLocation == null) return false
-        val fileSettings = File("${BaseFile.gameFolder}/arenas/$gameName/settings.yml")
+        val fileSettings = File("${BaseFile.gameFolder}/arenas/$name/settings.yml")
         val ymlSettings = YamlConfiguration.loadConfiguration(fileSettings)
 
-        ymlSettings.set("game-name", gameName)
+        ymlSettings.set("game-name", name)
         ymlSettings.set("chest-fall", chestFall)
         ymlSettings.set("chest-amount", chestAmount)
         ymlSettings.set("random-drop", randomDrop)
@@ -108,7 +110,7 @@ class Game(var gameName: String) {
         ymlSettings.set("worldboarder-min-border-size", worldBoarderController.minBorderSize)
         ymlSettings.set("worldboarder-shrinkboarder", worldBoarderController.shrinkBoarder)
 
-        val fileLocations = File("${BaseFile.gameFolder}/arenas/$gameName/locations.yml")
+        val fileLocations = File("${BaseFile.gameFolder}/arenas/$name/locations.yml")
         val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
 
         if (playerSpawns.isNotEmpty()) ymlLocations.set("spawn-locations", playerSpawns)
@@ -167,7 +169,8 @@ class Game(var gameName: String) {
         gameItems.saveAllItems()
         gameItems.loadAllItems()
         gameItems.loadAllGunSettings()
-        GamesHandler.games.add(this)
+        if (isGameValidConfigured()) GamesHandler.games.add(this)
+        else Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", name))
     }
 
 }
