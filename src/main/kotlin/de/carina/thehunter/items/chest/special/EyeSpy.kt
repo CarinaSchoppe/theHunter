@@ -1,7 +1,7 @@
 package de.carina.thehunter.items.chest.special
 
 import de.carina.thehunter.TheHunter
-import de.carina.thehunter.gamestates.IngameState
+import de.carina.thehunter.items.chest.ItemHandler
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
 import net.kyori.adventure.text.Component
@@ -31,29 +31,13 @@ class EyeSpy : Listener {
 
     @EventHandler
     fun onEyeSpyUse(event: PlayerInteractEvent) {
-        if (event.item == null)
+        if (!ItemHandler.shouldInteractWithItem(event, createEyeSpyItem(), "EyeSpy"))
             return
-        if (!event.item!!.hasItemMeta()) return
-        if (event.item!!.itemMeta != createEyeSpyItem().itemMeta)
-            return
-        if (event.player.inventory.itemInMainHand.itemMeta != createEyeSpyItem().itemMeta)
-            return
-        if (!GamesHandler.playerInGames.containsKey(event.player))
-            return
-        if (!event.action.isRightClick)
-            return
-
-        if (GamesHandler.playerInGames[event.player]!!.currentGameState !is IngameState)
-            return
-
         if (inEyeSpy.contains(event.player))
             return
-
         val target = GamesHandler.playerInGames[event.player]!!.players.filter { it != event.player }.random()
-
         event.isCancelled = true
-        if (GamesHandler.playerInGames[event.player]!!.gameItems!!.items["EyeSpy"] == false)
-            return
+
         setCamera(event.player, target)
     }
 

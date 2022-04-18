@@ -2,6 +2,7 @@ package de.carina.thehunter.items.chest.special
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
+import de.carina.thehunter.items.chest.ItemHandler
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.Material
@@ -20,25 +21,10 @@ class Food : Listener {
 
     @EventHandler
     fun onPlayerFood(event: PlayerInteractEvent) {
-        if (event.item == null)
-            return
-        if (!event.item!!.hasItemMeta())
-            return
-        if (event.item!!.itemMeta!! != createFoodItem().itemMeta)
-            return
-        if (!GamesHandler.playerInGames.containsKey(event.player))
-            return
-        if (!event.action.isRightClick)
-            return
-        val game = GamesHandler.playerInGames[event.player]!!
-        if (event.player.inventory.itemInMainHand.itemMeta != createFoodItem().itemMeta)
-            return
-        event.isCancelled = true
-        if (game.gameItems!!.items["Food"] == false)
-            return
-        if (GamesHandler.playerInGames[event.player]!!.currentGameState !is IngameState)
+        if (!ItemHandler.shouldInteractWithItem(event, createFoodItem(), "Food"))
             return
 
+        event.isCancelled = true
         event.player.foodLevel += GamesHandler.playerInGames[event.player]!!.gameItems!!.items["food-recharge"] as Int
 
         event.player.sendMessage(TheHunter.instance.messages.messagesMap["food-recharge"]!!.replace("%recharge%", (GamesHandler.playerInGames[event.player]!!.gameItems!!.items["food-recharge"] as Int).toString()))

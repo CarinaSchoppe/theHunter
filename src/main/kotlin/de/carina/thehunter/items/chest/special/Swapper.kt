@@ -1,7 +1,7 @@
 package de.carina.thehunter.items.chest.special
 
 import de.carina.thehunter.TheHunter
-import de.carina.thehunter.gamestates.IngameState
+import de.carina.thehunter.items.chest.ItemHandler
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.Material
@@ -18,24 +18,9 @@ class Swapper : Listener {
 
     @EventHandler
     fun onPlayerSwap(event: PlayerInteractEvent) {
-        if (event.item == null)
-            return
-        if (!event.item!!.hasItemMeta())
-            return
-        if (event.item!!.itemMeta!! != createSwapperItem().itemMeta)
-            return
-        if (!GamesHandler.playerInGames.containsKey(event.player))
-            return
-        val game = GamesHandler.playerInGames[event.player]!!
-        if (event.player.inventory.itemInMainHand.itemMeta != createSwapperItem().itemMeta)
-            return
-        if (!event.action.isRightClick)
+        if (!ItemHandler.shouldInteractWithItem(event, createSwapperItem(), "Swapper"))
             return
         event.isCancelled = true
-        if (game.gameItems!!.items["Swapper"] == false)
-            return
-        if (GamesHandler.playerInGames[event.player]!!.currentGameState !is IngameState)
-            return
 
         val target = GamesHandler.playerInGames[event.player]!!.players.filter { it != event.player }.random()
         val targetLocation = target.location

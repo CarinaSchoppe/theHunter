@@ -1,9 +1,8 @@
 package de.carina.thehunter.items.chest.special
 
 import de.carina.thehunter.TheHunter
-import de.carina.thehunter.gamestates.IngameState
+import de.carina.thehunter.items.chest.ItemHandler
 import de.carina.thehunter.util.builder.ItemBuilder
-import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
@@ -22,28 +21,10 @@ class EnergyDrink : Listener {
 
     @EventHandler
     fun onEnergyDinkDrink(event: PlayerInteractEvent) {
-        if (event.item == null)
+        if (!ItemHandler.shouldInteractWithItem(event, createEnergyDrinkItem(), "EnergyDrink"))
             return
-        if (!event.item!!.hasItemMeta()) return
-        if (event.item!!.itemMeta != createEnergyDrinkItem().itemMeta)
-            return
-        if (event.player.inventory.itemInMainHand.itemMeta != createEnergyDrinkItem().itemMeta)
-            return
-        if (!GamesHandler.playerInGames.containsKey(event.player))
-            return
-        if (!event.action.isRightClick)
-            return
-
-        if (GamesHandler.playerInGames[event.player]!!.currentGameState !is IngameState)
-            return
-
-        if (EyeSpy.inEyeSpy.contains(event.player))
-            return
-
 
         event.isCancelled = true
-        if (GamesHandler.playerInGames[event.player]!!.gameItems!!.items["EnergyDrink"] == false)
-            return
 
         event.player.addPotionEffects(createAndAddPotionEffects())
         event.player.sendMessage(TheHunter.instance.messages.messagesMap["energydrink-consumed"]!!)
