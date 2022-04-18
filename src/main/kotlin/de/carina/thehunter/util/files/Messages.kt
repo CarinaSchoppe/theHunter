@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 00:18 by Carina The Latest changes made by Carina on 18.04.22, 23:58 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -68,6 +68,11 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("cant-team-damage", "&cYou can't damage your team members!")
         yml.addDefault("cant-break-block", "&cYou can't break &6%block%&7!")
         yml.addDefault("cant-place-block", "&cYou can't place &6%block%&7!")
+        yml.addDefault("immunity-off", "&7You are no longer immune!")
+        yml.addDefault("immunity-message", "&7You are immune for &6%time%&7 seconds!")
+        yml.addDefault("player-won", "&aThe player &6%player% &awon the game!")
+        yml.addDefault("team-won", "&aThe team with leader &6%leader% &awon the game!")
+        yml.addDefault("game-over", "&aThe game is over!")
         super.addData()
         loadMessagesToMap()
         return this

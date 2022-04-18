@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:28 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 00:18 by Carina The Latest changes made by Carina on 19.04.22, 00:02 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -13,7 +13,7 @@ package de.carina.thehunter.util.game
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.countdowns.*
 import de.carina.thehunter.gamestates.*
-import de.carina.thehunter.items.chest.special.ItemChest
+import de.carina.thehunter.items.chest.ItemChest
 import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.misc.DeathChests
 import de.carina.thehunter.util.misc.MapResetter
@@ -166,6 +166,35 @@ class Game(var name: String) {
             game.currentGameState.start()
         }
 
+
+    }
+
+
+    fun checkWinning(): Boolean {
+        if (players.size == 1) {
+            val message = TheHunter.instance.messages.messagesMap["player-won"]!!.replace("%player%", players.first().name)
+            spectators.forEach { it.sendMessage(message) }
+            players.forEach { it.sendMessage(message) }
+            return true
+        } else if (players.size == 0) {
+            val message = TheHunter.instance.messages.messagesMap["game-over"]!!.replace("%player%", players.first().name)
+            players.forEach { it.sendMessage(message) }
+            return true
+        } else {
+            val team: Team = teams.find {
+                it.teamMembers.contains(players.first())
+            } ?: return false
+
+            if (!team.teamMembers.containsAll(players))
+                return false
+
+            val message = TheHunter.instance.messages.messagesMap["team-won"]!!.replace("%leader%", team.teamLeader.name)
+            spectators.forEach { it.sendMessage(message) }
+            players.forEach { it.sendMessage(message) }
+            return true
+        }
+
+        return false
 
     }
 

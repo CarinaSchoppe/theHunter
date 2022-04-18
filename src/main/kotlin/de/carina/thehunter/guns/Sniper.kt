@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "Sniper.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 00:18 by Carina The Latest changes made by Carina on 19.04.22, 00:18 All contents of "Sniper.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -21,19 +21,18 @@ import org.bukkit.entity.Arrow
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-class Sniper {
+object Sniper {
 
-    companion object {
-        val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
-        var reloading = mutableMapOf<Player, Boolean>()
-        var magazine = mutableMapOf<Player, Int>()
-        fun createSniperGunItem(): ItemStack {
-            return ItemBuilder(Material.DIAMOND_HOE).addDisplayName(TheHunter.PREFIX + "§7Sniper").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
-        }
+
+    val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
+    var reloading = mutableMapOf<Player, Boolean>()
+    var magazine = mutableMapOf<Player, Int>()
+    fun createSniperGunItem(): ItemStack {
+        return ItemBuilder(Material.DIAMOND_HOE).addDisplayName(TheHunter.PREFIX + "§7Sniper").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
     }
 
 
-    fun shootProjectile(player: Player) {
+    private fun shootProjectile(player: Player) {
         val arrow = player.launchProjectile(
             Arrow::class.java, player.location.direction.multiply(
                 GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-power"]!!
@@ -62,7 +61,7 @@ class Sniper {
         return true
     }
 
-    fun checkAmmoPossible(player: Player): Boolean {
+    private fun checkAmmoPossible(player: Player): Boolean {
         if (!hasAmmo(player, de.carina.thehunter.items.chest.ammo.Sniper.createSniperAmmo())) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
             return false
@@ -78,7 +77,7 @@ class Sniper {
         }
         if (!checkAmmoPossible(player))
             return
-
+        player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
         reloading[player] = true
         reload(player)
     }
@@ -96,11 +95,11 @@ class Sniper {
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-reload"]!!)
     }
 
-    fun hasAmmo(player: Player, ammo: ItemStack): Boolean {
+    private fun hasAmmo(player: Player, ammo: ItemStack): Boolean {
         return getAmmoAmount(player, ammo) > 0
     }
 
-    fun removeAmmo(player: Player, amount: Int) {
+    private fun removeAmmo(player: Player, amount: Int) {
         var ammo: ItemStack = de.carina.thehunter.items.chest.ammo.Sniper.createSniperAmmo()
         for ((slot, item) in player.inventory.contents!!.withIndex()) {
             if (item == null)
@@ -120,7 +119,7 @@ class Sniper {
         }
     }
 
-    fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
+    private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
         var amount = 0
         for (item in player.inventory.contents!!) {
             if (item == null)

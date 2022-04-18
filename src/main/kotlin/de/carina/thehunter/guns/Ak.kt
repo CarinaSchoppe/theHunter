@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 00:18 by Carina The Latest changes made by Carina on 19.04.22, 00:18 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -19,20 +19,37 @@ import org.bukkit.Sound
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Arrow
 import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
-class Ak {
-    companion object {
-        val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
-        var reloading = mutableMapOf<Player, Boolean>()
-        var magazine = mutableMapOf<Player, Int>()
+object Ak {
 
-        fun createAkGunItem(): ItemStack {
-            return ItemBuilder(Material.IRON_HOE).addDisplayName(TheHunter.PREFIX + "§7AK-47").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
-        }
+    val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
+    var reloading = mutableMapOf<Player, Boolean>()
+    var magazine = mutableMapOf<Player, Int>()
+
+    fun createAkGunItem(): ItemStack {
+        return ItemBuilder(Material.IRON_HOE).addDisplayName(TheHunter.PREFIX + "§7AK-47").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
     }
 
-    fun shootProjectile(player: Player) {
+
+    @EventHandler
+    fun onPlayerShoot(event: PlayerInteractEvent) {
+        if (event.item == null) return
+        if (!event.item!!.hasItemMeta()) return
+        if (event.item!!.itemMeta != createAkGunItem().itemMeta) return
+        if (event.action.isLeftClick) return
+        if (!event.player.hasPermission("thehunter.ak")) return
+        if (event.player.isSneaking) {
+            reloadGun(event.player)
+            return
+        }
+
+        shoot(event.player)
+    }
+
+    private fun shootProjectile(player: Player) {
         val arrow = player.launchProjectile(Arrow::class.java, player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["ak-power"]!!))
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
@@ -40,6 +57,7 @@ class Ak {
         arrow.shooter = player
         shotBullets[player]!!.add(arrow)
     }
+
 
     fun shoot(player: Player): Boolean {
         if (reloading[player] == true) {
@@ -57,7 +75,7 @@ class Ak {
         return true
     }
 
-    fun checkAmmoPossible(player: Player): Boolean {
+    private fun checkAmmoPossible(player: Player): Boolean {
         if (!hasAmmo(player, de.carina.thehunter.items.chest.ammo.Ak.createAKAmmo())) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
             return false
@@ -71,7 +89,7 @@ class Ak {
             return
         }
         if (!checkAmmoPossible(player)) return
-
+        player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
         reloading[player] = true
         reload(player)
     }
@@ -86,11 +104,11 @@ class Ak {
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["ak-reload"]!!)
     }
 
-    fun hasAmmo(player: Player, ammo: ItemStack): Boolean {
+    private fun hasAmmo(player: Player, ammo: ItemStack): Boolean {
         return getAmmoAmount(player, ammo) > 0
     }
 
-    fun removeAmmo(player: Player, amount: Int) {
+    private fun removeAmmo(player: Player, amount: Int) {
         var ammo: ItemStack = createAkGunItem()
         for ((slot, item) in player.inventory.contents!!.withIndex()) {
             if (item == null) continue
@@ -105,7 +123,7 @@ class Ak {
         }
     }
 
-    fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
+    private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
         var amount = 0
         for (item in player.inventory.contents!!) {
             if (item == null) continue

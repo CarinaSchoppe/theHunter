@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "Minigun.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 00:18 by Carina The Latest changes made by Carina on 19.04.22, 00:18 All contents of "Minigun.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -19,20 +19,34 @@ import org.bukkit.Sound
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Arrow
 import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
-class Minigun {
-
-    companion object {
-        val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
-        var reloading = mutableMapOf<Player, Boolean>()
-        var magazine = mutableMapOf<Player, Int>()
-        fun createMiniGunItem(): ItemStack {
-            return ItemBuilder(Material.STONE_HOE).addDisplayName(TheHunter.PREFIX + "§7Minigun").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
+object Minigun {
+    @EventHandler
+    fun onPlayerShoot(event: PlayerInteractEvent) {
+        if (event.item == null) return
+        if (!event.item!!.hasItemMeta()) return
+        if (event.item!!.itemMeta != createMiniGunItem().itemMeta) return
+        if (event.action.isLeftClick) return
+        if (!event.player.hasPermission("thehunter.minigun")) return
+        if (event.player.isSneaking) {
+            reloadGun(event.player)
+            return
         }
+        shoot(event.player)
     }
 
-    fun shootProjectile(player: Player) {
+    val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
+    var reloading = mutableMapOf<Player, Boolean>()
+    var magazine = mutableMapOf<Player, Int>()
+    fun createMiniGunItem(): ItemStack {
+        return ItemBuilder(Material.STONE_HOE).addDisplayName(TheHunter.PREFIX + "§7Minigun").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
+    }
+
+
+    private fun shootProjectile(player: Player) {
         val arrow = player.launchProjectile(Arrow::class.java, player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-power"]!!))
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
@@ -57,7 +71,7 @@ class Minigun {
         return true
     }
 
-    fun checkAmmoPossible(player: Player): Boolean {
+    private fun checkAmmoPossible(player: Player): Boolean {
         if (!hasAmmo(player, de.carina.thehunter.items.chest.ammo.Minigun.createMinigunAmmo())) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
             return false
@@ -73,6 +87,7 @@ class Minigun {
         }
         if (!checkAmmoPossible(player))
             return
+        player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
 
         reloading[player] = true
         reload(player)
@@ -91,11 +106,11 @@ class Minigun {
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-reload"]!!)
     }
 
-    fun hasAmmo(player: Player, ammo: ItemStack): Boolean {
+    private fun hasAmmo(player: Player, ammo: ItemStack): Boolean {
         return getAmmoAmount(player, ammo) > 0
     }
 
-    fun removeAmmo(player: Player, amount: Int) {
+    private fun removeAmmo(player: Player, amount: Int) {
         var ammo: ItemStack = de.carina.thehunter.items.chest.ammo.Minigun.createMinigunAmmo()
         for ((slot, item) in player.inventory.contents!!.withIndex()) {
             if (item == null)
@@ -115,7 +130,7 @@ class Minigun {
         }
     }
 
-    fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
+    private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
         var amount = 0
         for (item in player.inventory.contents!!) {
             if (item == null)
