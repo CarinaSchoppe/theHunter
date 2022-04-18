@@ -17,7 +17,7 @@ import java.io.File
 open class BaseFile(filePath: String) {
 
     val yml: YamlConfiguration
-    protected val file: File
+    private val file: File
 
     companion object {
         const val gameFolder = "/plugins/theHunterRemastered"
@@ -28,7 +28,7 @@ open class BaseFile(filePath: String) {
         yml = YamlConfiguration.loadConfiguration(file)
     }
 
-    protected fun saveFile() {
+    private fun saveFile() {
         try {
             yml.options().copyDefaults(true)
             yml.save(file)

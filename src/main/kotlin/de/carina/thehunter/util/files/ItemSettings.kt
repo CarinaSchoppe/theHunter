@@ -19,8 +19,7 @@ class ItemSettings : BaseFile("item-settings.yml") {
         yml.addDefault("knife-damage", 2.0)
         yml.addDefault("healer-amount", 5)
         yml.addDefault("eye-spy-duration", 5)
-        yml.options().copyDefaults(true)
-        yml.save(file)
+        super.addData()
         fillSettingsMap()
         return this
     }
