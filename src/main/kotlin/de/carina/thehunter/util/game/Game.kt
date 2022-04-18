@@ -59,6 +59,11 @@ class Game(var gameName: String) {
     var currentPlayers: Int = 0
     var gameStarted: Boolean = false
 
+    fun isGameValidConfigured(): Boolean {
+        if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null) return false
+        return true
+    }
+
     fun start() {
         TODO("not implemented")
     }
@@ -80,16 +85,11 @@ class Game(var gameName: String) {
 
 
     fun saveGameToConfig(): Boolean {
-        if (gameName == null)
-            return false
-        if (arenaCenter == null)
-            return false
-        if (backLocation == null)
-            return false
-        if (lobbyLocation == null)
-            return false
-        if (endLocation == null)
-            return false
+        if (gameName == null) return false
+        if (arenaCenter == null) return false
+        if (backLocation == null) return false
+        if (lobbyLocation == null) return false
+        if (endLocation == null) return false
         val fileSettings = File("${BaseFile.gameFolder}/arenas/$gameName/settings.yml")
         val ymlSettings = YamlConfiguration.loadConfiguration(fileSettings)
 
@@ -110,8 +110,7 @@ class Game(var gameName: String) {
         val fileLocations = File("${BaseFile.gameFolder}/arenas/$gameName/locations.yml")
         val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
 
-        if (playerSpawns.isNotEmpty())
-            ymlLocations.set("spawn-locations", playerSpawns)
+        if (playerSpawns.isNotEmpty()) ymlLocations.set("spawn-locations", playerSpawns)
         ymlLocations.set("arena-center", arenaCenter)
         ymlLocations.set("lobby-location", lobbyLocation)
         ymlLocations.set("back-location", backLocation)
