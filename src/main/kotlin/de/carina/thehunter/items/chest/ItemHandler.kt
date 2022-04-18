@@ -25,7 +25,7 @@ object ItemHandler {
         if (GamesHandler.playerInGames[event.player]!!.currentGameState !is IngameState)
             return false
 
-        if (GamesHandler.playerInGames[event.player]!!.gameItems!!.items[itemString] == false)
+        if (GamesHandler.playerInGames[event.player]!!.gameItems.items[itemString] == false)
             return false
 
         event.isCancelled = true

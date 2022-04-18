@@ -39,7 +39,7 @@ class BlocksFlyEvent : Listener {
         val game = GamesHandler.playerInGames[player]!!
 
         for (block in event.blockList()) {
-            game.mapResetter!!.blocks.add(MapResetter.createBlockString(block))
+            game.mapResetter.blocks.add(MapResetter.createBlockString(block))
             event.yield = 0f
 
             val x = -5f + (Math.random() * (5 + 5 + 1)).toFloat()
@@ -68,7 +68,7 @@ class BlocksFlyEvent : Listener {
         if (game.gameEntities.contains(event.entity))
             game.gameEntities.remove(event.entity)
         val blockString = Material.AIR.toString() + ":" + block.world.name + ":" + block.x + ":" + block.y + ":" + block.z
-        game.mapResetter!!.blocks.add(blockString)
+        game.mapResetter.blocks.add(blockString)
     }
 
 }

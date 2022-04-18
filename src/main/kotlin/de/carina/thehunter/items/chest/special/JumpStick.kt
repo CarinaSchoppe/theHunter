@@ -29,14 +29,14 @@ class JumpStick : Listener {
         val player = event.player
         event.isCancelled = true
         if (uses.containsKey(player)) {
-            if (uses[player]!! >= GamesHandler.playerInGames[player]!!.gameItems!!.items["jumpstick-uses"] as Int)
+            if (uses[player]!! >= GamesHandler.playerInGames[player]!!.gameItems.items["jumpstick-uses"] as Int)
                 player.sendMessage(TheHunter.instance.messages.messagesMap["jumpstick-broke"]!!)
             player.inventory.itemInMainHand.amount -= 1
             uses[player] = 0
             return
         }
 
-        player.velocity = player.eyeLocation.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems!!.items["jumpstick-power"] as Int)
+        player.velocity = player.eyeLocation.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.items["jumpstick-power"] as Int)
         if (uses.containsKey(player))
             uses[player] = 1
         else

@@ -60,7 +60,7 @@ class EggBomb : Listener {
             return
         if (egg.item.itemMeta != createEggBomb().itemMeta)
             return
-        if (GamesHandler.playerInGames[player]!!.gameItems!!.items["EggBomb"] == false)
+        if (GamesHandler.playerInGames[player]!!.gameItems.items["EggBomb"] == false)
             return
 
 

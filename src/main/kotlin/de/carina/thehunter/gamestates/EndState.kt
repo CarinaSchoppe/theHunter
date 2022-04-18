@@ -20,7 +20,7 @@ class EndState(game: Game) : GameState(game) {
     override fun stop() {
 
 
-        game.mapResetter!!.resetMap()
+        game.mapResetter.resetMap()
     }
 
     override val gameStateID: Int = GameStates.END_STATE.id

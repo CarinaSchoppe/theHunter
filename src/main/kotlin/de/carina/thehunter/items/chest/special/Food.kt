@@ -27,9 +27,9 @@ class Food : Listener {
             return
 
         event.isCancelled = true
-        event.player.foodLevel += GamesHandler.playerInGames[event.player]!!.gameItems!!.items["food-recharge"] as Int
+        event.player.foodLevel += GamesHandler.playerInGames[event.player]!!.gameItems.items["food-recharge"] as Int
 
-        event.player.sendMessage(TheHunter.instance.messages.messagesMap["food-recharge"]!!.replace("%recharge%", (GamesHandler.playerInGames[event.player]!!.gameItems!!.items["food-recharge"] as Int).toString()))
+        event.player.sendMessage(TheHunter.instance.messages.messagesMap["food-recharge"]!!.replace("%recharge%", (GamesHandler.playerInGames[event.player]!!.gameItems.items["food-recharge"] as Int).toString()))
 
     }
 
@@ -42,7 +42,7 @@ class Food : Listener {
             return
         if (GamesHandler.playerInGames[player]!!.currentGameState !is IngameState)
             return
-        if (GamesHandler.playerInGames[player]!!.gameItems!!.items["Food"] != false)
+        if (GamesHandler.playerInGames[player]!!.gameItems.items["Food"] != false)
             return
 
         player.foodLevel = 20

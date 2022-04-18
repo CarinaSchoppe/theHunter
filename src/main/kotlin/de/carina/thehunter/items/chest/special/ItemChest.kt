@@ -63,7 +63,7 @@ class ItemChest(private val game: Game) {
             items.add(item)
         }
 
-        repeat(Random().nextInt(game.gameItems!!.items["item-amounts"] as Int) + 1) {
+        repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
             val item = items[Random().nextInt(items.size)]
             while (true) {
                 val place = Random().nextInt(54)
