@@ -32,7 +32,7 @@ class StatsSystem : BaseFile("stats.yml") {
                 TheHunter.instance.statsSystem.yml.set("$player.Loses", playerStats[player]!!.loses)
                 TheHunter.instance.statsSystem.yml.set("$player.Points", playerStats[player]!!.points)
                 TheHunter.instance.statsSystem.yml.set("$player.Games", playerStats[player]!!.games)
-                TheHunter.instance.statsSystem.saveFile()
+                TheHunter.instance.statsSystem.addData()
                 TheHunter.instance.messages.sendMessageToConsole("stats-system-saved")
             }
         }
