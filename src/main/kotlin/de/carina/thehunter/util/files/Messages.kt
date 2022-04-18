@@ -61,6 +61,10 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("food-recharge", "&7Your food has been recharged with &6%recharge%&7!")
         yml.addDefault("energydrink-consumed", "&7You consumed an energy drink!")
         yml.addDefault("wrong-config", "&cThe config for the game &6%game%&c is wrong! Please check it!")
+        yml.addDefault("gun-reload-done", "&7You reloaded your gun!")
+        yml.addDefault("gun-reloading", "&7You are reloading your gun!")
+        yml.addDefault("gun-out-of-ammo", "&cYou don't have any ammo left for that gun!")
+        yml.addDefault("cant-drop-item", "&cYou can't drop &6%item%&7!")
         super.addData()
         loadMessagesToMap()
         return this

@@ -62,18 +62,22 @@ class GameItems(game: Game) {
         ymlGuns.addDefault("minigun-speed", 1)
         ymlGuns.addDefault("minigun-reload", 10)
         ymlGuns.addDefault("minigun-ammo", 50)
+        ymlGuns.addDefault("minigun-power", 7)
         ymlGuns.addDefault("ak-damage", 3)
         ymlGuns.addDefault("ak-speed", 2)
         ymlGuns.addDefault("ak-reload", 7)
         ymlGuns.addDefault("ak-ammo", 30)
+        ymlGuns.addDefault("ak-power", 9)
         ymlGuns.addDefault("sniper-damage", 5)
         ymlGuns.addDefault("sniper-speed", 5)
         ymlGuns.addDefault("sniper-reload", 15)
         ymlGuns.addDefault("sniper-ammo", 7)
+        ymlGuns.addDefault("sniper-power", 12)
         ymlGuns.addDefault("pistol-damage", 2)
         ymlGuns.addDefault("pistol-speed", 3)
         ymlGuns.addDefault("pistol-reload", 5)
         ymlGuns.addDefault("pistol-ammo", 12)
+        ymlGuns.addDefault("pistol-power", 5)
 
 
 

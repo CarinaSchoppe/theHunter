@@ -14,6 +14,7 @@ import de.carina.thehunter.commands.BaseCommand
 import de.carina.thehunter.events.game.ChestHandler
 import de.carina.thehunter.events.misc.BlocksFlyEvent
 import de.carina.thehunter.events.misc.PlayerJoinsServer
+import de.carina.thehunter.guns.GunHandler
 import de.carina.thehunter.items.chest.special.*
 import de.carina.thehunter.util.files.ItemSettings
 import de.carina.thehunter.util.files.Messages
@@ -114,6 +115,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(JumpStick(), this)
         pluginManager.registerEvents(ChestHandler(), this)
         pluginManager.registerEvents(Ammo(), this)
+        pluginManager.registerEvents(GunHandler(), this)
 
     }
 
