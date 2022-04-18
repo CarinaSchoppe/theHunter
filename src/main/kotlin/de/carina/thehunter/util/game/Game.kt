@@ -15,6 +15,7 @@ import de.carina.thehunter.countdowns.*
 import de.carina.thehunter.gamestates.*
 import de.carina.thehunter.items.chest.special.ItemChest
 import de.carina.thehunter.util.files.BaseFile
+import de.carina.thehunter.util.misc.DeathChests
 import de.carina.thehunter.util.misc.MapResetter
 import de.carina.thehunter.util.misc.WorldboarderController
 import org.bukkit.Bukkit
@@ -39,6 +40,7 @@ class Game(var name: String) {
     lateinit var scoreBoard: Scoreboard
     lateinit var gameItems: GameItems
     lateinit var gameChest: ItemChest
+    lateinit var deathChests: DeathChests
 
 
     val countdowns = mutableListOf<Countdown>()
@@ -181,6 +183,7 @@ class Game(var name: String) {
         mapResetter = MapResetter(this)
         gameItems = GameItems(this)
         gameChest = ItemChest(this)
+        deathChests = DeathChests(this)
         gameItems.saveAllItems()
         gameItems.loadAllItems()
         gameItems.loadAllGunSettings()

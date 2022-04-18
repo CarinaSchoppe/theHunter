@@ -12,6 +12,7 @@ package de.carina.thehunter
 
 import de.carina.thehunter.commands.BaseCommand
 import de.carina.thehunter.events.game.ChestHandler
+import de.carina.thehunter.events.game.DeathChest
 import de.carina.thehunter.events.game.TeamDamage
 import de.carina.thehunter.events.misc.BlocksFlyEvent
 import de.carina.thehunter.events.misc.MapModify
@@ -31,16 +32,13 @@ import org.bukkit.plugin.java.JavaPlugin
 class TheHunter : JavaPlugin() {
 
     /*
-    TODOS:
+    TODOS till done:
     TODO: MapLoader
-    TODO: GameStates
     TODO: GameSigns
     TODO: player Join event
     TODO: player leave event
     TODO: player death event
-    TODO: Map event
     TODO: Cluster event
-    TODO: EntityDamage event
     TODO: StatsSystem
     TODO: CommandManager
     TODO: InventoryCommander
@@ -48,12 +46,8 @@ class TheHunter : JavaPlugin() {
     TODO: DeathChests
     TODO: Countdowns
     TODO: Premium join
-    TODO: Scoreboard
     TODO: TeamMode
     TODO: AutoUpdater
-    TODO: Map Reset
-    TODO: Utility classes
-    TODO: PlayerDropping
      */
 
     companion object {
@@ -112,6 +106,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(GunHandler(), this)
         pluginManager.registerEvents(TeamDamage(), this)
         pluginManager.registerEvents(MapModify(), this)
+        pluginManager.registerEvents(DeathChest(), this)
 
 
     }
