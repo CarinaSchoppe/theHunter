@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 00:18 by Carina The Latest changes made by Carina on 19.04.22, 00:18 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 00:59 by Carina The Latest changes made by Carina on 19.04.22, 00:59 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -11,15 +11,20 @@
 package de.carina.thehunter.util.game
 
 import de.carina.thehunter.TheHunter
-import de.carina.thehunter.countdowns.*
+import de.carina.thehunter.countdowns.Countdown
+import de.carina.thehunter.countdowns.Countdowns
+import de.carina.thehunter.countdowns.EndCountdown
+import de.carina.thehunter.countdowns.LobbyCountdown
 import de.carina.thehunter.gamestates.*
 import de.carina.thehunter.items.chest.ItemChest
 import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.misc.DeathChests
 import de.carina.thehunter.util.misc.MapResetter
+import de.carina.thehunter.util.misc.Util
 import de.carina.thehunter.util.misc.WorldboarderController
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.block.Sign
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
@@ -51,6 +56,7 @@ class Game(var name: String) {
     val teams = mutableSetOf<Team>()
     val gameStates = mutableListOf<GameState>()
     val gameEntities = mutableSetOf<Entity>()
+    val signs = mutableSetOf<Sign>()
 
 
     var randomPlayerDrop = true
@@ -65,6 +71,7 @@ class Game(var name: String) {
     var teamDamage = false
     var mapModify = false
 
+
     fun isGameValidConfigured(): Boolean {
         if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null || spectatorLocation == null) return false
         if (minPlayers > maxPlayers) return false
@@ -77,16 +84,30 @@ class Game(var name: String) {
 
 
     fun nextGameState() {
-        currentGameState.stop()
         if (currentGameState is EndState) {
+            currentGameState.stop()
+            clearAll()
             GamesHandler.games.remove(this)
             loadGameFromConfig(name)
         } else {
+            currentGameState.stop()
             currentGameState = gameStates[gameStates.indexOf(currentGameState) + 1]
+            Util.updateGameSigns(this)
             currentGameState.start()
         }
     }
 
+    private fun clearAll() {
+        players.clear()
+        spectators.clear()
+        playerSpawns.clear()
+        teams.clear()
+        gameStates.clear()
+        gameEntities.clear()
+        signs.clear()
+        gameEntities.clear()
+        countdowns.clear()
+    }
 
     fun saveGameToConfig(): Boolean {
         if (name == null) return false
@@ -175,6 +196,7 @@ class Game(var name: String) {
             val message = TheHunter.instance.messages.messagesMap["player-won"]!!.replace("%player%", players.first().name)
             spectators.forEach { it.sendMessage(message) }
             players.forEach { it.sendMessage(message) }
+            TheHunter.instance.statsSystem.playerWon(players.first())
             return true
         } else if (players.size == 0) {
             val message = TheHunter.instance.messages.messagesMap["game-over"]!!.replace("%player%", players.first().name)
@@ -190,7 +212,10 @@ class Game(var name: String) {
 
             val message = TheHunter.instance.messages.messagesMap["team-won"]!!.replace("%leader%", team.teamLeader.name)
             spectators.forEach { it.sendMessage(message) }
-            players.forEach { it.sendMessage(message) }
+            players.forEach {
+                it.sendMessage(message)
+                TheHunter.instance.statsSystem.playerWon(it)
+            }
             return true
         }
 
@@ -199,7 +224,7 @@ class Game(var name: String) {
     }
 
     fun create() {
-        countdowns.addAll(listOf(LobbyCountdown(this), IngameCountdown(this), EndCountdown(this)))
+        countdowns.addAll(listOf(LobbyCountdown(this), EndCountdown(this)))
         gameStates.addAll(listOf(LobbyState(this), IngameState(this), EndState(this)))
         currentGameState = gameStates[GameStates.LOBBY_STATE.id]
         currentCountdown = countdowns[Countdowns.LOBBY_COUNTDOWN.id]
@@ -214,6 +239,7 @@ class Game(var name: String) {
         gameItems.loadAllGunSettings()
         if (isGameValidConfigured()) GamesHandler.games.add(this)
         else Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", name))
+        Util.updateGameSigns(this)
     }
 
 }

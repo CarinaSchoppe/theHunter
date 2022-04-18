@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 00:18 by Carina The Latest changes made by Carina on 19.04.22, 00:18 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 00:55 by Carina The Latest changes made by Carina on 19.04.22, 00:55 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -29,6 +29,7 @@ class IngameState(game: Game) : GameState(game) {
         else {
             for ((index, player) in game.players.withIndex()) {
                 player.isInvulnerable = true
+                TheHunter.instance.statsSystem.playerPlaysGame(player)
                 game.scoreBoard.createNewScoreboard(player)
                 player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX), LegacyComponentSerializer.legacySection().deserialize("§Lets Play!")))
                 player.teleport(game.playerSpawns[index])
@@ -49,6 +50,7 @@ class IngameState(game: Game) : GameState(game) {
         startImmunityCounter()
         game.gameChest.makeChestsFall()
         game.worldBoarderController.shrinkWorld()
+
         if (game.checkWinning())
             game.nextGameState()
     }
@@ -76,7 +78,10 @@ class IngameState(game: Game) : GameState(game) {
 
 
     override fun stop() {
-        TODO("Not yet implemented")
+        for (player in game.players) {
+            player.activePotionEffects.clear()
+        }
+        game.worldBoarderController.resetWorldBoarder()
     }
 
     private fun givePlayerStartItems() {

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "Scoreboard.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 00:55 by Carina The Latest changes made by Carina on 19.04.22, 00:55 All contents of "Scoreboard.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -28,7 +28,6 @@ class Scoreboard(val game: Game) {
         scoreboard.clearSlot(org.bukkit.scoreboard.DisplaySlot.SIDEBAR)
         val serverName = ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["server-name"] as String)
         val tsIP = ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["ts-ip"] as String)
-        val serverIP = ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["server-ip"] as String)
         val objective: Objective = scoreboard.registerNewObjective("aaa", "bbb", Component.text(serverName))
         objective.displaySlot = DisplaySlot.SIDEBAR
         val six = objective.getScore("§fKills: §d${StatsSystem.playerStats[player.uniqueId]!!.kills}")

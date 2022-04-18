@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "EndCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 00:59 by Carina The Latest changes made by Carina on 19.04.22, 00:59 All contents of "EndCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -10,22 +10,42 @@
 
 package de.carina.thehunter.countdowns
 
+import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.Game
+import org.bukkit.Bukkit
 
 class EndCountdown(game: Game) : Countdown(game) {
 
     override var duration: Int = 60
 
-    override fun idle() {
-        TODO("Not yet implemented")
-    }
 
     override fun start() {
-        TODO("Not yet implemented")
+        duration = TheHunter.instance.settings.settingsMap["duration-endcountdown"] as Int
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(TheHunter.instance, {
+            duration--
+            when (duration) {
+                in 0..10 -> {
+                    for (player in game.players) {
+                        player.sendMessage(TheHunter.instance.messages.messagesMap["endcountdown-message"]!!)
+                    }
+                    for (player in game.spectators) {
+                        player.sendMessage(TheHunter.instance.messages.messagesMap["endcountdown-message"]!!)
+                    }
+                }
+                0 -> {
+                    stop()
+                }
+            }
+        }, 20L, 20L)
+    }
+
+    override fun idle() {
+        //Will not be implemented
+        return
     }
 
     override fun stop() {
-        TODO("Not yet implemented")
+        game.nextGameState()
     }
 
     override var isIdle: Boolean = false

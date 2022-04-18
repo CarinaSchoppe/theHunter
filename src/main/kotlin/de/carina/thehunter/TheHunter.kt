@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 00:18 by Carina The Latest changes made by Carina on 19.04.22, 00:18 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 00:59 by Carina The Latest changes made by Carina on 19.04.22, 00:59 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -23,6 +23,7 @@ import de.carina.thehunter.items.chest.special.*
 import de.carina.thehunter.util.files.ItemSettings
 import de.carina.thehunter.util.files.Messages
 import de.carina.thehunter.util.files.Settings
+import de.carina.thehunter.util.game.GameSigns
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.Ammo
 import de.carina.thehunter.util.misc.StatsSystem
@@ -34,8 +35,6 @@ class TheHunter : JavaPlugin() {
 
     /*
     TODOS till done:
-    TODO: MapLoader
-    TODO: GameSigns
     TODO: player Join event
     TODO: player leave event
     TODO: player death event
@@ -44,10 +43,7 @@ class TheHunter : JavaPlugin() {
     TODO: CommandManager
     TODO: InventoryCommander
     TODO: anvilGUI
-    TODO: DeathChests
-    TODO: Countdowns
     TODO: Premium join
-    TODO: TeamMode
     TODO: AutoUpdater
      */
 
@@ -109,6 +105,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(MapModify(), this)
         pluginManager.registerEvents(DeathChest(), this)
         pluginManager.registerEvents(PlayerChat(), this)
+        pluginManager.registerEvents(GameSigns(), this)
 
     }
 
