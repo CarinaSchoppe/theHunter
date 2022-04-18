@@ -14,6 +14,7 @@ import de.carina.thehunter.commands.BaseCommand
 import de.carina.thehunter.events.game.ChestHandler
 import de.carina.thehunter.events.game.TeamDamage
 import de.carina.thehunter.events.misc.BlocksFlyEvent
+import de.carina.thehunter.events.misc.MapModify
 import de.carina.thehunter.events.misc.PlayerJoinsServer
 import de.carina.thehunter.guns.GunHandler
 import de.carina.thehunter.items.chest.special.*
@@ -38,22 +39,15 @@ class TheHunter : JavaPlugin() {
     TODO: player leave event
     TODO: player death event
     TODO: Map event
-    TODO: Gun event
     TODO: Cluster event
     TODO: EntityDamage event
     TODO: StatsSystem
-    TODO: MultiGameMode
     TODO: CommandManager
-    TODO: InventoryBuilder
-    TODO: ItemBuilder
     TODO: InventoryCommander
     TODO: anvilGUI
-    TODO: Guns
-    TODO: ItemChests
     TODO: DeathChests
     TODO: Countdowns
     TODO: Premium join
-    TODO: API
     TODO: Scoreboard
     TODO: TeamMode
     TODO: AutoUpdater
@@ -117,6 +111,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(Ammo(), this)
         pluginManager.registerEvents(GunHandler(), this)
         pluginManager.registerEvents(TeamDamage(), this)
+        pluginManager.registerEvents(MapModify(), this)
 
 
     }

@@ -60,6 +60,7 @@ class Game(var name: String) {
     var currentPlayers: Int = 0
     var immunity = 10
     var teamDamage = false
+    var mapModify = false
 
     fun isGameValidConfigured(): Boolean {
         if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null) return false
@@ -105,6 +106,7 @@ class Game(var name: String) {
         ymlSettings.addDefault("chest-amount", chestAmount)
         ymlSettings.addDefault("random-drop", randomPlayerDrop)
         ymlSettings.addDefault("immunity", immunity)
+        ymlSettings.addDefault("map-modify", mapModify)
         ymlSettings.addDefault("max-players", maxPlayers)
         ymlSettings.addDefault("min-players", minPlayers)
         ymlSettings.addDefault("world-boarder-size", worldBoarderController.worldBoarderSize)
@@ -147,6 +149,7 @@ class Game(var name: String) {
             game.teamsAllowed = ymlSettings.getBoolean("teams-allowed")
             game.teamMaxSize = ymlSettings.getInt("team-max-size")
             game.immunity = ymlSettings.getInt("immunity")
+            game.mapModify = ymlSettings.getBoolean("map-modify")
             game.teamDamage = ymlSettings.getBoolean("team-damage")
             game.worldBoarderController.worldBoarderSize = ymlSettings.getInt("world-boarder-size")
             game.worldBoarderController.shrinkSpeed = ymlSettings.getInt("worldboarder-shrinkspeed")
