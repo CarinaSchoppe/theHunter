@@ -64,7 +64,8 @@ class StatsSystem : BaseFile("stats.yml") {
         yml.set(player.uniqueId.toString() + ".Points", 0)
         yml.set(player.uniqueId.toString() + ".Games", 0)
         playerStats[player.uniqueId] = StatsPlayer(0, 0, 0, 0.0, 0, 0, 0)
-        saveFile()
+        super.addData()
+
     }
 
 
@@ -76,7 +77,8 @@ class StatsSystem : BaseFile("stats.yml") {
         playerStats[dead.uniqueId]!!.deaths += 1
         playerStats[dead.uniqueId]!!.KDR = playerStats[dead.uniqueId]!!.kills.toDouble() / playerStats[dead.uniqueId]!!.deaths.toDouble()
 
-        saveFile()
+        super.addData()
+
     }
 
     fun playerWon(player: Player) {
@@ -84,14 +86,15 @@ class StatsSystem : BaseFile("stats.yml") {
         yml.set(player.uniqueId.toString() + ".Points", yml.getInt(player.uniqueId.toString() + ".Points") + 15)
         playerStats[player.uniqueId]!!.wins += 1
         playerStats[player.uniqueId]!!.points += 15
-        saveFile()
+        super.addData()
+
     }
 
     fun playerDied(player: Player) {
         removePointsIfPossible(player)
         playerStats[player.uniqueId]!!.deaths += 1
         playerStats[player.uniqueId]!!.KDR = playerStats[player.uniqueId]!!.kills.toDouble() / playerStats[player.uniqueId]!!.deaths.toDouble()
-        saveFile()
+        super.addData()
     }
 
     private fun removePointsIfPossible(player: Player) {
@@ -102,7 +105,7 @@ class StatsSystem : BaseFile("stats.yml") {
 
     fun playerPlaysGame(player: Player) {
         playerStats[player.uniqueId]!!.games += 1
-        saveFile()
+        super.addData()
     }
 
     fun generateStatsMessageForPlayer(sender: Player, player: Player): Boolean {
