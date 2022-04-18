@@ -1,4 +1,4 @@
-package de.carina.thehunter.items.chest
+package de.carina.thehunter.items.chest.special
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
@@ -27,7 +27,7 @@ class Knife : Listener {
             return
         if (event.damager !is Player)
             return
-        if ((event.damager as Player).inventory.itemInMainHand.type != Material.IRON_SWORD)
+        if ((event.damager as Player).inventory.itemInMainHand.itemMeta != createKnifeItem().itemMeta)
             return
         if ((event.damager as Player).inventory.itemInMainHand.itemMeta != createKnifeItem().itemMeta)
             return
@@ -37,6 +37,10 @@ class Knife : Listener {
             return
 
         if (GamesHandler.playerInGames[event.entity as Player]!!.currentGameState !is IngameState)
+            return
+        if (GamesHandler.playerInGames[event.damager as Player]!!.currentGameState !is IngameState)
+            return
+        if (GamesHandler.playerInGames[event.damager as Player]!!.gameItems!!.items["Knife"] == false)
             return
         event.damage = TheHunter.instance.itemSettings.settingsMap["knife-damage"] as Double
 

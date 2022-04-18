@@ -55,6 +55,11 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("healer-message", "&7You have been healed with &6%heal%&7!")
         yml.addDefault("eye-spy-message", "&7You are now spying on &6%player%&7!")
         yml.addDefault("eye-spy-message-back", "&7You are now back in your view!")
+        yml.addDefault("jumpstick-broke", "&cYou can't use this item anymore!")
+        yml.addDefault("player-swapped", "&aYou swapped the place with &6%player%&7!")
+        yml.addDefault("tracker-distance", "&7The player &6%player%&7 is now &6%distance%&7 blocks away!")
+        yml.addDefault("food-recharge", "&7Your food has been recharged with &6%recharge%&7!")
+        yml.addDefault("energydrink-consumed", "&7You consumed an energy drink!")
         super.addData()
         loadMessagesToMap()
         return this

@@ -33,6 +33,7 @@ class Game(var gameName: String) {
     var mapResetter: MapResetter? = null
     var arenaCenter: Location? = null
     var scoreBoard: Scoreboard? = null
+    var gameItems: GameItems? = null
 
 
     val countdowns = mutableListOf<Countdown>()
@@ -42,6 +43,7 @@ class Game(var gameName: String) {
     val teams = mutableSetOf<Team>()
     val gameStates = mutableListOf<GameState>()
     val gameEntities = mutableSetOf<Entity>()
+
 
     var randomDrop = true
     var teamsAllowed = true
@@ -87,6 +89,7 @@ class Game(var gameName: String) {
         val ymlSettings = YamlConfiguration.loadConfiguration(fileSettings)
 
         ymlSettings.set("game-name", gameName)
+
         ymlSettings.set("random-drop", randomDrop)
         ymlSettings.set("max-players", maxPlayers)
         ymlSettings.set("min-players", minPlayers)
@@ -124,6 +127,7 @@ class Game(var gameName: String) {
             game.worldBoarderController!!.worldBoarderSize = ymlSettings.getInt("world-boarder-size")
             game.teamsAllowed = ymlSettings.getBoolean("teams-allowed")
             game.teamMaxSize = ymlSettings.getInt("team-max-size")
+
             game.arenaRadius = ymlSettings.getInt("arena-radius")
             game.worldBoarderController!!.shrinkSpeed = ymlSettings.getInt("worldboarder-shrinkspeed")
             game.worldBoarderController!!.minBorderSize = ymlSettings.getInt("worldboarder-min-border-size")
@@ -152,6 +156,10 @@ class Game(var gameName: String) {
         worldBoarderController = WorldboarderController(this)
         scoreBoard = Scoreboard(this)
         mapResetter = MapResetter(this)
+        gameItems = GameItems(this)
+        gameItems!!.saveAllItems()
+        gameItems!!.loadAllItems()
+        gameItems!!.loadAllGunSettings()
         GamesHandler.games.add(this)
     }
 

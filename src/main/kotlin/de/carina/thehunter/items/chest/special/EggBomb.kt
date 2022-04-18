@@ -8,7 +8,7 @@
  * requires the express written consent of Carina Sophie Schoppe.
  */
 
-package de.carina.thehunter.items.chest
+package de.carina.thehunter.items.chest.special
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
@@ -64,6 +64,8 @@ class EggBomb : Listener {
             return
 
 
+        if (GamesHandler.playerInGames[player]!!.gameItems!!.items["EggBomb"] == false)
+            return
 
 
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Runnable {

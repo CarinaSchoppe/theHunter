@@ -13,10 +13,10 @@ package de.carina.thehunter
 import de.carina.thehunter.commands.BaseCommand
 import de.carina.thehunter.events.misc.BlocksFlyEvent
 import de.carina.thehunter.events.misc.PlayerJoinsServer
-import de.carina.thehunter.items.chest.EggBomb
-import de.carina.thehunter.items.chest.EyeSpy
-import de.carina.thehunter.items.chest.Healer
-import de.carina.thehunter.items.chest.Knife
+import de.carina.thehunter.items.chest.special.EggBomb
+import de.carina.thehunter.items.chest.special.EyeSpy
+import de.carina.thehunter.items.chest.special.Healer
+import de.carina.thehunter.items.chest.special.Knife
 import de.carina.thehunter.util.files.ItemSettings
 
 import de.carina.thehunter.util.files.Messages
