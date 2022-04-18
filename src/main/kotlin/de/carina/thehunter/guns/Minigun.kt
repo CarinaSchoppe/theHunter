@@ -1,3 +1,13 @@
+/*
+ * Copyright Notice for theHunterRemaster
+ * Copyright (c) at Carina Sophie Schoppe 2022
+ * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "Minigun.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * at Carina Sophie Schoppe. All rights reserved
+ * Any type of duplication, distribution, rental, sale, award,
+ * Public accessibility or other use
+ * requires the express written consent of Carina Sophie Schoppe.
+ */
+
 package de.carina.thehunter.guns
 
 import de.carina.thehunter.TheHunter
@@ -47,14 +57,14 @@ class Minigun {
         return true
     }
 
-     fun checkAmmoPossible(player: Player): Boolean {
-         if (!hasAmmo(player, de.carina.thehunter.items.chest.ammo.Minigun.createMinigunAmmo())) {
-             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
-             return false
-         }
+    fun checkAmmoPossible(player: Player): Boolean {
+        if (!hasAmmo(player, de.carina.thehunter.items.chest.ammo.Minigun.createMinigunAmmo())) {
+            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
+            return false
+        }
 
-         return true
-     }
+        return true
+    }
 
     fun reloadGun(player: Player) {
         if (reloading[player] == true) {

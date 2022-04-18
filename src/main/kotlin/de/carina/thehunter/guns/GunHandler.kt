@@ -1,3 +1,13 @@
+/*
+ * Copyright Notice for theHunterRemaster
+ * Copyright (c) at Carina Sophie Schoppe 2022
+ * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "GunHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * at Carina Sophie Schoppe. All rights reserved
+ * Any type of duplication, distribution, rental, sale, award,
+ * Public accessibility or other use
+ * requires the express written consent of Carina Sophie Schoppe.
+ */
+
 package de.carina.thehunter.guns
 
 import de.carina.thehunter.TheHunter
@@ -19,13 +29,13 @@ class GunHandler : Listener {
             return
         if (!event.itemDrop.itemStack.hasItemMeta())
             return
-        if (event.itemDrop.itemStack!!.itemMeta == Ak.createAkGunItem().itemMeta ||
-            event.itemDrop.itemStack!!.itemMeta == Minigun.createMiniGunItem().itemMeta ||
-            event.itemDrop.itemStack!!.itemMeta == Sniper.createSniperGunItem().itemMeta ||
-            event.itemDrop.itemStack!!.itemMeta == Pistol.createPistolGunItem().itemMeta
+        if (event.itemDrop.itemStack.itemMeta == Ak.createAkGunItem().itemMeta ||
+            event.itemDrop.itemStack.itemMeta == Minigun.createMiniGunItem().itemMeta ||
+            event.itemDrop.itemStack.itemMeta == Sniper.createSniperGunItem().itemMeta ||
+            event.itemDrop.itemStack.itemMeta == Pistol.createPistolGunItem().itemMeta
         ) {
             event.isCancelled = true
-            event.player.sendMessage(TheHunter.instance.messages.messagesMap["cant-drop-item"]!!.replace("%item%", event.itemDrop.itemStack!!.type.toString()))
+            event.player.sendMessage(TheHunter.instance.messages.messagesMap["cant-drop-item"]!!.replace("%item%", event.itemDrop.itemStack.type.toString()))
             return
         }
     }

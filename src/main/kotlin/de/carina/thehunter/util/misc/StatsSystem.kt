@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 16.04.22, 12:24 by Carina The Latest changes made by Carina on 16.04.22, 12:24 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -65,7 +65,6 @@ class StatsSystem : BaseFile("stats.yml") {
         yml.set(player.uniqueId.toString() + ".Games", 0)
         playerStats[player.uniqueId] = StatsPlayer(0, 0, 0, 0.0, 0, 0, 0)
         super.addData()
-
     }
 
 

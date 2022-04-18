@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 16.04.22, 12:17 by Carina The Latest changes made by Carina on 16.04.22, 12:17 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:28 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -29,6 +29,7 @@ class Game(var name: String) {
 
 
     var lobbyLocation: Location? = null
+    var spectatorLocation: Location? = null
     var backLocation: Location? = null
     var endLocation: Location? = null
     var arenaCenter: Location? = null
@@ -65,7 +66,7 @@ class Game(var name: String) {
     var mapModify = false
 
     fun isGameValidConfigured(): Boolean {
-        if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null) return false
+        if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null || spectatorLocation == null) return false
         if (minPlayers > maxPlayers) return false
         if (maxPlayers == 0) return false
         if (worldBoarderController.worldBoarderSize < 50) return false
@@ -74,13 +75,6 @@ class Game(var name: String) {
         return true
     }
 
-    fun start() {
-        TODO("not implemented")
-    }
-
-    fun end() {
-        TODO("not implemented")
-    }
 
     fun nextGameState() {
         currentGameState.stop()
@@ -124,6 +118,7 @@ class Game(var name: String) {
 
         if (playerSpawns.isNotEmpty()) ymlLocations.addDefault("spawn-locations", playerSpawns)
         ymlLocations.addDefault("arena-center", arenaCenter)
+        ymlLocations.addDefault("spectator-location", spectatorLocation)
         ymlLocations.addDefault("lobby-location", lobbyLocation)
         ymlLocations.addDefault("back-location", backLocation)
         ymlLocations.addDefault("end-location", endLocation)
@@ -166,6 +161,7 @@ class Game(var name: String) {
             game.backLocation = ymlLocations.getLocation("back-location")!!
             game.endLocation = ymlLocations.getLocation("end-location")!!
             game.arenaCenter = ymlLocations.getLocation("arena-center")!!
+            game.spectatorLocation = ymlLocations.getLocation("spectator-location")!!
             game.create()
             game.currentGameState.start()
         }
