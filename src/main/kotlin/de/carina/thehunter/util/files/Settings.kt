@@ -29,8 +29,8 @@ class Settings(filePath: String) : BaseFile(filePath) {
         yml.addDefault("duration-idle", 10)
         yml.addDefault("server-name", "TheHunter")
         yml.addDefault("server-ip", "localhost")
-
-        super.addData()
+        yml.options().copyDefaults(true)
+        yml.save(file)
         fillSettingsMap()
         return this
     }

@@ -17,7 +17,7 @@ import java.io.File
 open class BaseFile(filePath: String) {
 
     val yml: YamlConfiguration
-    private val file: File
+    protected val file: File
 
     companion object {
         const val gameFolder = "/plugins/theHunterRemastered"
