@@ -50,7 +50,7 @@ class Game(var name: String) {
     val gameEntities = mutableSetOf<Entity>()
 
 
-    var randomDrop = true
+    var randomPlayerDrop = true
     var teamsAllowed = true
     var chestFall = true
     var chestAmount = 50
@@ -58,6 +58,8 @@ class Game(var name: String) {
     var maxPlayers: Int = 20
     var minPlayers: Int = 2
     var currentPlayers: Int = 0
+    var immunity = 10
+    var teamDamage = false
 
     fun isGameValidConfigured(): Boolean {
         if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null) return false
@@ -65,6 +67,7 @@ class Game(var name: String) {
         if (maxPlayers == 0) return false
         if (worldBoarderController.worldBoarderSize < 50) return false
         if (worldBoarderController.worldBoarderSize < worldBoarderController.minBorderSize) return false
+        if (playerSpawns.size - 1 < maxPlayers && !randomPlayerDrop) return false
         return true
     }
 
@@ -97,27 +100,34 @@ class Game(var name: String) {
         val fileSettings = File("${BaseFile.gameFolder}/arenas/$name/settings.yml")
         val ymlSettings = YamlConfiguration.loadConfiguration(fileSettings)
 
-        ymlSettings.set("game-name", name)
-        ymlSettings.set("chest-fall", chestFall)
-        ymlSettings.set("chest-amount", chestAmount)
-        ymlSettings.set("random-drop", randomDrop)
-        ymlSettings.set("max-players", maxPlayers)
-        ymlSettings.set("min-players", minPlayers)
-        ymlSettings.set("world-boarder-size", worldBoarderController.worldBoarderSize)
-        ymlSettings.set("teams-allowed", teamsAllowed)
-        ymlSettings.set("team-max-size", teamMaxSize)
-        ymlSettings.set("worldboarder-shrinkspeed", worldBoarderController.shrinkSpeed)
-        ymlSettings.set("worldboarder-min-border-size", worldBoarderController.minBorderSize)
-        ymlSettings.set("worldboarder-shrinkboarder", worldBoarderController.shrinkBoarder)
+        ymlSettings.addDefault("game-name", name)
+        ymlSettings.addDefault("chest-fall", chestFall)
+        ymlSettings.addDefault("chest-amount", chestAmount)
+        ymlSettings.addDefault("random-drop", randomPlayerDrop)
+        ymlSettings.addDefault("immunity", immunity)
+        ymlSettings.addDefault("max-players", maxPlayers)
+        ymlSettings.addDefault("min-players", minPlayers)
+        ymlSettings.addDefault("world-boarder-size", worldBoarderController.worldBoarderSize)
+        ymlSettings.addDefault("teams-allowed", teamsAllowed)
+        ymlSettings.addDefault("team-max-size", teamMaxSize)
+        ymlSettings.addDefault("team-damage", teamDamage)
+        ymlSettings.addDefault("worldboarder-shrinkspeed", worldBoarderController.shrinkSpeed)
+        ymlSettings.addDefault("worldboarder-min-border-size", worldBoarderController.minBorderSize)
+        ymlSettings.addDefault("worldboarder-shrinkboarder", worldBoarderController.shrinkBoarder)
 
         val fileLocations = File("${BaseFile.gameFolder}/arenas/$name/locations.yml")
         val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
 
-        if (playerSpawns.isNotEmpty()) ymlLocations.set("spawn-locations", playerSpawns)
-        ymlLocations.set("arena-center", arenaCenter)
-        ymlLocations.set("lobby-location", lobbyLocation)
-        ymlLocations.set("back-location", backLocation)
-        ymlLocations.set("end-location", endLocation)
+        if (playerSpawns.isNotEmpty()) ymlLocations.addDefault("spawn-locations", playerSpawns)
+        ymlLocations.addDefault("arena-center", arenaCenter)
+        ymlLocations.addDefault("lobby-location", lobbyLocation)
+        ymlLocations.addDefault("back-location", backLocation)
+        ymlLocations.addDefault("end-location", endLocation)
+
+        ymlSettings.options().copyDefaults(true)
+        ymlLocations.options().copyDefaults(true)
+        ymlLocations.save(fileLocations)
+        ymlSettings.save(fileSettings)
 
         return true
     }
@@ -131,11 +141,13 @@ class Game(var name: String) {
 
             game.chestFall = ymlSettings.getBoolean("chest-fall")
             game.chestAmount = ymlSettings.getInt("chest-amount")
-            game.randomDrop = ymlSettings.getBoolean("random-drop")
+            game.randomPlayerDrop = ymlSettings.getBoolean("random-drop")
             game.maxPlayers = ymlSettings.getInt("max-players")
             game.minPlayers = ymlSettings.getInt("min-players")
             game.teamsAllowed = ymlSettings.getBoolean("teams-allowed")
             game.teamMaxSize = ymlSettings.getInt("team-max-size")
+            game.immunity = ymlSettings.getInt("immunity")
+            game.teamDamage = ymlSettings.getBoolean("team-damage")
             game.worldBoarderController.worldBoarderSize = ymlSettings.getInt("world-boarder-size")
             game.worldBoarderController.shrinkSpeed = ymlSettings.getInt("worldboarder-shrinkspeed")
             game.worldBoarderController.minBorderSize = ymlSettings.getInt("worldboarder-min-border-size")

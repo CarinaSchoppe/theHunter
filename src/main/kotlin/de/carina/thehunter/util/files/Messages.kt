@@ -65,6 +65,7 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("gun-reloading", "&7You are reloading your gun!")
         yml.addDefault("gun-out-of-ammo", "&cYou don't have any ammo left for that gun!")
         yml.addDefault("cant-drop-item", "&cYou can't drop &6%item%&7!")
+        yml.addDefault("cant-team-damage", "&cYou can't damage your team members!")
         super.addData()
         loadMessagesToMap()
         return this

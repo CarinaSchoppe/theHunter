@@ -12,6 +12,7 @@ package de.carina.thehunter
 
 import de.carina.thehunter.commands.BaseCommand
 import de.carina.thehunter.events.game.ChestHandler
+import de.carina.thehunter.events.game.TeamDamage
 import de.carina.thehunter.events.misc.BlocksFlyEvent
 import de.carina.thehunter.events.misc.PlayerJoinsServer
 import de.carina.thehunter.guns.GunHandler
@@ -57,7 +58,6 @@ class TheHunter : JavaPlugin() {
     TODO: TeamMode
     TODO: AutoUpdater
     TODO: Map Reset
-    TODO: CleanUp
     TODO: Utility classes
     TODO: PlayerDropping
      */
@@ -116,6 +116,8 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(ChestHandler(), this)
         pluginManager.registerEvents(Ammo(), this)
         pluginManager.registerEvents(GunHandler(), this)
+        pluginManager.registerEvents(TeamDamage(), this)
+
 
     }
 

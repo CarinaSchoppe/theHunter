@@ -3,6 +3,7 @@ package de.carina.thehunter.items.chest.special
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.Util
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -102,9 +103,8 @@ class ItemChest(private val game: Game) {
         if (!game.chestFall)
             return
         repeat(game.chestAmount) {
-            //create a random x and y coordinate based on the game radius
-            val x = Random().nextInt(game.worldBoarderController.worldBoarderSize * 2) - game.worldBoarderController.worldBoarderSize
-            val y = Random().nextInt(game.worldBoarderController.worldBoarderSize * 2) - game.worldBoarderController.worldBoarderSize
+            val x = Util.getRandomXYValueFromWorldBoarder(game)
+            val y = Util.getRandomXYValueFromWorldBoarder(game)
             val location = game.arenaCenter!!.clone().add(x as Double, y as Double, 255.0)
             val block = location.world.spawnFallingBlock(location, Material.BEACON.createBlockData())
             game.gameEntities.add(block)
