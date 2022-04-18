@@ -47,17 +47,17 @@ class Minigun {
         return true
     }
 
-    protected fun checkAmmoPossible(player: Player): Boolean {
-        if (!hasAmmo(player, de.carina.thehunter.items.chest.ammo.Minigun.createMinigunAmmo())) {
-            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
-            return false
-        }
+     fun checkAmmoPossible(player: Player): Boolean {
+         if (!hasAmmo(player, de.carina.thehunter.items.chest.ammo.Minigun.createMinigunAmmo())) {
+             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
+             return false
+         }
 
-        return true
-    }
+         return true
+     }
 
     fun reloadGun(player: Player) {
-        if (reloading[player] != false) {
+        if (reloading[player] == true) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
             return
         }

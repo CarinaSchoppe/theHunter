@@ -47,17 +47,16 @@ class Ak {
         return true
     }
 
-    protected fun checkAmmoPossible(player: Player): Boolean {
+    fun checkAmmoPossible(player: Player): Boolean {
         if (!hasAmmo(player, de.carina.thehunter.items.chest.ammo.Ak.createAKAmmo())) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
             return false
         }
-
         return true
     }
 
     fun reloadGun(player: Player) {
-        if (reloading[player] != false) {
+        if (reloading[player] == true) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
             return
         }
@@ -73,7 +72,6 @@ class Ak {
             val amount = getAmmoAmount(player, de.carina.thehunter.items.chest.ammo.Ak.createAKAmmo())
             if (amount < GamesHandler.playerInGames[player]!!.gameItems.guns["ak-magazine"]!!) magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!
             else magazine[player] = amount
-
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloaded"]!!)
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["ak-reload"]!!)
     }

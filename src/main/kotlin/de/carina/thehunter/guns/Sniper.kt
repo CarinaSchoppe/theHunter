@@ -62,7 +62,7 @@ class Sniper {
     }
 
     fun reloadGun(player: Player) {
-        if (reloading[player] != false) {
+        if (reloading[player] == true) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
             return
         }
