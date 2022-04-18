@@ -53,7 +53,6 @@ class Game(var gameName: String) {
     var chestFall = true
     var chestAmount = 50
     var teamMaxSize = 4
-    var arenaRadius = 1000
     var maxPlayers: Int = 20
     var minPlayers: Int = 2
     var currentPlayers: Int = 0
@@ -61,6 +60,9 @@ class Game(var gameName: String) {
 
     fun isGameValidConfigured(): Boolean {
         if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null) return false
+        if (minPlayers > maxPlayers) return false
+        if (maxPlayers == 0) return false
+        if (worldBoarderController.worldBoarderSize < 50) return false
         return true
     }
 
@@ -103,7 +105,6 @@ class Game(var gameName: String) {
         ymlSettings.set("teams-allowed", teamsAllowed)
         ymlSettings.set("team-max-size", teamMaxSize)
         ymlSettings.set("worldboarder-shrinkspeed", worldBoarderController.shrinkSpeed)
-        ymlSettings.set("arena-radius", arenaRadius)
         ymlSettings.set("worldboarder-min-border-size", worldBoarderController.minBorderSize)
         ymlSettings.set("worldboarder-shrinkboarder", worldBoarderController.shrinkBoarder)
 
@@ -131,11 +132,9 @@ class Game(var gameName: String) {
             game.randomDrop = ymlSettings.getBoolean("random-drop")
             game.maxPlayers = ymlSettings.getInt("max-players")
             game.minPlayers = ymlSettings.getInt("min-players")
-            game.worldBoarderController.worldBoarderSize = ymlSettings.getInt("world-boarder-size")
             game.teamsAllowed = ymlSettings.getBoolean("teams-allowed")
             game.teamMaxSize = ymlSettings.getInt("team-max-size")
-
-            game.arenaRadius = ymlSettings.getInt("arena-radius")
+            game.worldBoarderController.worldBoarderSize = ymlSettings.getInt("world-boarder-size")
             game.worldBoarderController.shrinkSpeed = ymlSettings.getInt("worldboarder-shrinkspeed")
             game.worldBoarderController.minBorderSize = ymlSettings.getInt("worldboarder-min-border-size")
             game.worldBoarderController.shrinkBoarder = ymlSettings.getBoolean("worldboarder-shrinkboarder")

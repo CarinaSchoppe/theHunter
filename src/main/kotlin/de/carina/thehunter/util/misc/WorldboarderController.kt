@@ -20,7 +20,7 @@ class WorldboarderController(private val game: Game) {
     var shrinkSpeed = 10
     private val worldBoarder = game.arenaCenter!!.world.worldBorder
     var minBorderSize = 100
-    var worldBoarderSize = 50000
+    var worldBoarderSize = 5000
     var shrinkBoarder = true
     lateinit var task: BukkitTask
     fun shrinkWorld() {
@@ -38,7 +38,7 @@ class WorldboarderController(private val game: Game) {
 
     fun resetWorldBoarder() {
         worldBoarder.center = game.arenaCenter!!
-        worldBoarder.size = game.arenaRadius.toDouble()
+        worldBoarder.size = worldBoarderSize.toDouble()
     }
 
 

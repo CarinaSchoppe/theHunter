@@ -81,8 +81,8 @@ class ItemChest(private val game: Game) {
             return
         repeat(game.chestAmount) {
             //create a random x and y coordinate based on the game radius
-            val x = Random().nextInt(game.arenaRadius * 2) - game.arenaRadius
-            val y = Random().nextInt(game.arenaRadius * 2) - game.arenaRadius
+            val x = Random().nextInt(game.worldBoarderController.worldBoarderSize * 2) - game.worldBoarderController.worldBoarderSize
+            val y = Random().nextInt(game.worldBoarderController.worldBoarderSize * 2) - game.worldBoarderController.worldBoarderSize
             val location = game.arenaCenter!!.clone().add(x as Double, y as Double, 255.0)
             val block = location.world.spawnFallingBlock(location, Material.BEACON.createBlockData())
             game.gameEntities.add(block)
