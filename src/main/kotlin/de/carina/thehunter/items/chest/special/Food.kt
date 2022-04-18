@@ -15,8 +15,10 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
 class Food : Listener {
-    fun createFoodItem(): ItemStack {
-        return ItemBuilder(Material.BEETROOT_SOUP).addDisplayName(TheHunter.PREFIX + "§6Food").addLore("§7Click to regenerate food!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+    companion object {
+        fun createFoodItem(): ItemStack {
+            return ItemBuilder(Material.BEETROOT_SOUP).addDisplayName(TheHunter.PREFIX + "§6Food").addLore("§7Click to regenerate food!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+        }
     }
 
     @EventHandler

@@ -15,8 +15,11 @@ import org.bukkit.potion.PotionEffectType
 
 class EnergyDrink : Listener {
 
-    fun createEnergyDrinkItem(): ItemStack {
-        return ItemBuilder(Material.POTION).addDisplayName(TheHunter.PREFIX + "§6Energy-Drink").addLore("§7Energie- gives you some effects on right-clicking").addEnchantment(Enchantment.DURABILITY, 1).build()
+    companion object {
+        fun createEnergyDrinkItem(): ItemStack {
+            return ItemBuilder(Material.POTION).addDisplayName(TheHunter.PREFIX + "§6Energy-Drink").addLore("§7Energie- gives you some effects on right-clicking").addEnchantment(Enchantment.DURABILITY, 1).build()
+        }
+
     }
 
     @EventHandler

@@ -12,6 +12,7 @@ package de.carina.thehunter.util.game
 
 import de.carina.thehunter.countdowns.*
 import de.carina.thehunter.gamestates.*
+import de.carina.thehunter.items.chest.special.ItemChest
 import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.misc.MapResetter
 import de.carina.thehunter.util.misc.WorldboarderController
@@ -24,16 +25,18 @@ import java.io.File
 class Game(var gameName: String) {
 
 
-    var currentGameState: GameState? = null
-    var currentCountdown: Countdown? = null
     var lobbyLocation: Location? = null
     var backLocation: Location? = null
     var endLocation: Location? = null
-    var worldBoarderController: WorldboarderController? = null
-    var mapResetter: MapResetter? = null
     var arenaCenter: Location? = null
-    var scoreBoard: Scoreboard? = null
-    var gameItems: GameItems? = null
+
+    lateinit var currentGameState: GameState
+    lateinit var currentCountdown: Countdown
+    lateinit var worldBoarderController: WorldboarderController
+    lateinit var mapResetter: MapResetter
+    lateinit var scoreBoard: Scoreboard
+    lateinit var gameItems: GameItems
+    lateinit var gameChest: ItemChest
 
 
     val countdowns = mutableListOf<Countdown>()
@@ -47,6 +50,8 @@ class Game(var gameName: String) {
 
     var randomDrop = true
     var teamsAllowed = true
+    var chestFall = true
+    var chestAmount = 50
     var teamMaxSize = 4
     var arenaRadius = 1000
     var maxPlayers: Int = 20
@@ -89,7 +94,8 @@ class Game(var gameName: String) {
         val ymlSettings = YamlConfiguration.loadConfiguration(fileSettings)
 
         ymlSettings.set("game-name", gameName)
-
+        ymlSettings.set("chest-fall", chestFall)
+        ymlSettings.set("chest-amount", chestAmount)
         ymlSettings.set("random-drop", randomDrop)
         ymlSettings.set("max-players", maxPlayers)
         ymlSettings.set("min-players", minPlayers)
@@ -121,6 +127,8 @@ class Game(var gameName: String) {
 
             val game = Game(ymlSettings.getString("game-name")!!)
 
+            game.chestFall = ymlSettings.getBoolean("chest-fall")
+            game.chestAmount = ymlSettings.getInt("chest-amount")
             game.randomDrop = ymlSettings.getBoolean("random-drop")
             game.maxPlayers = ymlSettings.getInt("max-players")
             game.minPlayers = ymlSettings.getInt("min-players")
@@ -157,6 +165,7 @@ class Game(var gameName: String) {
         scoreBoard = Scoreboard(this)
         mapResetter = MapResetter(this)
         gameItems = GameItems(this)
+        gameChest = ItemChest(this)
         gameItems!!.saveAllItems()
         gameItems!!.loadAllItems()
         gameItems!!.loadAllGunSettings()

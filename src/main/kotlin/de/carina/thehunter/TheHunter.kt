@@ -18,6 +18,7 @@ import de.carina.thehunter.util.files.ItemSettings
 
 import de.carina.thehunter.util.files.Messages
 import de.carina.thehunter.util.files.Settings
+import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.StatsSystem
 import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginManager
@@ -85,7 +86,14 @@ class TheHunter : JavaPlugin() {
 
     override fun onDisable() {
         StatsSystem.saveAllStatsPlayerToFiles()
+        resetAllGames()
         messages.sendMessageToConsole("shutdown-message-successfully")
+    }
+
+    private fun resetAllGames() {
+        for (game in GamesHandler.games) {
+            game.mapResetter.resetMap()
+        }
     }
 
     private fun initialize(pluginManager: PluginManager) {

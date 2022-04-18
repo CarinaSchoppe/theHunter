@@ -26,6 +26,7 @@ class GameItems(game: Game) {
     }
 
     fun saveAllItems() {
+        ymlItems.addDefault("item-amounts", 10)
         ymlItems.addDefault("EyeSpy", true)
         ymlItems.addDefault("eyespy-amount", 2)
         ymlItems.addDefault("Healer", true)

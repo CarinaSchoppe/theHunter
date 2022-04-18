@@ -43,6 +43,9 @@ class MapResetter(val game: Game) {
 
     fun resetMap() {
         blocks.reverse()
+        game.gameEntities.forEach {
+            it.remove()
+        }
         blocks.forEach {
             setBlockFromBlockString(it)
         }

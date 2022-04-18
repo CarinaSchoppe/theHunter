@@ -12,8 +12,11 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
 class Tracker : Listener {
-    fun createTrackerItem(): ItemStack {
-        return ItemBuilder(Material.COMPASS).addDisplayName(TheHunter.PREFIX + "§6Tracker").addLore("§7Click to track a player!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+    companion object {
+
+        fun createTrackerItem(): ItemStack {
+            return ItemBuilder(Material.COMPASS).addDisplayName(TheHunter.PREFIX + "§6Tracker").addLore("§7Click to track a player!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+        }
     }
 
     @EventHandler

@@ -10,6 +10,8 @@ object ItemHandler {
     fun shouldInteractWithItem(event: PlayerInteractEvent, item: ItemStack, itemString: String): Boolean {
         if (event.item == null)
             return false
+        if (!event.player.hasPermission("theHunter.$itemString"))
+            return false
         if (!event.item!!.hasItemMeta()) return false
         if (event.item!!.itemMeta != item.itemMeta)
             return false

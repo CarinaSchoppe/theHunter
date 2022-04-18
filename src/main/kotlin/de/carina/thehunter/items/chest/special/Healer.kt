@@ -11,9 +11,10 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
 class Healer : Listener {
-
-    fun createHealerItem(): ItemStack {
-        return ItemBuilder(Material.RED_DYE).addDisplayName(TheHunter.PREFIX + "§7Healer").addLore("§7Heals you!").addLore("§7Right-click to activate").build()
+    companion object {
+        fun createHealerItem(): ItemStack {
+            return ItemBuilder(Material.RED_DYE).addDisplayName(TheHunter.PREFIX + "§7Healer").addLore("§7Heals you!").addLore("§7Right-click to activate").build()
+        }
     }
 
     @EventHandler

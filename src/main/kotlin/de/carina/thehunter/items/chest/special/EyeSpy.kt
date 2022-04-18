@@ -22,12 +22,11 @@ class EyeSpy : Listener {
         val inEyeSpy = mutableSetOf<Player>()
         val lastPlayerLocation = mutableMapOf<Player, Location>()
         private val mapPlayerTime = mutableMapOf<Player, Int>()
+        fun createEyeSpyItem(): ItemStack {
+            return ItemBuilder(Material.ENDER_EYE).addDisplayName(TheHunter.PREFIX + "§aEye Spy").addLore("§7This Article will let you see the other player for 10 sec").addLore("§7Right-click to activate").build()
+        }
     }
 
-
-    fun createEyeSpyItem(): ItemStack {
-        return ItemBuilder(Material.ENDER_EYE).addDisplayName(TheHunter.PREFIX + "§aEye Spy").addLore("§7This Article will let you see the other player for 10 sec").addLore("§7Right-click to activate").build()
-    }
 
     @EventHandler
     fun onEyeSpyUse(event: PlayerInteractEvent) {

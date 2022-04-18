@@ -16,12 +16,11 @@ class JumpStick : Listener {
 
     companion object {
         val uses = mutableMapOf<Player, Int>()
-
+        fun createJumpStick(): ItemStack {
+            return ItemBuilder(Material.STICK).addDisplayName(TheHunter.PREFIX + "§6JumpStick").addLore("§aClick to jump into an direction with power").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+        }
     }
 
-    fun createJumpStick(): ItemStack {
-        return ItemBuilder(Material.STICK).addDisplayName(TheHunter.PREFIX + "§6JumpStick").addLore("§aClick to jump into an direction with power").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
-    }
 
     @EventHandler
     fun onJumpStickUse(event: PlayerInteractEvent) {

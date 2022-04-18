@@ -13,13 +13,14 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.inventory.ItemStack
 
 class Knife : Listener {
-
+companion object {
     fun createKnifeItem(): ItemStack {
         return ItemBuilder(Material.IRON_SWORD)
             .addDisplayName(TheHunter.PREFIX + "§eKnife")
             .addLore(listOf("§Knife to kill", "§eLeft-Click to use")).addEnchantment(Enchantment.DURABILITY, 1)
             .build()
     }
+}
 
     @EventHandler
     fun onKnifeUse(event: EntityDamageByEntityEvent) {

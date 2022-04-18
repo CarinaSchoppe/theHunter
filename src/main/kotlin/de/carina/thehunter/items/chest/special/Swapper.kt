@@ -12,8 +12,11 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
 class Swapper : Listener {
-    fun createSwapperItem(): ItemStack {
-        return ItemBuilder(Material.TNT).addDisplayName(TheHunter.PREFIX + "§6Swapper").addLore("§7Click to swap with a player!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+    companion object {
+
+        fun createSwapperItem(): ItemStack {
+            return ItemBuilder(Material.TNT).addDisplayName(TheHunter.PREFIX + "§6Swapper").addLore("§7Click to swap with a player!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+        }
     }
 
     @EventHandler

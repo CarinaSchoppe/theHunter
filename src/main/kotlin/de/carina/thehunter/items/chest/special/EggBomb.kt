@@ -29,15 +29,15 @@ class EggBomb : Listener {
 
     companion object {
         val bombs = mutableSetOf<TNTPrimed>()
+        fun createEggBomb(): ItemStack {
+            return ItemBuilder(Material.EGG).addDisplayName(TheHunter.PREFIX + "§eEggBomb").addAmount(Random().nextInt(1, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-amount"] as Int) + 1)).addEnchantment(Enchantment.DURABILITY, 1).addLore(
+                listOf(
+                    TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace("%power%", TheHunter.instance.itemSettings.settingsMap["egg-bomb-radius"].toString())
+                )
+            ).build()
+        }
     }
 
-    fun createEggBomb(): ItemStack {
-        return ItemBuilder(Material.EGG).addDisplayName(TheHunter.PREFIX + "§eEggBomb").addAmount(Random().nextInt(1, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-amount"] as Int) + 1)).addEnchantment(Enchantment.DURABILITY, 1).addLore(
-            listOf(
-                TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace("%power%", TheHunter.instance.itemSettings.settingsMap["egg-bomb-radius"].toString())
-            )
-        ).build()
-    }
 
     @EventHandler
     fun onEggBomb(event: ProjectileHitEvent) {
@@ -50,20 +50,16 @@ class EggBomb : Listener {
         //Check if the egg is the same egg as an EggBomb item
         if (!player.hasPermission("theHunter.eggbomb"))
             return
-
         if (!GamesHandler.playerInGames.containsKey(player))
             return
 
         val game = GamesHandler.playerInGames[player]!!
         if (game.currentGameState !is IngameState)
             return
-
         if (!egg.item.hasItemMeta())
             return
         if (egg.item.itemMeta != createEggBomb().itemMeta)
             return
-
-
         if (GamesHandler.playerInGames[player]!!.gameItems!!.items["EggBomb"] == false)
             return
 
