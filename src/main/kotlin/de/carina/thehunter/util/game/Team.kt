@@ -90,6 +90,16 @@ class Team(var teamLeader: Player) {
     }
 
     companion object {
+
+        fun isTeamMember(player: Player, other: Player): Boolean {
+            if (GamesHandler.playerInGames.containsKey(player)) {
+                if (GamesHandler.playerInGames[player]!!.teams.any { it.teamMembers.contains(other) }) {
+                    return true
+                }
+            }
+            return false
+        }
+
         fun removePlayerFromTeam(player: Player) {
             val team = GamesHandler.playerInGames[player]!!.teams.find { it.teamMembers.contains(player) }
             team?.teamMembers?.remove(player)

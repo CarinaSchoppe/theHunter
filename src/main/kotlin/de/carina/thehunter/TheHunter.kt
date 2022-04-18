@@ -16,10 +16,10 @@ import de.carina.thehunter.events.misc.BlocksFlyEvent
 import de.carina.thehunter.events.misc.PlayerJoinsServer
 import de.carina.thehunter.items.chest.special.*
 import de.carina.thehunter.util.files.ItemSettings
-
 import de.carina.thehunter.util.files.Messages
 import de.carina.thehunter.util.files.Settings
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.Ammo
 import de.carina.thehunter.util.misc.StatsSystem
 import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginManager
@@ -113,6 +113,8 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(EnergyDrink(), this)
         pluginManager.registerEvents(JumpStick(), this)
         pluginManager.registerEvents(ChestHandler(), this)
+        pluginManager.registerEvents(Ammo(), this)
+
     }
 
 

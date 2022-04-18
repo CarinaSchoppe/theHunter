@@ -62,6 +62,28 @@ class ItemChest(private val game: Game) {
             item.amount = game.gameItems.items["tracker-amount"] as Int
             items.add(item)
         }
+        if (game.gameItems.items["PistolAmmo"] == true) {
+            val item = Tracker.createTrackerItem()
+            item.amount = game.gameItems.items["pistolammo-amount"] as Int
+            items.add(item)
+        }
+        if (game.gameItems.items["SniperAmmo"] == true) {
+            val item = Tracker.createTrackerItem()
+            item.amount = game.gameItems.items["sniperammo-amount"] as Int
+            items.add(item)
+        }
+        if (game.gameItems.items["AkAmmo"] == true) {
+            val item = Tracker.createTrackerItem()
+            item.amount = game.gameItems.items["akammo-amount"] as Int
+            items.add(item)
+        }
+        if (game.gameItems.items["MiniGunAmmo"] == true) {
+            val item = Tracker.createTrackerItem()
+            item.amount = game.gameItems.items["minigunammo-amount"] as Int
+            items.add(item)
+        }
+
+
 
         repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
             val item = items[Random().nextInt(items.size)]
