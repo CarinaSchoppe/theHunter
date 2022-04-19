@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:09 by Carina The Latest changes made by Carina on 19.04.22, 13:09 All contents of "TeamCommands.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:22 by Carina The Latest changes made by Carina on 19.04.22, 13:22 All contents of "TeamCommands.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -23,8 +23,10 @@ class TeamCommands {
         if (!CommandUtil.checkCommandBasics(sender, command, args, "team", 1, "theHunter.team"))
             return
 
-        if (!GamesHandler.playerInGames.containsKey(sender as Player))
+        if (!GamesHandler.playerInGames.containsKey(sender as Player)) {
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["player-own-not-in-game"]!!)
             return
+        }
         if (args[0].lowercase() == "leave") {
             Team.removePlayerFromTeam(sender, sender)
         } else if (args[0].lowercase() == "invite") {

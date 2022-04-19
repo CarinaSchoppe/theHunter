@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:20 by Carina The Latest changes made by Carina on 19.04.22, 13:20 All contents of "Team.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:22 by Carina The Latest changes made by Carina on 19.04.22, 13:22 All contents of "Team.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -96,14 +96,6 @@ class Team(var teamLeader: Player) {
         }
 
         fun removePlayerFromTeam(player: Player, leader: Player) {
-            if (!GamesHandler.playerInGames.containsKey(leader)) {
-                leader.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace("%player%", leader.name))
-                return
-            }
-            if (!GamesHandler.playerInGames.containsKey(player)) {
-                leader.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace("%player%", player.name))
-                return
-            }
             val team = GamesHandler.playerInGames[player]!!.teams.find { it.teamMembers.contains(player) }
             if (leader == player) {
                 if (team == null) {
@@ -131,15 +123,6 @@ class Team(var teamLeader: Player) {
         }
 
         fun invitePlayerToTeam(playerToInvite: Player, sender: Player) {
-            if (!GamesHandler.playerInGames.containsKey(sender)) {
-                sender.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace("%player%", sender.name))
-                return
-            }
-            if (!GamesHandler.playerInGames.containsKey(playerToInvite)) {
-                sender.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace("%player%", playerToInvite.name))
-                return
-            }
-
             val team = GamesHandler.playerInGames[sender]!!.teams.find { it.teamMembers.contains(sender) }
             if (team != null) {
                 team.inviteTeamMember(playerToInvite, sender)
@@ -150,14 +133,6 @@ class Team(var teamLeader: Player) {
         }
 
         fun promoteNewTeamLeader(player: Player, sender: Player) {
-            if (!GamesHandler.playerInGames.containsKey(sender)) {
-                sender.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace("%player%", sender.name))
-                return
-            }
-            if (!GamesHandler.playerInGames.containsKey(player)) {
-                sender.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace("%player%", player.name))
-                return
-            }
             val team = GamesHandler.playerInGames[sender]!!.teams.find { it.teamMembers.contains(sender) }
             if (team != null) {
                 team.promoteTeamLeader(player, sender)
