@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "PlayerJoinsServer.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 11:02 by Carina The Latest changes made by Carina on 19.04.22, 11:02 All contents of "PlayerJoinsServer.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -11,6 +11,7 @@
 package de.carina.thehunter.events.misc
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -20,6 +21,14 @@ class PlayerJoinsServer : Listener {
     @EventHandler
     fun onPlayerJoinServer(event: PlayerJoinEvent) {
         TheHunter.instance.statsSystem.generateNewStatsPlayer(event.player)
+        GamesHandler.playerInGames.keys.forEach {
+            it.hidePlayer(TheHunter.instance, event.player)
+            event.player.hidePlayer(TheHunter.instance, it)
+        }
+        GamesHandler.spectatorInGames.keys.forEach {
+            it.hidePlayer(TheHunter.instance, event.player)
+            event.player.hidePlayer(TheHunter.instance, it)
+        }
 
     }
 }
