@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 11:14 by Carina The Latest changes made by Carina on 19.04.22, 11:14 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 11:17 by Carina The Latest changes made by Carina on 19.04.22, 11:17 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -24,8 +24,6 @@ import java.util.function.Consumer
 
 class IngameState(game: Game) : GameState(game) {
     override fun start() {
-
-
         if (game.randomPlayerDrop) PlayerDropping.dropPlayers(game)
         else {
             for ((index, player) in game.players.withIndex()) {
@@ -35,16 +33,18 @@ class IngameState(game: Game) : GameState(game) {
                 player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX), LegacyComponentSerializer.legacySection().deserialize("§Lets Play!")))
                 player.teleport(game.playerSpawns[index])
                 //Create a for each loop with game.spectators with the Consumer spectator
+                Bukkit.getOnlinePlayers().forEach {
+                    player.hidePlayer(TheHunter.instance, it)
+                    it.hidePlayer(TheHunter.instance, player)
+                }
+                game.players.forEach {
+                    it.showPlayer(TheHunter.instance, player)
+                }
                 game.spectators.forEach(Consumer { spectator ->
-                    player.hidePlayer(TheHunter.instance, spectator)
+                    spectator.showPlayer(TheHunter.instance, player)
                 })
             }
 
-            game.spectators.forEach(Consumer { spectator ->
-                game.spectators.forEach(Consumer { player ->
-                    player.hidePlayer(TheHunter.instance, spectator)
-                })
-            })
         }
 
         givePlayerStartItems()
