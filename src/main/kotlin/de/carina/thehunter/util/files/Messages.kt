@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:39 by Carina The Latest changes made by Carina on 19.04.22, 18:39 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:35 by Carina The Latest changes made by Carina on 19.04.22, 21:35 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -104,6 +104,9 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("player-own-not-in-game", "&cYou are not in a game!")
         yml.addDefault("loaded-game-successfully", "&aThe game &6%game% &ahas been loaded!")
         yml.addDefault("no-lobby-damage", "&cYou can't damage the lobby!")
+        yml.addDefault("autoupdate", "&cThe Plugin has a &6new Version&c!")
+        yml.addDefault("update-true", "&aThe Plugin is upto Date!")
+        yml.addDefault("update-error", "&cCant check for Updates!")
         super.addData()
         loadMessagesToMap()
         return this
@@ -113,7 +116,7 @@ class Messages(filePath: String) : BaseFile(filePath) {
         for (key in yml.getKeys(false)) {
             messagesMap[key] = getMessageWithPrefix(key)
         }
-        Bukkit.getConsoleSender().sendMessage(LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX + "§aMessages loaded"))
+        Bukkit.getConsoleSender().sendMessage(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§aMessages loaded"))
     }
 
     fun sendMessageToPlayer(player: Player, messagePath: String) {
@@ -126,7 +129,7 @@ class Messages(filePath: String) : BaseFile(filePath) {
 
 
     private fun getMessageWithPrefix(path: String): String {
-        return TheHunter.PREFIX + getColorCodedString(path)
+        return TheHunter.prefix + getColorCodedString(path)
 
     }
 

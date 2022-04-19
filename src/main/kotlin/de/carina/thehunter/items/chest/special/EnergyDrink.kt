@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:15 by Carina The Latest changes made by Carina on 19.04.22, 19:15 All contents of "EnergyDrink.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "EnergyDrink.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -27,7 +27,7 @@ class EnergyDrink : Listener {
 
     companion object {
         fun createEnergyDrinkItem(): ItemStack {
-            return ItemBuilder(Material.POTION).addDisplayName(TheHunter.PREFIX + "§6Energy-Drink").addLore("§7Energie- gives you some effects on right-clicking").addEnchantment(Enchantment.DURABILITY, 1).build()
+            return ItemBuilder(Material.POTION).addDisplayName(TheHunter.prefix + "§6Energy-Drink").addLore("§7Energie- gives you some effects on right-clicking").addEnchantment(Enchantment.DURABILITY, 1).build()
         }
 
     }

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:15 by Carina The Latest changes made by Carina on 19.04.22, 19:15 All contents of "Healer.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "Healer.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack
 class Healer : Listener {
     companion object {
         fun createHealerItem(): ItemStack {
-            return ItemBuilder(Material.RED_DYE).addDisplayName(TheHunter.PREFIX + "§7Healer").addLore("§7Heals you!").addLore("§7Right-click to activate").build()
+            return ItemBuilder(Material.RED_DYE).addDisplayName(TheHunter.prefix + "§7Healer").addLore("§7Heals you!").addLore("§7Right-click to activate").build()
         }
     }
 

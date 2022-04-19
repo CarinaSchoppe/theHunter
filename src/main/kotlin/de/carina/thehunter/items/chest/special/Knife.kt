@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:57 by Carina The Latest changes made by Carina on 19.04.22, 18:57 All contents of "Knife.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "Knife.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -26,7 +26,7 @@ class Knife : Listener {
 companion object {
     fun createKnifeItem(): ItemStack {
         return ItemBuilder(Material.IRON_SWORD)
-            .addDisplayName(TheHunter.PREFIX + "§eKnife")
+            .addDisplayName(TheHunter.prefix + "§eKnife")
             .addLore(listOf("§6Knife to kill", "§eLeft-Click to use")).addEnchantment(Enchantment.DURABILITY, 1)
             .build()
     }

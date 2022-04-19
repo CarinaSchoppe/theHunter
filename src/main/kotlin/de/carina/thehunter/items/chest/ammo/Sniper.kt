@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "Sniper.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "Sniper.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -20,7 +20,7 @@ class Sniper {
 
     companion object {
         fun createSniperAmmo(): ItemStack {
-            return ItemBuilder(Material.ENDER_PEARL).addDisplayName(TheHunter.PREFIX + "§6Sniper-Ammo").addLore("§7Is used to shoot with the Sniper").addEnchantment(Enchantment.DURABILITY, 1).build()
+            return ItemBuilder(Material.ENDER_PEARL).addDisplayName(TheHunter.prefix + "§6Sniper-Ammo").addLore("§7Is used to shoot with the Sniper").addEnchantment(Enchantment.DURABILITY, 1).build()
         }
     }
 

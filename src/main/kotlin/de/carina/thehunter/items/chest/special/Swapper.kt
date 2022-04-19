@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:43 by Carina The Latest changes made by Carina on 19.04.22, 19:43 All contents of "Swapper.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "Swapper.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -25,7 +25,7 @@ class Swapper : Listener {
     companion object {
 
         fun createSwapperItem(): ItemStack {
-            return ItemBuilder(Material.TNT).addDisplayName(TheHunter.PREFIX + "§6Swapper").addLore("§7Click to swap with a player!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+            return ItemBuilder(Material.TNT).addDisplayName(TheHunter.prefix + "§6Swapper").addLore("§7Click to swap with a player!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
         }
     }
 

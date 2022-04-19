@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 20:04 by Carina The Latest changes made by Carina on 19.04.22, 20:04 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -28,7 +28,7 @@ object Ak {
     var magazine = mutableMapOf<Player, Int>()
 
     fun createAkGunItem(): ItemStack {
-        return ItemBuilder(Material.IRON_HOE).addDisplayName(TheHunter.PREFIX + "§7AK-47").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
+        return ItemBuilder(Material.IRON_HOE).addDisplayName(TheHunter.prefix + "§7AK-47").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
     }
 
 

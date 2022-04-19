@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 21:28 by Carina The Latest changes made by Carina on 19.04.22, 21:28 All contents of "ItemChest.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "ItemChest.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -31,7 +31,7 @@ class ItemChest(private val game: Game) {
 
     val chests = mutableMapOf<Location, Inventory>()
     fun createItemInventory(): Inventory {
-        val inventory = Bukkit.createInventory(null, 54, LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX + "§7Chest"))
+        val inventory = Bukkit.createInventory(null, 54, LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§7Chest"))
         val items = mutableListOf<ItemStack>()
         val ammo = mutableListOf<ItemStack>()
         if (game.gameItems.items["EggBomb"] == true) {

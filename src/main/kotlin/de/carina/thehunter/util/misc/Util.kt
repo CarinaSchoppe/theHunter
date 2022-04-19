@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:46 by Carina The Latest changes made by Carina on 19.04.22, 19:46 All contents of "Util.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "Util.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -25,7 +25,7 @@ object Util {
 
     fun updateGameSigns(game: Game) {
         for (sign in game.signs) {
-            sign.line(0, LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX))
+            sign.line(0, LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix))
             sign.line(1, LegacyComponentSerializer.legacySection().deserialize(game.name))
             if (game.currentGameState is LobbyState) {
                 sign.line(3, LegacyComponentSerializer.legacySection().deserialize("§aLobby"))

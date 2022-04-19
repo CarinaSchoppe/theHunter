@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:43 by Carina The Latest changes made by Carina on 19.04.22, 18:43 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -31,7 +31,7 @@ class IngameState(game: Game) : GameState(game) {
                 player.isInvulnerable = true
                 TheHunter.instance.statsSystem.playerPlaysGame(player)
                 game.scoreBoard.createNewScoreboard(player)
-                player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX), LegacyComponentSerializer.legacySection().deserialize("§Lets Play!")))
+                player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix), LegacyComponentSerializer.legacySection().deserialize("§Lets Play!")))
                 player.teleport(game.playerSpawns[index])
                 //Create a for each loop with game.spectators with the Consumer spectator
                 Bukkit.getOnlinePlayers().forEach {

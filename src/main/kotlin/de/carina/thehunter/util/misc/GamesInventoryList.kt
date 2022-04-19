@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:19 by Carina The Latest changes made by Carina on 19.04.22, 18:19 All contents of "GamesInventoryList.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "GamesInventoryList.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -27,14 +27,14 @@ class GamesInventoryList : Listener {
 
     companion object {
         fun createInventory(): Inventory {
-            return InventoryBuilder(TheHunter.PREFIX + "§6Games", 54).addGamesToInventory().fillInventory(ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1).build()).create()
+            return InventoryBuilder(TheHunter.prefix + "§6Games", 54).addGamesToInventory().fillInventory(ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1).build()).create()
         }
     }
 
     @EventHandler
     fun onInventoryJoin(event: InventoryClickEvent) {
-        if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX + "§6Games"))) {
-            println("text2:" + PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX + "§6Games")))
+        if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§6Games"))) {
+            println("text2:" + PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§6Games")))
             println("text3:" + PlainTextComponentSerializer.plainText().serialize(event.view.title()))
             return
         }

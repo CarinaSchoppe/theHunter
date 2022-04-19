@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:15 by Carina The Latest changes made by Carina on 19.04.22, 19:15 All contents of "Food.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "Food.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -27,7 +27,7 @@ import org.bukkit.inventory.ItemStack
 class Food : Listener {
     companion object {
         fun createFoodItem(): ItemStack {
-            return ItemBuilder(Material.BEETROOT_SOUP).addDisplayName(TheHunter.PREFIX + "§6Food").addLore("§7Click to regenerate food!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+            return ItemBuilder(Material.BEETROOT_SOUP).addDisplayName(TheHunter.prefix + "§6Food").addLore("§7Click to regenerate food!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
         }
     }
 

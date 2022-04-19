@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 00:18 by Carina The Latest changes made by Carina on 19.04.22, 00:18 All contents of "PlayerChat.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "PlayerChat.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -26,7 +26,7 @@ class PlayerChat : Listener {
 
         event.isCancelled = true
         if (LegacyComponentSerializer.builder().build().serialize(event.message()).startsWith("@Team")) {
-            var message = TheHunter.PREFIX + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
+            var message = TheHunter.prefix + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
             val team = GamesHandler.playerInGames[event.player]!!.teams.first { it.teamMembers.contains(event.player) }
             if (team != null) {
                 team.teamMembers.forEach {
@@ -36,7 +36,7 @@ class PlayerChat : Listener {
             }
         }
         if (GamesHandler.playerInGames.containsKey(event.player)) {
-            var message = TheHunter.PREFIX + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
+            var message = TheHunter.prefix + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
             GamesHandler.playerInGames[event.player]!!.players.forEach {
                 it.sendMessage(message)
             }
@@ -45,7 +45,7 @@ class PlayerChat : Listener {
             }
             return
         }
-        var message = TheHunter.PREFIX + "§7[Dead] " + LegacyComponentSerializer.builder().build().serialize(event.message())
+        var message = TheHunter.prefix + "§7[Dead] " + LegacyComponentSerializer.builder().build().serialize(event.message())
         GamesHandler.spectatorInGames[event.player]!!.spectators.forEach {
             it.sendMessage(message)
         }
