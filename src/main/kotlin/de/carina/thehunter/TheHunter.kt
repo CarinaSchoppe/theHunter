@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 12:58 by Carina The Latest changes made by Carina on 19.04.22, 12:58 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 14:00 by Carina The Latest changes made by Carina on 19.04.22, 14:00 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -24,6 +24,7 @@ import de.carina.thehunter.util.files.Settings
 import de.carina.thehunter.util.game.GameSigns
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.Ammo
+import de.carina.thehunter.util.misc.GamesInventoryList
 import de.carina.thehunter.util.misc.StatsSystem
 import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginManager
@@ -111,6 +112,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(PlayerKillsOtherOrDies(), this)
         pluginManager.registerEvents(PlayerDisconnects(), this)
         pluginManager.registerEvents(LeaveItem(), this)
+        pluginManager.registerEvents(GamesInventoryList(), this)
 
     }
 

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "InventoryBuilder.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:56 by Carina The Latest changes made by Carina on 19.04.22, 13:56 All contents of "InventoryBuilder.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -10,8 +10,10 @@
 
 package de.carina.thehunter.util.builder
 
+import de.carina.thehunter.util.game.GamesHandler
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryView
 
@@ -23,6 +25,13 @@ class InventoryBuilder(name: String, size: Int) {
 
     fun addItem(item: org.bukkit.inventory.ItemStack): InventoryBuilder {
         inventory.addItem(item)
+        return this
+    }
+
+    fun addGamesToInventory(): InventoryBuilder {
+        for (game in GamesHandler.games) {
+            inventory.addItem(ItemBuilder(Material.ACACIA_SIGN).addDisplayName("§6${game.name}").addLore("§7Click to join the game").addLore("§7current Gamestate: §6${game.currentGameState}").addLore("§aCurrent players: §7[§6${game.players.size}§7/§6${game.maxPlayers}§7]").build())
+        }
         return this
     }
 

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:35 by Carina The Latest changes made by Carina on 19.04.22, 13:35 All contents of "JoinGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:48 by Carina The Latest changes made by Carina on 19.04.22, 13:48 All contents of "JoinGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -11,6 +11,7 @@
 package de.carina.thehunter.commands
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.countdowns.LobbyCountdown
 import de.carina.thehunter.items.configurator.LeaveItem
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.Bukkit
@@ -47,6 +48,11 @@ class JoinGame {
         sender.inventory.clear()
         sender.inventory.setItem(8, LeaveItem.createLeaveItem())
         sender.gameMode = GameMode.SURVIVAL
+        if (game.currentCountdown is LobbyCountdown) {
+            val countdown = game.currentCountdown as LobbyCountdown
+            if (!countdown.isRunning && !countdown.isIdle)
+                countdown.start()
+        }
         Bukkit.getOnlinePlayers().forEach {
             it.hidePlayer(TheHunter.instance, sender)
             sender.hidePlayer(TheHunter.instance, it)
