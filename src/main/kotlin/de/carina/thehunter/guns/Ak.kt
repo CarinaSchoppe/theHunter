@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:55 by Carina The Latest changes made by Carina on 19.04.22, 19:55 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 20:00 by Carina The Latest changes made by Carina on 19.04.22, 20:00 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -67,7 +67,7 @@ object Ak {
     }
 
     private fun checkAmmoPossible(player: Player): Boolean {
-        if (!hasAmmo(player, de.carina.thehunter.items.chest.ammo.Ak.createAKAmmo())) {
+        if (!hasAmmo(player)) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
             return false
         }
@@ -97,10 +97,10 @@ object Ak {
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["ak-reload"]!!)
     }
 
-    private fun hasAmmo(player: Player, ammo: ItemStack): Boolean {
-        return getAmmoAmount(player, ammo) > 0
-    }
+    private fun hasAmmo(player: Player): Boolean {
+        return return player.inventory.containsAtLeast(de.carina.thehunter.items.chest.ammo.Ak.createAKAmmo(), 1)
 
+    }
 
 
     private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
