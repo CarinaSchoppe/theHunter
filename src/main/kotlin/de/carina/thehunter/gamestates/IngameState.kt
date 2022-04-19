@@ -24,10 +24,7 @@ import java.util.function.Consumer
 
 class IngameState(game: Game) : GameState(game) {
     override fun start() {
-        if (game.checkWinning()) {
-            game.nextGameState()
-            return
-        }
+
 
         if (game.randomPlayerDrop) PlayerDropping.dropPlayers(game)
         else {
