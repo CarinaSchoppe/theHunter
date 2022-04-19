@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 14:01 by Carina The Latest changes made by Carina on 19.04.22, 14:00 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 16:06 by Carina The Latest changes made by Carina on 19.04.22, 16:06 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -156,9 +156,7 @@ class Game(var name: String) {
         fun loadGameFromConfig(fileName: String) {
             val fileSettings = File("${BaseFile.gameFolder}/arenas/$fileName/settings.yml")
             val ymlSettings = YamlConfiguration.loadConfiguration(fileSettings)
-
             val game = Game(ymlSettings.getString("game-name")!!)
-
             game.chestFall = ymlSettings.getBoolean("chest-fall")
             game.chestAmount = ymlSettings.getInt("chest-amount")
             game.randomPlayerDrop = ymlSettings.getBoolean("random-drop")
@@ -185,6 +183,7 @@ class Game(var name: String) {
             game.spectatorLocation = ymlLocations.getLocation("spectator-location")!!
             game.create()
             game.currentGameState.start()
+            Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["loaded-game-successfully"]!!.replace("%game%", game.name))
         }
 
 

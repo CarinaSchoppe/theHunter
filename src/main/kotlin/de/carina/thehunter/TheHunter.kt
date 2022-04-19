@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 14:00 by Carina The Latest changes made by Carina on 19.04.22, 14:00 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 16:06 by Carina The Latest changes made by Carina on 19.04.22, 16:06 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -18,9 +18,11 @@ import de.carina.thehunter.events.misc.PlayerJoinsServer
 import de.carina.thehunter.guns.GunHandler
 import de.carina.thehunter.items.chest.special.*
 import de.carina.thehunter.items.configurator.LeaveItem
+import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.files.ItemSettings
 import de.carina.thehunter.util.files.Messages
 import de.carina.thehunter.util.files.Settings
+import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GameSigns
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.Ammo
@@ -29,6 +31,7 @@ import de.carina.thehunter.util.misc.StatsSystem
 import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin
+import java.io.File
 
 class TheHunter : JavaPlugin() {
 
@@ -114,7 +117,21 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(LeaveItem(), this)
         pluginManager.registerEvents(GamesInventoryList(), this)
 
+        loadGamesFromFolders()
     }
 
+
+    fun loadGamesFromFolders() {
+        val folder = File(BaseFile.gameFolder + "/arenas/")
+        if (!folder.exists()) {
+            folder.mkdirs()
+        }
+        val files = folder.listFiles()
+        for (file in files) {
+            if (file.isDirectory) {
+                Game.loadGameFromConfig(file.name)
+            }
+        }
+    }
 
 }

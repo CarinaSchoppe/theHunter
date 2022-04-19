@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 14:00 by Carina The Latest changes made by Carina on 19.04.22, 14:00 All contents of "GamesInventoryList.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 14:15 by Carina The Latest changes made by Carina on 19.04.22, 14:15 All contents of "GamesInventoryList.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -30,8 +30,11 @@ class GamesInventoryList : Listener {
 
     @EventHandler
     fun onInventoryJoin(event: InventoryClickEvent) {
-        if (LegacyComponentSerializer.legacySection().serialize(event.view.title()) != TheHunter.PREFIX + "§6Games")
+        event.whoClicked.sendMessage(LegacyComponentSerializer.legacySection().serialize(event.view.title()))
+        if (LegacyComponentSerializer.legacySection().serialize(event.view.title()) != TheHunter.PREFIX + "§6Games") {
+            event.whoClicked.sendMessage("oisefjölkesfjkolösfjiolseijo")
             return
+        }
         event.isCancelled = true
         if (event.currentItem == null)
             return
@@ -42,5 +45,4 @@ class GamesInventoryList : Listener {
             return
         (event.whoClicked as Player).performCommand("thehunter join " + arenaName)
     }
-
 }
