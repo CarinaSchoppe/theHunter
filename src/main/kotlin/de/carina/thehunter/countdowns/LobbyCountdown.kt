@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 17:53 by Carina The Latest changes made by Carina on 19.04.22, 17:53 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 17:55 by Carina The Latest changes made by Carina on 19.04.22, 17:55 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -70,6 +70,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
                     player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting"]!!.replace("%time%", duration.toString()))
                 })
                 game.nextGameState()
+                it.cancel()
                 return@Consumer
             }
 

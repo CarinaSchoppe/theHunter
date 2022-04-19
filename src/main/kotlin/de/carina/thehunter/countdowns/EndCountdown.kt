@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 17:53 by Carina The Latest changes made by Carina on 19.04.22, 17:53 All contents of "EndCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 17:54 by Carina The Latest changes made by Carina on 19.04.22, 17:54 All contents of "EndCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -33,12 +33,12 @@ class EndCountdown(game: Game) : Countdown(game) {
             when (duration) {
                 in 0..10 -> {
                     for (player in game.players) {
-                        player.sendMessage(TheHunter.instance.messages.messagesMap["endcountdown-message"]!!)
+                        player.sendMessage(TheHunter.instance.messages.messagesMap["endcountdown-message"]!!.replace("%time%", duration.toString()))
                         player.level = duration
                         player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
                     }
                     for (spectator in game.spectators) {
-                        spectator.sendMessage(TheHunter.instance.messages.messagesMap["endcountdown-message"]!!)
+                        spectator.sendMessage(TheHunter.instance.messages.messagesMap["endcountdown-message"]!!.replace("%time%", duration.toString()))
                         spectator.level = duration
                         spectator.playSound(spectator.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
                     }
