@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 12:38 by Carina The Latest changes made by Carina on 19.04.22, 12:38 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:09 by Carina The Latest changes made by Carina on 19.04.22, 13:09 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -15,6 +15,7 @@ import de.carina.thehunter.guns.Ak
 import de.carina.thehunter.guns.Minigun
 import de.carina.thehunter.guns.Pistol
 import de.carina.thehunter.guns.Sniper
+import de.carina.thehunter.items.configurator.LeaveItem
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.misc.PlayerDropping
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
@@ -85,6 +86,14 @@ class IngameState(game: Game) : GameState(game) {
     override fun stop() {
         for (player in game.players) {
             player.activePotionEffects.clear()
+            player.inventory.clear()
+            player.teleport(game.endLocation!!)
+            player.inventory.setItem(8, LeaveItem.createLeaveItem())
+        }
+        for (spectator in game.spectators) {
+            spectator.activePotionEffects.clear()
+            spectator.inventory.clear()
+            spectator.teleport(game.endLocation!!)
         }
         game.worldBoarderController.resetWorldBoarder()
     }

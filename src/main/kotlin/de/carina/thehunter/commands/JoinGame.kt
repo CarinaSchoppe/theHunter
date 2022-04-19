@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 12:38 by Carina The Latest changes made by Carina on 19.04.22, 12:38 All contents of "JoinGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 12:49 by Carina The Latest changes made by Carina on 19.04.22, 12:49 All contents of "JoinGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -19,7 +19,7 @@ import org.bukkit.entity.Player
 
 class JoinGame {
 
-    fun startGame(sender: CommandSender, command: String, args: Array<out String>) {
+    fun join(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(sender, command, args, "join", 1, "theHunter.join"))
             return
 

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 12:23 by Carina The Latest changes made by Carina on 19.04.22, 12:23 All contents of "BaseCommand.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:09 by Carina The Latest changes made by Carina on 19.04.22, 13:09 All contents of "BaseCommand.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -26,18 +26,30 @@ class BaseCommand : CommandExecutor {
 
         val commandName = args[0]
         val args = args.slice(1 until args.size).toTypedArray()
-        when (commandName) {
+        when (commandName.lowercase()) {
             "start" -> {
-                StartGame().startGame(sender, commandName, args)
+                StartGame().start(sender, commandName, args)
+                return true
             }
             "stats" -> {
                 StatsPlayer().stats(sender, commandName, args)
+                return true
             }
             "team" -> {
                 TeamCommands().team(sender, commandName, args)
+                return true
             }
             "remove" -> {
                 RemoveGame().remove(sender, commandName, args)
+                return true
+            }
+            "join" -> {
+                JoinGame().join(sender, commandName, args)
+                return true
+            }
+            "setup" -> {
+                CreateGame().create(sender, commandName, args)
+                return true
             }
         }
 
