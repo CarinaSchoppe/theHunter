@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 00:59 by Carina The Latest changes made by Carina on 19.04.22, 00:59 All contents of "EndState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 10:58 by Carina The Latest changes made by Carina on 19.04.22, 10:58 All contents of "EndState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -17,7 +17,8 @@ import org.bukkit.entity.Player
 
 class EndState(game: Game) : GameState(game) {
     override fun start() {
-        game.countdowns[Countdowns.END_COUNTDOWN.id].start()
+        game.currentCountdown = game.countdowns[Countdowns.END_COUNTDOWN.id]
+        game.currentCountdown.start()
     }
 
     override fun stop() {
