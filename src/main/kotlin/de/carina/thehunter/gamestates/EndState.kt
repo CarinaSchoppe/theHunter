@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 10:58 by Carina The Latest changes made by Carina on 19.04.22, 10:58 All contents of "EndState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 11:06 by Carina The Latest changes made by Carina on 19.04.22, 11:06 All contents of "EndState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -13,6 +13,8 @@ package de.carina.thehunter.gamestates
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.countdowns.Countdowns
 import de.carina.thehunter.util.game.Game
+import de.carina.thehunter.util.game.GamesHandler
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
 class EndState(game: Game) : GameState(game) {
@@ -35,12 +37,20 @@ class EndState(game: Game) : GameState(game) {
         }
     }
 
-    private fun showAll(it: Player) {
-        for (player in game.players) {
-            player.showPlayer(TheHunter.instance, it)
+    private fun showAll(user: Player) {
+        Bukkit.getOnlinePlayers().forEach {
+            if (it != user) {
+                user.showPlayer(TheHunter.instance, it)
+                it.showPlayer(TheHunter.instance, user)
+            }
         }
-        for (player in game.spectators) {
-            player.showPlayer(TheHunter.instance, it)
+        GamesHandler.playerInGames.keys.forEach {
+            it.hidePlayer(TheHunter.instance, user)
+            user.hidePlayer(TheHunter.instance, it)
+        }
+        GamesHandler.spectatorInGames.keys.forEach {
+            it.hidePlayer(TheHunter.instance, user)
+            user.hidePlayer(TheHunter.instance, it)
         }
     }
 

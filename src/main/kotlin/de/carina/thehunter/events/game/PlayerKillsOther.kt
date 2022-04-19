@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 10:47 by Carina The Latest changes made by Carina on 19.04.22, 10:47 All contents of "PlayerKillsOther.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 11:05 by Carina The Latest changes made by Carina on 19.04.22, 11:05 All contents of "PlayerKillsOther.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -72,13 +72,11 @@ class PlayerKillsOther : Listener {
         generalHandling(player, game)
         game.players.forEach {
             it.sendMessage(TheHunter.instance.messages.messagesMap["player-died"]!!.replace("%player%", player.name))
-            it.hidePlayer(TheHunter.instance, player)
-            player.hidePlayer(TheHunter.instance, it)
+
         }
         game.spectators.filter { it.name != player.name }.forEach {
             it.sendMessage(TheHunter.instance.messages.messagesMap["player-died"]!!.replace("%player%", player.name))
-            it.hidePlayer(TheHunter.instance, player)
-            player.hidePlayer(TheHunter.instance, it)
+
         }
         player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-died"]!!)
         if (game.checkWinning())
@@ -93,6 +91,15 @@ class PlayerKillsOther : Listener {
         player.teleport(game.spectatorLocation!!)
         for (players in Bukkit.getOnlinePlayers()) {
             players.showPlayer(TheHunter.instance, player)
+        }
+
+        GamesHandler.playerInGames.keys.forEach {
+            it.hidePlayer(TheHunter.instance, player)
+            player.hidePlayer(TheHunter.instance, it)
+        }
+        GamesHandler.spectatorInGames.keys.forEach {
+            it.hidePlayer(TheHunter.instance, player)
+            player.hidePlayer(TheHunter.instance, it)
         }
     }
 }
