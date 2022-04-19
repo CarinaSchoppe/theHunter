@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:55 by Carina The Latest changes made by Carina on 19.04.22, 19:55 All contents of "GunHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 20:04 by Carina The Latest changes made by Carina on 19.04.22, 20:04 All contents of "GunHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -32,7 +32,32 @@ class GunHandler : Listener {
         if (!event.player.inventory.itemInMainHand.hasItemMeta())
             return
         if (!event.item!!.hasItemMeta()) return
-        if (event.action.isLeftClick) return
+        if (event.action.isLeftClick) {
+            when (event.item!!.itemMeta) {
+                Ak.createAkGunItem().itemMeta -> {
+                    if (!event.player.hasPermission("thehunter.ak")) return
+                    Ak.reloadGun(event.player)
+                    return
+                }
+                Minigun.createMiniGunItem().itemMeta -> {
+                    if (!event.player.hasPermission("thehunter.minigun")) return
+                    Minigun.reloadGun(event.player)
+                    return
+                }
+                Pistol.createPistolGunItem().itemMeta -> {
+                    if (!event.player.hasPermission("thehunter.pistol")) return
+                    Pistol.reloadGun(event.player)
+                    return
+                }
+                Sniper.createSniperGunItem().itemMeta -> {
+                    if (!event.player.hasPermission("thehunter.sniper")) return
+
+                    Sniper.reloadGun(event.player)
+                    return
+                }
+            }
+
+        }
         when (event.item!!.itemMeta) {
             Ak.createAkGunItem().itemMeta -> {
                 if (!event.player.hasPermission("thehunter.ak")) return

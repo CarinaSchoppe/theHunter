@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 20:00 by Carina The Latest changes made by Carina on 19.04.22, 20:00 All contents of "Minigun.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 20:04 by Carina The Latest changes made by Carina on 19.04.22, 20:04 All contents of "Minigun.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -49,6 +49,7 @@ object Minigun {
     fun shoot(player: Player): Boolean {
         if (!reloading.containsKey(player)) {
             reloading[player] = false
+
         }
 
         if (!magazine.containsKey(player)) {
@@ -77,13 +78,14 @@ object Minigun {
 
     fun reloadGun(player: Player) {
         if (reloading[player] == true) {
+            player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
+
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
             return
         }
         if (!checkAmmoPossible(player))
             return
         player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
-        player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
         reloading[player] = true
         reload(player)
     }
