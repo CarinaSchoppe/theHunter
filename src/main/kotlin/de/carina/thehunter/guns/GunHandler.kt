@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 11:11 by Carina The Latest changes made by Carina on 19.04.22, 11:11 All contents of "GunHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:25 by Carina The Latest changes made by Carina on 19.04.22, 13:25 All contents of "GunHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -25,6 +25,10 @@ class GunHandler : Listener {
     @EventHandler
     fun onPlayerShoot(event: PlayerInteractEvent) {
         if (event.item == null) return
+        if (event.player.inventory.itemInMainHand == null)
+            return
+        if (!event.player.inventory.itemInMainHand.hasItemMeta())
+            return
         if (!event.item!!.hasItemMeta()) return
         if (event.action.isLeftClick) return
         when (event.item!!.itemMeta) {
