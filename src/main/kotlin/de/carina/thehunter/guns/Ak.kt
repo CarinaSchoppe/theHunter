@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:35 by Carina The Latest changes made by Carina on 19.04.22, 19:35 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:55 by Carina The Latest changes made by Carina on 19.04.22, 19:55 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -36,9 +36,13 @@ object Ak {
         val arrow = player.launchProjectile(Arrow::class.java, player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["ak-power"]!!))
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
-        removeAmmo(player, 1)
+        GunHandler.removeAmmo(player, 1, de.carina.thehunter.items.chest.ammo.Ak.createAKAmmo().itemMeta)
         arrow.shooter = player
-        shotBullets[player]!!.add(arrow)
+        if (shotBullets.containsKey(player)) {
+            shotBullets[player]!!.add(arrow)
+        } else {
+            shotBullets[player] = mutableSetOf(arrow)
+        }
     }
 
 
@@ -78,6 +82,7 @@ object Ak {
         if (!checkAmmoPossible(player)) return
         player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
         reloading[player] = true
+        player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
         reload(player)
     }
 
@@ -87,6 +92,7 @@ object Ak {
             val amount = getAmmoAmount(player, de.carina.thehunter.items.chest.ammo.Ak.createAKAmmo())
             if (amount < GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!) magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!
             else magazine[player] = amount
+            player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1f, 1f)
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["ak-reload"]!!)
     }
@@ -95,20 +101,7 @@ object Ak {
         return getAmmoAmount(player, ammo) > 0
     }
 
-    private fun removeAmmo(player: Player, amount: Int) {
-        var ammo: ItemStack = createAkGunItem()
-        for ((slot, item) in player.inventory.contents!!.withIndex()) {
-            if (item == null) continue
-            if (!item.hasItemMeta()) continue
-            if (item.itemMeta != ammo.itemMeta) continue
 
-            if (item.amount - amount > 0) item.amount -= amount
-            else player.inventory.setItem(slot, ItemStack(Material.AIR))
-            return
-
-
-        }
-    }
 
     private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
         var amount = 0

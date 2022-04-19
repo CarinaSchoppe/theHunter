@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:35 by Carina The Latest changes made by Carina on 19.04.22, 19:35 All contents of "Pistol.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:55 by Carina The Latest changes made by Carina on 19.04.22, 19:55 All contents of "Pistol.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -40,9 +40,13 @@ object Pistol {
         )
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
-        removeAmmo(player, 1)
+        GunHandler.removeAmmo(player, 1, de.carina.thehunter.items.chest.ammo.Pistol.createPistolAmmo().itemMeta)
         arrow.shooter = player
-        shotBullets[player]!!.add(arrow)
+        if (shotBullets.containsKey(player)) {
+            shotBullets[player]!!.add(arrow)
+        } else {
+            shotBullets[player] = mutableSetOf(arrow)
+        }
     }
 
     fun shoot(player: Player): Boolean {
@@ -83,7 +87,7 @@ object Pistol {
         if (!checkAmmoPossible(player))
             return
         player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
-
+        player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
         reloading[player] = true
         reload(player)
     }
@@ -96,6 +100,7 @@ object Pistol {
                 magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-ammo"]!!
             else
                 magazine[player] = amount
+            player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1f, 1f)
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-reload"]!!)
     }
@@ -104,24 +109,7 @@ object Pistol {
         return getAmmoAmount(player, ammo) > 0
     }
 
-    private fun removeAmmo(player: Player, amount: Int) {
-        var ammo: ItemStack = de.carina.thehunter.items.chest.ammo.Pistol.createPistolAmmo()
-        for ((slot, item) in player.inventory.contents!!.withIndex()) {
-            if (item == null)
-                continue
-            if (!item.hasItemMeta())
-                continue
-            if (item.itemMeta != ammo.itemMeta)
-                continue
-            if (item.amount - amount > 0)
-                item.amount -= amount
-            else
-                player.inventory.setItem(slot, ItemStack(Material.AIR))
-            return
 
-
-        }
-    }
 
     private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
         var amount = 0

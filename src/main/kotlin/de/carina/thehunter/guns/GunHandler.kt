@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:25 by Carina The Latest changes made by Carina on 19.04.22, 13:25 All contents of "GunHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:55 by Carina The Latest changes made by Carina on 19.04.22, 19:55 All contents of "GunHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -12,6 +12,7 @@ package de.carina.thehunter.guns
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.GamesHandler
+import org.bukkit.Sound
 import org.bukkit.entity.Arrow
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -19,6 +20,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.inventory.meta.ItemMeta
 
 class GunHandler : Listener {
 
@@ -86,6 +88,22 @@ class GunHandler : Listener {
         }
     }
 
+    companion object {
+        fun removeAmmo(player: Player, amount: Int, itemMeta: ItemMeta) {
+            for (itemStack in player.inventory.contents!!) {
+                if (itemStack != null && itemStack.itemMeta == itemMeta) {
+                    if (player.inventory.itemInMainHand.itemMeta == itemStack.itemMeta) {
+                        itemStack.subtract(amount)
+                        return
+                    }
+                    itemStack.subtract(amount)
+                    return
+                }
+            }
+            player.updateInventory()
+        }
+    }
+
     @EventHandler
     fun onPlayerHitEvent(event: EntityDamageByEntityEvent) {
         if (event.damager !is Arrow)
@@ -96,6 +114,8 @@ class GunHandler : Listener {
         val player = arrow.shooter as Player
         if (!GamesHandler.playerInGames.containsKey(player))
             return
+        player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
+        (event.entity as Player).playSound(event.entity.location, Sound.ENTITY_PLAYER_HURT, 1f, 1f)
         if (Ak.shotBullets.containsKey(player)) {
             if (Ak.shotBullets[player]!!.contains(arrow)) {
                 event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-damage"] as Double
