@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 11:17 by Carina The Latest changes made by Carina on 19.04.22, 11:17 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 12:38 by Carina The Latest changes made by Carina on 19.04.22, 12:38 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -44,14 +44,18 @@ class IngameState(game: Game) : GameState(game) {
                     spectator.showPlayer(TheHunter.instance, player)
                 })
             }
-
+            Bukkit.getOnlinePlayers().forEach {
+                game.spectators.forEach(Consumer { spectator ->
+                    spectator.hidePlayer(TheHunter.instance, it)
+                    it.hidePlayer(TheHunter.instance, spectator)
+                })
+            }
         }
 
         givePlayerStartItems()
         startImmunityCounter()
         game.gameChest.makeChestsFall()
         game.worldBoarderController.shrinkWorld()
-
         if (game.checkWinning())
             game.nextGameState()
     }
@@ -87,6 +91,7 @@ class IngameState(game: Game) : GameState(game) {
 
     private fun givePlayerStartItems() {
         game.players.forEach {
+            it.inventory.clear()
             it.inventory.addItem(Ak.createAkGunItem())
             it.inventory.addItem(Minigun.createMiniGunItem())
             it.inventory.addItem(Pistol.createPistolGunItem())

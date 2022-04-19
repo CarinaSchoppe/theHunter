@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 10:59 by Carina The Latest changes made by Carina on 19.04.22, 10:59 All contents of "BaseCommand.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 12:23 by Carina The Latest changes made by Carina on 19.04.22, 12:23 All contents of "BaseCommand.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -29,6 +29,15 @@ class BaseCommand : CommandExecutor {
         when (commandName) {
             "start" -> {
                 StartGame().startGame(sender, commandName, args)
+            }
+            "stats" -> {
+                StatsPlayer().stats(sender, commandName, args)
+            }
+            "team" -> {
+                TeamCommands().team(sender, commandName, args)
+            }
+            "remove" -> {
+                RemoveGame().remove(sender, commandName, args)
             }
         }
 

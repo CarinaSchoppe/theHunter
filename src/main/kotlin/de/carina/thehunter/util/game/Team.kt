@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "Team.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 12:43 by Carina The Latest changes made by Carina on 19.04.22, 12:43 All contents of "Team.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -43,10 +43,6 @@ class Team(var teamLeader: Player) {
                 return false
             }
         }
-
-
-
-
         if (!leader.hasPermission("theHunter.teams.invite")) {
             TheHunter.instance.messages.sendMessageToPlayer(leader, "player-not-permissions")
             return false
@@ -72,7 +68,7 @@ class Team(var teamLeader: Player) {
 
     private fun promoteTeamLeader(player: Player, leader: Player) {
         if (!teamMembers.contains(player)) {
-            leader.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-team"]!!)
+            leader.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-team"]!!.replace("%player%", player.name))
             return
         }
         if (teamLeader != leader) {
@@ -83,8 +79,7 @@ class Team(var teamLeader: Player) {
         teamLeader.sendMessage(TheHunter.instance.messages.messagesMap["player-promote-leader"]!!.replace("%player%", player.name))
         teamLeader = player
         teamLeader.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader"]!!)
-        teamMembers.forEach {
-            it.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team-all"]!!.replace("%player%", player.name))
+        teamMembers.filter { it.name != player.name && it.name != leader.name }.forEach {
             it.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader-all"]!!.replace("%player%", teamLeader.name))
         }
     }
@@ -100,19 +95,28 @@ class Team(var teamLeader: Player) {
             return false
         }
 
-        fun removePlayerFromTeam(player: Player) {
+        fun removePlayerFromTeam(player: Player, leader: Player) {
             val team = GamesHandler.playerInGames[player]!!.teams.find { it.teamMembers.contains(player) }
-            team?.teamMembers?.remove(player)
-            if (team!!.teamMembers.isEmpty()) {
-                GamesHandler.playerInGames[player]!!.teams.remove(team)
-            } else {
+            if (leader == player) {
+                if (team == null) {
+                    player.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-team"]!!)
+                    return
+                }
+                team.teamMembers.remove(player)
+                player.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team"]!!)
+                if (team.teamMembers.isEmpty()) {
+                    GamesHandler.playerInGames[player]!!.teams.remove(team)
+                    return
+                }
                 if (team.teamLeader == player) {
                     team.teamLeader = team.teamMembers.first()
-                    player.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team"]!!)
                     team.teamLeader.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader"]!!)
                     team.teamMembers.forEach {
-                        it.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team-all"]!!.replace("%player%", player.name))
                         it.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader-all"]!!.replace("%player%", team.teamLeader.name))
+                    }
+                } else {
+                    team.teamMembers.forEach {
+                        it.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team-all"]!!.replace("%player%", player.name))
                     }
                 }
             }
