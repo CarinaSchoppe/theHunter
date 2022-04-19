@@ -27,7 +27,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
         isIdle = true
         isRunning = false
         duration = 10
-        idleID = Bukkit.getScheduler().scheduleSyncRepeatingTask(TheHunter.instance, Runnable {
+        idleID = Bukkit.getScheduler().scheduleSyncRepeatingTask(TheHunter.instance, {
             if (game.players.isEmpty() && game.spectators.isEmpty()) {
                 isIdle = false
                 if (taskIDRun != null) {
@@ -38,12 +38,12 @@ class LobbyCountdown(game: Game) : Countdown(game) {
                     Bukkit.getScheduler().cancelTask(idleID!!)
                     println("deactivete1")
                 }
-                return@Runnable
+                return@scheduleSyncRepeatingTask
             }
             if (game.players.size >= game.minPlayers) {
                 isIdle = false
                 start()
-                return@Runnable
+                return@scheduleSyncRepeatingTask
             }
             if (duration == 0) {
                 duration = TheHunter.instance.settings.settingsMap["duration-idle"] as Int
