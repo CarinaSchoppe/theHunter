@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 16:34 by Carina The Latest changes made by Carina on 19.04.22, 16:34 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 17:49 by Carina The Latest changes made by Carina on 19.04.22, 17:49 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -85,10 +85,11 @@ class Game(var name: String) {
 
     fun nextGameState() {
         if (currentGameState is EndState) {
-            currentGameState.stop()
-            clearAll()
-            GamesHandler.games.remove(this)
-            loadGameFromConfig(name)
+            println("hier")
+            /*      currentGameState.stop()
+                  clearAll()
+                  GamesHandler.games.remove(this)
+                  loadGameFromConfig(name)*/
         } else {
             currentGameState.stop()
             currentGameState = gameStates[gameStates.indexOf(currentGameState) + 1]

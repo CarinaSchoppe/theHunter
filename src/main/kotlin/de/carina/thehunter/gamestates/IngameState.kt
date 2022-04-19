@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 17:24 by Carina The Latest changes made by Carina on 19.04.22, 17:24 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 17:53 by Carina The Latest changes made by Carina on 19.04.22, 17:53 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -63,13 +63,16 @@ class IngameState(game: Game) : GameState(game) {
 
 
     private fun startImmunityCounter() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(TheHunter.instance, {
+        Bukkit.getScheduler().runTaskTimer(TheHunter.instance, { task ->
             game.immunity -= 1
+            if (game.currentGameState !is IngameState)
+                task.cancel()
             when (game.immunity) {
                 0 -> {
                     game.players.forEach {
                         it.isInvulnerable = false
                         it.sendMessage(TheHunter.instance.messages.messagesMap["immunity-off"]!!)
+                        task.cancel()
                     }
                 }
                 else -> {
