@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:09 by Carina The Latest changes made by Carina on 19.04.22, 13:09 All contents of "CreateGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:32 by Carina The Latest changes made by Carina on 19.04.22, 13:32 All contents of "CreateGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -24,21 +24,27 @@ class CreateGame {
         when (args[0].lowercase()) {
             "create" -> {
                 if (GamesHandler.games.find { it.name != args[1] } != null) {
-                    sender.sendMessage(TheHunter.instance.messages.messagesMap["game-already-exists"]!!.replace("%game%", args[0]))
+                    sender.sendMessage(TheHunter.instance.messages.messagesMap["game-already-exists"]!!.replace("%game%", args[1]))
                     return
                 }
                 val game = Game(args[1])
                 GamesHandler.setupGames.add(game)
-                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-created"]!!.replace("%game%", args[0]))
+                GamesHandler.setupGames.forEach {
+                    println(it.name + "<- game name setup")
+                }
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-created"]!!.replace("%game%", args[1]))
             }
-            "setup" -> {
+            "config" -> {
                 if (args.size != 3) {
                     sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!)
                     return
                 }
                 val game = GamesHandler.setupGames.find { it.name == args[2] }
+                GamesHandler.setupGames.forEach {
+                    println(it.name + "<- game name setup")
+                }
                 if (game == null) {
-                    sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!)
+                    sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace("%game%", args[2]))
                     return
                 }
                 when (args[1].lowercase()) {
@@ -72,6 +78,9 @@ class CreateGame {
                     }
                 }
 
+            }
+            else -> {
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["no-command-found"]!!.replace("%command%", args[0]))
             }
         }
     }
