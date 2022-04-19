@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 11:05 by Carina The Latest changes made by Carina on 19.04.22, 11:05 All contents of "PlayerDisconnects.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 16:34 by Carina The Latest changes made by Carina on 19.04.22, 16:34 All contents of "PlayerDisconnects.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -26,12 +26,13 @@ class PlayerDisconnects : Listener {
         if (!GamesHandler.playerInGames.containsKey(event.player))
             return
         val game = GamesHandler.playerInGames[event.player]!!
+
         if (game.currentGameState !is IngameState) {
             removePlayer(event.player)
             return
         } else {
-            removePlayer(event.player)
             game.deathChests.createDeathChest(event.player)
+            removePlayer(event.player)
             TheHunter.instance.statsSystem.playerDied(event.player)
             if (game.checkWinning())
                 game.nextGameState()
@@ -42,6 +43,10 @@ class PlayerDisconnects : Listener {
         val game = GamesHandler.playerInGames[player]!!
         game.spectators.remove(player)
         game.players.remove(player)
+        player.inventory.clear()
+        GamesHandler.playerInGames.remove(player)
+        GamesHandler.spectatorInGames.remove(player)
+        player.teleport(game.backLocation!!)
         for (players in Bukkit.getOnlinePlayers()) {
             players.showPlayer(TheHunter.instance, player)
             player.showPlayer(TheHunter.instance, players)

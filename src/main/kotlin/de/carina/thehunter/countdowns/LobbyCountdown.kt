@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 10:27 by Carina The Latest changes made by Carina on 19.04.22, 10:27 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 17:24 by Carina The Latest changes made by Carina on 19.04.22, 17:24 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -13,7 +13,6 @@ package de.carina.thehunter.countdowns
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.Game
 import org.bukkit.Bukkit
-import org.bukkit.scheduler.BukkitTask
 import java.util.function.Consumer
 
 class LobbyCountdown(game: Game) : Countdown(game) {
@@ -21,20 +20,24 @@ class LobbyCountdown(game: Game) : Countdown(game) {
     override var duration: Int = 60
 
 
-    private lateinit var taskIDRun: BukkitTask
-    private lateinit var idleID: BukkitTask
+    private var taskIDRun: Int? = null
+    private var idleID: Int? = null
 
     override fun idle() {
         isIdle = true
         isRunning = false
         duration = 10
-        idleID = Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
-
+        idleID = Bukkit.getScheduler().scheduleSyncRepeatingTask(TheHunter.instance, Runnable {
             if (game.players.isEmpty() && game.spectators.isEmpty()) {
-                idleID.cancel()
-                taskIDRun.cancel()
                 isIdle = false
-                isRunning = false
+                if (taskIDRun != null) {
+                    Bukkit.getScheduler().cancelTask(taskIDRun!!)
+                    println("deactivete2")
+                }
+                if (idleID != null) {
+                    Bukkit.getScheduler().cancelTask(idleID!!)
+                    println("deactivete1")
+                }
                 return@Runnable
             }
             if (game.players.size >= game.minPlayers) {
@@ -48,8 +51,8 @@ class LobbyCountdown(game: Game) : Countdown(game) {
                     player.sendMessage(TheHunter.instance.messages.messagesMap["game-waiting-for-players"]!!.replace("%current%", game.players.size.toString()).replace("%max%", game.maxPlayers.toString()))
                 })
             }
-            duration--
-        }, 20, 20)
+            duration -= 1
+        }, 20L, 20L)
     }
 
     override fun start() {
@@ -60,16 +63,21 @@ class LobbyCountdown(game: Game) : Countdown(game) {
             idle()
             return
         }
-        idleID.cancel()
-        taskIDRun = Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
-
-
+        if (idleID != null) {
+            Bukkit.getScheduler().cancelTask(idleID!!)
+            println("deactivete3")
+        }
+        taskIDRun = Bukkit.getScheduler().scheduleSyncRepeatingTask(TheHunter.instance, Runnable {
             if (game.players.size < game.minPlayers) {
                 idle()
                 return@Runnable
             }
             if (duration <= 0) {
+                println("size: ${game.players.size}")
                 game.players.forEach(Consumer { player ->
+                    player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting"]!!.replace("%time%", duration.toString()))
+                })
+                game.spectators.forEach(Consumer { player ->
                     player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting"]!!.replace("%time%", duration.toString()))
                 })
                 game.nextGameState()
@@ -78,36 +86,44 @@ class LobbyCountdown(game: Game) : Countdown(game) {
 
             when (duration) {
                 in 1..TheHunter.instance.settings.settingsMap["duration-speedup"] as Int -> {
-                    game.players.forEach(Consumer { player ->
-                        player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
-                    })
+                    sendMessageTime()
                 }
-                in 60..60 -> {
-                    game.players.forEach(Consumer { player ->
-                        player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
-                    })
+                60 -> {
+                    sendMessageTime()
                 }
-                in 30..30 -> {
-                    game.players.forEach(Consumer { player ->
-                        player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
-                    })
-
+                30 -> {
+                    sendMessageTime()
                 }
-                in 20..20 -> {
-                    game.players.forEach(Consumer { player ->
-                        player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
-                    })
-
+                20 -> {
+                    sendMessageTime()
                 }
-                in 10..10 -> {
-                    game.players.forEach(Consumer { player ->
-                        player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
-                    })
+                in 5..10 -> {
+                    sendMessageTime()
+                }
+                else -> {
+                    sendMessageTime()
+                    game.players.forEach {
+                        it.level = duration
+                    }
+                    game.spectators.forEach {
+                        it.level = duration
+                    }
                 }
             }
-
             duration--
+
         }, 20, 20)
+    }
+
+    private fun sendMessageTime() {
+        game.players.forEach(Consumer { player ->
+            player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
+            player.level = duration
+        })
+        game.spectators.forEach(Consumer { spectator ->
+            spectator.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
+            spectator.level = duration
+        })
     }
 
     override fun stop() {

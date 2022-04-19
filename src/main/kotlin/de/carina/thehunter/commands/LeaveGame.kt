@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 12:46 by Carina The Latest changes made by Carina on 19.04.22, 12:46 All contents of "LeaveGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 17:08 by Carina The Latest changes made by Carina on 19.04.22, 17:08 All contents of "LeaveGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -20,20 +20,20 @@ import org.bukkit.entity.Player
 import org.bukkit.scoreboard.DisplaySlot
 
 class LeaveGame {
-    fun startGame(sender: CommandSender, command: String, args: Array<out String>) {
+    fun leave(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(sender, command, args, "leave", 0, "theHunter.leave"))
             return
 
-        if (!GamesHandler.playerInGames.containsKey(sender)) {
+        if (!GamesHandler.playerInGames.containsKey(sender as Player)) {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace("%player%", sender.name))
             return
         }
         val game = GamesHandler.playerInGames[sender]!!
         if (game.currentGameState !is IngameState) {
-            removePlayer(sender as Player)
+            removePlayer(sender)
             return
         } else {
-            removePlayer(sender as Player)
+            removePlayer(sender)
             game.deathChests.createDeathChest(sender)
             TheHunter.instance.statsSystem.playerDied(sender)
             if (game.checkWinning())
@@ -47,7 +47,11 @@ class LeaveGame {
         val game = GamesHandler.playerInGames[player]!!
         game.spectators.remove(player)
         game.players.remove(player)
+        GamesHandler.playerInGames.remove(player)
+        GamesHandler.spectatorInGames.remove(player)
         player.teleport(game.backLocation!!)
+        println("a" + GamesHandler.playerInGames.size)
+        println("ab" + game.players.size)
         player.inventory.clear()
         player.scoreboard.clearSlot(DisplaySlot.SIDEBAR)
         val team = game.teams.find { it.teamMembers.contains(player) }

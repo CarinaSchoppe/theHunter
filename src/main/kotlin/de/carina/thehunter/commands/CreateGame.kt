@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:42 by Carina The Latest changes made by Carina on 19.04.22, 13:42 All contents of "CreateGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 16:17 by Carina The Latest changes made by Carina on 19.04.22, 16:17 All contents of "CreateGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -23,7 +23,7 @@ class CreateGame {
 
         when (args[0].lowercase()) {
             "create" -> {
-                if (GamesHandler.games.find { it.name != args[1] } != null) {
+                if (GamesHandler.games.find { it.name == args[1] } != null) {
                     sender.sendMessage(TheHunter.instance.messages.messagesMap["game-already-exists"]!!.replace("%game%", args[1]))
                     return
                 }

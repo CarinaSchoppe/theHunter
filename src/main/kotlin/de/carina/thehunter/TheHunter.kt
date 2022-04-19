@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 16:06 by Carina The Latest changes made by Carina on 19.04.22, 16:06 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 16:28 by Carina The Latest changes made by Carina on 19.04.22, 16:28 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -13,6 +13,7 @@ package de.carina.thehunter
 import de.carina.thehunter.commands.BaseCommand
 import de.carina.thehunter.events.game.*
 import de.carina.thehunter.events.misc.BlocksFlyEvent
+import de.carina.thehunter.events.misc.LobbyInteraction
 import de.carina.thehunter.events.misc.MapModify
 import de.carina.thehunter.events.misc.PlayerJoinsServer
 import de.carina.thehunter.guns.GunHandler
@@ -116,6 +117,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(PlayerDisconnects(), this)
         pluginManager.registerEvents(LeaveItem(), this)
         pluginManager.registerEvents(GamesInventoryList(), this)
+        pluginManager.registerEvents(LobbyInteraction(), this)
 
         loadGamesFromFolders()
     }
@@ -127,6 +129,7 @@ class TheHunter : JavaPlugin() {
             folder.mkdirs()
         }
         val files = folder.listFiles()
+
         for (file in files) {
             if (file.isDirectory) {
                 Game.loadGameFromConfig(file.name)

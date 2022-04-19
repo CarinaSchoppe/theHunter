@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:48 by Carina The Latest changes made by Carina on 19.04.22, 13:48 All contents of "JoinGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 16:34 by Carina The Latest changes made by Carina on 19.04.22, 16:34 All contents of "JoinGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -36,15 +36,17 @@ class JoinGame {
                 it.sendMessage(TheHunter.instance.messages.messagesMap["player-joined-game"]!!.replace("%player%", sender.name))
             }
             game.players.add(sender as Player)
+            GamesHandler.playerInGames[sender] = game
+            sender.teleport(game.lobbyLocation!!)
             game.spectators.forEach {
                 it.sendMessage(TheHunter.instance.messages.messagesMap["player-joined-game"]!!.replace("%player%", sender.name))
             }
         } else {
-            game.spectators.add(sender as Player)
+            GamesHandler.spectatorInGames[sender as Player] = game
+            game.spectators.add(sender)
             sender.sendMessage(TheHunter.instance.messages.messagesMap["game-full-spectator"]!!)
             sender.teleport(game.lobbyLocation!!)
         }
-        sender.teleport(game.lobbyLocation!!)
         sender.inventory.clear()
         sender.inventory.setItem(8, LeaveItem.createLeaveItem())
         sender.gameMode = GameMode.SURVIVAL
