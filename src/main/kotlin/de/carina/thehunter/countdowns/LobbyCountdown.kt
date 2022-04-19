@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 17:55 by Carina The Latest changes made by Carina on 19.04.22, 17:55 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:15 by Carina The Latest changes made by Carina on 19.04.22, 18:15 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -12,6 +12,8 @@ package de.carina.thehunter.countdowns
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.Game
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import java.util.function.Consumer
@@ -76,6 +78,13 @@ class LobbyCountdown(game: Game) : Countdown(game) {
 
             when (duration) {
                 in 1..TheHunter.instance.settings.settingsMap["duration-speedup"] as Int -> {
+                    game.players.forEach(Consumer { player ->
+                        player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
+                        player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6$duration"), LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))))
+                    })
+                    game.spectators.forEach(Consumer { spectator ->
+                        spectator.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6$duration"), LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))))
+                    })
                     sendMessageTime()
                 }
                 60 -> {

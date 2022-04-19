@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 17:54 by Carina The Latest changes made by Carina on 19.04.22, 17:54 All contents of "EndCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:19 by Carina The Latest changes made by Carina on 19.04.22, 18:19 All contents of "EndCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -18,7 +18,7 @@ import java.util.function.Consumer
 
 class EndCountdown(game: Game) : Countdown(game) {
 
-    override var duration: Int = 60
+    override var duration: Int = 10
 
 
 
@@ -31,7 +31,11 @@ class EndCountdown(game: Game) : Countdown(game) {
                 it.cancel()
             }
             when (duration) {
-                in 0..10 -> {
+                in 0 downTo 0 -> {
+                    println("hiersindwir")
+                    stop()
+                }
+                in 1 until 10 -> {
                     for (player in game.players) {
                         player.sendMessage(TheHunter.instance.messages.messagesMap["endcountdown-message"]!!.replace("%time%", duration.toString()))
                         player.level = duration
@@ -43,11 +47,9 @@ class EndCountdown(game: Game) : Countdown(game) {
                         spectator.playSound(spectator.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
                     }
                 }
-                0 -> {
-                    stop()
-                }
+
             }
-            duration -= 1
+            duration--
         }, 20L, 20L)
     }
 

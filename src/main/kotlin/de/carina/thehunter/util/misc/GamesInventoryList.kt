@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 17:24 by Carina The Latest changes made by Carina on 19.04.22, 17:24 All contents of "GamesInventoryList.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:19 by Carina The Latest changes made by Carina on 19.04.22, 18:19 All contents of "GamesInventoryList.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -21,21 +21,21 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.inventory.Inventory
 
 class GamesInventoryList : Listener {
 
     companion object {
-        val inventory = InventoryBuilder(TheHunter.PREFIX + "§6Games", 54).addGamesToInventory().fillInventory(ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1).build()).create()
+        fun createInventory(): Inventory {
+            return InventoryBuilder(TheHunter.PREFIX + "§6Games", 54).addGamesToInventory().fillInventory(ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1).build()).create()
+        }
     }
 
     @EventHandler
     fun onInventoryJoin(event: InventoryClickEvent) {
-        if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != TheHunter.PREFIX + "§6Games") {
-            println("test: " + PlainTextComponentSerializer.plainText().serialize(event.view.title()) != TheHunter.PREFIX + "§6Games")
-            println("test2: ${LegacyComponentSerializer.legacySection().serialize(event.view.title()) != TheHunter.PREFIX + "§6Games"}")
-            println("text:" + TheHunter.PREFIX + "§6Games")
-            println("text2:" + PlainTextComponentSerializer.plainText().serialize(event.view.title()))
-            println("text3:" + LegacyComponentSerializer.legacySection().serialize(event.view.title()))
+        if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX + "§6Games"))) {
+            println("text2:" + PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX + "§6Games")))
+            println("text3:" + PlainTextComponentSerializer.plainText().serialize(event.view.title()))
             return
         }
         event.isCancelled = true
