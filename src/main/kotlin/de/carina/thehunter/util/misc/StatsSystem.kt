@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:13 by Carina The Latest changes made by Carina on 19.04.22, 13:13 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:14 by Carina The Latest changes made by Carina on 19.04.22, 13:14 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -122,7 +122,7 @@ class StatsSystem : BaseFile("stats.yml") {
                 TheHunter.instance.messages.messagesMap["stats-message-own"]!!.replace("%kills%", playerStats[player.uniqueId]!!.kills.toString())
                     .replace("%deaths%", playerStats[player.uniqueId]!!.deaths.toString()).replace("%wins%", playerStats[player.uniqueId]!!.wins.toString())
                     .replace("%games%", playerStats[player.uniqueId]!!.games.toString()).replace("%points%", playerStats[player.uniqueId]!!.points.toString())
-                    .replace("%kdr%", playerStats[player.uniqueId]!!.KDR.toString())
+                    .replace("%kd%", playerStats[player.uniqueId]!!.KDR.toString())
                     .replace("%losses%", playerStats[player.uniqueId]!!.loses.toString())
             )
         else
@@ -133,7 +133,7 @@ class StatsSystem : BaseFile("stats.yml") {
                     .replace("%wins%", playerStats[player.uniqueId]!!.wins.toString())
                     .replace("%games%", playerStats[player.uniqueId]!!.games.toString())
                     .replace("%points%", playerStats[player.uniqueId]!!.points.toString())
-                    .replace("%kdr%", playerStats[player.uniqueId]!!.KDR.toString())
+                    .replace("%kd%", playerStats[player.uniqueId]!!.KDR.toString())
                     .replace("%losses%", playerStats[player.uniqueId]!!.loses.toString())
                     .replace("%player%", player.name)
             )

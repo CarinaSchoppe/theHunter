@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:09 by Carina The Latest changes made by Carina on 19.04.22, 13:09 All contents of "BaseCommand.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:15 by Carina The Latest changes made by Carina on 19.04.22, 13:15 All contents of "BaseCommand.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -53,7 +53,7 @@ class BaseCommand : CommandExecutor {
             }
         }
 
-        sender.sendMessage(TheHunter.instance.messages.messagesMap["command-not-found"]!!)
+        sender.sendMessage(TheHunter.instance.messages.messagesMap["no-command-found"]!!.replace("%command%", commandName))
         return false
     }
 }
