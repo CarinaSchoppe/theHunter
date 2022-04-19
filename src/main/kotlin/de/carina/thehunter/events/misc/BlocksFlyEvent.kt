@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "BlocksFlyEvent.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:07 by Carina The Latest changes made by Carina on 19.04.22, 19:07 All contents of "BlocksFlyEvent.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -15,7 +15,6 @@ import de.carina.thehunter.items.chest.special.EggBomb
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.MapResetter
 import org.bukkit.Material
-import org.bukkit.entity.Egg
 import org.bukkit.entity.FallingBlock
 import org.bukkit.entity.TNTPrimed
 import org.bukkit.event.EventHandler
@@ -30,18 +29,17 @@ class BlocksFlyEvent : Listener {
     @EventHandler
     fun onExplosion(event: EntityExplodeEvent) {
         if (event.entity !is TNTPrimed) return
-
         val tnt = event.entity as TNTPrimed
         if (!EggBomb.bombs.contains(tnt)) return
-
+        print("explod")
         EggBomb.bombs.remove(tnt)
-        val player = (tnt.source as Egg).shooter as org.bukkit.entity.Player
-        val game = GamesHandler.playerInGames[player]!!
+
+        val game = GamesHandler.entitiesInGames[tnt]!!
+        GamesHandler.entitiesInGames.remove(tnt)
 
         for (block in event.blockList()) {
             game.mapResetter.blocks.add(MapResetter.createBlockString(block))
             event.yield = 0f
-
             val x = -5f + (Math.random() * (5 + 5 + 1)).toFloat()
             val y = -5f + (Math.random() * (6 + 6 + 1)).toFloat()
             val z = -5f + (Math.random() * (5 + 5 + 1)).toFloat()
@@ -52,6 +50,7 @@ class BlocksFlyEvent : Listener {
             GamesHandler.entitiesInGames[fallingBlock] = game
             game.gameEntities.add(fallingBlock)
         }
+        event.yield = 0f
     }
 
     @EventHandler

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:24 by Carina The Latest changes made by Carina on 19.04.22, 13:24 All contents of "ItemHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:10 by Carina The Latest changes made by Carina on 19.04.22, 19:10 All contents of "ItemHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -12,6 +12,7 @@ package de.carina.thehunter.items.chest
 
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.game.GamesHandler
+import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
@@ -43,6 +44,12 @@ object ItemHandler {
             return false
 
         event.isCancelled = true
+
+        println("is interact")
         return true
+    }
+
+    fun removeOneItemOfPlayer(player: Player, item: ItemStack) {
+
     }
 }

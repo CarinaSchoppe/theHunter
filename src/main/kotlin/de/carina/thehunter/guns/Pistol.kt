@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:49 by Carina The Latest changes made by Carina on 19.04.22, 18:49 All contents of "Pistol.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:54 by Carina The Latest changes made by Carina on 19.04.22, 18:54 All contents of "Pistol.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -49,10 +49,7 @@ object Pistol {
         if (!reloading.containsKey(player)) {
             reloading[player] = false
         }
-        if (reloading[player] == true) {
-            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
-            return false
-        }
+
         if (!magazine.containsKey(player)) {
             magazine[player] = 0
             return false

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:27 by Carina The Latest changes made by Carina on 19.04.22, 13:27 All contents of "ItemBuilder.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:57 by Carina The Latest changes made by Carina on 19.04.22, 18:57 All contents of "ItemBuilder.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -35,7 +35,8 @@ class ItemBuilder(material: Material) {
 
 
     fun addLore(lore: List<String>): ItemBuilder {
-        itemMeta.lore(lore.map { LegacyComponentSerializer.legacySection().deserialize(it) })
+        var myLore = lore.map { LegacyComponentSerializer.legacySection().deserialize(it) }
+        itemMeta.lore(myLore)
         itemStack.itemMeta = itemMeta
         return this
     }

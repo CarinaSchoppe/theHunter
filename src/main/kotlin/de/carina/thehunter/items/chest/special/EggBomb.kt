@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "EggBomb.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:07 by Carina The Latest changes made by Carina on 19.04.22, 19:07 All contents of "EggBomb.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -31,9 +31,7 @@ class EggBomb : Listener {
         val bombs = mutableSetOf<TNTPrimed>()
         fun createEggBomb(): ItemStack {
             return ItemBuilder(Material.EGG).addDisplayName(TheHunter.PREFIX + "§eEggBomb").addAmount(Random().nextInt(1, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-amount"] as Int) + 1)).addEnchantment(Enchantment.DURABILITY, 1).addLore(
-                listOf(
-                    TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace("%power%", TheHunter.instance.itemSettings.settingsMap["egg-bomb-radius"].toString())
-                )
+                listOf(TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace("%power%", TheHunter.instance.itemSettings.settingsMap["egg-bomb-radius"].toString()))
             ).build()
         }
     }
@@ -69,6 +67,7 @@ class EggBomb : Listener {
             tnt.fuseTicks = 0
             tnt.source = egg
             bombs.add(tnt)
+            GamesHandler.entitiesInGames[tnt] = game
         }, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-delay"] as Int) * 20L)
     }
 

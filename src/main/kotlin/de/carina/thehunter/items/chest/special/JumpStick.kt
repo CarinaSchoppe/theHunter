@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "JumpStick.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:04 by Carina The Latest changes made by Carina on 19.04.22, 19:04 All contents of "JumpStick.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -47,7 +47,7 @@ class JumpStick : Listener {
         }
 
         player.velocity = player.eyeLocation.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.items["jumpstick-power"] as Int)
-        if (uses.containsKey(player))
+        if (!uses.containsKey(player))
             uses[player] = 1
         else
             uses[player] = uses[player]!! + 1

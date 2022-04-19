@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:44 by Carina The Latest changes made by Carina on 19.04.22, 13:44 All contents of "WorldboarderController.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:52 by Carina The Latest changes made by Carina on 19.04.22, 18:52 All contents of "WorldboarderController.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -28,6 +28,7 @@ class WorldboarderController(private val game: Game) {
         if (!shrinkBoarder)
             return
 
+        worldBoarder.center = game.arenaCenter!!
         Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
             if (worldBoarder.size - shrinkSpeed.toDouble() >= minBorderSize) {
                 worldBoarder.size -= shrinkSpeed.toDouble()

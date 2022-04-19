@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:15 by Carina The Latest changes made by Carina on 19.04.22, 18:15 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:01 by Carina The Latest changes made by Carina on 19.04.22, 19:01 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -79,7 +79,6 @@ class LobbyCountdown(game: Game) : Countdown(game) {
             when (duration) {
                 in 1..TheHunter.instance.settings.settingsMap["duration-speedup"] as Int -> {
                     game.players.forEach(Consumer { player ->
-                        player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
                         player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6$duration"), LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))))
                     })
                     game.spectators.forEach(Consumer { spectator ->

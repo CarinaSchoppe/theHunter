@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 16:53 by Carina The Latest changes made by Carina on 19.04.22, 16:53 All contents of "StartGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:50 by Carina The Latest changes made by Carina on 19.04.22, 18:50 All contents of "StartGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -28,8 +28,6 @@ class StartGame {
             return
         if (game.currentCountdown.duration > 5) {
             game.currentCountdown.duration = 5
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-speedup"]!!)
-        } else {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["game-speedup"]!!)
         }
 

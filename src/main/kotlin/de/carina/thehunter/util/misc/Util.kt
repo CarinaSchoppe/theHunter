@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 00:42 by Carina The Latest changes made by Carina on 19.04.22, 00:42 All contents of "Util.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:51 by Carina The Latest changes made by Carina on 19.04.22, 18:51 All contents of "Util.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -20,7 +20,7 @@ import java.util.*
 
 object Util {
     fun getRandomXYValueFromWorldBoarder(game: Game): Int {
-        return Random().nextInt(game.worldBoarderController.worldBoarderSize * 2) - game.worldBoarderController.worldBoarderSize
+        return Random().nextInt(game.worldBoarderController.worldBoarderSize * 2) - game.worldBoarderController.worldBoarderSize + 5
     }
 
     fun updateGameSigns(game: Game) {

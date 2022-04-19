@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "Tracker.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:08 by Carina The Latest changes made by Carina on 19.04.22, 19:08 All contents of "Tracker.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -36,6 +36,8 @@ class Tracker : Listener {
         event.isCancelled = true
         //get the closest Player to the event.player based on the distance of their location
         val closestPlayers = GamesHandler.playerInGames[event.player]!!.players.filter { it.uniqueId != event.player.uniqueId }
+        if (closestPlayers.isEmpty())
+            return
         var closest = closestPlayers.first()
         for (players in closestPlayers) {
             if (event.player.location.distance(players.location) < event.player.location.distance(closest.location))
