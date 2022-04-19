@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:43 by Carina The Latest changes made by Carina on 19.04.22, 19:43 All contents of "ItemChest.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 21:28 by Carina The Latest changes made by Carina on 19.04.22, 21:28 All contents of "ItemChest.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -18,13 +18,13 @@ import de.carina.thehunter.items.chest.ammo.Sniper
 import de.carina.thehunter.items.chest.special.*
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
-import de.carina.thehunter.util.misc.Util
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
+import org.bukkit.util.Vector
 import java.util.*
 
 class ItemChest(private val game: Game) {
@@ -126,12 +126,17 @@ class ItemChest(private val game: Game) {
         if (!game.chestFall)
             return
         repeat(game.chestAmount) {
-            val x = Util.getRandomXYValueFromWorldBoarder(game)
-            val z = Util.getRandomXYValueFromWorldBoarder(game)
-            val location = game.arenaCenter!!.clone().add(x + 0.0, 255.0, z + 0.0)
-            val block = location.world.spawnFallingBlock(location, Material.BEACON.createBlockData())
-            game.gameEntities.add(block)
-            GamesHandler.entitiesInGames[block] = game
+
+            //Location of the Worldboarder Edge
+            val locationCenter: Location = game.arenaCenter!!.subtract(game.worldBoarderController.worldBoarderSize / 2 + 0.0, 0.0, game.worldBoarderController.worldBoarderSize / 2 + 0.0)
+            val x = Random().nextInt(game.worldBoarderController.worldBoarderSize)
+            val z = Random().nextInt(game.worldBoarderController.worldBoarderSize)
+            val chest = locationCenter.world.spawnFallingBlock(locationCenter.add(x.toDouble(), 170.0, z.toDouble()), Material.BEACON.createBlockData())
+            chest.velocity = Vector(0.0, -1.5, 0.0)
+            chest.dropItem = false
+            chest.setHurtEntities(false)
+            game.gameEntities.add(chest)
+            GamesHandler.entitiesInGames[chest] = game
 
         }
     }
