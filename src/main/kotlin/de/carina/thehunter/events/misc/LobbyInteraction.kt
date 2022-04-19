@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 16:40 by Carina The Latest changes made by Carina on 19.04.22, 16:40 All contents of "LobbyInteraction.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:33 by Carina The Latest changes made by Carina on 19.04.22, 19:33 All contents of "LobbyInteraction.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -11,6 +11,7 @@
 package de.carina.thehunter.events.misc
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.gamestates.LobbyState
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.entity.Player
@@ -77,15 +78,18 @@ class LobbyInteraction : Listener {
         if (event.entity !is Player)
             return
         if (GamesHandler.playerInGames.containsKey(event.entity)) {
-            if (GamesHandler.playerInGames[event.entity]!!.currentGameState is LobbyState)
+            if (GamesHandler.playerInGames[event.entity]!!.currentGameState !is IngameState) {
                 event.isCancelled = true
-            event.damage = 0.0
-            return
+                event.damage = 0.0
+                return
+            }
+
         } else if (GamesHandler.spectatorInGames.containsKey(event.entity)) {
-            if (GamesHandler.spectatorInGames[event.entity]!!.currentGameState is LobbyState)
+            if (GamesHandler.spectatorInGames[event.entity]!!.currentGameState !is IngameState) {
                 event.isCancelled = true
-            event.damage = 0.0
-            return
+                event.damage = 0.0
+                return
+            }
 
         }
     }

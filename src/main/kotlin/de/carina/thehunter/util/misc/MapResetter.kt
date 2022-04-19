@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "MapResetter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:43 by Carina The Latest changes made by Carina on 19.04.22, 19:43 All contents of "MapResetter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -31,11 +31,11 @@ class MapResetter(val game: Game) {
             val split = blockString.split(":")
             val type = split[0]
             val world = split[1]
-            val x = split[2].toInt()
-            val y = split[3].toInt()
-            val z = split[4].toInt()
+            val x = split[2].toDouble()
+            val y = split[3].toDouble()
+            val z = split[4].toDouble()
             val worldObj = Bukkit.getWorld(world)
-            val block = worldObj!!.getBlockAt(x, y, z)
+            val block = worldObj!!.getBlockAt(x.toInt(), y.toInt(), z.toInt())
             block.type = org.bukkit.Material.valueOf(type)
         }
     }

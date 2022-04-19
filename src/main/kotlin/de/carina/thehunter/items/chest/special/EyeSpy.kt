@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:15 by Carina The Latest changes made by Carina on 19.04.22, 19:15 All contents of "EyeSpy.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:17 by Carina The Latest changes made by Carina on 19.04.22, 19:17 All contents of "EyeSpy.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -44,9 +44,10 @@ class EyeSpy : Listener {
             return
         if (inEyeSpy.contains(event.player))
             return
-        val target = GamesHandler.playerInGames[event.player]!!.players.filter { it != event.player }.random()
-        if (target == null)
+        val targets = GamesHandler.playerInGames[event.player]!!.players.filter { it != event.player }
+        if (targets.isEmpty())
             return
+        val target = targets.random()
         ItemHandler.removeOneItemOfPlayer(event.player)
         event.isCancelled = true
 

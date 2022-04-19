@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:07 by Carina The Latest changes made by Carina on 19.04.22, 19:07 All contents of "EggBomb.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:33 by Carina The Latest changes made by Carina on 19.04.22, 19:33 All contents of "EggBomb.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -61,7 +61,8 @@ class EggBomb : Listener {
         if (GamesHandler.playerInGames[player]!!.gameItems.items["EggBomb"] == false)
             return
 
-
+        if (GamesHandler.playerInGames[player]!!.currentGameState !is IngameState)
+            return
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Runnable {
             val tnt = event.entity.location.world.spawn(event.entity.location, org.bukkit.entity.TNTPrimed::class.java)
             tnt.fuseTicks = 0

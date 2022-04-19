@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:54 by Carina The Latest changes made by Carina on 19.04.22, 18:54 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:35 by Carina The Latest changes made by Carina on 19.04.22, 19:35 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -30,8 +30,6 @@ object Ak {
     fun createAkGunItem(): ItemStack {
         return ItemBuilder(Material.IRON_HOE).addDisplayName(TheHunter.PREFIX + "§7AK-47").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
     }
-
-
 
 
     private fun shootProjectile(player: Player) {
@@ -87,9 +85,9 @@ object Ak {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
             val amount = getAmmoAmount(player, de.carina.thehunter.items.chest.ammo.Ak.createAKAmmo())
-            if (amount < GamesHandler.playerInGames[player]!!.gameItems.guns["ak-magazine"]!!) magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!
+            if (amount < GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!) magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!
             else magazine[player] = amount
-            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloaded"]!!)
+            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["ak-reload"]!!)
     }
 

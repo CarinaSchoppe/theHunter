@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:11 by Carina The Latest changes made by Carina on 19.04.22, 19:11 All contents of "ItemChest.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:26 by Carina The Latest changes made by Carina on 19.04.22, 19:26 All contents of "ItemChest.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -11,6 +11,10 @@
 package de.carina.thehunter.items.chest
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.items.chest.ammo.Ak
+import de.carina.thehunter.items.chest.ammo.Minigun
+import de.carina.thehunter.items.chest.ammo.Pistol
+import de.carina.thehunter.items.chest.ammo.Sniper
 import de.carina.thehunter.items.chest.special.*
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
@@ -76,22 +80,22 @@ class ItemChest(private val game: Game) {
             items.add(item)
         }
         if (game.gameItems.items["PistolAmmo"] == true) {
-            val item = Tracker.createTrackerItem()
+            val item = Pistol.createPistolAmmo()
             item.amount = game.gameItems.items["pistolammo-amount"] as Int
             ammo.add(item)
         }
         if (game.gameItems.items["SniperAmmo"] == true) {
-            val item = Tracker.createTrackerItem()
+            val item = Sniper.createSniperAmmo()
             item.amount = game.gameItems.items["sniperammo-amount"] as Int
             ammo.add(item)
         }
         if (game.gameItems.items["AkAmmo"] == true) {
-            val item = Tracker.createTrackerItem()
+            val item = Ak.createAKAmmo()
             item.amount = game.gameItems.items["akammo-amount"] as Int
             ammo.add(item)
         }
         if (game.gameItems.items["MiniGunAmmo"] == true) {
-            val item = Tracker.createTrackerItem()
+            val item = Minigun.createMinigunAmmo()
             item.amount = game.gameItems.items["minigunammo-amount"] as Int
             ammo.add(item)
         }
@@ -105,7 +109,7 @@ class ItemChest(private val game: Game) {
                 }
             }
         }
-        repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int)) {
+        repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
             val item = ammo[Random().nextInt(ammo.size)]
             while (true) {
                 val place = Random().nextInt(54)

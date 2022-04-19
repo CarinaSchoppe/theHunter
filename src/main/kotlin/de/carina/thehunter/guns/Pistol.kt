@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:12 by Carina The Latest changes made by Carina on 19.04.22, 19:12 All contents of "Pistol.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:35 by Carina The Latest changes made by Carina on 19.04.22, 19:35 All contents of "Pistol.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -92,12 +92,11 @@ object Pistol {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
             val amount = getAmmoAmount(player, de.carina.thehunter.items.chest.ammo.Pistol.createPistolAmmo())
-            if (amount < GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-magazine"]!!)
+            if (amount < GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-ammo"]!!)
                 magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-ammo"]!!
             else
                 magazine[player] = amount
-
-            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloaded"]!!)
+            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-reload"]!!)
     }
 
