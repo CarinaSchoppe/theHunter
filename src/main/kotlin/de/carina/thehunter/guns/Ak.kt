@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 00:18 by Carina The Latest changes made by Carina on 19.04.22, 00:18 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 11:10 by Carina The Latest changes made by Carina on 19.04.22, 11:10 All contents of "Ak.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -19,8 +19,6 @@ import org.bukkit.Sound
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Arrow
 import org.bukkit.entity.Player
-import org.bukkit.event.EventHandler
-import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
 object Ak {
@@ -34,20 +32,7 @@ object Ak {
     }
 
 
-    @EventHandler
-    fun onPlayerShoot(event: PlayerInteractEvent) {
-        if (event.item == null) return
-        if (!event.item!!.hasItemMeta()) return
-        if (event.item!!.itemMeta != createAkGunItem().itemMeta) return
-        if (event.action.isLeftClick) return
-        if (!event.player.hasPermission("thehunter.ak")) return
-        if (event.player.isSneaking) {
-            reloadGun(event.player)
-            return
-        }
 
-        shoot(event.player)
-    }
 
     private fun shootProjectile(player: Player) {
         val arrow = player.launchProjectile(Arrow::class.java, player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["ak-power"]!!))
