@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 16:28 by Carina The Latest changes made by Carina on 19.04.22, 16:28 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:15 by Carina The Latest changes made by Carina on 19.04.22, 19:15 All contents of "TheHunter.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -38,12 +38,6 @@ class TheHunter : JavaPlugin() {
 
     /*
     TODOS till done:
-    TODO: player Join event
-    TODO: player leave event
-    TODO: player death event
-    TODO: Cluster event
-    TODO: StatsSystem
-    TODO: CommandManager
     TODO: InventoryCommander
     TODO: anvilGUI
     TODO: Premium join
@@ -52,6 +46,8 @@ class TheHunter : JavaPlugin() {
     TODO: Commands
     TODO: TOTAL CHECKUP
     TODO: Price Online Shop
+    TODO: Testing
+    TODO: Worldboarder bug
      */
 
     companion object {

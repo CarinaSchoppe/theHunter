@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:10 by Carina The Latest changes made by Carina on 19.04.22, 19:10 All contents of "Healer.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:15 by Carina The Latest changes made by Carina on 19.04.22, 19:15 All contents of "Healer.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -36,7 +36,7 @@ class Healer : Listener {
             event.player.health += TheHunter.instance.itemSettings.settingsMap["healer-amount"] as Int
         else
             event.player.health = 20.0
-
+        ItemHandler.removeOneItemOfPlayer(event.player)
         event.player.sendActionBar(LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["healer-message"]!!.replace("%hearts%", (TheHunter.instance.settings.settingsMap["healer-amount"] as Int).toString())))
     }
 }

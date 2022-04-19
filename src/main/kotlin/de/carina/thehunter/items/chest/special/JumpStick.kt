@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:04 by Carina The Latest changes made by Carina on 19.04.22, 19:04 All contents of "JumpStick.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:15 by Carina The Latest changes made by Carina on 19.04.22, 19:15 All contents of "JumpStick.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -41,7 +41,7 @@ class JumpStick : Listener {
         if (uses.containsKey(player)) {
             if (uses[player]!! >= GamesHandler.playerInGames[player]!!.gameItems.items["jumpstick-uses"] as Int)
                 player.sendMessage(TheHunter.instance.messages.messagesMap["jumpstick-broke"]!!)
-            player.inventory.itemInMainHand.amount -= 1
+            ItemHandler.removeOneItemOfPlayer(event.player)
             uses[player] = 0
             return
         }

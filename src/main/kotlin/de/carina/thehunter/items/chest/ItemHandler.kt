@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:10 by Carina The Latest changes made by Carina on 19.04.22, 19:10 All contents of "ItemHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 19:12 by Carina The Latest changes made by Carina on 19.04.22, 19:12 All contents of "ItemHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -49,7 +49,15 @@ object ItemHandler {
         return true
     }
 
-    fun removeOneItemOfPlayer(player: Player, item: ItemStack) {
+    fun removeOneItemOfPlayer(player: Player) {
+        val item = player.inventory.itemInMainHand
+        if (item.amount == 1) {
+            player.inventory.setItemInMainHand(null)
+            return
+        } else {
+            item.amount -= 1
+            player.inventory.setItemInMainHand(item)
+        }
 
     }
 }
