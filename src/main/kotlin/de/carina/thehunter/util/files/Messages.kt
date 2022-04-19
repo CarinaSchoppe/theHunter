@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 00:55 by Carina The Latest changes made by Carina on 19.04.22, 00:55 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 10:40 by Carina The Latest changes made by Carina on 19.04.22, 10:40 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -74,6 +74,12 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("team-won", "&aThe team with leader &6%leader% &awon the game!")
         yml.addDefault("game-over", "&aThe game is over!")
         yml.addDefault("endcountdown-message", "&7The game ends in &6%time%&7 seconds!")
+        yml.addDefault("player-own-died", "&cYou died!")
+        yml.addDefault("player-died", "&cThe player &6%player% &cdied!")
+        yml.addDefault("player-own-killed-by-other", "&cYou were killed by &6%player%&c!")
+        yml.addDefault("player-killed-by-other", "&cThe player &6%player% &cwas killed by &6%killer%&c!")
+        yml.addDefault("player-quit", "&cThe player &6%player% &cquit the game!")
+        yml.addDefault("player-own-quit", "&cYou quit the game!")
         super.addData()
         loadMessagesToMap()
         return this

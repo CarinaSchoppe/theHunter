@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 10:27 by Carina The Latest changes made by Carina on 19.04.22, 10:27 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -13,6 +13,7 @@ package de.carina.thehunter.countdowns
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.Game
 import org.bukkit.Bukkit
+import org.bukkit.scheduler.BukkitTask
 import java.util.function.Consumer
 
 class LobbyCountdown(game: Game) : Countdown(game) {
@@ -20,10 +21,22 @@ class LobbyCountdown(game: Game) : Countdown(game) {
     override var duration: Int = 60
 
 
+    private lateinit var taskIDRun: BukkitTask
+    private lateinit var idleID: BukkitTask
+
     override fun idle() {
         isIdle = true
+        isRunning = false
         duration = 10
-        Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
+        idleID = Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
+
+            if (game.players.isEmpty() && game.spectators.isEmpty()) {
+                idleID.cancel()
+                taskIDRun.cancel()
+                isIdle = false
+                isRunning = false
+                return@Runnable
+            }
             if (game.players.size >= game.minPlayers) {
                 isIdle = false
                 start()
@@ -40,12 +53,21 @@ class LobbyCountdown(game: Game) : Countdown(game) {
     }
 
     override fun start() {
+        isRunning = true
+        isIdle = false
         duration = TheHunter.instance.settings.settingsMap["duration-lobby"] as Int
         if (game.players.size < game.minPlayers) {
             idle()
             return
         }
-        Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
+        idleID.cancel()
+        taskIDRun = Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
+
+
+            if (game.players.size < game.minPlayers) {
+                idle()
+                return@Runnable
+            }
             if (duration <= 0) {
                 game.players.forEach(Consumer { player ->
                     player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting"]!!.replace("%time%", duration.toString()))
@@ -93,6 +115,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
     }
 
     override var isIdle: Boolean = false
+    var isRunning = false
 
     override val id: Int = Countdowns.LOBBY_COUNTDOWN.id
 

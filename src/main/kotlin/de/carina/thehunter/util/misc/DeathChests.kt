@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 18.04.22, 23:29 by Carina The Latest changes made by Carina on 18.04.22, 23:29 All contents of "DeathChests.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 10:36 by Carina The Latest changes made by Carina on 19.04.22, 10:36 All contents of "DeathChests.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -14,6 +14,7 @@ import de.carina.thehunter.util.game.Game
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 
@@ -34,6 +35,9 @@ class DeathChests(private val game: Game) {
         val blockString = Material.AIR.toString() + ":" + player.location.world.name + ":" + player.location.x + ":" + player.location.y + ":" + player.location.z
         game.mapResetter.blocks.add(blockString)
         chests[player.location] = inventory
+        player.inventory.clear()
+        player.updateInventory()
+        player.location.world.spawnEntity(player.location, EntityType.LIGHTNING)
     }
 
 }
