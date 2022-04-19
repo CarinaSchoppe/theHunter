@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 16:39 by Carina The Latest changes made by Carina on 19.04.22, 16:39 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:39 by Carina The Latest changes made by Carina on 19.04.22, 18:39 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -91,6 +91,7 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("player-joined-game", "&aThe player &6%player% &ajoined the game&a!")
         yml.addDefault("game-full-spectator", "&cThe game is full! You are now a spectator!")
         yml.addDefault("game-already-exists", "&cThe game &6%game% &calready exists!")
+        yml.addDefault("player-already-ingame", "&cYou are already in a game!")
         yml.addDefault("game-successfully-created", "&aThe game &6%game% &ahas been created!")
         yml.addDefault("game-successfully-activated", "&aThe game &6%game% &ahas been activated!")
         yml.addDefault("game-lobby-set", "&aThe &6lobby spawn&a has been set for game &6%game%&a!")

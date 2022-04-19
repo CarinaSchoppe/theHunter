@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:19 by Carina The Latest changes made by Carina on 19.04.22, 18:19 All contents of "EndCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:22 by Carina The Latest changes made by Carina on 19.04.22, 18:22 All contents of "EndCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -21,17 +21,15 @@ class EndCountdown(game: Game) : Countdown(game) {
     override var duration: Int = 10
 
 
-
     override fun start() {
         duration = TheHunter.instance.settings.settingsMap["duration-endcountdown"] as Int
         Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Consumer {
-            duration--
             if (game.players.isEmpty() && game.spectators.isEmpty()) {
                 stop()
                 it.cancel()
             }
             when (duration) {
-                in 0 downTo 0 -> {
+                0 -> {
                     println("hiersindwir")
                     stop()
                 }
@@ -49,16 +47,18 @@ class EndCountdown(game: Game) : Countdown(game) {
                 }
 
             }
-            duration--
+            duration -= 1
+
+
         }, 20L, 20L)
     }
 
     override fun idle() {
-        //Will not be implemented
         return
     }
 
     override fun stop() {
+        print("hierrrrr")
         game.nextGameState()
     }
 

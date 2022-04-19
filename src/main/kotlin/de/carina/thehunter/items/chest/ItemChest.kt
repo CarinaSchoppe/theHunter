@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 17:24 by Carina The Latest changes made by Carina on 19.04.22, 17:24 All contents of "ItemChest.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:48 by Carina The Latest changes made by Carina on 19.04.22, 18:48 All contents of "ItemChest.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -115,8 +115,8 @@ class ItemChest(private val game: Game) {
             return
         repeat(game.chestAmount) {
             val x = Util.getRandomXYValueFromWorldBoarder(game)
-            val y = Util.getRandomXYValueFromWorldBoarder(game)
-            val location = game.arenaCenter!!.clone().add(x + 0.0, y + 0.0, 255.0)
+            val z = Util.getRandomXYValueFromWorldBoarder(game)
+            val location = game.arenaCenter!!.clone().add(x + 0.0, 255.0, z + 0.0)
             val block = location.world.spawnFallingBlock(location, Material.BEACON.createBlockData())
             game.gameEntities.add(block)
             GamesHandler.entitiesInGames[block] = game

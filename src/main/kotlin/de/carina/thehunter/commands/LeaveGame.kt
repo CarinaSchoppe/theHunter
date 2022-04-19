@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 17:24 by Carina The Latest changes made by Carina on 19.04.22, 17:24 All contents of "LeaveGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:47 by Carina The Latest changes made by Carina on 19.04.22, 18:47 All contents of "LeaveGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -14,6 +14,7 @@ import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.game.Team
+import de.carina.thehunter.util.misc.Util
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -50,8 +51,7 @@ class LeaveGame {
         GamesHandler.playerInGames.remove(player)
         GamesHandler.spectatorInGames.remove(player)
         player.teleport(game.backLocation!!)
-        println("a" + GamesHandler.playerInGames.size)
-        println("ab" + game.players.size)
+        Util.updateGameSigns(game)
         player.inventory.clear()
         player.scoreboard.clearSlot(DisplaySlot.SIDEBAR)
         val team = game.teams.find { it.teamMembers.contains(player) }

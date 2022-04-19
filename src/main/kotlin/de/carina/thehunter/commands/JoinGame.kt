@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 16:34 by Carina The Latest changes made by Carina on 19.04.22, 16:34 All contents of "JoinGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:47 by Carina The Latest changes made by Carina on 19.04.22, 18:47 All contents of "JoinGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -14,6 +14,7 @@ import de.carina.thehunter.TheHunter
 import de.carina.thehunter.countdowns.LobbyCountdown
 import de.carina.thehunter.items.configurator.LeaveItem
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.Util
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.command.CommandSender
@@ -28,6 +29,10 @@ class JoinGame {
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace("%game%", args[0]))
+            return
+        }
+        if (GamesHandler.playerInGames.containsKey(sender) || GamesHandler.spectatorInGames.containsKey(sender)) {
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["player-already-ingame"]!!)
             return
         }
         if (game.players.size + 1 <= game.maxPlayers) {
@@ -47,6 +52,7 @@ class JoinGame {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["game-full-spectator"]!!)
             sender.teleport(game.lobbyLocation!!)
         }
+        Util.updateGameSigns(game)
         sender.inventory.clear()
         sender.inventory.setItem(8, LeaveItem.createLeaveItem())
         sender.gameMode = GameMode.SURVIVAL
@@ -63,6 +69,10 @@ class JoinGame {
             if (game.players.contains(sender))
                 it.showPlayer(TheHunter.instance, sender)
             sender.showPlayer(TheHunter.instance, it)
+        }
+        game.spectators.forEach {
+            if (game.players.contains(sender))
+                it.showPlayer(TheHunter.instance, sender)
         }
     }
 }

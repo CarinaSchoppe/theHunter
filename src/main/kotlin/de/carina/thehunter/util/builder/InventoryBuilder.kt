@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:19 by Carina The Latest changes made by Carina on 19.04.22, 18:19 All contents of "InventoryBuilder.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:21 by Carina The Latest changes made by Carina on 19.04.22, 18:21 All contents of "InventoryBuilder.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -30,7 +30,6 @@ class InventoryBuilder(name: String, size: Int) {
 
     fun addGamesToInventory(): InventoryBuilder {
         for (game in GamesHandler.games) {
-            print("adding")
             inventory.addItem(ItemBuilder(Material.ACACIA_SIGN).addDisplayName("§6${game.name}").addLore("§7Click to join the game").addLore("§7current Gamestate: §6${game.currentGameState}").addLore("§aCurrent players: §7[§6${game.players.size}§7/§6${game.maxPlayers}§7]").build())
         }
         return this

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 00:55 by Carina The Latest changes made by Carina on 19.04.22, 00:55 All contents of "GameSigns.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:37 by Carina The Latest changes made by Carina on 19.04.22, 18:37 All contents of "GameSigns.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -39,9 +39,8 @@ class GameSigns : Listener {
         if (sign.line(0) == LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX)) {
             event.isCancelled = true
             event.player.performCommand("thehunter join " + PlainTextComponentSerializer.plainText().serialize(sign.line(1)))
-            Util.updateGameSigns(game)
             game.signs.add(sign)
-
+            Util.updateGameSigns(game)
         }
     }
 
@@ -58,7 +57,7 @@ class GameSigns : Listener {
 
         event.line(0, LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX))
         event.line(1, LegacyComponentSerializer.legacySection().deserialize("§6" + game.name))
-        event.line(2, LegacyComponentSerializer.legacySection().deserialize("§7[§6" + game.players.size + " §7|§6" + game.maxPlayers + "§7]"))
+        event.line(2, LegacyComponentSerializer.legacySection().deserialize("§7[§6" + game.players.size + " §7|§6 " + game.maxPlayers + "§7]"))
         event.line(3, LegacyComponentSerializer.legacySection().deserialize("§aLOBBY"))
         val sign = event.block.state as Sign
         game.signs.add(sign)

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 12:46 by Carina The Latest changes made by Carina on 19.04.22, 12:46 All contents of "PlayerKillsOtherOrDies.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:30 by Carina The Latest changes made by Carina on 19.04.22, 18:30 All contents of "PlayerKillsOtherOrDies.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -15,7 +15,6 @@ import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.items.configurator.LeaveItem
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -92,13 +91,9 @@ class PlayerKillsOtherOrDies : Listener {
         player.inventory.setItem(8, LeaveItem.createLeaveItem())
         player.teleport(game.spectatorLocation!!)
         player.inventory.clear()
-        for (players in Bukkit.getOnlinePlayers()) {
-            players.showPlayer(TheHunter.instance, player)
-        }
 
         GamesHandler.playerInGames.keys.forEach {
             it.hidePlayer(TheHunter.instance, player)
-            player.hidePlayer(TheHunter.instance, it)
         }
         GamesHandler.spectatorInGames.keys.forEach {
             it.hidePlayer(TheHunter.instance, player)

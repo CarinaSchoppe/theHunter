@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 16:34 by Carina The Latest changes made by Carina on 19.04.22, 16:34 All contents of "PlayerDisconnects.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:47 by Carina The Latest changes made by Carina on 19.04.22, 18:47 All contents of "PlayerDisconnects.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -13,6 +13,7 @@ package de.carina.thehunter.events.game
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.Util
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -44,6 +45,7 @@ class PlayerDisconnects : Listener {
         game.spectators.remove(player)
         game.players.remove(player)
         player.inventory.clear()
+        Util.updateGameSigns(game)
         GamesHandler.playerInGames.remove(player)
         GamesHandler.spectatorInGames.remove(player)
         player.teleport(game.backLocation!!)

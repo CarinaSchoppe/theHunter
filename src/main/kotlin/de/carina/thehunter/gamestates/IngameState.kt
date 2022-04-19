@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:14 by Carina The Latest changes made by Carina on 19.04.22, 18:14 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 18:43 by Carina The Latest changes made by Carina on 19.04.22, 18:43 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -47,19 +47,22 @@ class IngameState(game: Game) : GameState(game) {
             }
             Bukkit.getOnlinePlayers().forEach {
                 game.spectators.forEach(Consumer { spectator ->
-                    spectator.hidePlayer(TheHunter.instance, it)
+                    if (!game.players.contains(it))
+                        spectator.hidePlayer(TheHunter.instance, it)
                     it.hidePlayer(TheHunter.instance, spectator)
                 })
             }
         }
 
-        if (game.checkWinning())
+        if (game.checkWinning()) {
             game.nextGameState()
-        givePlayerStartItems()
-        startImmunityCounter()
-        game.gameChest.makeChestsFall()
-        game.worldBoarderController.shrinkWorld()
-
+            return
+        } else {
+            givePlayerStartItems()
+            startImmunityCounter()
+            game.gameChest.makeChestsFall()
+            game.worldBoarderController.shrinkWorld()
+        }
     }
 
 
@@ -67,7 +70,7 @@ class IngameState(game: Game) : GameState(game) {
         Bukkit.getScheduler().runTaskTimer(TheHunter.instance, { task ->
             if (game.currentGameState !is IngameState)
                 task.cancel()
-            game.immunity -= 1
+
             when (game.immunity) {
                 0 -> {
                     game.players.forEach {
@@ -83,6 +86,7 @@ class IngameState(game: Game) : GameState(game) {
                     }
                 }
             }
+            game.immunity -= 1
         }, 20L, 20L)
     }
 
