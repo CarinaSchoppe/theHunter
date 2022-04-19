@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 12:58 by Carina The Latest changes made by Carina on 19.04.22, 12:58 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:42 by Carina The Latest changes made by Carina on 19.04.22, 13:42 All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -148,6 +148,7 @@ class Game(var name: String) {
         ymlLocations.options().copyDefaults(true)
         ymlLocations.save(fileLocations)
         ymlSettings.save(fileSettings)
+        Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-saved"]!!.replace("%game%", name))
         return true
     }
 
@@ -227,15 +228,9 @@ class Game(var name: String) {
     }
 
     fun create() {
-        if (!isGameValidConfigured()) {
-            Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", name))
-            return
-        }
         countdowns.addAll(listOf(LobbyCountdown(this), EndCountdown(this)))
         gameStates.addAll(listOf(LobbyState(this), IngameState(this), EndState(this)))
-        gameItems.saveAllItems()
-        gameItems.loadAllItems()
-        gameItems.loadAllGunSettings()
+
         currentGameState = gameStates[GameStates.LOBBY_STATE.id]
         currentCountdown = countdowns[Countdowns.LOBBY_COUNTDOWN.id]
         worldBoarderController = WorldboarderController(this)
@@ -244,6 +239,19 @@ class Game(var name: String) {
         gameItems = GameItems(this)
         gameChest = ItemChest(this)
         deathChests = DeathChests(this)
+        GamesHandler.setupGames.add(this)
+    }
+
+    fun finish() {
+        if (!isGameValidConfigured()) {
+            Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", name))
+            return
+        }
+        saveGameToConfig()
+        gameItems.saveAllItems()
+        gameItems.loadAllItems()
+        gameItems.loadAllGunSettings()
+        GamesHandler.setupGames.remove(this)
         GamesHandler.games.add(this)
         Util.updateGameSigns(this)
     }

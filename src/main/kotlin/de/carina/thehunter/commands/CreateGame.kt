@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:33 by Carina The Latest changes made by Carina on 19.04.22, 13:33 All contents of "CreateGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:42 by Carina The Latest changes made by Carina on 19.04.22, 13:42 All contents of "CreateGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -28,10 +28,7 @@ class CreateGame {
                     return
                 }
                 val game = Game(args[1])
-                GamesHandler.setupGames.add(game)
-                GamesHandler.setupGames.forEach {
-                    println(it.name + "<- game name setup")
-                }
+                game.create()
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-created"]!!.replace("%game%", args[1]))
             }
             "config" -> {
@@ -40,9 +37,6 @@ class CreateGame {
                     return
                 }
                 val game = GamesHandler.setupGames.find { it.name == args[2] }
-                GamesHandler.setupGames.forEach {
-                    println(it.name + "<- game name setup")
-                }
                 if (game == null) {
                     sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace("%game%", args[2]))
                     return
@@ -64,17 +58,20 @@ class CreateGame {
                         game.endLocation = (sender as Player).location
                         sender.sendMessage(TheHunter.instance.messages.messagesMap["game-end-set"]!!.replace("%game%", args[2]))
                     }
+
+                    "arenacenter" -> {
+                        game.arenaCenter = (sender as Player).location
+                        sender.sendMessage(TheHunter.instance.messages.messagesMap["game-arenacenter-set"]!!.replace("%game%", args[2]))
+
+                    }
                     "finish" -> {
                         if (!game.isGameValidConfigured()) {
                             sender.sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", args[2]))
                             return
                         }
-                        GamesHandler.games.add(game)
-                        GamesHandler.setupGames.remove(game)
+                        game.finish()
                         sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-created"]!!.replace("%game%", args[2]))
-                        game.saveGameToConfig()
                         sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-saved"]!!.replace("%game%", args[2]))
-                        game.create()
                     }
                 }
 

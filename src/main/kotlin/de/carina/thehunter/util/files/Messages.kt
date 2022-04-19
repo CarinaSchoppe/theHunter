@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:22 by Carina The Latest changes made by Carina on 19.04.22, 13:22 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:38 by Carina The Latest changes made by Carina on 19.04.22, 13:38 All contents of "Messages.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -93,12 +93,12 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("game-already-exists", "&cThe game &6%game% &calready exists!")
         yml.addDefault("game-successfully-created", "&aThe game &6%game% &ahas been created!")
         yml.addDefault("game-successfully-activated", "&aThe game &6%game% &ahas been activated!")
-        yml.addDefault("game-lobby-set", "&aThe lobby has been set for game &6%game%&a!")
-        yml.addDefault("game-spectator-set", "&aThe spectator spawn has been set for game &6%game%&a!")
-        yml.addDefault("game-arenacenter-set", "&aThe arena center has been set for game &6%game%&a!")
-        yml.addDefault("game-back-set", "&aThe back spawn has been set for game &6%game%&a!")
-        yml.addDefault("game-end-set", "&aThe end spawn has been set for game &6%game%&a!")
-        yml.addDefault("game-spawn-set", "&aThe spawn %id% has been set for game &6%game%&a!")
+        yml.addDefault("game-lobby-set", "&aThe &6lobby spawn&a has been set for game &6%game%&a!")
+        yml.addDefault("game-spectator-set", "&aThe &6spectator spawn&a has been set for game &6%game%&a!")
+        yml.addDefault("game-arenacenter-set", "&aThe &6arena center&a has been set for game &6%game%&a!")
+        yml.addDefault("game-back-set", "&aThe &6back spawn&a has been set for game &6%game%&a!")
+        yml.addDefault("game-end-set", "&aThe &6end spawn&a has been set for game &6%game%&a!")
+        yml.addDefault("game-spawn-set", "&aThe &6spawn %id% &ahas been set for game &6%game%&a!")
         yml.addDefault("game-successfully-saved", "&aThe game &6%game% &ahas been saved!")
         yml.addDefault("player-own-not-in-game", "&cYou are not in a game!")
         super.addData()
