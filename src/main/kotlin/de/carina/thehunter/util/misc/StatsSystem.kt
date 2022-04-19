@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 11:37 by Carina The Latest changes made by Carina on 19.04.22, 11:37 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 19.04.22, 13:13 by Carina The Latest changes made by Carina on 19.04.22, 13:13 All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -12,6 +12,8 @@ package de.carina.thehunter.util.misc
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.files.BaseFile
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.util.*
 
@@ -52,6 +54,8 @@ class StatsSystem : BaseFile("stats.yml") {
                     )
                 }
             }
+            Bukkit.getConsoleSender().sendMessage(LegacyComponentSerializer.legacySection().deserialize(TheHunter.PREFIX + "§aStats loaded"))
+
         }
     }
 
