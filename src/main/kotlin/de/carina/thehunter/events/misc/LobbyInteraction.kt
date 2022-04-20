@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 20.04.22, 10:48 by Carina The Latest changes made by Carina on 20.04.22, 10:48 All contents of "LobbyInteraction.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 20.04.22, 10:58 by Carina The Latest changes made by Carina on 20.04.22, 10:58 All contents of "LobbyInteraction.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -11,6 +11,7 @@
 package de.carina.thehunter.events.misc
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.gamestates.EndState
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.gamestates.LobbyState
 import de.carina.thehunter.util.game.GamesHandler
@@ -19,6 +20,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 
 class LobbyInteraction : Listener {
@@ -99,6 +101,27 @@ class LobbyInteraction : Listener {
                 return
             }
 
+        }
+    }
+
+
+    @EventHandler
+    fun onLobbyInventoryClick(event: InventoryClickEvent) {
+        if (event.whoClicked !is Player)
+            return
+        if (GamesHandler.playerInGames.containsKey(event.whoClicked) || GamesHandler.spectatorInGames.containsKey(event.whoClicked)) {
+            val game = if (GamesHandler.playerInGames.containsKey(event.whoClicked)) GamesHandler.playerInGames[event.whoClicked] else GamesHandler.spectatorInGames[event.whoClicked]
+            if (game!!.currentGameState is LobbyState || game.currentGameState is EndState) {
+                event.isCancelled = true
+                (event.whoClicked as Player).updateInventory()
+                return
+            } else {
+                if (GamesHandler.spectatorInGames.containsKey(event.whoClicked)) {
+                    event.isCancelled = true
+                    (event.whoClicked as Player).updateInventory()
+                    return
+                }
+            }
         }
     }
 }
