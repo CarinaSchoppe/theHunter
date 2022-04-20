@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "EggBomb.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 20.04.22, 10:48 by Carina The Latest changes made by Carina on 20.04.22, 10:48 All contents of "EggBomb.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -13,6 +13,7 @@ package de.carina.thehunter.items.chest.special
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.builder.ItemBuilder
+import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -63,6 +64,11 @@ class EggBomb : Listener {
 
         if (GamesHandler.playerInGames[player]!!.currentGameState !is IngameState)
             return
+        eggBombBoom(game, event, egg)
+    }
+
+
+    private fun eggBombBoom(game: Game, event: ProjectileHitEvent, egg: Egg) {
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Runnable {
             val tnt = event.entity.location.world.spawn(event.entity.location, org.bukkit.entity.TNTPrimed::class.java)
             tnt.fuseTicks = 0
@@ -71,6 +77,5 @@ class EggBomb : Listener {
             GamesHandler.entitiesInGames[tnt] = game
         }, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-delay"] as Int) * 20L)
     }
-
 
 }

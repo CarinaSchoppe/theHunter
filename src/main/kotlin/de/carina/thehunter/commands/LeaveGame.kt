@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:47 by Carina The Latest changes made by Carina on 19.04.22, 18:47 All contents of "LeaveGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 20.04.22, 10:48 by Carina The Latest changes made by Carina on 20.04.22, 10:48 All contents of "LeaveGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -12,6 +12,7 @@ package de.carina.thehunter.commands
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
+import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.game.Team
 import de.carina.thehunter.util.misc.Util
@@ -54,6 +55,11 @@ class LeaveGame {
         Util.updateGameSigns(game)
         player.inventory.clear()
         player.scoreboard.clearSlot(DisplaySlot.SIDEBAR)
+
+        playerMessagesAndHiding(game, player)
+    }
+
+    private fun playerMessagesAndHiding(game: Game, player: Player) {
         val team = game.teams.find { it.teamMembers.contains(player) }
         if (team != null)
             Team.removePlayerFromTeam(player, player)
@@ -76,6 +82,5 @@ class LeaveGame {
             it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace("%player%", player.name))
         }
         player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-quit"]!!)
-
     }
 }

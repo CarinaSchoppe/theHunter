@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 20:04 by Carina The Latest changes made by Carina on 19.04.22, 20:04 All contents of "GunHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 20.04.22, 10:48 by Carina The Latest changes made by Carina on 20.04.22, 10:48 All contents of "GunHandler.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -33,65 +33,79 @@ class GunHandler : Listener {
             return
         if (!event.item!!.hasItemMeta()) return
         if (event.action.isLeftClick) {
-            when (event.item!!.itemMeta) {
-                Ak.createAkGunItem().itemMeta -> {
-                    if (!event.player.hasPermission("thehunter.ak")) return
-                    Ak.reloadGun(event.player)
-                    return
-                }
-                Minigun.createMiniGunItem().itemMeta -> {
-                    if (!event.player.hasPermission("thehunter.minigun")) return
-                    Minigun.reloadGun(event.player)
-                    return
-                }
-                Pistol.createPistolGunItem().itemMeta -> {
-                    if (!event.player.hasPermission("thehunter.pistol")) return
-                    Pistol.reloadGun(event.player)
-                    return
-                }
-                Sniper.createSniperGunItem().itemMeta -> {
-                    if (!event.player.hasPermission("thehunter.sniper")) return
-
-                    Sniper.reloadGun(event.player)
-                    return
-                }
-            }
+            if (whenLeftClick(event))
+                return
+        } else {
+            if (whenRightClick(event))
+                return
 
         }
+    }
+
+    private fun whenLeftClick(event: PlayerInteractEvent): Boolean {
         when (event.item!!.itemMeta) {
             Ak.createAkGunItem().itemMeta -> {
-                if (!event.player.hasPermission("thehunter.ak")) return
+                if (!event.player.hasPermission("thehunter.ak")) return true
+                Ak.reloadGun(event.player)
+                return true
+            }
+            Minigun.createMiniGunItem().itemMeta -> {
+                if (!event.player.hasPermission("thehunter.minigun")) return true
+                Minigun.reloadGun(event.player)
+                return true
+            }
+            Pistol.createPistolGunItem().itemMeta -> {
+                if (!event.player.hasPermission("thehunter.pistol")) return true
+                Pistol.reloadGun(event.player)
+                return true
+            }
+            Sniper.createSniperGunItem().itemMeta -> {
+                if (!event.player.hasPermission("thehunter.sniper")) return true
+
+                Sniper.reloadGun(event.player)
+                return true
+            }
+        }
+        return true
+
+    }
+
+    private fun whenRightClick(event: PlayerInteractEvent): Boolean {
+        when (event.item!!.itemMeta) {
+            Ak.createAkGunItem().itemMeta -> {
+                if (!event.player.hasPermission("thehunter.ak")) return true
                 if (event.player.isSneaking) {
                     Ak.reloadGun(event.player)
-                    return
+                    return true
                 }
                 Ak.shoot(event.player)
             }
             Minigun.createMiniGunItem().itemMeta -> {
-                if (!event.player.hasPermission("thehunter.minigun")) return
+                if (!event.player.hasPermission("thehunter.minigun")) return true
                 if (event.player.isSneaking) {
                     Minigun.reloadGun(event.player)
-                    return
+                    return true
                 }
                 Minigun.shoot(event.player)
             }
             Pistol.createPistolGunItem().itemMeta -> {
-                if (!event.player.hasPermission("thehunter.pistol")) return
+                if (!event.player.hasPermission("thehunter.pistol")) return true
                 if (event.player.isSneaking) {
                     Pistol.reloadGun(event.player)
-                    return
+                    return true
                 }
                 Pistol.shoot(event.player)
             }
             Sniper.createSniperGunItem().itemMeta -> {
-                if (!event.player.hasPermission("thehunter.sniper")) return
+                if (!event.player.hasPermission("thehunter.sniper")) return true
                 if (event.player.isSneaking) {
                     Sniper.reloadGun(event.player)
-                    return
+                    return true
                 }
                 Sniper.shoot(event.player)
             }
         }
+        return true
     }
 
     @EventHandler

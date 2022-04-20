@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:41 by Carina The Latest changes made by Carina on 19.04.22, 19:41 All contents of "PlayerKillsOtherOrDies.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 20.04.22, 10:48 by Carina The Latest changes made by Carina on 20.04.22, 10:48 All contents of "PlayerKillsOtherOrDies.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -49,6 +49,13 @@ class PlayerKillsOtherOrDies : Listener {
         TheHunter.instance.statsSystem.playerKilledOtherPlayer(killer, player)
         generalHandling(player, game)
         event.deathMessage(Component.text(""))
+        playerHiding(player, game, killer)
+        player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-killed-by-other"]!!.replace("%killer%", killer.name))
+        if (game.checkWinning())
+            game.nextGameState()
+    }
+
+    private fun playerHiding(player: Player, game: Game, killer: Player) {
         game.players.forEach {
             it.sendMessage(TheHunter.instance.messages.messagesMap["player-killed-by-other"]!!.replace("%player%", player.name).replace("%killer%", killer.name))
             it.hidePlayer(TheHunter.instance, player)
@@ -59,9 +66,6 @@ class PlayerKillsOtherOrDies : Listener {
             it.hidePlayer(TheHunter.instance, player)
             player.hidePlayer(TheHunter.instance, it)
         }
-        player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-killed-by-other"]!!.replace("%killer%", killer.name))
-        if (game.checkWinning())
-            game.nextGameState()
     }
 
     private fun addDeathToPlayer(event: PlayerDeathEvent, player: Player) {

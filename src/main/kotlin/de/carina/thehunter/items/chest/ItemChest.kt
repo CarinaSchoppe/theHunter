@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "ItemChest.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 20.04.22, 10:48 by Carina The Latest changes made by Carina on 20.04.22, 10:48 All contents of "ItemChest.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -32,8 +32,41 @@ class ItemChest(private val game: Game) {
     val chests = mutableMapOf<Location, Inventory>()
     fun createItemInventory(): Inventory {
         val inventory = Bukkit.createInventory(null, 54, LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§7Chest"))
-        val items = mutableListOf<ItemStack>()
-        val ammo = mutableListOf<ItemStack>()
+        var items = mutableListOf<ItemStack>()
+        var ammo = mutableListOf<ItemStack>()
+
+        items = addItems(items)
+        ammo = ammoAdding(ammo)
+
+        fillChests(inventory, items, ammo)
+        return inventory
+    }
+
+
+    private fun fillChests(inventory: Inventory, items: MutableList<ItemStack>, ammo: MutableList<ItemStack>) {
+        repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
+            val item = items[Random().nextInt(items.size)]
+            while (true) {
+                val place = Random().nextInt(54)
+                if (inventory.getItem(place) == null) {
+                    inventory.setItem(place, item)
+                    break
+                }
+            }
+        }
+        repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
+            val item = ammo[Random().nextInt(ammo.size)]
+            while (true) {
+                val place = Random().nextInt(54)
+                if (inventory.getItem(place) == null) {
+                    inventory.setItem(place, item)
+                    break
+                }
+            }
+        }
+    }
+
+    private fun addItems(items: MutableList<ItemStack>): MutableList<ItemStack> {
         if (game.gameItems.items["EggBomb"] == true) {
             val item = EggBomb.createEggBomb()
             item.amount = game.gameItems.items["eggbomb-amount"] as Int
@@ -79,6 +112,11 @@ class ItemChest(private val game: Game) {
             item.amount = game.gameItems.items["tracker-amount"] as Int
             items.add(item)
         }
+
+        return items
+    }
+
+    private fun ammoAdding(ammo: MutableList<ItemStack>): MutableList<ItemStack> {
         if (game.gameItems.items["PistolAmmo"] == true) {
             val item = Pistol.createPistolAmmo()
             item.amount = game.gameItems.items["pistolammo-amount"] as Int
@@ -99,27 +137,7 @@ class ItemChest(private val game: Game) {
             item.amount = game.gameItems.items["minigunammo-amount"] as Int
             ammo.add(item)
         }
-        repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
-            val item = items[Random().nextInt(items.size)]
-            while (true) {
-                val place = Random().nextInt(54)
-                if (inventory.getItem(place) == null) {
-                    inventory.setItem(place, item)
-                    break
-                }
-            }
-        }
-        repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
-            val item = ammo[Random().nextInt(ammo.size)]
-            while (true) {
-                val place = Random().nextInt(54)
-                if (inventory.getItem(place) == null) {
-                    inventory.setItem(place, item)
-                    break
-                }
-            }
-        }
-        return inventory
+        return ammo
     }
 
     fun makeChestsFall() {

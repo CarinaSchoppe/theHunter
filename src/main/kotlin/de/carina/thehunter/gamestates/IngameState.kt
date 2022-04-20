@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 20.04.22, 10:48 by Carina The Latest changes made by Carina on 20.04.22, 10:48 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -21,38 +21,18 @@ import de.carina.thehunter.util.misc.PlayerDropping
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import java.util.function.Consumer
 
 class IngameState(game: Game) : GameState(game) {
     override fun start() {
         if (game.randomPlayerDrop) PlayerDropping.dropPlayers(game)
         else {
-            for ((index, player) in game.players.withIndex()) {
-                player.isInvulnerable = true
-                TheHunter.instance.statsSystem.playerPlaysGame(player)
-                game.scoreBoard.createNewScoreboard(player)
-                player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix), LegacyComponentSerializer.legacySection().deserialize("§Lets Play!")))
-                player.teleport(game.playerSpawns[index])
-                //Create a for each loop with game.spectators with the Consumer spectator
-                Bukkit.getOnlinePlayers().forEach {
-                    player.hidePlayer(TheHunter.instance, it)
-                    it.hidePlayer(TheHunter.instance, player)
-                }
-                game.players.forEach {
-                    it.showPlayer(TheHunter.instance, player)
-                }
-                game.spectators.forEach(Consumer { spectator ->
-                    spectator.showPlayer(TheHunter.instance, player)
-                })
-            }
-            Bukkit.getOnlinePlayers().forEach {
-                game.spectators.forEach(Consumer { spectator ->
-                    if (!game.players.contains(it))
-                        spectator.hidePlayer(TheHunter.instance, it)
-                    it.hidePlayer(TheHunter.instance, spectator)
-                })
-            }
+            forEachPlayer()
+            allPlayerStuffHiding()
         }
+
+
 
         if (game.checkWinning()) {
             game.nextGameState()
@@ -65,6 +45,40 @@ class IngameState(game: Game) : GameState(game) {
         }
     }
 
+    private fun forEachPlayer() {
+        for ((index, player) in game.players.withIndex()) {
+            player.isInvulnerable = true
+            TheHunter.instance.statsSystem.playerPlaysGame(player)
+            game.scoreBoard.createNewScoreboard(player)
+            player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix), LegacyComponentSerializer.legacySection().deserialize("§Lets Play!")))
+            player.teleport(game.playerSpawns[index])
+            //Create a for each loop with game.spectators with the Consumer spectator
+            playerHiding(player)
+        }
+    }
+
+    private fun playerHiding(player: Player) {
+        Bukkit.getOnlinePlayers().forEach {
+            player.hidePlayer(TheHunter.instance, it)
+            it.hidePlayer(TheHunter.instance, player)
+        }
+        game.players.forEach {
+            it.showPlayer(TheHunter.instance, player)
+        }
+        game.spectators.forEach(Consumer { spectator ->
+            spectator.showPlayer(TheHunter.instance, player)
+        })
+    }
+
+    private fun allPlayerStuffHiding() {
+        Bukkit.getOnlinePlayers().forEach {
+            game.spectators.forEach(Consumer { spectator ->
+                if (!game.players.contains(it))
+                    spectator.hidePlayer(TheHunter.instance, it)
+                it.hidePlayer(TheHunter.instance, spectator)
+            })
+        }
+    }
 
     private fun startImmunityCounter() {
         Bukkit.getScheduler().runTaskTimer(TheHunter.instance, { task ->

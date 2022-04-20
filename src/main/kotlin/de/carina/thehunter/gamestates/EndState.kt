@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 18:30 by Carina The Latest changes made by Carina on 19.04.22, 18:30 All contents of "EndState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 20.04.22, 10:48 by Carina The Latest changes made by Carina on 20.04.22, 10:48 All contents of "EndState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -17,14 +17,14 @@ import de.carina.thehunter.util.game.Game
 class EndState(game: Game) : GameState(game) {
     override fun start() {
 
-        game.players.forEach {
-            it.inventory.clear()
-            it.teleport(game.endLocation!!)
-            for (spectator in game.spectators) {
-                spectator.showPlayer(TheHunter.instance, it)
-                it.showPlayer(TheHunter.instance, spectator)
-            }
-        }
+        playerStuff(game)
+        spectatorStuff(game)
+
+        game.currentCountdown = game.countdowns[Countdowns.END_COUNTDOWN.id]
+        game.currentCountdown.start()
+    }
+
+    private fun spectatorStuff(game: Game) {
         game.spectators.forEach {
             it.inventory.clear()
             it.teleport(game.endLocation!!)
@@ -33,8 +33,17 @@ class EndState(game: Game) : GameState(game) {
                 it.showPlayer(TheHunter.instance, spectator)
             }
         }
-        game.currentCountdown = game.countdowns[Countdowns.END_COUNTDOWN.id]
-        game.currentCountdown.start()
+    }
+
+    private fun playerStuff(game: Game) {
+        game.players.forEach {
+            it.inventory.clear()
+            it.teleport(game.endLocation!!)
+            for (spectator in game.spectators) {
+                spectator.showPlayer(TheHunter.instance, it)
+                it.showPlayer(TheHunter.instance, spectator)
+            }
+        }
     }
 
     override fun stop() {

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 16:17 by Carina The Latest changes made by Carina on 19.04.22, 16:17 All contents of "CreateGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 20.04.22, 10:48 by Carina The Latest changes made by Carina on 20.04.22, 10:48 All contents of "CreateGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -32,53 +32,57 @@ class CreateGame {
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-created"]!!.replace("%game%", args[1]))
             }
             "config" -> {
-                if (args.size != 3) {
-                    sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!)
-                    return
-                }
-                val game = GamesHandler.setupGames.find { it.name == args[2] }
-                if (game == null) {
-                    sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace("%game%", args[2]))
-                    return
-                }
-                when (args[1].lowercase()) {
-                    "lobbyspawn" -> {
-                        game.lobbyLocation = (sender as Player).location
-                        sender.sendMessage(TheHunter.instance.messages.messagesMap["game-lobby-set"]!!.replace("%game%", args[2]))
-                    }
-                    "spectatorspawn" -> {
-                        game.spectatorLocation = (sender as Player).location
-                        sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spectator-set"]!!.replace("%game%", args[2]))
-                    }
-                    "backspawn" -> {
-                        game.backLocation = (sender as Player).location
-                        sender.sendMessage(TheHunter.instance.messages.messagesMap["game-back-set"]!!.replace("%game%", args[2]))
-                    }
-                    "endspawn" -> {
-                        game.endLocation = (sender as Player).location
-                        sender.sendMessage(TheHunter.instance.messages.messagesMap["game-end-set"]!!.replace("%game%", args[2]))
-                    }
-
-                    "arenacenter" -> {
-                        game.arenaCenter = (sender as Player).location
-                        sender.sendMessage(TheHunter.instance.messages.messagesMap["game-arenacenter-set"]!!.replace("%game%", args[2]))
-
-                    }
-                    "finish" -> {
-                        if (!game.isGameValidConfigured()) {
-                            sender.sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", args[2]))
-                            return
-                        }
-                        game.finish()
-                        sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-created"]!!.replace("%game%", args[2]))
-                        sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-saved"]!!.replace("%game%", args[2]))
-                    }
-                }
-
+                configGame(args, sender as Player)
             }
             else -> {
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["no-command-found"]!!.replace("%command%", args[0]))
             }
         }
+    }
+
+    private fun configGame(args: Array<out String>, sender: CommandSender) {
+        if (args.size != 3) {
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!)
+            return
+        }
+        val game = GamesHandler.setupGames.find { it.name == args[2] }
+        if (game == null) {
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace("%game%", args[2]))
+            return
+        }
+        when (args[1].lowercase()) {
+            "lobbyspawn" -> {
+                game.lobbyLocation = (sender as Player).location
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-lobby-set"]!!.replace("%game%", args[2]))
+            }
+            "spectatorspawn" -> {
+                game.spectatorLocation = (sender as Player).location
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spectator-set"]!!.replace("%game%", args[2]))
+            }
+            "backspawn" -> {
+                game.backLocation = (sender as Player).location
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-back-set"]!!.replace("%game%", args[2]))
+            }
+            "endspawn" -> {
+                game.endLocation = (sender as Player).location
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-end-set"]!!.replace("%game%", args[2]))
+            }
+
+            "arenacenter" -> {
+                game.arenaCenter = (sender as Player).location
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-arenacenter-set"]!!.replace("%game%", args[2]))
+
+            }
+            "finish" -> {
+                if (!game.isGameValidConfigured()) {
+                    sender.sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", args[2]))
+                    return
+                }
+                game.finish()
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-created"]!!.replace("%game%", args[2]))
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-saved"]!!.replace("%game%", args[2]))
+            }
+        }
+
     }
 }

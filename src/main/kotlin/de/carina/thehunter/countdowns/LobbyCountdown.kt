@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 19:01 by Carina The Latest changes made by Carina on 19.04.22, 19:01 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 20.04.22, 10:49 by Carina The Latest changes made by Carina on 20.04.22, 10:49 All contents of "LobbyCountdown.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -75,38 +75,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
                 it.cancel()
                 return@Consumer
             }
-
-            when (duration) {
-                in 1..TheHunter.instance.settings.settingsMap["duration-speedup"] as Int -> {
-                    game.players.forEach(Consumer { player ->
-                        player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6$duration"), LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))))
-                    })
-                    game.spectators.forEach(Consumer { spectator ->
-                        spectator.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6$duration"), LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))))
-                    })
-                    sendMessageTime()
-                }
-                60 -> {
-                    sendMessageTime()
-                }
-                30 -> {
-                    sendMessageTime()
-                }
-                20 -> {
-                    sendMessageTime()
-                }
-                in 5..10 -> {
-                    sendMessageTime()
-                }
-                else -> {
-                    game.players.forEach {
-                        it.level = duration
-                    }
-                    game.spectators.forEach {
-                        it.level = duration
-                    }
-                }
-            }
+            lobbyCountdown()
             duration--
 
         }, 20, 20)
@@ -123,6 +92,41 @@ class LobbyCountdown(game: Game) : Countdown(game) {
             spectator.level = duration
             spectator.playSound(spectator.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
         })
+    }
+
+
+    private fun lobbyCountdown() {
+        when (duration) {
+            in 1..TheHunter.instance.settings.settingsMap["duration-speedup"] as Int -> {
+                game.players.forEach(Consumer { player ->
+                    player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6$duration"), LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))))
+                })
+                game.spectators.forEach(Consumer { spectator ->
+                    spectator.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6$duration"), LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))))
+                })
+                sendMessageTime()
+            }
+            60 -> {
+                sendMessageTime()
+            }
+            30 -> {
+                sendMessageTime()
+            }
+            20 -> {
+                sendMessageTime()
+            }
+            in 5..10 -> {
+                sendMessageTime()
+            }
+            else -> {
+                game.players.forEach {
+                    it.level = duration
+                }
+                game.spectators.forEach {
+                    it.level = duration
+                }
+            }
+        }
     }
 
     override fun stop() {

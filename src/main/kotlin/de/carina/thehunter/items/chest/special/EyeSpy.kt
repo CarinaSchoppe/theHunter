@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 21:33 by Carina The Latest changes made by Carina on 19.04.22, 21:33 All contents of "EyeSpy.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 20.04.22, 10:48 by Carina The Latest changes made by Carina on 20.04.22, 10:48 All contents of "EyeSpy.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -62,6 +62,17 @@ class EyeSpy : Listener {
         player.gameMode = GameMode.SPECTATOR
         player.spectatorTarget = target
         mapPlayerTime[player] = (TheHunter.instance.itemSettings.settingsMap["eye-spy-duration"]!! as Long).toInt()
+
+        showingTitle(player)
+        TheHunter.instance.server.scheduler.scheduleSyncDelayedTask(TheHunter.instance, {
+            player.teleport(lastPlayerLocation[player]!!)
+            player.gameMode = GameMode.SURVIVAL
+            player.spectatorTarget = null
+            inEyeSpy.remove(player)
+        }, 20L * TheHunter.instance.itemSettings.settingsMap["eye-spy-duration"]!! as Long)
+    }
+
+    private fun showingTitle(player: Player) {
         TheHunter.instance.server.scheduler.scheduleSyncRepeatingTask(TheHunter.instance, {
             mapPlayerTime[player] = mapPlayerTime[player]!! - 1
             when (mapPlayerTime[player]!!) {
@@ -76,13 +87,6 @@ class EyeSpy : Listener {
                 }
             }
         }, 20L, 20L)
-
-        TheHunter.instance.server.scheduler.scheduleSyncDelayedTask(TheHunter.instance, {
-            player.teleport(lastPlayerLocation[player]!!)
-            player.gameMode = GameMode.SURVIVAL
-            player.spectatorTarget = null
-            inEyeSpy.remove(player)
-        }, 20L * TheHunter.instance.itemSettings.settingsMap["eye-spy-duration"]!! as Long)
     }
 
 }
