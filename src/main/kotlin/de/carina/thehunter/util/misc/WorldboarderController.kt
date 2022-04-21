@@ -10,7 +10,9 @@
 
 package de.carina.thehunter.util.misc
 
+import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.Game
+import org.bukkit.Bukkit
 import org.bukkit.WorldBorder
 import org.bukkit.scheduler.BukkitTask
 
@@ -27,13 +29,13 @@ class WorldboarderController(private val game: Game) {
             return
 
         resetWorldBoarder()
-/*   TODO: hier     Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
+        Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
             if (worldBoarder.size - 1 >= minBorderSize) {
                 worldBoarder.size -= 1
             } else {
                 task.cancel()
             }
-        }, (shrinkSpeed * 20).toLong(), (shrinkSpeed * 20).toLong())*/
+        }, (shrinkSpeed * 20).toLong(), (shrinkSpeed * 20).toLong())
     }
 
     fun resetWorldBoarder() {
