@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 20.04.22, 10:50 by Carina The Latest changes made by Carina on 20.04.22, 10:49 All contents of "EndState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 21.04.22, 15:29 by Carina The Latest changes made by Carina on 21.04.22, 15:29 All contents of "EndState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -25,10 +25,10 @@ class EndState(game: Game) : GameState(game) {
     }
 
     private fun spectatorStuff(game: Game) {
-        game.spectators.forEach {
+        game.spectators.toMutableList().forEach {
             it.inventory.clear()
             it.teleport(game.endLocation!!)
-            for (spectator in game.spectators) {
+            for (spectator in game.spectators.toMutableList()) {
                 spectator.showPlayer(TheHunter.instance, it)
                 it.showPlayer(TheHunter.instance, spectator)
             }
@@ -36,22 +36,23 @@ class EndState(game: Game) : GameState(game) {
     }
 
     private fun playerStuff(game: Game) {
-        game.players.forEach {
-            it.inventory.clear()
-            it.teleport(game.endLocation!!)
-            for (spectator in game.spectators) {
-                spectator.showPlayer(TheHunter.instance, it)
-                it.showPlayer(TheHunter.instance, spectator)
+        game.players.toMutableList()
+            .forEach {
+                it.inventory.clear()
+                it.teleport(game.endLocation!!)
+                for (spectator in game.spectators.toMutableList()) {
+                    spectator.showPlayer(TheHunter.instance, it)
+                    it.showPlayer(TheHunter.instance, spectator)
+                }
             }
-        }
     }
 
     override fun stop() {
         game.mapResetter.resetMap()
-        game.players.forEach {
+        game.players.toMutableList().forEach {
             it.performCommand("thehunter leave")
         }
-        game.spectators.forEach {
+        game.spectators.toMutableList().forEach {
             it.performCommand("thehunter leave")
         }
 
