@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 13:22 by Carina The Latest changes made by Carina on 19.04.22, 13:22 All contents of "Team.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 21.04.22, 14:54 by Carina The Latest changes made by Carina on 21.04.22, 14:54 All contents of "Team.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -17,7 +17,7 @@ class Team(var teamLeader: Player) {
     val invites = mutableSetOf<Player>()
     val teamMembers = mutableSetOf<Player>()
     lateinit var game: Game
-    private fun inviteTeamMember(playerToAdd: Player, leader: Player): Boolean {
+    private fun inviteTeamMember(playerToAdd: Player, leader: Player, game: Game): Boolean {
         if (!game.teamsAllowed) {
             TheHunter.instance.messages.sendMessageToPlayer(leader, "teams-not-allowed")
             return false
@@ -97,38 +97,39 @@ class Team(var teamLeader: Player) {
 
         fun removePlayerFromTeam(player: Player, leader: Player) {
             val team = GamesHandler.playerInGames[player]!!.teams.find { it.teamMembers.contains(player) }
-            if (leader == player) {
-                if (team == null) {
-                    player.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-team"]!!)
-                    return
+            if (leader != player)
+                return
+            if (team == null) {
+                player.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-team"]!!)
+                return
+            }
+            team.teamMembers.remove(player)
+            player.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team"]!!)
+            if (team.teamMembers.isEmpty()) {
+                GamesHandler.playerInGames[player]!!.teams.remove(team)
+                return
+            }
+            if (team.teamLeader == player) {
+                team.teamLeader = team.teamMembers.first()
+                team.teamLeader.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader"]!!)
+                team.teamMembers.forEach {
+                    it.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader-all"]!!.replace("%player%", team.teamLeader.name))
                 }
-                team.teamMembers.remove(player)
-                player.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team"]!!)
-                if (team.teamMembers.isEmpty()) {
-                    GamesHandler.playerInGames[player]!!.teams.remove(team)
-                    return
-                }
-                if (team.teamLeader == player) {
-                    team.teamLeader = team.teamMembers.first()
-                    team.teamLeader.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader"]!!)
-                    team.teamMembers.forEach {
-                        it.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader-all"]!!.replace("%player%", team.teamLeader.name))
-                    }
-                } else {
-                    team.teamMembers.forEach {
-                        it.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team-all"]!!.replace("%player%", player.name))
-                    }
+            } else {
+                team.teamMembers.forEach {
+                    it.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team-all"]!!.replace("%player%", player.name))
                 }
             }
+
         }
 
         fun invitePlayerToTeam(playerToInvite: Player, sender: Player) {
             val team = GamesHandler.playerInGames[sender]!!.teams.find { it.teamMembers.contains(sender) }
             if (team != null) {
-                team.inviteTeamMember(playerToInvite, sender)
+                team.inviteTeamMember(playerToInvite, sender, GamesHandler.playerInGames[sender]!!)
             } else {
                 GamesHandler.playerInGames[sender]!!.teams.add(Team(sender))
-                GamesHandler.playerInGames[sender]!!.teams.last().inviteTeamMember(playerToInvite, sender)
+                GamesHandler.playerInGames[sender]!!.teams.last().inviteTeamMember(playerToInvite, sender, GamesHandler.playerInGames[sender]!!)
             }
         }
 

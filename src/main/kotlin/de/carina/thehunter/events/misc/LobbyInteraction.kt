@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 20.04.22, 10:58 by Carina The Latest changes made by Carina on 20.04.22, 10:58 All contents of "LobbyInteraction.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 21.04.22, 14:55 by Carina The Latest changes made by Carina on 21.04.22, 14:55 All contents of "LobbyInteraction.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -11,10 +11,10 @@
 package de.carina.thehunter.events.misc
 
 import de.carina.thehunter.TheHunter
-import de.carina.thehunter.gamestates.EndState
 import de.carina.thehunter.gamestates.IngameState
-import de.carina.thehunter.gamestates.LobbyState
+import de.carina.thehunter.items.configurator.LeaveItem
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.PlayerTeamHead
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -30,12 +30,12 @@ class LobbyInteraction : Listener {
         if (!GamesHandler.playerInGames.containsKey(event.player) && !GamesHandler.spectatorInGames.containsKey(event.player))
             return
         if (GamesHandler.playerInGames.containsKey(event.player)) {
-            if (GamesHandler.playerInGames[event.player]!!.currentGameState is LobbyState)
+            if (GamesHandler.playerInGames[event.player]!!.currentGameState !is IngameState)
                 event.isCancelled = true
             return
         }
         if (GamesHandler.spectatorInGames.containsKey(event.player)) {
-            if (GamesHandler.spectatorInGames[event.player]!!.currentGameState is LobbyState)
+            if (GamesHandler.spectatorInGames[event.player]!!.currentGameState !is IngameState)
                 event.isCancelled = true
             return
         }
@@ -44,17 +44,19 @@ class LobbyInteraction : Listener {
 
     private fun lobbyDamagePlayerDamager(event: EntityDamageByEntityEvent) {
         if (GamesHandler.playerInGames.containsKey(event.damager)) {
-            if (GamesHandler.playerInGames[event.damager]!!.currentGameState is LobbyState)
+            if (GamesHandler.playerInGames[event.damager]!!.currentGameState !is IngameState)
                 event.isCancelled = true
             event.damage = 0.0
-            event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
+            if ((event.damager as Player).inventory.itemInMainHand.itemMeta != LeaveItem.createLeaveItem().itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
+                event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
 
             return
         } else if (GamesHandler.spectatorInGames.containsKey(event.damager)) {
-            if (GamesHandler.spectatorInGames[event.damager]!!.currentGameState is LobbyState)
+            if (GamesHandler.spectatorInGames[event.damager]!!.currentGameState !is IngameState)
                 event.isCancelled = true
             event.damage = 0.0
-            event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
+            if ((event.damager as Player).inventory.itemInMainHand.itemMeta != LeaveItem.createLeaveItem().itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
+                event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
             return
         }
     }
@@ -62,12 +64,12 @@ class LobbyInteraction : Listener {
     private fun lobbyDamagePLayer(event: EntityDamageByEntityEvent) {
         if (event.entity is Player) {
             if (GamesHandler.playerInGames.containsKey(event.entity)) {
-                if (GamesHandler.playerInGames[event.entity]!!.currentGameState is LobbyState)
+                if (GamesHandler.playerInGames[event.entity]!!.currentGameState !is IngameState)
                     event.isCancelled = true
                 event.damage = 0.0
                 return
             } else if (GamesHandler.spectatorInGames.containsKey(event.entity)) {
-                if (GamesHandler.spectatorInGames[event.entity]!!.currentGameState is LobbyState)
+                if (GamesHandler.spectatorInGames[event.entity]!!.currentGameState !is IngameState)
                     event.isCancelled = true
                 event.damage = 0.0
                 return
@@ -111,7 +113,7 @@ class LobbyInteraction : Listener {
             return
         if (GamesHandler.playerInGames.containsKey(event.whoClicked) || GamesHandler.spectatorInGames.containsKey(event.whoClicked)) {
             val game = if (GamesHandler.playerInGames.containsKey(event.whoClicked)) GamesHandler.playerInGames[event.whoClicked] else GamesHandler.spectatorInGames[event.whoClicked]
-            if (game!!.currentGameState is LobbyState || game.currentGameState is EndState) {
+            if (game!!.currentGameState !is IngameState) {
                 event.isCancelled = true
                 (event.whoClicked as Player).updateInventory()
                 return
