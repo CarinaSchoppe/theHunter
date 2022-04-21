@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 20.04.22, 10:26 by Carina The Latest changes made by Carina on 20.04.22, 10:26 All contents of "PlayerTeamHead.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 21.04.22, 15:02 by Carina The Latest changes made by Carina on 21.04.22, 15:02 All contents of "PlayerTeamHead.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -73,5 +73,7 @@ class PlayerTeamHead : Listener {
         if ((event.damager as Player).inventory.itemInMainHand.itemMeta != createPlayerHead().itemMeta)
             return
         (event.damager as Player).performCommand("thehunter team invite " + event.entity.name)
+        println("hitPlayer1")
+
     }
 }

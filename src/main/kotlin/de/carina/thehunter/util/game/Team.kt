@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 21.04.22, 14:54 by Carina The Latest changes made by Carina on 21.04.22, 14:54 All contents of "Team.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 21.04.22, 15:02 by Carina The Latest changes made by Carina on 21.04.22, 15:02 All contents of "Team.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -18,6 +18,7 @@ class Team(var teamLeader: Player) {
     val teamMembers = mutableSetOf<Player>()
     lateinit var game: Game
     private fun inviteTeamMember(playerToAdd: Player, leader: Player, game: Game): Boolean {
+        println("hitPlayer3")
         if (!game.teamsAllowed) {
             TheHunter.instance.messages.sendMessageToPlayer(leader, "teams-not-allowed")
             return false
