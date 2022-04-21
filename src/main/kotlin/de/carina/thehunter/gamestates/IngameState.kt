@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 21.04.22, 14:46 by Carina The Latest changes made by Carina on 21.04.22, 14:46 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 21.04.22, 15:46 by Carina The Latest changes made by Carina on 21.04.22, 15:46 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -26,13 +26,9 @@ import java.util.function.Consumer
 
 class IngameState(game: Game) : GameState(game) {
     override fun start() {
-        if (game.randomPlayerDrop) PlayerDropping.dropPlayers(game)
-        else {
-            forEachPlayer()
-            allPlayerStuffHiding()
-        }
-
-
+        if (!game.randomPlayerDrop) PlayerDropping.dropPlayers(game) //TODO: Hier
+        forEachPlayer()
+        allPlayerStuffHiding()
         if (game.checkWinning()) {
             game.nextGameState()
             return
@@ -46,12 +42,12 @@ class IngameState(game: Game) : GameState(game) {
 
     private fun forEachPlayer() {
         for ((index, player) in game.players.withIndex()) {
+            if (!game.randomPlayerDrop) //TODO: Hier
+                player.teleport(game.playerSpawns[index])
             player.isInvulnerable = true
             TheHunter.instance.statsSystem.playerPlaysGame(player)
             game.scoreBoard.createNewScoreboard(player)
             player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix), LegacyComponentSerializer.legacySection().deserialize("§Lets Play!")))
-            player.teleport(game.playerSpawns[index])
-            //Create a for each loop with game.spectators with the Consumer spectator
             playerHiding(player)
         }
     }

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 19.04.22, 21:31 by Carina The Latest changes made by Carina on 19.04.22, 21:31 All contents of "Settings.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 21.04.22, 15:42 by Carina The Latest changes made by Carina on 21.04.22, 15:42 All contents of "Settings.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -34,7 +34,7 @@ class Settings(filePath: String) : BaseFile(filePath) {
         yml.addDefault("duration-speedup", 5)
         yml.addDefault("duration-idle", 10)
         yml.addDefault("server-name", "TheHunter")
-        yml.addDefault("server-ip", "localhost")
+        yml.addDefault("ts-ip", "localhost")
         yml.addDefault("autoupdater", true)
         super.addData()
         fillSettingsMap()
