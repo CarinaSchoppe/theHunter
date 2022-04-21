@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 21.04.22, 15:46 by Carina The Latest changes made by Carina on 21.04.22, 15:46 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 21.04.22, 15:55 by Carina The Latest changes made by Carina on 21.04.22, 15:55 All contents of "IngameState.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -62,6 +62,7 @@ class IngameState(game: Game) : GameState(game) {
         }
         game.spectators.forEach(Consumer { spectator ->
             spectator.showPlayer(TheHunter.instance, player)
+            spectator.allowFlight = true
         })
     }
 
@@ -107,8 +108,10 @@ class IngameState(game: Game) : GameState(game) {
             player.teleport(game.endLocation!!)
             player.inventory.setItem(8, LeaveItem.createLeaveItem())
             player.level = 0
+            player.allowFlight = false
         }
         for (spectator in game.spectators) {
+            spectator.allowFlight = false
             spectator.activePotionEffects.clear()
             spectator.inventory.clear()
             spectator.teleport(game.endLocation!!)

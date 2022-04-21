@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 20.04.22, 10:48 by Carina The Latest changes made by Carina on 20.04.22, 10:48 All contents of "JoinGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 21.04.22, 15:55 by Carina The Latest changes made by Carina on 21.04.22, 15:55 All contents of "JoinGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -59,6 +59,7 @@ class JoinGame {
                 it.sendMessage(TheHunter.instance.messages.messagesMap["player-joined-game"]!!.replace("%player%", player.name))
             }
             game.players.add(player)
+            player.allowFlight = false
             GamesHandler.playerInGames[player] = game
             player.teleport(game.lobbyLocation!!)
             game.spectators.forEach {
@@ -67,6 +68,7 @@ class JoinGame {
         } else {
             GamesHandler.spectatorInGames[player] = game
             game.spectators.add(player)
+            player.allowFlight = false
             player.sendMessage(TheHunter.instance.messages.messagesMap["game-full-spectator"]!!)
             player.teleport(game.lobbyLocation!!)
         }
