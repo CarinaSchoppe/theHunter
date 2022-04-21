@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 21.04.22, 15:09 by Carina The Latest changes made by Carina on 21.04.22, 15:09 All contents of "PlayerKillsOtherOrDies.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 21.04.22, 15:51 by Carina The Latest changes made by Carina on 21.04.22, 15:51 All contents of "PlayerKillsOtherOrDies.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -49,9 +49,9 @@ class PlayerKillsOtherOrDies : Listener {
         if (game.currentGameState !is IngameState)
             return
         TheHunter.instance.statsSystem.playerKilledOtherPlayer(killer, player)
-        generalHandling(player, game)
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Consumer {
             player.spigot().respawn()
+            generalHandling(player, game)
         }, 1)
         event.deathMessage(Component.text(""))
         playerHiding(player, game, killer)
@@ -80,18 +80,16 @@ class PlayerKillsOtherOrDies : Listener {
         if (game.currentGameState !is IngameState)
             return
         TheHunter.instance.statsSystem.playerDied(player)
-        generalHandling(player, game)
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Consumer {
             player.spigot().respawn()
+            generalHandling(player, game)
         }, 1)
         event.deathMessage(Component.text(""))
         game.players.forEach {
             it.sendMessage(TheHunter.instance.messages.messagesMap["player-died"]!!.replace("%player%", player.name))
-
         }
         game.spectators.filter { it.name != player.name }.forEach {
             it.sendMessage(TheHunter.instance.messages.messagesMap["player-died"]!!.replace("%player%", player.name))
-
         }
         player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-died"]!!)
         if (game.checkWinning())
@@ -106,7 +104,7 @@ class PlayerKillsOtherOrDies : Listener {
         player.inventory.setItem(8, LeaveItem.createLeaveItem())
         player.teleport(game.spectatorLocation!!)
         player.inventory.clear()
-
+        player.inventory.setItem(9, LeaveItem.createLeaveItem())
         GamesHandler.playerInGames.keys.forEach {
             it.hidePlayer(TheHunter.instance, player)
         }

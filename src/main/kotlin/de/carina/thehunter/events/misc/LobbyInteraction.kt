@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 21.04.22, 14:55 by Carina The Latest changes made by Carina on 21.04.22, 14:55 All contents of "LobbyInteraction.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 21.04.22, 15:49 by Carina The Latest changes made by Carina on 21.04.22, 15:49 All contents of "LobbyInteraction.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
@@ -44,35 +44,38 @@ class LobbyInteraction : Listener {
 
     private fun lobbyDamagePlayerDamager(event: EntityDamageByEntityEvent) {
         if (GamesHandler.playerInGames.containsKey(event.damager)) {
-            if (GamesHandler.playerInGames[event.damager]!!.currentGameState !is IngameState)
+            if (GamesHandler.playerInGames[event.damager]!!.currentGameState !is IngameState) {
                 event.isCancelled = true
-            event.damage = 0.0
-            if ((event.damager as Player).inventory.itemInMainHand.itemMeta != LeaveItem.createLeaveItem().itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
-                event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
-
-            return
+                event.damage = 0.0
+                if ((event.damager as Player).inventory.itemInMainHand.itemMeta != LeaveItem.createLeaveItem().itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
+                    event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
+                return
+            }
         } else if (GamesHandler.spectatorInGames.containsKey(event.damager)) {
-            if (GamesHandler.spectatorInGames[event.damager]!!.currentGameState !is IngameState)
+            if (GamesHandler.spectatorInGames[event.damager]!!.currentGameState !is IngameState) {
                 event.isCancelled = true
-            event.damage = 0.0
-            if ((event.damager as Player).inventory.itemInMainHand.itemMeta != LeaveItem.createLeaveItem().itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
-                event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
-            return
+                event.damage = 0.0
+                if ((event.damager as Player).inventory.itemInMainHand.itemMeta != LeaveItem.createLeaveItem().itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
+                    event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
+                return
+            }
         }
     }
 
     private fun lobbyDamagePLayer(event: EntityDamageByEntityEvent) {
         if (event.entity is Player) {
             if (GamesHandler.playerInGames.containsKey(event.entity)) {
-                if (GamesHandler.playerInGames[event.entity]!!.currentGameState !is IngameState)
+                if (GamesHandler.playerInGames[event.entity]!!.currentGameState !is IngameState) {
                     event.isCancelled = true
-                event.damage = 0.0
-                return
+                    event.damage = 0.0
+                    return
+                }
             } else if (GamesHandler.spectatorInGames.containsKey(event.entity)) {
-                if (GamesHandler.spectatorInGames[event.entity]!!.currentGameState !is IngameState)
+                if (GamesHandler.spectatorInGames[event.entity]!!.currentGameState !is IngameState) {
                     event.isCancelled = true
-                event.damage = 0.0
-                return
+                    event.damage = 0.0
+                    return
+                }
             }
         }
     }
