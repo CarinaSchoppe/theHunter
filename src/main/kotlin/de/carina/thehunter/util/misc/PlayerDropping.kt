@@ -17,7 +17,7 @@ import java.util.*
 object PlayerDropping {
 
     fun dropPlayers(game: Game) {
-        val locationCenter: Location = game.arenaCenter!!.subtract(game.worldBoarderController.worldBoarderSize / 2 - 1.0, 0.0, game.worldBoarderController.worldBoarderSize / 2 - 1.0)
+        val locationCenter: Location = game.arenaCenter!!.subtract((game.worldBoarderController.worldBoarderSize / 2).toDouble(), 0.0, (game.worldBoarderController.worldBoarderSize / 2).toDouble())
         for (player in game.players) {
             val x = Random().nextInt(game.worldBoarderController.worldBoarderSize) + 0.0
             val z = Random().nextInt(game.worldBoarderController.worldBoarderSize) + 0.0

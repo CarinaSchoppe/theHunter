@@ -16,24 +16,19 @@ import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.gamestates.LobbyState
 import de.carina.thehunter.util.game.Game
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
-import java.util.*
 
 object Util {
-    fun getRandomXYValueFromWorldBoarder(game: Game): Int {
-        return Random().nextInt(game.worldBoarderController.worldBoarderSize * 2) - game.worldBoarderController.worldBoarderSize
-    }
-
-    fun updateGameSigns(game: Game) {
-        for (sign in game.signs) {
-            sign.line(0, LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix))
-            sign.line(1, LegacyComponentSerializer.legacySection().deserialize(game.name))
-            if (game.currentGameState is LobbyState) {
-                sign.line(3, LegacyComponentSerializer.legacySection().deserialize("§aLobby"))
-                if (game.players.size < game.maxPlayers) sign.line(2, LegacyComponentSerializer.legacySection().deserialize("§7[§6" + game.players.size + " §7|§6" + game.maxPlayers + "§7]")) else sign.line(2, LegacyComponentSerializer.legacySection().deserialize("§7[§c" + game.players.size + " §7|§c" + game.maxPlayers + "§7]"))
-            } else if (game.currentGameState is IngameState) sign.line(2, LegacyComponentSerializer.legacySection().deserialize("§6RUNNING")) else if (game.currentGameState is EndState) {
-                sign.line(2, LegacyComponentSerializer.legacySection().deserialize("§cENDING"))
-                sign.line(3, LegacyComponentSerializer.legacySection().deserialize("§aReady Restart"))
-            }
+      fun updateGameSigns(game: Game) {
+          for (sign in game.signs) {
+              sign.line(0, LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix))
+              sign.line(1, LegacyComponentSerializer.legacySection().deserialize(game.name))
+              if (game.currentGameState is LobbyState) {
+                  sign.line(3, LegacyComponentSerializer.legacySection().deserialize("§aLobby"))
+                  if (game.players.size < game.maxPlayers) sign.line(2, LegacyComponentSerializer.legacySection().deserialize("§7[§6" + game.players.size + " §7|§6" + game.maxPlayers + "§7]")) else sign.line(2, LegacyComponentSerializer.legacySection().deserialize("§7[§c" + game.players.size + " §7|§c" + game.maxPlayers + "§7]"))
+              } else if (game.currentGameState is IngameState) sign.line(2, LegacyComponentSerializer.legacySection().deserialize("§6RUNNING")) else if (game.currentGameState is EndState) {
+                  sign.line(2, LegacyComponentSerializer.legacySection().deserialize("§cENDING"))
+                  sign.line(3, LegacyComponentSerializer.legacySection().deserialize("§aReady Restart"))
+              }
             sign.update(true)
         }
     }

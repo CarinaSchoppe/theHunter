@@ -253,7 +253,6 @@ class Game(var name: String) {
             Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", name))
             return
         }
-        worldBoarderController.worldBoarder = arenaCenter!!.world.worldBorder
         saveGameToConfig()
         gameItems.saveAllItems()
         gameItems.loadAllItems()

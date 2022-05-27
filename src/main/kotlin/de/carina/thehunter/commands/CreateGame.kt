@@ -42,7 +42,7 @@ class CreateGame {
 
     private fun configGame(args: Array<out String>, sender: CommandSender) {
         if (args.size != 3) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!)
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!.replace("%arguments%", 3.toString()))
             return
         }
         val game = GamesHandler.setupGames.find { it.name == args[2] }

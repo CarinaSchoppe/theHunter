@@ -20,7 +20,7 @@ class BaseCommand : CommandExecutor {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.isEmpty()) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!)
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!.replace("%arguments%", 1.toString()))
             return false
         }
 

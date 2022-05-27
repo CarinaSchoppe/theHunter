@@ -22,7 +22,6 @@ class DeathChest : Listener {
     @EventHandler
     fun onOpenDeathChest(event: PlayerInteractEvent) {
         if (!GamesHandler.playerInGames.containsKey(event.player)) return
-
         if (event.action.isLeftClick) return
         if (event.clickedBlock == null) return
         if (event.clickedBlock!!.type != Material.CHEST) return

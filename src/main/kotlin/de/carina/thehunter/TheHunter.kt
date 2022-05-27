@@ -42,17 +42,19 @@ class TheHunter : JavaPlugin() {
     TODO: PlayerHiding
     TODO: TOTAL CHECKUP
     TODO: Price Online Shop
-    TODO: Testing
+    TODO: Testing (Boarder, Drops, Damage, multirounds, ammo amountstuff, hiding, countdowns, bugs)
     TODO: Worldboarder bug
     TODO: NPC?
-    TODO: Hover animation
-    TODO: Spawnteleport testing
+    TODO: Hover animation (when scrolling
+      TODO: Spawnteleport testing
       TODO: Damagechecking
       TODO: PlayerChat
       TODO: PlayerBuild and Breaking
       TODO: Teamfunctionchecks
       TODO: PlayerHeadInLobby
       TODO: Itemlores in config
+
+      TODO: Transplation INtellij plugin download
      */
 
     companion object {

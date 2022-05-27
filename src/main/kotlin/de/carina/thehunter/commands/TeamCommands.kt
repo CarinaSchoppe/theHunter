@@ -50,8 +50,8 @@ class TeamCommands {
     }
 
     private fun remove(sender: Player, args: Array<out String>) {
-        if (args.size == 1) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!)
+        if (args.size <= 1) {
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!.replace("%arguments%", 2.toString()))
             return
         }
         val player = Bukkit.getPlayer(args[1])
@@ -70,8 +70,8 @@ class TeamCommands {
             return
         }
 
-        if (args.size == 1) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!)
+        if (args.size <= 1) {
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!.replace("%arguments%", 2.toString()))
             return
         }
         val player = Bukkit.getPlayer(args[1])
@@ -101,8 +101,8 @@ class TeamCommands {
 
 
     private fun invite(sender: Player, args: Array<out String>) {
-        if (args.size == 1) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!)
+        if (args.size <= 1) {
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!.replace("%arguments%", 2.toString()))
             return
         }
 

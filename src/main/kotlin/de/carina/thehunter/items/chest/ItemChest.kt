@@ -146,7 +146,7 @@ class ItemChest(private val game: Game) {
         repeat(game.chestAmount) {
 
             //Location of the Worldboarder Edge
-            val locationCenter: Location = game.arenaCenter!!.subtract(game.worldBoarderController.worldBoarderSize / 2 + 0.0, 0.0, game.worldBoarderController.worldBoarderSize / 2 + 0.0)
+            val locationCenter: Location = game.arenaCenter!!.subtract((game.worldBoarderController.worldBoarderSize / 2).toDouble(), 0.0, (game.worldBoarderController.worldBoarderSize / 2).toDouble())
             val x = Random().nextInt(game.worldBoarderController.worldBoarderSize)
             val z = Random().nextInt(game.worldBoarderController.worldBoarderSize)
             val chest = locationCenter.world.spawnFallingBlock(locationCenter.add(x.toDouble(), 170.0, z.toDouble()), Material.BEACON.createBlockData())

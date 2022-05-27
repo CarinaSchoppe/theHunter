@@ -11,8 +11,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    java
-    `java-library`
+    id("java-library")
     idea
     id("io.papermc.paperweight.userdev") version "1.3.5"
     kotlin("jvm") version "1.6.20"
@@ -26,20 +25,23 @@ description = "The theHunter minigame but in a kotlin project remake"
 
 
 repositories {
-    maven ("https://repo.codemc.io/repository/maven-snapshots/")
+    mavenCentral()
+    gradlePluginPortal()
+    maven("https://repo.codemc.io/repository/maven-snapshots/")
 }
 
 dependencies {
     paperDevBundle("1.18.2-R0.1-SNAPSHOT")
     testImplementation(kotlin("test"))
-    testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.8.2")
     implementation("net.wesjd:anvilgui:1.5.3-SNAPSHOT")
 }
 
 
 
 tasks {
+    assemble {
+        dependsOn(reobfJar)
+    }
     runServer {
         minecraftVersion("1.18.2")
     }

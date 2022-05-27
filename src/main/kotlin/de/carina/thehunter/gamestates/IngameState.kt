@@ -35,8 +35,8 @@ class IngameState(game: Game) : GameState(game) {
         } else {
             givePlayerStartItems()
             startImmunityCounter()
-            game.gameChest.makeChestsFall()
             game.worldBoarderController.shrinkWorld()
+            game.gameChest.makeChestsFall()
         }
     }
 

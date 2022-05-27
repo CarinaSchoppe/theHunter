@@ -46,7 +46,7 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("game-starting-in", "&7The game will start in &6%time%&7 seconds!")
         yml.addDefault("game-starting", "&aThe game starts!")
         yml.addDefault("no-permission", "&cYou don't have the permissions to do this!")
-        yml.addDefault("not-enough-arguments", "&cYou need at least %arguments% arguments!")
+        yml.addDefault("not-enough-arguments", "&cYou need at least &6%arguments% &carguments!")
         yml.addDefault("stats-not-found", "&cThe stats of the player &6%player% &cwas not found!")
         yml.addDefault("no-command-found", "&cThe command &6%command% &cwas not found!")
         yml.addDefault("not-a-player", "&cYou must be a player to do this!")
