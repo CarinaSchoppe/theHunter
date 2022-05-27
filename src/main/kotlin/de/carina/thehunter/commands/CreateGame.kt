@@ -31,9 +31,11 @@ class CreateGame {
                 game.create()
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-created"]!!.replace("%game%", args[1]))
             }
+
             "config" -> {
                 configGame(args, sender as Player)
             }
+
             else -> {
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["no-command-found"]!!.replace("%command%", args[0]))
             }
@@ -55,14 +57,17 @@ class CreateGame {
                 game.lobbyLocation = (sender as Player).location
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["game-lobby-set"]!!.replace("%game%", args[2]))
             }
+
             "spectatorspawn" -> {
                 game.spectatorLocation = (sender as Player).location
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spectator-set"]!!.replace("%game%", args[2]))
             }
+
             "backspawn" -> {
                 game.backLocation = (sender as Player).location
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["game-back-set"]!!.replace("%game%", args[2]))
             }
+
             "endspawn" -> {
                 game.endLocation = (sender as Player).location
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["game-end-set"]!!.replace("%game%", args[2]))
@@ -73,6 +78,15 @@ class CreateGame {
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["game-arenacenter-set"]!!.replace("%game%", args[2]))
 
             }
+
+            "playerspawn" -> {
+                if (game.playerSpawns.size < game.maxPlayers) {
+                    game.playerSpawns.add((sender as Player).location)
+                    sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spawn-set"]!!.replace("%id%", (game.playerSpawns.size - 1).toString()).replace("%game%", args[2]))
+                } else
+                    sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spawns-toomuch"]!!.replace("%game%", args[2]).replace("%max%", game.maxPlayers.toString()))
+            }
+
             "finish" -> {
                 if (!game.isGameValidConfigured()) {
                     sender.sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", args[2]))

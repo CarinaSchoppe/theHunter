@@ -11,29 +11,21 @@
 package de.carina.thehunter.util.misc
 
 import de.carina.thehunter.TheHunter
-import de.carina.thehunter.util.builder.InventoryBuilder
-import de.carina.thehunter.util.builder.ItemBuilder
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.Material
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.inventory.Inventory
 
 class GamesInventoryList : Listener {
 
-    companion object {
-        fun createInventory(): Inventory {
-            return InventoryBuilder(TheHunter.prefix + "§6Games", 54).addGamesToInventory().fillInventory(ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1).build()).create()
-        }
-    }
 
     @EventHandler
     fun onInventoryJoin(event: InventoryClickEvent) {
         if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§6Games"))) {
+            //TODO: Test hier
             println("text2:" + PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§6Games")))
             println("text3:" + PlainTextComponentSerializer.plainText().serialize(event.view.title()))
             return

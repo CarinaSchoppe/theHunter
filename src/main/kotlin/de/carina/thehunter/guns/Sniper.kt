@@ -11,6 +11,7 @@
 package de.carina.thehunter.guns
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.items.chest.AmmoItems
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.Bukkit
@@ -40,7 +41,7 @@ object Sniper {
         )
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
-        GunHandler.removeAmmo(player, 1, de.carina.thehunter.items.chest.ammo.Sniper.createSniperAmmo().itemMeta)
+        GunHandler.removeAmmo(player, 1, AmmoItems.sniperAmmo.itemMeta)
 
         arrow.shooter = player
         if (shotBullets.containsKey(player)) {
@@ -96,7 +97,7 @@ object Sniper {
     private fun reload(player: Player) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
-            val amount = getAmmoAmount(player, de.carina.thehunter.items.chest.ammo.Sniper.createSniperAmmo())
+            val amount = getAmmoAmount(player, AmmoItems.sniperAmmo)
             if (amount < GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!)
                 magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!
             else
@@ -108,7 +109,7 @@ object Sniper {
     }
 
     private fun hasAmmo(player: Player): Boolean {
-        return return player.inventory.containsAtLeast(de.carina.thehunter.items.chest.ammo.Sniper.createSniperAmmo(), 1)
+        return player.inventory.containsAtLeast(AmmoItems.sniperAmmo, 1)
 
     }
 

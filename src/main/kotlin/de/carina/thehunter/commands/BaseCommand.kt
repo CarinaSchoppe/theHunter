@@ -25,42 +25,50 @@ class BaseCommand : CommandExecutor {
         }
 
         val commandName = args[0]
-        val args = args.slice(1 until args.size).toTypedArray()
+        val arguments = args.slice(1 until args.size).toTypedArray()
         when (commandName.lowercase()) {
             "start" -> {
-                StartGame().start(sender, commandName, args)
+                StartGame().start(sender, commandName, arguments)
                 return true
             }
+
             "stats" -> {
-                StatsPlayer().stats(sender, commandName, args)
+                StatsPlayer().stats(sender, commandName, arguments)
                 return true
             }
+
             "team" -> {
-                TeamCommands().team(sender, commandName, args)
+                TeamCommands().team(sender, commandName, arguments)
                 return true
             }
+
             "remove" -> {
-                RemoveGame().remove(sender, commandName, args)
+                RemoveGame().remove(sender, commandName, arguments)
                 return true
             }
+
             "join" -> {
-                JoinGame().join(sender, commandName, args)
+                JoinGame().join(sender, commandName, arguments)
                 return true
             }
+
             "setup" -> {
-                CreateGame().create(sender, commandName, args)
+                CreateGame().create(sender, commandName, arguments)
                 return true
             }
+
             "inventory" -> {
-                GamesInventory().openInv(sender, commandName, args)
+                GamesInventory().openInv(sender, commandName, arguments)
                 return true
             }
+
             "leave" -> {
-                LeaveGame().leave(sender, commandName, args)
+                LeaveGame().leave(sender, commandName, arguments)
                 return true
             }
+
             "mapreset" -> {
-                MapReset().reset(sender, commandName, args)
+                MapReset().reset(sender, commandName, arguments)
                 return true
             }
         }

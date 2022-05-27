@@ -43,38 +43,24 @@ class LobbyInteraction : Listener {
 
 
     private fun lobbyDamagePlayerDamager(event: EntityDamageByEntityEvent) {
-        if (GamesHandler.playerInGames.containsKey(event.damager)) {
-            if (GamesHandler.playerInGames[event.damager]!!.currentGameState !is IngameState) {
-                event.isCancelled = true
-                event.damage = 0.0
-                if ((event.damager as Player).inventory.itemInMainHand.itemMeta != LeaveItem.createLeaveItem().itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
-                    event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
-                return
-            }
-        } else if (GamesHandler.spectatorInGames.containsKey(event.damager)) {
+        if (GamesHandler.playerInGames.containsKey(event.damager) || GamesHandler.spectatorInGames.containsKey(event.damager)) {
             if (GamesHandler.spectatorInGames[event.damager]!!.currentGameState !is IngameState) {
                 event.isCancelled = true
                 event.damage = 0.0
-                if ((event.damager as Player).inventory.itemInMainHand.itemMeta != LeaveItem.createLeaveItem().itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
+                if ((event.damager as Player).inventory.itemInMainHand.itemMeta != LeaveItem.leaveItem.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
                     event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
-                return
+
             }
         }
     }
 
+
     private fun lobbyDamagePLayer(event: EntityDamageByEntityEvent) {
         if (event.entity is Player) {
-            if (GamesHandler.playerInGames.containsKey(event.entity)) {
+            if (GamesHandler.playerInGames.containsKey(event.entity) || GamesHandler.spectatorInGames.containsKey(event.entity)) {
                 if (GamesHandler.playerInGames[event.entity]!!.currentGameState !is IngameState) {
                     event.isCancelled = true
                     event.damage = 0.0
-                    return
-                }
-            } else if (GamesHandler.spectatorInGames.containsKey(event.entity)) {
-                if (GamesHandler.spectatorInGames[event.entity]!!.currentGameState !is IngameState) {
-                    event.isCancelled = true
-                    event.damage = 0.0
-                    return
                 }
             }
         }

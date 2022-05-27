@@ -11,6 +11,7 @@
 package de.carina.thehunter.guns
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.items.chest.AmmoItems
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.Bukkit
@@ -36,7 +37,7 @@ object Minigun {
         val arrow = player.launchProjectile(Arrow::class.java, player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-power"]!!))
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
-        GunHandler.removeAmmo(player, 1, de.carina.thehunter.items.chest.ammo.Minigun.createMinigunAmmo().itemMeta)
+        GunHandler.removeAmmo(player, 1, AmmoItems.minigunAmmo.itemMeta)
 
         arrow.shooter = player
         if (shotBullets.containsKey(player)) {
@@ -93,7 +94,7 @@ object Minigun {
     private fun reload(player: Player) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
-            val amount = getAmmoAmount(player, de.carina.thehunter.items.chest.ammo.Minigun.createMinigunAmmo())
+            val amount = getAmmoAmount(player, AmmoItems.minigunAmmo)
             if (amount < GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-ammo"]!!)
                 magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-ammo"]!!
             else
@@ -104,7 +105,7 @@ object Minigun {
     }
 
     private fun hasAmmo(player: Player): Boolean {
-        return player.inventory.containsAtLeast(de.carina.thehunter.items.chest.ammo.Minigun.createMinigunAmmo(), 1)
+        return player.inventory.containsAtLeast(AmmoItems.minigunAmmo, 1)
     }
 
 

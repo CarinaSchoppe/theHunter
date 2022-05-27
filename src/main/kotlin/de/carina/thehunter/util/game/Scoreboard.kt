@@ -21,14 +21,14 @@ import org.bukkit.scoreboard.Objective
 import org.bukkit.scoreboard.Score
 
 class Scoreboard(val game: Game) {
-
+    //TDOO: Dies testen
+    private val serverName = ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["server-name"] as String)
+    private val scoreboard = Bukkit.getScoreboardManager().newScoreboard
+    private val objective: Objective = scoreboard.registerNewObjective("aaa", "bbb", Component.text(serverName))
+    private val tsIP = ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["ts-ip"] as String)
 
     fun createNewScoreboard(player: Player) {
-        val scoreboard = Bukkit.getScoreboardManager().newScoreboard
         scoreboard.clearSlot(org.bukkit.scoreboard.DisplaySlot.SIDEBAR)
-        val serverName = ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["server-name"] as String)
-        val tsIP = ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["ts-ip"] as String)
-        val objective: Objective = scoreboard.registerNewObjective("aaa", "bbb", Component.text(serverName))
         objective.displaySlot = DisplaySlot.SIDEBAR
         val six = objective.getScore("§fKills: §d${StatsSystem.playerStats[player.uniqueId]!!.kills}")
         val five = objective.getScore("§aAlive Players:")

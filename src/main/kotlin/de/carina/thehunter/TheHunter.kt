@@ -16,6 +16,8 @@ import de.carina.thehunter.events.misc.BlocksFlyEvent
 import de.carina.thehunter.events.misc.LobbyInteraction
 import de.carina.thehunter.events.misc.MapModify
 import de.carina.thehunter.events.misc.PlayerJoinsServer
+import de.carina.thehunter.events.misc.gameconfigurator.GameConfigurator
+import de.carina.thehunter.events.misc.gameconfigurator.SettingsConfigurator
 import de.carina.thehunter.guns.GunHandler
 import de.carina.thehunter.items.chest.special.*
 import de.carina.thehunter.items.configurator.LeaveItem
@@ -42,7 +44,7 @@ class TheHunter : JavaPlugin() {
     TODO: PlayerHiding
     TODO: TOTAL CHECKUP
     TODO: Price Online Shop
-    TODO: Testing (Boarder, Drops, Damage, multirounds, ammo amountstuff, hiding, countdowns, bugs)
+    TODO: Testing (Boarder, Drops, Damage, multirounds, ammo amountstuff, hiding, countdowns, teams, scoreboards, bugs)
     TODO: Worldboarder bug
     TODO: NPC?
     TODO: Hover animation (when scrolling
@@ -110,7 +112,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(EnergyDrink(), this)
         pluginManager.registerEvents(JumpStick(), this)
         pluginManager.registerEvents(ChestHandler(), this)
-        pluginManager.registerEvents(Ammo(), this)
+        pluginManager.registerEvents(AmmoHandler(), this)
         pluginManager.registerEvents(GunHandler(), this)
         pluginManager.registerEvents(TeamDamage(), this)
         pluginManager.registerEvents(MapModify(), this)
@@ -123,6 +125,8 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(GamesInventoryList(), this)
         pluginManager.registerEvents(LobbyInteraction(), this)
         pluginManager.registerEvents(PlayerTeamHead(), this)
+        pluginManager.registerEvents(SettingsConfigurator(), this)
+        pluginManager.registerEvents(GameConfigurator(), this)
 
         loadGamesFromFolders()
 

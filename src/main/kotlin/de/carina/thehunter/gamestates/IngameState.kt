@@ -89,6 +89,7 @@ class IngameState(game: Game) : GameState(game) {
                         task.cancel()
                     }
                 }
+
                 else -> {
                     game.players.forEach {
                         it.isInvulnerable = true
@@ -106,7 +107,7 @@ class IngameState(game: Game) : GameState(game) {
             player.activePotionEffects.clear()
             player.inventory.clear()
             player.teleport(game.endLocation!!)
-            player.inventory.setItem(8, LeaveItem.createLeaveItem())
+            player.inventory.setItem(8, LeaveItem.leaveItem)
             player.level = 0
             player.allowFlight = false
         }

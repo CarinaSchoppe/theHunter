@@ -100,6 +100,7 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("game-back-set", "&aThe &6back spawn&a has been set for game &6%game%&a!")
         yml.addDefault("game-end-set", "&aThe &6end spawn&a has been set for game &6%game%&a!")
         yml.addDefault("game-spawn-set", "&aThe &6spawn %id% &ahas been set for game &6%game%&a!")
+        yml.addDefault("game-spawns-toomuch", "&cThere are to many gamespawns for game &6%game%&c. Max spawns &6%max%&c!")
         yml.addDefault("game-successfully-saved", "&aThe game &6%game% &ahas been saved!")
         yml.addDefault("player-own-not-in-game", "&cYou are not in a game!")
         yml.addDefault("loaded-game-successfully", "&aThe game &6%game% &ahas been loaded!")

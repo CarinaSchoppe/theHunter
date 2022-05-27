@@ -11,10 +11,6 @@
 package de.carina.thehunter.items.chest
 
 import de.carina.thehunter.TheHunter
-import de.carina.thehunter.items.chest.ammo.Ak
-import de.carina.thehunter.items.chest.ammo.Minigun
-import de.carina.thehunter.items.chest.ammo.Pistol
-import de.carina.thehunter.items.chest.ammo.Sniper
 import de.carina.thehunter.items.chest.special.*
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
@@ -118,22 +114,22 @@ class ItemChest(private val game: Game) {
 
     private fun ammoAdding(ammo: MutableList<ItemStack>): MutableList<ItemStack> {
         if (game.gameItems.items["PistolAmmo"] == true) {
-            val item = Pistol.createPistolAmmo()
+            val item = AmmoItems.pistolAmmo
             item.amount = game.gameItems.items["pistolammo-amount"] as Int
             ammo.add(item)
         }
         if (game.gameItems.items["SniperAmmo"] == true) {
-            val item = Sniper.createSniperAmmo()
+            val item = AmmoItems.sniperAmmo
             item.amount = game.gameItems.items["sniperammo-amount"] as Int
             ammo.add(item)
         }
         if (game.gameItems.items["AkAmmo"] == true) {
-            val item = Ak.createAKAmmo()
+            val item = AmmoItems.akAmmo
             item.amount = game.gameItems.items["akammo-amount"] as Int
             ammo.add(item)
         }
         if (game.gameItems.items["MiniGunAmmo"] == true) {
-            val item = Minigun.createMinigunAmmo()
+            val item = AmmoItems.minigunAmmo
             item.amount = game.gameItems.items["minigunammo-amount"] as Int
             ammo.add(item)
         }

@@ -10,7 +10,7 @@
 
 package de.carina.thehunter.commands
 
-import de.carina.thehunter.util.misc.GamesInventoryList
+import de.carina.thehunter.util.builder.Inventories
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
@@ -19,6 +19,6 @@ class GamesInventory {
         if (!CommandUtil.checkCommandBasics(sender, command, args, "inventory", 0, "theHunter.inventory"))
             return
 
-        (sender as Player).openInventory(GamesInventoryList.createInventory())
+        (sender as Player).openInventory(Inventories.gamesInventory)
     }
 }

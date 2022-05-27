@@ -28,7 +28,7 @@ class PlayerKillsOtherOrDies : Listener {
     @EventHandler
     fun onPlayerKillsOther(event: PlayerDeathEvent) {
         if (event.entity.killer != null) {
-            if (event.entity.killer!! !is Player) {
+            if (event.entity.killer == null) {
                 addDeathToPlayer(event, event.player)
             } else {
                 playerKilledOther(event, event.player, event.entity.killer!!)
@@ -101,11 +101,11 @@ class PlayerKillsOtherOrDies : Listener {
         game.deathChests.createDeathChest(player)
         game.players.remove(player)
         game.spectators.add(player)
-        player.inventory.setItem(8, LeaveItem.createLeaveItem())
+        player.inventory.setItem(8, LeaveItem.leaveItem)
         player.teleport(game.spectatorLocation!!)
         player.inventory.clear()
         player.allowFlight = true
-        player.inventory.setItem(9, LeaveItem.createLeaveItem())
+        player.inventory.setItem(9, LeaveItem.leaveItem)
         Bukkit.getOnlinePlayers().forEach {
             it.hidePlayer(TheHunter.instance, player)
             player.hidePlayer(TheHunter.instance, it)

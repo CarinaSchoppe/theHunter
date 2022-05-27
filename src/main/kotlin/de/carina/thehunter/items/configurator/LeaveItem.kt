@@ -17,13 +17,11 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.inventory.ItemStack
 
 class LeaveItem : Listener {
     companion object {
-        fun createLeaveItem(): ItemStack {
-            return ItemBuilder(Material.IRON_DOOR).addDisplayName(TheHunter.prefix + "§6Leave").addLore("§7Click to leave the game").addEnchantment(Enchantment.DURABILITY, 1).build()
-        }
+        val leaveItem = ItemBuilder(Material.IRON_DOOR).addDisplayName(TheHunter.prefix + "§6Leave").addLore("§7Click to leave the game").addEnchantment(Enchantment.DURABILITY, 1).build()
+
     }
 
 
@@ -32,7 +30,7 @@ class LeaveItem : Listener {
         if (event.item == null) return
         if (!event.item!!.hasItemMeta())
             return
-        if (event.item!!.itemMeta != createLeaveItem().itemMeta)
+        if (event.item!!.itemMeta != leaveItem.itemMeta)
             return
         if (event.action.isLeftClick)
             return
