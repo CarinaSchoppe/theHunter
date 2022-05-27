@@ -28,7 +28,8 @@ class WorldboarderController(private val game: Game) {
 
         resetWorldBoarder()
         Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
-            if (game.arenaCenter!!.world.worldBorder.size - 1 >= minBorderSize) {
+            if
+                    (game.arenaCenter!!.world.worldBorder.size - 1 >= minBorderSize) {
                 game.arenaCenter!!.world.worldBorder.size -= 1
             } else {
                 task.cancel()
@@ -37,6 +38,7 @@ class WorldboarderController(private val game: Game) {
     }
 
     fun resetWorldBoarder() {
+        //TODO: hier testen und schauen...
         game.arenaCenter!!.world.worldBorder.center = game.arenaCenter!!
         println(game.arenaCenter!!.world.worldBorder.center)
         println(game.arenaCenter!!)
