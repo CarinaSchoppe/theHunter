@@ -13,6 +13,7 @@ package de.carina.thehunter.commands
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.Util
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
@@ -29,7 +30,17 @@ class CreateGame {
                 }
                 val game = Game(args[1])
                 game.create()
+                Util.currentGameSelected[sender as Player] = game
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-created"]!!.replace("%game%", args[1]))
+            }
+
+            "select" -> {
+                val game = GamesHandler.games.find { it.name == args[1] }
+                if (game == null) {
+                    sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace("%game%", args[1]))
+                    return
+                }
+                Util.currentGameSelected[sender as Player] = game
             }
 
             "config" -> {

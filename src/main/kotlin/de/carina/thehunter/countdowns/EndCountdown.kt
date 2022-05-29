@@ -32,6 +32,7 @@ class EndCountdown(game: Game) : Countdown(game) {
                 0 -> {
                     stop()
                 }
+
                 in 1 until 10 -> {
                     for (player in game.players) {
                         player.sendMessage(TheHunter.instance.messages.messagesMap["endcountdown-message"]!!.replace("%time%", duration.toString()))

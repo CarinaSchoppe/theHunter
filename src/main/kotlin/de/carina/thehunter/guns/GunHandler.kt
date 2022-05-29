@@ -49,16 +49,19 @@ class GunHandler : Listener {
                 Ak.reloadGun(event.player)
                 return true
             }
+
             Minigun.createMiniGunItem().itemMeta -> {
                 if (!event.player.hasPermission("thehunter.minigun")) return true
                 Minigun.reloadGun(event.player)
                 return true
             }
+
             Pistol.createPistolGunItem().itemMeta -> {
                 if (!event.player.hasPermission("thehunter.pistol")) return true
                 Pistol.reloadGun(event.player)
                 return true
             }
+
             Sniper.createSniperGunItem().itemMeta -> {
                 if (!event.player.hasPermission("thehunter.sniper")) return true
 
@@ -80,6 +83,7 @@ class GunHandler : Listener {
                 }
                 Ak.shoot(event.player)
             }
+
             Minigun.createMiniGunItem().itemMeta -> {
                 if (!event.player.hasPermission("thehunter.minigun")) return true
                 if (event.player.isSneaking) {
@@ -88,6 +92,7 @@ class GunHandler : Listener {
                 }
                 Minigun.shoot(event.player)
             }
+
             Pistol.createPistolGunItem().itemMeta -> {
                 if (!event.player.hasPermission("thehunter.pistol")) return true
                 if (event.player.isSneaking) {
@@ -96,6 +101,7 @@ class GunHandler : Listener {
                 }
                 Pistol.shoot(event.player)
             }
+
             Sniper.createSniperGunItem().itemMeta -> {
                 if (!event.player.hasPermission("thehunter.sniper")) return true
                 if (event.player.isSneaking) {

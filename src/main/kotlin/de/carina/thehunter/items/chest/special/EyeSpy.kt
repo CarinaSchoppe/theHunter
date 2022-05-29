@@ -79,9 +79,11 @@ class EyeSpy : Listener {
                 3 -> {
                     player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6${mapPlayerTime[player]}"), Component.text("")))
                 }
+
                 2 -> {
                     player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6${mapPlayerTime[player]}"), Component.text("")))
                 }
+
                 1 -> {
                     player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6${mapPlayerTime[player]}"), Component.text("")))
                 }

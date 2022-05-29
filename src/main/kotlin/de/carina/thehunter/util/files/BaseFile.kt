@@ -47,5 +47,4 @@ open class BaseFile(filePath: String) {
     }
 
 
-
 }

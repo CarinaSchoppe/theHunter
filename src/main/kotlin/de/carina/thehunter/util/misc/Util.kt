@@ -16,10 +16,11 @@ import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.gamestates.LobbyState
 import de.carina.thehunter.util.game.Game
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import org.bukkit.entity.Player
 
 object Util {
 
-    lateinit var currentGameSelected: Game
+    var currentGameSelected = mutableMapOf<Player, Game>()
     fun updateGameSigns(game: Game) {
         for (sign in game.signs) {
             sign.line(0, LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix))

@@ -18,9 +18,17 @@ import org.bukkit.inventory.ItemStack
 
 class ItemBuilder(material: Material) {
 
+    constructor(builder: ItemBuilder) : this(builder.itemStack.type) {
+        this.itemStack = builder.itemStack
+        this.itemMeta = builder.itemMeta
+    }
 
     private var itemStack = ItemStack(material)
     private var itemMeta = itemStack.itemMeta
+
+    fun clone(): ItemBuilder {
+        return ItemBuilder(this)
+    }
 
     fun addDisplayName(name: String): ItemBuilder {
         itemMeta.displayName(LegacyComponentSerializer.legacySection().deserialize(name))

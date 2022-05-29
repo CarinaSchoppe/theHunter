@@ -23,14 +23,14 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.inventory.ItemStack
 
 class Knife : Listener {
-companion object {
-    fun createKnifeItem(): ItemStack {
-        return ItemBuilder(Material.IRON_SWORD)
-            .addDisplayName(TheHunter.prefix + "§eKnife")
-            .addLore(listOf("§6Knife to kill", "§eLeft-Click to use")).addEnchantment(Enchantment.DURABILITY, 1)
-            .build()
+    companion object {
+        fun createKnifeItem(): ItemStack {
+            return ItemBuilder(Material.IRON_SWORD)
+                .addDisplayName(TheHunter.prefix + "§eKnife")
+                .addLore(listOf("§6Knife to kill", "§eLeft-Click to use")).addEnchantment(Enchantment.DURABILITY, 1)
+                .build()
+        }
     }
-}
 
     @EventHandler
     fun onKnifeUse(event: EntityDamageByEntityEvent) {

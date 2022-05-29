@@ -212,6 +212,7 @@ class Game(var name: String) {
                     spectator.sendMessage(message)
                 return true
             }
+
             else -> {
                 val team: Team = teams.find {
                     it.teamMembers.contains(players.first())

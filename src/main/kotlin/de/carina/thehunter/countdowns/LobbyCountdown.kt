@@ -106,18 +106,23 @@ class LobbyCountdown(game: Game) : Countdown(game) {
                 })
                 sendMessageTime()
             }
+
             60 -> {
                 sendMessageTime()
             }
+
             30 -> {
                 sendMessageTime()
             }
+
             20 -> {
                 sendMessageTime()
             }
+
             in 5..10 -> {
                 sendMessageTime()
             }
+
             else -> {
                 game.players.forEach {
                     it.level = duration
