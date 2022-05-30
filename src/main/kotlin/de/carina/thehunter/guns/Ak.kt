@@ -11,7 +11,7 @@
 package de.carina.thehunter.guns
 
 import de.carina.thehunter.TheHunter
-import de.carina.thehunter.items.chest.AmmoItems
+import de.carina.thehunter.items.AmmoItems
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.Bukkit

@@ -8,10 +8,10 @@
  * requires the express written consent of Carina Sophie Schoppe.
  */
 
-package de.carina.thehunter.items.chest.special
+package de.carina.thehunter.items.special
 
 import de.carina.thehunter.TheHunter
-import de.carina.thehunter.items.chest.ItemHandler
+import de.carina.thehunter.items.ItemHandler
 import de.carina.thehunter.util.builder.ItemBuilder
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Material

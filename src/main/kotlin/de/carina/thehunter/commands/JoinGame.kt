@@ -12,7 +12,6 @@ package de.carina.thehunter.commands
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.countdowns.LobbyCountdown
-import de.carina.thehunter.items.configurator.LeaveItem
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.PlayerTeamHead

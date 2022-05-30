@@ -11,7 +11,7 @@
 package de.carina.thehunter.events.misc
 
 import de.carina.thehunter.gamestates.IngameState
-import de.carina.thehunter.items.chest.special.EggBomb
+import de.carina.thehunter.items.special.EggBomb
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.MapResetter
 import org.bukkit.Material

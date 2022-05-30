@@ -12,7 +12,6 @@ package de.carina.thehunter.events.game
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
-import de.carina.thehunter.items.configurator.LeaveItem
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
 import net.kyori.adventure.text.Component

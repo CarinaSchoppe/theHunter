@@ -46,5 +46,10 @@ class WorldboarderController(private val game: Game) {
         game.arenaCenter!!.world.worldBorder.size = worldBoarderSize.toDouble()
     }
 
+    companion object {
+        const val toHigh: Int = 1000
+        const val toLow: Int = 25
+    }
+
 
 }

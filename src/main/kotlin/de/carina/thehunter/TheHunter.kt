@@ -19,8 +19,7 @@ import de.carina.thehunter.events.misc.PlayerJoinsServer
 import de.carina.thehunter.events.misc.gameconfigurator.GameConfigurator
 import de.carina.thehunter.events.misc.gameconfigurator.SettingsConfigurator
 import de.carina.thehunter.guns.GunHandler
-import de.carina.thehunter.items.chest.special.*
-import de.carina.thehunter.items.configurator.LeaveItem
+import de.carina.thehunter.items.special.*
 import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.files.ItemSettings
 import de.carina.thehunter.util.files.Messages
@@ -121,7 +120,6 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(GameSigns(), this)
         pluginManager.registerEvents(PlayerKillsOtherOrDies(), this)
         pluginManager.registerEvents(PlayerDisconnects(), this)
-        pluginManager.registerEvents(LeaveItem(), this)
         pluginManager.registerEvents(GamesInventoryList(), this)
         pluginManager.registerEvents(LobbyInteraction(), this)
         pluginManager.registerEvents(PlayerTeamHead(), this)

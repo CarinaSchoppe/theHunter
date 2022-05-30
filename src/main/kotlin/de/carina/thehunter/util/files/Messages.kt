@@ -108,6 +108,12 @@ class Messages(filePath: String) : BaseFile(filePath) {
         yml.addDefault("autoupdate", "&cThe Plugin has a &6new Version&c!")
         yml.addDefault("update-true", "&aThe Plugin is upto Date!")
         yml.addDefault("update-error", "&cCant check for Updates!")
+        yml.addDefault("bordersize-plus", "&aThe border size has been increased to &6%size%&a!")
+        yml.addDefault("bordersize-minus", "&aThe border size has been decreased to &6%size%&a!")
+        yml.addDefault("bordersize-to-low", "&cThe border size is to low. Lowest allowed: &6%size%&c!")
+        yml.addDefault("bordersize-to-high", "&cThe border size is to high. Highest allowed: &6%size%&c!")
+
+
         super.addData()
         loadMessagesToMap()
         return this

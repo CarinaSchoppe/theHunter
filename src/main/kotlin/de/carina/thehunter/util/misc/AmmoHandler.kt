@@ -10,7 +10,7 @@
 
 package de.carina.thehunter.util.misc
 
-import de.carina.thehunter.items.chest.AmmoItems
+import de.carina.thehunter.items.AmmoItems
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener

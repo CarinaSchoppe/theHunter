@@ -16,7 +16,7 @@ import de.carina.thehunter.countdowns.Countdowns
 import de.carina.thehunter.countdowns.EndCountdown
 import de.carina.thehunter.countdowns.LobbyCountdown
 import de.carina.thehunter.gamestates.*
-import de.carina.thehunter.items.chest.ItemChest
+import de.carina.thehunter.items.ItemChest
 import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.misc.DeathChests
 import de.carina.thehunter.util.misc.MapResetter

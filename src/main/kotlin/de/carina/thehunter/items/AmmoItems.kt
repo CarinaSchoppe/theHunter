@@ -1,4 +1,4 @@
-package de.carina.thehunter.items.chest
+package de.carina.thehunter.items
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.builder.ItemBuilder

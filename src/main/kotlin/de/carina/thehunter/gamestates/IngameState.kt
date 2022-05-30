@@ -15,7 +15,6 @@ import de.carina.thehunter.guns.Ak
 import de.carina.thehunter.guns.Minigun
 import de.carina.thehunter.guns.Pistol
 import de.carina.thehunter.guns.Sniper
-import de.carina.thehunter.items.configurator.LeaveItem
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.misc.PlayerDropping
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer

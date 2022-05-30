@@ -8,7 +8,7 @@
  * requires the express written consent of Carina Sophie Schoppe.
  */
 
-package de.carina.thehunter.items.chest
+package de.carina.thehunter.items
 
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.game.GamesHandler

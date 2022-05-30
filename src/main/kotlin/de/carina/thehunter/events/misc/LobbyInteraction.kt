@@ -12,7 +12,7 @@ package de.carina.thehunter.events.misc
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
-import de.carina.thehunter.items.configurator.LeaveItem
+import de.carina.thehunter.util.builder.Items
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.PlayerTeamHead
 import org.bukkit.entity.Player
@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerDropItemEvent
+import org.bukkit.event.player.PlayerInteractEvent
 
 class LobbyInteraction : Listener {
 
@@ -47,13 +48,24 @@ class LobbyInteraction : Listener {
             if (GamesHandler.spectatorInGames[event.damager]!!.currentGameState !is IngameState) {
                 event.isCancelled = true
                 event.damage = 0.0
-                if ((event.damager as Player).inventory.itemInMainHand.itemMeta != LeaveItem.leaveItem.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
+                if ((event.damager as Player).inventory.itemInMainHand.itemMeta != Items.leaveItem.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
                     event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
 
             }
         }
     }
 
+    @EventHandler
+    fun onPlayerLeavesGame(event: PlayerInteractEvent) {
+        if (event.item == null) return
+        if (!event.item!!.hasItemMeta())
+            return
+        if (event.item!!.itemMeta != Items.leaveItem.itemMeta)
+            return
+        if (event.action.isLeftClick)
+            return
+        event.player.performCommand("thehunter leave")
+    }
 
     private fun lobbyDamagePLayer(event: EntityDamageByEntityEvent) {
         if (event.entity is Player) {
