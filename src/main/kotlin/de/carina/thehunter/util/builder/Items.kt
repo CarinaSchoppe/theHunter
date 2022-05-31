@@ -22,5 +22,6 @@ object Items {
     val maxPlayers = ItemBuilder(Material.NETHERITE_INGOT).addDisplayName("§6Max Players").addLore("§7Max Players amount").build()
     val borderSize = ItemBuilder(Material.BARRIER).addDisplayName("§6Border Size").addLore("§7Border Size").build()
     val leaveItem = ItemBuilder(Material.IRON_DOOR).addDisplayName(TheHunter.prefix + "§6Leave").addLore("§7Click to leave the game").addEnchantment(Enchantment.DURABILITY, 1).build()
+    val saveButton = ItemBuilder(Material.RED_BED).addDisplayName(TheHunter.prefix + "§6Save Settings").addLore("§7Click to save the settings").addEnchantment(Enchantment.DURABILITY, 1).build()
 
 }

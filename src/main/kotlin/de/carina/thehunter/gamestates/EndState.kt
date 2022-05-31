@@ -35,17 +35,15 @@ class EndState(game: Game) : GameState(game) {
         }
     }
 
-    private fun playerStuff(game: Game) {
-        game.players.toMutableList()
-            .forEach {
-                it.inventory.clear()
-                it.teleport(game.endLocation!!)
-                for (spectator in game.spectators.toMutableList()) {
-                    spectator.showPlayer(TheHunter.instance, it)
-                    it.showPlayer(TheHunter.instance, spectator)
-                }
+    private fun playerStuff(game: Game) = game.players.toMutableList()
+        .forEach {
+            it.inventory.clear()
+            it.teleport(game.endLocation!!)
+            for (spectator in game.spectators.toMutableList()) {
+                spectator.showPlayer(TheHunter.instance, it)
+                it.showPlayer(TheHunter.instance, spectator)
             }
-    }
+        }
 
     override fun stop() {
         game.mapResetter.resetMap()
@@ -55,7 +53,6 @@ class EndState(game: Game) : GameState(game) {
         game.spectators.toMutableList().forEach {
             it.performCommand("thehunter leave")
         }
-
     }
 
     override val gameStateID: Int = GameStates.END_STATE.id

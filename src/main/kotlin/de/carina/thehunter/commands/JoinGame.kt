@@ -12,6 +12,7 @@ package de.carina.thehunter.commands
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.countdowns.LobbyCountdown
+import de.carina.thehunter.util.builder.Items
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.PlayerTeamHead
@@ -36,7 +37,7 @@ class JoinGame {
             return
         Util.updateGameSigns(game)
         sender.inventory.clear()
-        sender.inventory.setItem(8, LeaveItem.leaveItem)
+        sender.inventory.setItem(8, Items.leaveItem)
         sender.inventory.setItem(5, PlayerTeamHead.createPlayerHead())
         sender.gameMode = GameMode.SURVIVAL
         if (game.currentCountdown is LobbyCountdown) {

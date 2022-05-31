@@ -18,6 +18,8 @@ class GameConfigurator : Listener {
         if (!Util.currentGameSelected.containsKey(event.whoClicked as Player)) return
         if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize("§d${Util.currentGameSelected[event.whoClicked as Player]}§6: Game Setup")))
             return
+        if (!(event.whoClicked as Player).hasPermission("thehunter.setupgui"))
+            return
         event.isCancelled = true
 
         if (event.currentItem == null)
@@ -26,7 +28,6 @@ class GameConfigurator : Listener {
         if (event.currentItem!!.itemMeta == null)
             return
 
-        if (!Util.currentGameSelected.containsKey(event.whoClicked as Player)) return
         when (event.currentItem!!.itemMeta!!) {
             Items.addLobbyButton.itemMeta -> (event.whoClicked as Player).performCommand("thehunter setup config lobbyspawn ${Util.currentGameSelected[event.whoClicked as Player]!!.name}")
             Items.addBackButton.itemMeta -> (event.whoClicked as Player).performCommand("thehunter setup config backspawn ${Util.currentGameSelected[event.whoClicked as Player]!!.name}")

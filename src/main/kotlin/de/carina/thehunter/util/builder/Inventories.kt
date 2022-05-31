@@ -37,6 +37,7 @@ object Inventories {
         builder.setItem(3 + 9 * 4, Items.maxPlayers)
         addColoredWool(builder, 4)
         builder.setItem(3 + 9 * 5, Items.borderSize)
+        builder.setItem(53, Items.saveButton)
         addColoredWool(builder, 5)
         return builder.fillInventory(ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1).build()).create()
 

@@ -32,7 +32,6 @@ import java.io.File
 
 class Game(var name: String) {
 
-
     var lobbyLocation: Location? = null
     var spectatorLocation: Location? = null
     var backLocation: Location? = null
@@ -66,7 +65,6 @@ class Game(var name: String) {
     var teamMaxSize = 4
     var maxPlayers: Int = 20
     var minPlayers: Int = 1
-    var currentPlayers: Int = 0
     var immunity = 10
     var teamDamage = false
     var mapModify = false
@@ -112,7 +110,7 @@ class Game(var name: String) {
         countdowns.clear()
     }
 
-    fun saveGameToConfig(): Boolean {
+    private fun saveGameToConfig(): Boolean {
         if (name == null) return false
         if (arenaCenter == null) return false
         if (backLocation == null) return false
@@ -187,6 +185,7 @@ class Game(var name: String) {
             game.arenaCenter = ymlLocations.getLocation("arena-center")!!
             game.spectatorLocation = ymlLocations.getLocation("spectator-location")!!
             game.finish()
+            game.currentGameState = game.gameStates[GameStates.LOBBY_STATE.id]
             game.currentGameState.start()
             Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["loaded-game-successfully"]!!.replace("%game%", game.name))
             game.worldBoarderController.resetWorldBoarder()
@@ -254,13 +253,21 @@ class Game(var name: String) {
             Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", name))
             return
         }
+        currentGameState.stop()
+        currentGameState = gameStates[GameStates.END_STATE.id]
+        currentGameState.stop()
+        GamesHandler.setupGames.remove(this)
+        GamesHandler.games.remove(this)
+        currentGameState = gameStates[GameStates.LOBBY_STATE.id]
+        currentGameState.start()
         saveGameToConfig()
         gameItems.saveAllItems()
         gameItems.loadAllItems()
         gameItems.loadAllGunSettings()
-        GamesHandler.setupGames.remove(this)
         GamesHandler.games.add(this)
         Util.updateGameSigns(this)
+        Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["save-settings-successfull".replace("%game%", name)]!!)
+
     }
 
 }

@@ -15,6 +15,7 @@ import de.carina.thehunter.guns.Ak
 import de.carina.thehunter.guns.Minigun
 import de.carina.thehunter.guns.Pistol
 import de.carina.thehunter.guns.Sniper
+import de.carina.thehunter.util.builder.Items
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.misc.PlayerDropping
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
@@ -106,7 +107,7 @@ class IngameState(game: Game) : GameState(game) {
             player.activePotionEffects.clear()
             player.inventory.clear()
             player.teleport(game.endLocation!!)
-            player.inventory.setItem(8, LeaveItem.leaveItem)
+            player.inventory.setItem(8, Items.leaveItem)
             player.level = 0
             player.allowFlight = false
         }

@@ -12,6 +12,7 @@ package de.carina.thehunter.events.game
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
+import de.carina.thehunter.util.builder.Items
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
 import net.kyori.adventure.text.Component
@@ -100,11 +101,11 @@ class PlayerKillsOtherOrDies : Listener {
         game.deathChests.createDeathChest(player)
         game.players.remove(player)
         game.spectators.add(player)
-        player.inventory.setItem(8, LeaveItem.leaveItem)
+        player.inventory.setItem(8, Items.leaveItem)
         player.teleport(game.spectatorLocation!!)
         player.inventory.clear()
         player.allowFlight = true
-        player.inventory.setItem(9, LeaveItem.leaveItem)
+        player.inventory.setItem(9, Items.leaveItem)
         Bukkit.getOnlinePlayers().forEach {
             it.hidePlayer(TheHunter.instance, player)
             player.hidePlayer(TheHunter.instance, it)
