@@ -1,7 +1,8 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 21.04.22, 15:42 by Carina The Latest changes made by Carina on 21.04.22, 15:42 All contents of "Settings.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is
+ * File created on 6/1/22, 4:23 PM by Carina The Latest changes made by Carina on 4/21/22, 3:42 PM All contents of "Settings.kt" are protected by copyright.
+ * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
  * Public accessibility or other use
