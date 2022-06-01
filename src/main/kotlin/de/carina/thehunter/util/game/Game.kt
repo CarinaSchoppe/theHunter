@@ -267,7 +267,7 @@ class Game(var name: String) {
         gameItems.loadAllGunSettings()
         GamesHandler.games.add(this)
         Util.updateGameSigns(this)
-        Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["loaded-game-successfully".replace("%game%", name)]!!)
+        Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["loaded-game-successfully"]!!.replace("%game%", name))
 
     }
 
