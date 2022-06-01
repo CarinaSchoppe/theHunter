@@ -28,8 +28,7 @@ class GunHandler : Listener {
     @EventHandler
     fun onPlayerShoot(event: PlayerInteractEvent) {
         if (event.item == null) return
-        if (event.player.inventory.itemInMainHand == null)
-            return
+
         if (!event.player.inventory.itemInMainHand.hasItemMeta())
             return
         if (!event.item!!.hasItemMeta()) return
@@ -117,10 +116,8 @@ class GunHandler : Listener {
 
     @EventHandler
     fun onGunDrop(event: PlayerDropItemEvent) {
-        if (event.itemDrop.itemStack == null)
-            return
-        if (!GamesHandler.playerInGames.containsKey(event.player))
-            return
+
+
         if (!event.itemDrop.itemStack.hasItemMeta())
             return
         if (event.itemDrop.itemStack.itemMeta == Ak.createAkGunItem().itemMeta ||
@@ -136,7 +133,7 @@ class GunHandler : Listener {
 
     companion object {
         fun removeAmmo(player: Player, amount: Int, itemMeta: ItemMeta) {
-            for (itemStack in player.inventory.contents!!) {
+            for (itemStack in player.inventory.contents) {
                 if (itemStack != null && itemStack.itemMeta == itemMeta) {
                     if (player.inventory.itemInMainHand.itemMeta == itemStack.itemMeta) {
                         itemStack.subtract(amount)
@@ -164,23 +161,23 @@ class GunHandler : Listener {
         (event.entity as Player).playSound(event.entity.location, Sound.ENTITY_PLAYER_HURT, 1f, 1f)
         if (Ak.shotBullets.containsKey(player)) {
             if (Ak.shotBullets[player]!!.contains(arrow)) {
-                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-damage"] as Double
+                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-damage"]?.plus(0.0) ?: 3.0
                 return
             }
         } else if (Minigun.shotBullets.containsKey(player)) {
             if (Minigun.shotBullets[player]!!.contains(arrow)) {
-                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-damage"] as Double
+                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-damage"]?.plus(0.0) ?: 1.0
                 return
             }
 
         } else if (Sniper.shotBullets.containsKey(player)) {
             if (Sniper.shotBullets[player]!!.contains(arrow)) {
-                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-damage"] as Double
+                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-damage"]?.plus(0.0) ?: 5.0
                 return
             }
         } else if (Pistol.shotBullets.containsKey(player)) {
             if (Pistol.shotBullets[player]!!.contains(arrow)) {
-                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-damage"] as Double
+                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-damage"]?.plus(0.0) ?: 2.0
                 return
             }
         }

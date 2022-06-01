@@ -113,7 +113,7 @@ object Minigun {
     private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
 
         var amount = 0
-        for (item in player.inventory.contents!!) {
+        for (item in player.inventory.contents) {
             if (item == null)
                 continue
             if (!item.hasItemMeta())

@@ -33,8 +33,7 @@ class PlayerTeamHead : Listener {
 
     @EventHandler
     fun onItemAccept(event: PlayerInteractAtEntityEvent) {
-        if (event.player.inventory.itemInMainHand == null)
-            return
+
         if (!event.player.inventory.itemInMainHand.hasItemMeta())
             return
         if (event.player.inventory.itemInMainHand.itemMeta != createPlayerHead().itemMeta)
@@ -72,8 +71,6 @@ class PlayerTeamHead : Listener {
         if (!game.players.contains(event.entity as Player))
             return
 
-        if ((event.damager as Player).inventory.itemInMainHand == null)
-            return
         if ((event.damager as Player).inventory.itemInMainHand.itemMeta != createPlayerHead().itemMeta)
             return
         (event.damager as Player).performCommand("thehunter team invite " + event.entity.name)

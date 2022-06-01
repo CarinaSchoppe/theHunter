@@ -27,8 +27,7 @@ object ItemHandler {
         if (!event.item!!.hasItemMeta()) return false
         if (event.item!!.itemMeta != item.itemMeta)
             return false
-        if (event.player.inventory.itemInMainHand == null)
-            return false
+
         if (!event.player.inventory.itemInMainHand.hasItemMeta())
             return false
         if (event.player.inventory.itemInMainHand.itemMeta != item.itemMeta)

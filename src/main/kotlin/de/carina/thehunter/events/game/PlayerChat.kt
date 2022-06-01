@@ -31,7 +31,7 @@ class PlayerChat : Listener {
         event.isCancelled = true
         if (LegacyComponentSerializer.builder().build().serialize(event.message()).startsWith("@Team")) {
             var message = TheHunter.prefix + "§7[§6${event.player.name}§7]§f " + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
-            val team = GamesHandler.playerInGames[event.player]!!.teams.first { it.teamMembers.contains(event.player) }
+            val team = GamesHandler.playerInGames[event.player]!!.teams.find { it.teamMembers.contains(event.player) }
             if (team != null) {
                 team.teamMembers.forEach {
                     it.sendMessage(message)

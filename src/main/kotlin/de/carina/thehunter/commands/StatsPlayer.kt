@@ -27,8 +27,7 @@ class StatsPlayer {
             sender as Player
         else
             Bukkit.getPlayer(args[0])!!
-        if (player == null)
-            player = sender as Player
+
         TheHunter.instance.statsSystem.generateStatsMessageForPlayer(sender as Player, player)
 
     }

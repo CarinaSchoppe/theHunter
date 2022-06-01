@@ -112,7 +112,6 @@ class Game(var name: String) {
     }
 
     private fun saveGameToConfig(): Boolean {
-        if (name == null) return false
         if (arenaCenter == null) return false
         if (backLocation == null) return false
         if (lobbyLocation == null) return false
@@ -229,9 +228,6 @@ class Game(var name: String) {
                 return true
             }
         }
-
-        return false
-
     }
 
     fun create() {
