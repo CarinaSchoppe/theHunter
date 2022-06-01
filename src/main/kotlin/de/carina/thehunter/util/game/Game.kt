@@ -187,7 +187,6 @@ class Game(var name: String) {
             game.finish()
             game.currentGameState = game.gameStates[GameStates.LOBBY_STATE.id]
             game.currentGameState.start()
-            Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["loaded-game-successfully"]!!.replace("%game%", game.name))
             game.worldBoarderController.resetWorldBoarder()
         }
 
