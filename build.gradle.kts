@@ -15,7 +15,7 @@ plugins {
     id("java-library")
     idea
     id("io.papermc.paperweight.userdev") version "1.3.5"
-    kotlin("jvm") version "1.7.+"
+    kotlin("jvm") version "1.7.0-RC2"
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("xyz.jpenilla.run-paper") version "1.0.6" // Adds runServer and runMojangMappedServer tasks for testing
 }
