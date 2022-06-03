@@ -13,6 +13,7 @@ package de.carina.thehunter.events.misc.gameconfigurator
 
 import de.carina.thehunter.util.builder.Inventories
 import de.carina.thehunter.util.builder.Items
+import de.carina.thehunter.util.misc.Permissions
 import de.carina.thehunter.util.misc.Util
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
@@ -25,11 +26,10 @@ class GameConfigurator : Listener {
 
     @EventHandler
     fun onGameConfigEdit(event: InventoryClickEvent) {
-        //TODO: hier check
         if (!Util.currentGameSelected.containsKey(event.whoClicked as Player)) return
         if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize("§d${Util.currentGameSelected[event.whoClicked as Player]}§6: Game Setup")))
             return
-        if (!(event.whoClicked as Player).hasPermission("thehunter.setupgui"))
+        if (!(event.whoClicked as Player).hasPermission(Permissions.SETUP_GUI))
             return
         event.isCancelled = true
 

@@ -15,7 +15,6 @@ import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.Util
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -50,24 +49,7 @@ class PlayerDisconnects : Listener {
         GamesHandler.playerInGames.remove(player)
         GamesHandler.spectatorInGames.remove(player)
         player.teleport(game.backLocation!!)
-        for (players in Bukkit.getOnlinePlayers()) {
-            players.showPlayer(TheHunter.instance, player)
-            player.showPlayer(TheHunter.instance, players)
-        }
-        GamesHandler.playerInGames.keys.forEach {
-            it.hidePlayer(TheHunter.instance, player)
-            player.hidePlayer(TheHunter.instance, it)
-        }
-        GamesHandler.spectatorInGames.keys.forEach {
-            it.hidePlayer(TheHunter.instance, player)
-            player.hidePlayer(TheHunter.instance, it)
-        }
+        Util.playerHiding(game, player)
 
-        game.spectators.forEach {
-            it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace("%player%", player.name))
-        }
-        game.players.forEach {
-            it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace("%player%", player.name))
-        }
     }
 }

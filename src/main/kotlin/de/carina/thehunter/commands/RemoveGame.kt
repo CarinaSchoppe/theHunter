@@ -15,12 +15,13 @@ import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.GameStates
 import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.command.CommandSender
 import java.io.File
 
 class RemoveGame {
     fun remove(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "remove", 1, "theHunter.removegame"))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, "remove", 1, Permissions.REMOVE_GAME_COMMAND))
             return
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {

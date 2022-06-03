@@ -32,7 +32,6 @@ class BlocksFlyEvent : Listener {
         if (event.entity !is TNTPrimed) return
         val tnt = event.entity as TNTPrimed
         if (!EggBomb.bombs.contains(tnt)) return
-        print("explod")
         EggBomb.bombs.remove(tnt)
 
         val game = GamesHandler.entitiesInGames[tnt]!!

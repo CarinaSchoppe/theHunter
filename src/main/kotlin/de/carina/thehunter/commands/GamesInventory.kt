@@ -12,14 +12,25 @@
 package de.carina.thehunter.commands
 
 import de.carina.thehunter.util.builder.Inventories
+import de.carina.thehunter.util.misc.Permissions
+import de.carina.thehunter.util.misc.Util
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 class GamesInventory {
-    fun openInv(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "inventory", 0, "theHunter.inventory"))
+    fun openInventory(sender: CommandSender, command: String, args: Array<out String>) {
+        if (!CommandUtil.checkCommandBasics(sender, command, args, "inventory", 0, Permissions.GAMES_INVENTORY))
             return
 
         (sender as Player).openInventory(Inventories.gamesInventory)
+    }
+
+    fun openSettings(sender: CommandSender, command: String, args: Array<out String>) {
+        if (!CommandUtil.checkCommandBasics(sender, command, args, "settings", 0, Permissions.SETTINGS_GUI))
+            return
+
+        if (!Util.currentGameSelected.containsKey(sender))
+            return
+        (sender as Player).openInventory(Inventories.createSettingsInventory(Util.currentGameSelected[sender]!!))
     }
 }

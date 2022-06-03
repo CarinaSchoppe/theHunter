@@ -38,7 +38,7 @@ class PlayerTeamHead : Listener {
             return
         if (event.player.inventory.itemInMainHand.itemMeta != createPlayerHead().itemMeta)
             return
-        if (!event.player.hasPermission("thehunter.playerinviter"))
+        if (!event.player.hasPermission(Permissions.PLAYER_INVITER))
             return
         if (!GamesHandler.playerInGames.containsKey(event.player))
             return
@@ -60,7 +60,7 @@ class PlayerTeamHead : Listener {
         if (event.damager !is Player)
             return
 
-        if (!event.damager.hasPermission("thehunter.playerinviter"))
+        if (!event.damager.hasPermission(Permissions.PLAYER_INVITER))
             return
         if (!GamesHandler.playerInGames.containsKey(event.damager))
             return
@@ -73,7 +73,7 @@ class PlayerTeamHead : Listener {
 
         if ((event.damager as Player).inventory.itemInMainHand.itemMeta != createPlayerHead().itemMeta)
             return
-        (event.damager as Player).performCommand("thehunter team invite " + event.entity.name)
+        (event.damager as Player).performCommand("theHunter team invite " + event.entity.name)
 
 
     }

@@ -47,7 +47,7 @@ class GameItems(game: Game) {
         ymlItems.addDefault("EggBomb", true)
         ymlItems.addDefault("eggbomb-amount", 2)
         ymlItems.addDefault("JumpStick", true)
-        ymlItems.addDefault("jumpstick-amount", 2)
+        ymlItems.addDefault("jump-stick-amount", 2)
         ymlItems.addDefault("MinigunAmmo", true)
         ymlItems.addDefault("minigunammo-amount", 10)
         ymlItems.addDefault("AkAmmo", true)
@@ -64,8 +64,8 @@ class GameItems(game: Game) {
         ymlItems.addDefault("energydrink-amount", 2)
         ymlItems.addDefault("Food", true)
         ymlItems.addDefault("food-amount", 3)
-        ymlItems.set("jumpstick-uses", 3)
-        ymlItems.set("jumpstick-power", 5)
+        ymlItems.set("jump-stick-uses", 3)
+        ymlItems.set("jump-stick-power", 5)
         ymlItems.set("food-recharge", 4)
 
         //Gun settings

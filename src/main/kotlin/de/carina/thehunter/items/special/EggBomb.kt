@@ -16,6 +16,7 @@ import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
@@ -48,7 +49,7 @@ class EggBomb : Listener {
             return
         val player = egg.shooter as org.bukkit.entity.Player
         //Check if the egg is the same egg as an EggBomb item
-        if (!player.hasPermission("theHunter.eggbomb"))
+        if (!player.hasPermission(Permissions.EGG_BOMB))
             return
         if (!GamesHandler.playerInGames.containsKey(player))
             return

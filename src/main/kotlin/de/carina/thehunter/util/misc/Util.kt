@@ -16,10 +16,35 @@ import de.carina.thehunter.gamestates.EndState
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.gamestates.LobbyState
 import de.carina.thehunter.util.game.Game
+import de.carina.thehunter.util.game.GamesHandler
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
 object Util {
+
+    fun playerHiding(game: Game, player: Player) {
+        for (players in Bukkit.getOnlinePlayers()) {
+            players.showPlayer(TheHunter.instance, player)
+            player.showPlayer(TheHunter.instance, players)
+        }
+        GamesHandler.playerInGames.keys.forEach {
+            it.hidePlayer(TheHunter.instance, player)
+            player.hidePlayer(TheHunter.instance, it)
+        }
+        GamesHandler.spectatorInGames.keys.forEach {
+            it.hidePlayer(TheHunter.instance, player)
+            player.hidePlayer(TheHunter.instance, it)
+        }
+
+        game.spectators.forEach {
+            it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace("%player%", player.name))
+        }
+        if (game.currentGameState !is IngameState)
+            game.players.forEach {
+                it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace("%player%", player.name))
+            }
+    }
 
     var currentGameSelected = mutableMapOf<Player, Game>()
     fun updateGameSigns(game: Game) {

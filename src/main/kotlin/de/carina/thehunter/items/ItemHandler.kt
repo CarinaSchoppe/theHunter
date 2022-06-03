@@ -13,6 +13,7 @@ package de.carina.thehunter.items
 
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
@@ -22,7 +23,7 @@ object ItemHandler {
     fun shouldInteractWithItem(event: PlayerInteractEvent, item: ItemStack, itemString: String): Boolean {
         if (event.item == null)
             return false
-        if (!event.player.hasPermission("theHunter.$itemString"))
+        if (!event.player.hasPermission("${Permissions.PERMISSION_PREFIX}.$itemString"))
             return false
         if (!event.item!!.hasItemMeta()) return false
         if (event.item!!.itemMeta != item.itemMeta)

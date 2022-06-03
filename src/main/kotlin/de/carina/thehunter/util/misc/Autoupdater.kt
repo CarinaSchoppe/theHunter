@@ -20,7 +20,7 @@ import javax.net.ssl.HttpsURLConnection
 
 class Autoupdater {
     fun checkUpdate(resourceId: String) {
-        if (TheHunter.instance.settings.settingsMap["autoupdater"] as Boolean) {
+        if (TheHunter.instance.settings.settingsMap["updater"] as Boolean) {
             try {
                 val con: HttpsURLConnection = URL("https://www.spigotmc.org/api/general.php")
                     .openConnection() as HttpsURLConnection

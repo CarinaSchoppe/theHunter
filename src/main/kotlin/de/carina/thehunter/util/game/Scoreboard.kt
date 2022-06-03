@@ -22,7 +22,6 @@ import org.bukkit.scoreboard.Objective
 import org.bukkit.scoreboard.Score
 
 class Scoreboard(val game: Game) {
-    //TDOO: Dies testen
     private val serverName = ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["server-name"] as String)
     private val scoreboard = Bukkit.getScoreboardManager().newScoreboard
     private val objective: Objective = scoreboard.registerNewObjective("aaa", "bbb", Component.text(serverName))

@@ -23,7 +23,7 @@ abstract class GameState(val game: Game) {
         if (this is LobbyState)
             return "LobbyState"
         if (this is IngameState)
-            return "IngameState"
+            return "InGameState"
         if (this is EndState)
             return "EndState"
         return "Unknown state"

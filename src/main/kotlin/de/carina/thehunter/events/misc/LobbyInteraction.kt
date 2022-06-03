@@ -92,19 +92,9 @@ class LobbyInteraction : Listener {
     fun onLobbyDamageRandom(event: EntityDamageEvent) {
         if (event.entity !is Player)
             return
-        if (GamesHandler.playerInGames.containsKey(event.entity)) {
-            if (GamesHandler.playerInGames[event.entity]!!.currentGameState !is IngameState) {
-                event.isCancelled = true
-                event.damage = 0.0
-                return
-            }
-        } else if (GamesHandler.spectatorInGames.containsKey(event.entity)) {
-            if (GamesHandler.spectatorInGames[event.entity]!!.currentGameState !is IngameState) {
-                event.isCancelled = true
-                event.damage = 0.0
-                return
-            }
-
+        if ((GamesHandler.playerInGames.containsKey(event.entity) && GamesHandler.playerInGames[event.entity]!!.currentGameState !is IngameState) || (GamesHandler.spectatorInGames.containsKey(event.entity) && GamesHandler.spectatorInGames[event.entity]!!.currentGameState !is IngameState)) {
+            event.isCancelled = true
+            event.damage = 0.0
         }
     }
 

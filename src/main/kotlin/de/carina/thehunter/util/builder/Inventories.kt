@@ -66,13 +66,13 @@ object Inventories {
     }
 
     private fun addColoredWool(builder: InventoryBuilder, row: Int) {
-        builder.setItem(row * 9 + 6, Items.settingsGreen.build())
-        builder.setItem(row * 9 + 7, Items.settingsRed.build())
+        builder.setItem(row * 9 + 6, Items.settingsWoolGreen.build())
+        builder.setItem(row * 9 + 7, Items.settingsWoolRed.build())
     }
 
     private fun addSettingButtonsInColorToInventory(builder: InventoryBuilder, row: Int, value: Boolean) {
-        var itemGreen: ItemStack = if (value) Items.settingsGreen.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsGreen.clone().build()
-        var itemRed: ItemStack = if (value) Items.settingsRed.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsRed.clone().build()
+        var itemGreen: ItemStack = if (value) Items.settingsWoolGreen.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsWoolGreen.clone().build()
+        var itemRed: ItemStack = if (value) Items.settingsWoolRed.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsWoolRed.clone().build()
         builder.setItem(row * 9 + 6, itemGreen)
         builder.setItem(row * 9 + 7, itemRed)
     }

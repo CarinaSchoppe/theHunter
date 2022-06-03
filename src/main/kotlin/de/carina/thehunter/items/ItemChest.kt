@@ -91,7 +91,7 @@ class ItemChest(private val game: Game) {
         }
         if (game.gameItems.items["JumpStick"] == true) {
             val item = JumpStick.createJumpStick()
-            item.amount = game.gameItems.items["jumpstick-amount"] as Int
+            item.amount = game.gameItems.items["jump-stick-amount"] as Int
             items.add(item)
         }
         if (game.gameItems.items["Knife"] == true) {

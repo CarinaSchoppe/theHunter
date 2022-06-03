@@ -59,7 +59,12 @@ class BaseCommand : CommandExecutor {
             }
 
             "inventory" -> {
-                GamesInventory().openInv(sender, commandName, arguments)
+                GamesInventory().openInventory(sender, commandName, arguments)
+                return true
+            }
+
+            "settings" -> {
+                GamesInventory().openSettings(sender, commandName, arguments)
                 return true
             }
 

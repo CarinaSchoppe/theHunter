@@ -36,7 +36,7 @@ class Settings(filePath: String) : BaseFile(filePath) {
         yml.addDefault("duration-idle", 10)
         yml.addDefault("server-name", "TheHunter")
         yml.addDefault("ts-ip", "localhost")
-        yml.addDefault("autoupdater", true)
+        yml.addDefault("updater", true)
         super.addData()
         fillSettingsMap()
         return this

@@ -12,6 +12,7 @@
 package de.carina.thehunter.util.game
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.entity.Player
 
 class Team(var teamLeader: Player) {
@@ -44,7 +45,7 @@ class Team(var teamLeader: Player) {
                 return false
             }
         }
-        if (!leader.hasPermission("theHunter.teams.invite")) {
+        if (!leader.hasPermission(Permissions.TEAM_COMMAND)) {
             TheHunter.instance.messages.sendMessageToPlayer(leader, "player-not-permissions")
             return false
         }
@@ -85,7 +86,16 @@ class Team(var teamLeader: Player) {
         }
     }
 
+
     companion object {
+        fun teamsCleanUp(game: Game) {
+            game.teams.forEach {
+                it.invites.clear()
+                if (it.teamMembers.size < 2)
+                    game.teams.remove(it)
+                it.teamMembers.first().performCommand("theHunter team leave")
+            }
+        }
 
         fun isTeamMember(player: Player, other: Player): Boolean {
             if (GamesHandler.playerInGames.containsKey(player)) {

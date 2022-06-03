@@ -13,6 +13,7 @@ package de.carina.thehunter.util.game
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.EndState
+import de.carina.thehunter.util.misc.Permissions
 import de.carina.thehunter.util.misc.Util
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
@@ -34,12 +35,12 @@ class GameSigns : Listener {
             return
         var sign = event.clickedBlock!!.state as Sign
         var game = GamesHandler.games.find { it.name == PlainTextComponentSerializer.plainText().serialize(sign.line(1)) } ?: return
-        if (game.currentGameState is EndState || !event.player.hasPermission("thehunter.signjoin"))
+        if (game.currentGameState is EndState || !event.player.hasPermission(Permissions.SIGN_JOIN))
             return
 
         if (sign.line(0) == LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix)) {
             event.isCancelled = true
-            event.player.performCommand("thehunter join " + PlainTextComponentSerializer.plainText().serialize(sign.line(1)))
+            event.player.performCommand("theHunter join " + PlainTextComponentSerializer.plainText().serialize(sign.line(1)))
             game.signs.add(sign)
             Util.updateGameSigns(game)
         }
@@ -47,7 +48,7 @@ class GameSigns : Listener {
 
     @EventHandler
     fun onSignCreate(event: SignChangeEvent) {
-        if (!event.player.hasPermission("thehunter.signcreate"))
+        if (!event.player.hasPermission("theHunter.signcreate"))
             return
         if (event.line(0) != Component.text("[thehunter]"))
             return

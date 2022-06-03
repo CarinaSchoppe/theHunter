@@ -12,6 +12,7 @@
 package de.carina.thehunter.commands
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -19,11 +20,10 @@ import org.bukkit.entity.Player
 class StatsPlayer {
 
     fun stats(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "stats", 0, "theHunter.stats"))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, "stats", 0, Permissions.STATS_COMMAND))
             return
 
-        var player: Player
-        player = if (args.isEmpty())
+        var player: Player = if (args.isEmpty())
             sender as Player
         else
             Bukkit.getPlayer(args[0])!!

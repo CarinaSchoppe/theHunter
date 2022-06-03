@@ -16,6 +16,7 @@ import de.carina.thehunter.countdowns.LobbyCountdown
 import de.carina.thehunter.util.builder.Items
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.Permissions
 import de.carina.thehunter.util.misc.PlayerTeamHead
 import de.carina.thehunter.util.misc.Util
 import org.bukkit.Bukkit
@@ -26,7 +27,7 @@ import org.bukkit.entity.Player
 class JoinGame {
 
     fun join(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "join", 1, "theHunter.join"))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, "join", 1, Permissions.JOIN_COMMAND))
             return
 
         val game = GamesHandler.games.find { it.name == args[0] }
@@ -51,7 +52,7 @@ class JoinGame {
 
     private fun playerAddingAndMessaging(player: Player, game: Game): Boolean {
         if (GamesHandler.playerInGames.containsKey(player) || GamesHandler.spectatorInGames.containsKey(player)) {
-            player.sendMessage(TheHunter.instance.messages.messagesMap["player-already-ingame"]!!)
+            player.sendMessage(TheHunter.instance.messages.messagesMap["player-already-in-game"]!!)
             return false
         }
         if (game.players.size + 1 <= game.maxPlayers) {

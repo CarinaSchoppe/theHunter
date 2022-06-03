@@ -14,13 +14,14 @@ package de.carina.thehunter.commands
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.Permissions
 import de.carina.thehunter.util.misc.Util
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 class CreateGame {
     fun create(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "setup", 2, "theHunter.setup"))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, "setup", 2, Permissions.SETUP_COMMAND))
             return
 
         when (args[0].lowercase()) {
@@ -87,7 +88,7 @@ class CreateGame {
 
             "arenacenter" -> {
                 game.arenaCenter = (sender as Player).location
-                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-arenacenter-set"]!!.replace("%game%", args[2]))
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-arena center-set"]!!.replace("%game%", args[2]))
 
             }
 
@@ -96,7 +97,7 @@ class CreateGame {
                     game.playerSpawns.add((sender as Player).location)
                     sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spawn-set"]!!.replace("%id%", (game.playerSpawns.size - 1).toString()).replace("%game%", args[2]))
                 } else
-                    sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spawns-toomuch"]!!.replace("%game%", args[2]).replace("%max%", game.maxPlayers.toString()))
+                    sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spawns-to-much"]!!.replace("%game%", args[2]).replace("%max%", game.maxPlayers.toString()))
             }
 
             "finish" -> {

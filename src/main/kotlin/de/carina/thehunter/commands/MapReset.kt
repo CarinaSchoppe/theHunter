@@ -12,11 +12,12 @@
 package de.carina.thehunter.commands
 
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.command.CommandSender
 
 class MapReset {
     fun reset(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "mapreset", 0, "theHunter.mapreset"))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, "mapreset", 0, Permissions.MAPRESET_COMMAND))
             return
 
         if (!GamesHandler.playerInGames.containsKey(sender) && !GamesHandler.spectatorInGames.containsKey(sender))

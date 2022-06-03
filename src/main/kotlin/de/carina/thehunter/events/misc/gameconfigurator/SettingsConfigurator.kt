@@ -13,6 +13,7 @@ package de.carina.thehunter.events.misc.gameconfigurator
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.builder.Items
+import de.carina.thehunter.util.misc.Permissions
 import de.carina.thehunter.util.misc.Util
 import de.carina.thehunter.util.misc.WorldboarderController
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
@@ -29,14 +30,18 @@ class SettingsConfigurator : Listener {
     companion object {
         private const val minPlayersHigh = 20
         private const val minPlayersLow = 1
+        private const val maxPlayersHigh = 50
+        private const val maxPlayersLow = 2
+        private const val teamSizeLow = 2
+        private const val teamSizeHigh = 4
     }
 
-    //TODO: hier
+
     @EventHandler
     fun onInteractWithSettings(event: InventoryClickEvent) {
         if (!Util.currentGameSelected.containsKey(event.whoClicked as Player)) return
 
-        if (!(event.whoClicked as Player).hasPermission("thehunter.settingsgui"))
+        if (!(event.whoClicked as Player).hasPermission(Permissions.SETTINGS_GUI))
             return
         if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize("§d${Util.currentGameSelected[event.whoClicked as Player]!!.name}§6: Game Settings")))
             return
@@ -55,28 +60,104 @@ class SettingsConfigurator : Listener {
         when (item.itemMeta) {
             Items.borderSize.itemMeta -> borderSize(type, event.whoClicked as Player)
             Items.saveButton.itemMeta -> Util.currentGameSelected[event.whoClicked as Player]!!.finish()
+            Items.minPlayers.itemMeta -> minPlayers(type, event.whoClicked as Player)
+            Items.maxPlayers.itemMeta -> maxPlayers(type, event.whoClicked as Player)
+            Items.teamsSize.itemMeta -> teamSize(type, event.whoClicked as Player)
+            Items.teamsAllowedHead.itemMeta -> teamsAllowed(type, event.whoClicked as Player)
+            Items.teamsDamage.itemMeta -> teamDamage(type, event.whoClicked as Player)
         }
 
     }
 
+    private fun teamsAllowed(type: Boolean, player: Player) {
+        if (type) {
+            if (Util.currentGameSelected[player]!!.teamsAllowed)
+                return
+            Util.currentGameSelected[player]!!.teamsAllowed = false
+            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-allowed-enabled"]!!.replace("%game%", Util.currentGameSelected[player]!!.name))
+
+        } else {
+            if (!Util.currentGameSelected[player]!!.teamsAllowed)
+                return
+            Util.currentGameSelected[player]!!.teamsAllowed = true
+            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-allowed-disabled"]!!.replace("%game%", Util.currentGameSelected[player]!!.name))
+
+        }
+    }
+
+    private fun teamDamage(type: Boolean, player: Player) {
+        if (type) {
+            if (Util.currentGameSelected[player]!!.teamDamage)
+                return
+            Util.currentGameSelected[player]!!.teamDamage = false
+            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-teamDamage-enabled"]!!.replace("%game%", Util.currentGameSelected[player]!!.name))
+
+        } else {
+            if (!Util.currentGameSelected[player]!!.teamDamage)
+                return
+            Util.currentGameSelected[player]!!.teamDamage = true
+            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-teamDamage-disabled"]!!.replace("%game%", Util.currentGameSelected[player]!!.name))
+
+        }
+    }
+
+
+    private fun teamSize(type: Boolean, player: Player) {
+        if (type) {
+            if (Util.currentGameSelected[player]!!.teamMaxSize + 1 > teamSizeHigh) {
+                player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-to-high"]!!.replace("%players%", teamSizeHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+                return
+            }
+            Util.currentGameSelected[player]!!.teamMaxSize++
+            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-increased"]!!.replace("%players%", Util.currentGameSelected[player]!!.teamMaxSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+
+        } else {
+            if (Util.currentGameSelected[player]!!.teamMaxSize - 1 < teamSizeLow) {
+                player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-to-low"]!!.replace("%players%", teamSizeLow.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+                return
+            }
+            Util.currentGameSelected[player]!!.teamMaxSize--
+            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-reduced"]!!.replace("%players%", Util.currentGameSelected[player]!!.teamMaxSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+
+        }
+    }
 
     private fun minPlayers(type: Boolean, player: Player) {
         if (type) {
             if (Util.currentGameSelected[player]!!.minPlayers + 1 > minPlayersHigh) {
-                player.sendMessage(TheHunter.instance.messages.messagesMap["min-players-to-high".replace("%players%", minPlayersHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name)]!!)
+                player.sendMessage(TheHunter.instance.messages.messagesMap["min-players-to-high"]!!.replace("%players%", minPlayersHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
                 return
             }
             Util.currentGameSelected[player]!!.minPlayers++
-            player.sendMessage(TheHunter.instance.messages.messagesMap["min-players-increased".replace("%players%", Util.currentGameSelected[player]!!.minPlayers.toString()).replace("%game%", Util.currentGameSelected[player]!!.name)]!!)
+            player.sendMessage(TheHunter.instance.messages.messagesMap["min-players-increased"]!!.replace("%players%", Util.currentGameSelected[player]!!.minPlayers.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
 
         } else {
             if (Util.currentGameSelected[player]!!.minPlayers - 1 < minPlayersLow) {
-                player.sendMessage(TheHunter.instance.messages.messagesMap["min-players-to-low".replace("%players%", minPlayersLow.toString()).replace("%game%", Util.currentGameSelected[player]!!.name)]!!)
-
+                player.sendMessage(TheHunter.instance.messages.messagesMap["min-players-to-low"]!!.replace("%players%", minPlayersLow.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
                 return
             }
             Util.currentGameSelected[player]!!.minPlayers--
-            player.sendMessage(TheHunter.instance.messages.messagesMap["min-players-reduced".replace("%players%", Util.currentGameSelected[player]!!.minPlayers.toString()).replace("%game%", Util.currentGameSelected[player]!!.name)]!!)
+            player.sendMessage(TheHunter.instance.messages.messagesMap["min-players-reduced"]!!.replace("%players%", Util.currentGameSelected[player]!!.minPlayers.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+
+        }
+    }
+
+    private fun maxPlayers(type: Boolean, player: Player) {
+        if (type) {
+            if (Util.currentGameSelected[player]!!.maxPlayers + 1 > maxPlayersHigh) {
+                player.sendMessage(TheHunter.instance.messages.messagesMap["max-players-to-high"]!!.replace("%players%", maxPlayersHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+                return
+            }
+            Util.currentGameSelected[player]!!.maxPlayers++
+            player.sendMessage(TheHunter.instance.messages.messagesMap["max-players-increased"]!!.replace("%players%", Util.currentGameSelected[player]!!.maxPlayers.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+
+        } else {
+            if (Util.currentGameSelected[player]!!.minPlayers - 1 < maxPlayersLow) {
+                player.sendMessage(TheHunter.instance.messages.messagesMap["max-players-to-low"]!!.replace("%players%", maxPlayersLow.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+                return
+            }
+            Util.currentGameSelected[player]!!.maxPlayers--
+            player.sendMessage(TheHunter.instance.messages.messagesMap["max-players-reduced"]!!.replace("%players%", Util.currentGameSelected[player]!!.maxPlayers.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
 
         }
     }
@@ -84,18 +165,18 @@ class SettingsConfigurator : Listener {
     private fun borderSize(type: Boolean, player: Player) {
         if (type) {
             if (Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize + 10 > WorldboarderController.toHigh) {
-                player.sendMessage(TheHunter.instance.messages.messagesMap["bordersize-to-high".replace("%size%", WorldboarderController.toHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name)]!!)
+                player.sendMessage(TheHunter.instance.messages.messagesMap["border-size-to-high"]!!.replace("%size%", WorldboarderController.toHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
                 return
             }
             Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize += 10
-            player.sendMessage(TheHunter.instance.messages.messagesMap["bordersize-plus".replace("%size%", Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name)]!!)
+            player.sendMessage(TheHunter.instance.messages.messagesMap["border-size-plus"]!!.replace("%size%", Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
         } else {
             if (Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize - 10 > WorldboarderController.toLow) {
-                player.sendMessage(TheHunter.instance.messages.messagesMap["bordersize-to-low".replace("%size%", WorldboarderController.toHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name)]!!)
+                player.sendMessage(TheHunter.instance.messages.messagesMap["border-size-to-low"]!!.replace("%size%", WorldboarderController.toHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
                 return
             }
             Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize -= 10
-            player.sendMessage(TheHunter.instance.messages.messagesMap["bordersize-minus".replace("%size%", Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name)]!!)
+            player.sendMessage(TheHunter.instance.messages.messagesMap["border-size-minus"]!!.replace("%size%", Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
         }
     }
 

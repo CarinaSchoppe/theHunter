@@ -16,15 +16,15 @@ import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.game.Team
+import de.carina.thehunter.util.misc.Permissions
 import de.carina.thehunter.util.misc.Util
-import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.scoreboard.DisplaySlot
 
 class LeaveGame {
     fun leave(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "leave", 0, "theHunter.leave"))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, "leave", 0, Permissions.LEAVE_COMMAND))
             return
 
         if (!GamesHandler.playerInGames.containsKey(sender as Player)) {
@@ -68,24 +68,8 @@ class LeaveGame {
         val team = game.teams.find { it.teamMembers.contains(player) }
         if (team != null)
             Team.removePlayerFromTeam(player, player)
-        for (players in Bukkit.getOnlinePlayers()) {
-            players.showPlayer(TheHunter.instance, player)
-            player.showPlayer(TheHunter.instance, players)
-        }
-        GamesHandler.playerInGames.keys.forEach {
-            it.hidePlayer(TheHunter.instance, player)
-            player.hidePlayer(TheHunter.instance, it)
-        }
-        GamesHandler.spectatorInGames.keys.forEach {
-            it.hidePlayer(TheHunter.instance, player)
-            player.hidePlayer(TheHunter.instance, it)
-        }
-        game.spectators.forEach {
-            it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace("%player%", player.name))
-        }
-        game.players.forEach {
-            it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace("%player%", player.name))
-        }
+        Util.playerHiding(game, player)
+
         player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-quit"]!!)
     }
 }

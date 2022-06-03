@@ -14,19 +14,21 @@ package de.carina.thehunter.gamestates
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.countdowns.Countdowns
 import de.carina.thehunter.util.game.Game
+import org.bukkit.entity.Player
 
 class EndState(game: Game) : GameState(game) {
     override fun start() {
 
-        playerStuff(game)
-        spectatorStuff(game)
+        userHandlerShowingAfter(game.spectators.toMutableList())
+        userHandlerShowingAfter(game.players.toMutableList())
 
         game.currentCountdown = game.countdowns[Countdowns.END_COUNTDOWN.id]
         game.currentCountdown.start()
     }
 
-    private fun spectatorStuff(game: Game) {
-        game.spectators.toMutableList().forEach {
+
+    private fun userHandlerShowingAfter(playerList: MutableList<Player>) {
+        playerList.forEach {
             it.inventory.clear()
             it.teleport(game.endLocation!!)
             for (spectator in game.spectators.toMutableList()) {
@@ -36,15 +38,6 @@ class EndState(game: Game) : GameState(game) {
         }
     }
 
-    private fun playerStuff(game: Game) = game.players.toMutableList()
-        .forEach {
-            it.inventory.clear()
-            it.teleport(game.endLocation!!)
-            for (spectator in game.spectators.toMutableList()) {
-                spectator.showPlayer(TheHunter.instance, it)
-                it.showPlayer(TheHunter.instance, spectator)
-            }
-        }
 
     override fun stop() {
         game.mapResetter.resetMap()

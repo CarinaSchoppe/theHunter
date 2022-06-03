@@ -133,7 +133,7 @@ class GunHandler : Listener {
 
     companion object {
         fun removeAmmo(player: Player, amount: Int, itemMeta: ItemMeta) {
-            for (itemStack in player.inventory.contents) {
+            for (itemStack in player.inventory.contents!!) {
                 if (itemStack != null && itemStack.itemMeta == itemMeta) {
                     if (player.inventory.itemInMainHand.itemMeta == itemStack.itemMeta) {
                         itemStack.subtract(amount)

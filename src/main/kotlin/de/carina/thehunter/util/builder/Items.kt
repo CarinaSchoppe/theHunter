@@ -16,8 +16,8 @@ import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 
 object Items {
-    val settingsGreen = ItemBuilder(Material.GREEN_WOOL).addLore("§7Click here to activate the setting")
-    val settingsRed = ItemBuilder(Material.RED_WOOL).addLore("§7Click here to activate thedeactivate the setting")
+    val settingsWoolGreen = ItemBuilder(Material.GREEN_WOOL).addLore("§7Click here to activate the setting")
+    val settingsWoolRed = ItemBuilder(Material.RED_WOOL).addLore("§7Click here to activate thedeactivate the setting")
     val settingsHead = ItemBuilder(Material.JUNGLE_FENCE).addLore("§7Click to open the settings menu").addDisplayName("§Settings Menu").build()
     val addLobbyButton = ItemBuilder(Material.DIAMOND).addDisplayName("§6Lobby Location").addLore("§7Click to add the spawn of the lobby to the game").build()
     val addSpectatorButton = ItemBuilder(Material.ACACIA_BOAT).addLore("§7Click to add the spectator location to the game").addDisplayName("§6Spectator Location").build()
