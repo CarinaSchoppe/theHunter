@@ -26,7 +26,7 @@ class AnvilGUI {
             return
 
         (sender as Player).closeInventory()
-        AnvilGUI.Builder().itemLeft(Items.nameTag).title("§6Game Name").plugin(TheHunter.instance).onComplete(BiFunction { player, text ->
+        AnvilGUI.Builder().itemLeft(Items.nameTag).title("Game Name").plugin(TheHunter.instance).onComplete(BiFunction { player, text ->
             player.performCommand("theHunter setup create $text")
             return@BiFunction Response.close()
         }).open(sender)
