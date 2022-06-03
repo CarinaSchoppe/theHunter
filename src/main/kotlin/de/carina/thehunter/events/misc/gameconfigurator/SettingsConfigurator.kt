@@ -12,6 +12,7 @@
 package de.carina.thehunter.events.misc.gameconfigurator
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.util.builder.Inventories
 import de.carina.thehunter.util.builder.Items
 import de.carina.thehunter.util.misc.Permissions
 import de.carina.thehunter.util.misc.Util
@@ -63,8 +64,15 @@ class SettingsConfigurator : Listener {
             Items.minPlayers.itemMeta -> minPlayers(type, event.whoClicked as Player)
             Items.maxPlayers.itemMeta -> maxPlayers(type, event.whoClicked as Player)
             Items.teamsSize.itemMeta -> teamSize(type, event.whoClicked as Player)
-            Items.teamsAllowedHead.itemMeta -> teamsAllowed(type, event.whoClicked as Player)
-            Items.teamsDamage.itemMeta -> teamDamage(type, event.whoClicked as Player)
+            Items.teamsAllowedHead.itemMeta -> {
+                teamsAllowed(type, event.whoClicked as Player)
+                Inventories.itemEnchantmentSwitcher(event)
+            }
+
+            Items.teamsDamage.itemMeta -> {
+                Inventories.itemEnchantmentSwitcher(event)
+                teamDamage(type, event.whoClicked as Player)
+            }
         }
 
     }

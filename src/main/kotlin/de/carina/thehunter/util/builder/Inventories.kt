@@ -50,7 +50,7 @@ object Inventories {
         val meta = item.itemMeta!!
         if (item.enchantments.isNotEmpty()) return
 
-        if (!(item.type == Material.RED_WOOL || item.type == Material.GREEN_WOOL)) return
+        if (item.type != Material.RED_WOOL && item.type != Material.GREEN_WOOL) return
         meta.addEnchant(Enchantment.DURABILITY, 1, true)
         item.itemMeta = meta
         event.inventory.setItem(event.slot, item)
