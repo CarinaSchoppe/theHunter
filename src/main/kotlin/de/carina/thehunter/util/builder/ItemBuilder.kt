@@ -44,14 +44,14 @@ class ItemBuilder(material: Material) {
 
 
     fun addLore(lore: List<String>): ItemBuilder {
-        var myLore = lore.map { LegacyComponentSerializer.legacySection().deserialize(it) }
+        val myLore = lore.map { LegacyComponentSerializer.legacySection().deserialize(it) }
         itemMeta.lore(myLore)
         itemStack.itemMeta = itemMeta
         return this
     }
 
     fun addLore(text: String): ItemBuilder {
-        var lore = itemMeta.lore() ?: mutableListOf()
+        val lore = itemMeta.lore() ?: mutableListOf()
         lore.add(LegacyComponentSerializer.legacySection().deserialize(text))
         itemMeta.lore(lore)
         itemStack.itemMeta = itemMeta

@@ -41,7 +41,7 @@ class EyeSpy : Listener {
 
     @EventHandler
     fun onEyeSpyUse(event: PlayerInteractEvent) {
-        if (!ItemHandler.shouldInteractWithItem(event, createEyeSpyItem(), "EyeSpy"))
+        if (ItemHandler.shouldNotInteractWithItem(event, createEyeSpyItem(), "EyeSpy"))
             return
         if (inEyeSpy.contains(event.player))
             return

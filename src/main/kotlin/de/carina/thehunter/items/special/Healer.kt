@@ -30,7 +30,7 @@ class Healer : Listener {
 
     @EventHandler
     fun onHealerItemClick(event: PlayerInteractEvent) {
-        if (!ItemHandler.shouldInteractWithItem(event, createHealerItem(), "Healer"))
+        if (ItemHandler.shouldNotInteractWithItem(event, createHealerItem(), "Healer"))
             return
         event.isCancelled = true
         if (event.player.health + TheHunter.instance.itemSettings.settingsMap["healer-amount"] as Int <= 20)

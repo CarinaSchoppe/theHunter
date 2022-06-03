@@ -35,7 +35,7 @@ class JumpStick : Listener {
 
     @EventHandler
     fun onJumpStickUse(event: PlayerInteractEvent) {
-        if (!ItemHandler.shouldInteractWithItem(event, createJumpStick(), "JumpStrick"))
+        if (ItemHandler.shouldNotInteractWithItem(event, createJumpStick(), "JumpStrick"))
             return
         val player = event.player
         event.isCancelled = true

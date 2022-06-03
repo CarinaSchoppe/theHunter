@@ -32,7 +32,7 @@ class Swapper : Listener {
 
     @EventHandler
     fun onPlayerSwap(event: PlayerInteractEvent) {
-        if (!ItemHandler.shouldInteractWithItem(event, createSwapperItem(), "Swapper"))
+        if (ItemHandler.shouldNotInteractWithItem(event, createSwapperItem(), "Swapper"))
             return
         event.isCancelled = true
 

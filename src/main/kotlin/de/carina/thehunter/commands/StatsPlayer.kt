@@ -23,7 +23,7 @@ class StatsPlayer {
         if (!CommandUtil.checkCommandBasics(sender, command, args, "stats", 0, Permissions.STATS_COMMAND))
             return
 
-        var player: Player = if (args.isEmpty())
+        val player: Player = if (args.isEmpty())
             sender as Player
         else
             Bukkit.getPlayer(args[0])!!

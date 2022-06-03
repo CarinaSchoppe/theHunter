@@ -30,7 +30,7 @@ class PlayerChat : Listener {
 
         event.isCancelled = true
         if (LegacyComponentSerializer.builder().build().serialize(event.message()).startsWith("@Team")) {
-            var message = TheHunter.prefix + "§7[§6${event.player.name}§7]§f " + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
+            val message = TheHunter.prefix + "§7[§6${event.player.name}§7]§f " + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
             val team = GamesHandler.playerInGames[event.player]!!.teams.find { it.teamMembers.contains(event.player) }
             if (team != null) {
                 team.teamMembers.forEach {
@@ -40,7 +40,7 @@ class PlayerChat : Listener {
             }
         }
         if (GamesHandler.playerInGames.containsKey(event.player)) {
-            var message = TheHunter.prefix + "§7[§6${event.player.name}§7]§f " + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
+            val message = TheHunter.prefix + "§7[§6${event.player.name}§7]§f " + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
             GamesHandler.playerInGames[event.player]!!.players.forEach {
                 it.sendMessage(message)
             }
@@ -49,7 +49,7 @@ class PlayerChat : Listener {
             }
             return
         }
-        var message = TheHunter.prefix + "§7[Dead] " + "§7[§6${event.player.name}§7]§f " + LegacyComponentSerializer.builder().build().serialize(event.message())
+        val message = TheHunter.prefix + "§7[Dead] " + "§7[§6${event.player.name}§7]§f " + LegacyComponentSerializer.builder().build().serialize(event.message())
         GamesHandler.spectatorInGames[event.player]!!.spectators.forEach {
             it.sendMessage(message)
         }

@@ -71,14 +71,14 @@ class Game(var name: String) {
     var mapModify = false
 
 
-    fun isGameValidConfigured(): Boolean {
-        if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null || spectatorLocation == null) return false
-        if (minPlayers > maxPlayers) return false
-        if (maxPlayers == 0) return false
-        if (worldBoarderController.worldBoarderSize < 50) return false
-        if (worldBoarderController.worldBoarderSize < worldBoarderController.minBorderSize) return false
-        if (playerSpawns.size - 1 < maxPlayers && !randomPlayerDrop) return false
-        return true
+    fun isGameInvalidConfigured(): Boolean {
+        if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null || spectatorLocation == null) return true
+        if (minPlayers > maxPlayers) return true
+        if (maxPlayers == 0) return true
+        if (worldBoarderController.worldBoarderSize < 50) return true
+        if (worldBoarderController.worldBoarderSize < worldBoarderController.minBorderSize) return true
+        if (playerSpawns.size - 1 < maxPlayers && !randomPlayerDrop) return true
+        return false
     }
 
 
@@ -245,7 +245,7 @@ class Game(var name: String) {
     }
 
     fun finish() {
-        if (!isGameValidConfigured()) {
+        if (isGameInvalidConfigured()) {
             Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", name))
             return
         }

@@ -34,7 +34,7 @@ class Food : Listener {
 
     @EventHandler
     fun onPlayerFood(event: PlayerInteractEvent) {
-        if (!ItemHandler.shouldInteractWithItem(event, createFoodItem(), "Food"))
+        if (ItemHandler.shouldNotInteractWithItem(event, createFoodItem(), "Food"))
             return
 
         event.isCancelled = true

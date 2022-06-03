@@ -35,7 +35,7 @@ class EnergyDrink : Listener {
 
     @EventHandler
     fun onEnergyDinkDrink(event: PlayerInteractEvent) {
-        if (!ItemHandler.shouldInteractWithItem(event, createEnergyDrinkItem(), "EnergyDrink"))
+        if (ItemHandler.shouldNotInteractWithItem(event, createEnergyDrinkItem(), "EnergyDrink"))
             return
 
         event.isCancelled = true

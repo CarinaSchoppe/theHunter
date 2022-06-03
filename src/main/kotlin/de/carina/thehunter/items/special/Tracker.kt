@@ -32,7 +32,7 @@ class Tracker : Listener {
 
     @EventHandler
     fun onPlayerTrack(event: PlayerInteractEvent) {
-        if (!ItemHandler.shouldInteractWithItem(event, createTrackerItem(), "Tracker"))
+        if (ItemHandler.shouldNotInteractWithItem(event, createTrackerItem(), "Tracker"))
             return
         event.isCancelled = true
         //get the closest Player to the event.player based on the distance of their location

@@ -20,31 +20,31 @@ import org.bukkit.inventory.ItemStack
 
 object ItemHandler {
 
-    fun shouldInteractWithItem(event: PlayerInteractEvent, item: ItemStack, itemString: String): Boolean {
+    fun shouldNotInteractWithItem(event: PlayerInteractEvent, item: ItemStack, itemString: String): Boolean {
         if (event.item == null)
-            return false
+            return true
         if (!event.player.hasPermission("${Permissions.PERMISSION_PREFIX}.$itemString"))
-            return false
+            return true
         if (!event.item!!.hasItemMeta()) return false
         if (event.item!!.itemMeta != item.itemMeta)
-            return false
+            return true
 
         if (!event.player.inventory.itemInMainHand.hasItemMeta())
-            return false
+            return true
         if (event.player.inventory.itemInMainHand.itemMeta != item.itemMeta)
-            return false
+            return true
         if (!GamesHandler.playerInGames.containsKey(event.player))
-            return false
+            return true
         if (!event.action.isRightClick)
-            return false
+            return true
 
         if (GamesHandler.playerInGames[event.player]!!.currentGameState !is IngameState)
-            return false
+            return true
 
         if (GamesHandler.playerInGames[event.player]!!.gameItems.items[itemString] == false)
-            return false
+            return true
         event.isCancelled = true
-        return true
+        return false
     }
 
     fun removeOneItemOfPlayer(player: Player) {

@@ -39,6 +39,6 @@ class GamesInventoryList : Listener {
         val arenaName = PlainTextComponentSerializer.plainText().serialize(event.currentItem!!.itemMeta.displayName()!!)
         if (event.whoClicked !is Player)
             return
-        (event.whoClicked as Player).performCommand("thehunter join " + arenaName)
+        (event.whoClicked as Player).performCommand("thehunter join $arenaName")
     }
 }

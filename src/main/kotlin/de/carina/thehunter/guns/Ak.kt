@@ -26,8 +26,8 @@ import org.bukkit.inventory.ItemStack
 object Ak {
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
-    var reloading = mutableMapOf<Player, Boolean>()
-    var magazine = mutableMapOf<Player, Int>()
+    private var reloading = mutableMapOf<Player, Boolean>()
+    private var magazine = mutableMapOf<Player, Int>()
 
     fun createAkGunItem(): ItemStack {
         return ItemBuilder(Material.IRON_HOE).addDisplayName(TheHunter.prefix + "§7AK-47").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()

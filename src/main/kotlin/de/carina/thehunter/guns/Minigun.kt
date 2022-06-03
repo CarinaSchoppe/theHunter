@@ -27,8 +27,8 @@ object Minigun {
 
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
-    var reloading = mutableMapOf<Player, Boolean>()
-    var magazine = mutableMapOf<Player, Int>()
+    private var reloading = mutableMapOf<Player, Boolean>()
+    private var magazine = mutableMapOf<Player, Int>()
     fun createMiniGunItem(): ItemStack {
         return ItemBuilder(Material.STONE_HOE).addDisplayName(TheHunter.prefix + "§7Minigun").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
     }

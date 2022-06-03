@@ -33,8 +33,8 @@ class GameSigns : Listener {
             return
         if (event.clickedBlock!!.state !is Sign)
             return
-        var sign = event.clickedBlock!!.state as Sign
-        var game = GamesHandler.games.find { it.name == PlainTextComponentSerializer.plainText().serialize(sign.line(1)) } ?: return
+        val sign = event.clickedBlock!!.state as Sign
+        val game = GamesHandler.games.find { it.name == PlainTextComponentSerializer.plainText().serialize(sign.line(1)) } ?: return
         if (game.currentGameState is EndState || !event.player.hasPermission(Permissions.SIGN_JOIN))
             return
 

@@ -17,6 +17,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.Sound
+import org.bukkit.entity.Player
 import java.util.function.Consumer
 
 
@@ -83,15 +84,15 @@ class LobbyCountdown(game: Game) : Countdown(game) {
     }
 
     private fun sendMessageTime() {
-        game.players.forEach(Consumer { player ->
+        playerHandler(game.players)
+        playerHandler(game.spectators)
+    }
+
+    private fun playerHandler(user: MutableSet<Player>) {
+        user.forEach(Consumer { player ->
             player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
             player.level = duration
             player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
-        })
-        game.spectators.forEach(Consumer { spectator ->
-            spectator.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
-            spectator.level = duration
-            spectator.playSound(spectator.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
         })
     }
 

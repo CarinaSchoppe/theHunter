@@ -133,7 +133,7 @@ class TheHunter : JavaPlugin() {
     }
 
 
-    fun loadGamesFromFolders() {
+    private fun loadGamesFromFolders() {
         val folder = File(BaseFile.gameFolder + "/arenas/")
         if (!folder.exists()) {
             folder.mkdirs()

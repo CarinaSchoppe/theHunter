@@ -26,13 +26,13 @@ class GameItems(game: Game) {
 
     fun loadAllItems() {
         for (item in ymlItems.getKeys(false)) {
-            items[item] = ymlItems.get("$item") as Any
+            items[item] = ymlItems.get(item) as Any
         }
     }
 
     fun loadAllGunSettings() {
         for (gun in ymlGuns.getKeys(false)) {
-            guns[gun] = ymlGuns.getInt("$gun")
+            guns[gun] = ymlGuns.getInt(gun)
         }
     }
 

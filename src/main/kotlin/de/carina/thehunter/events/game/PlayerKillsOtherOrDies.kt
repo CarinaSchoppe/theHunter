@@ -113,10 +113,10 @@ class PlayerKillsOtherOrDies : Listener {
         }
         game.players.forEach {
             player.showPlayer(TheHunter.instance, it)
-            game.scoreBoard.createNewScoreboard(player)
+            game.scoreBoard.createNewScoreboard(it)
         }
         game.spectators.forEach {
-            game.scoreBoard.createNewScoreboard(player)
+            game.scoreBoard.createNewScoreboard(it)
         }
 
     }

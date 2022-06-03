@@ -101,7 +101,7 @@ class CreateGame {
             }
 
             "finish" -> {
-                if (!game.isGameValidConfigured()) {
+                if (game.isGameInvalidConfigured()) {
                     sender.sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", args[2]))
                     return
                 }

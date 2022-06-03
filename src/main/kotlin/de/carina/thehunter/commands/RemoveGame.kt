@@ -32,7 +32,7 @@ class RemoveGame {
         game.nextGameState()
         game.currentGameState.stop()
         GamesHandler.games.remove(game)
-        var file = File(BaseFile.gameFolder + "/arenas/${game.name}")
+        val file = File(BaseFile.gameFolder + "/arenas/${game.name}")
         if (file.deleteRecursively())
             sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-removed"]!!.replace("%game%", args[0]))
         else

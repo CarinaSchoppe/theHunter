@@ -51,22 +51,28 @@ class TeamCommands {
         Team.promoteNewTeamLeader(player, sender)
     }
 
-    private fun remove(sender: Player, args: Array<out String>) {
+    private fun argumentChecker(sender: Player, args: Array<out String>): Boolean {
         if (args.size <= 1) {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!.replace("%arguments%", 2.toString()))
-            return
+            return true
         }
         val player = Bukkit.getPlayer(args[1])
         if (player == null) {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace("%player%", args[1]))
-            return
+            return true
         }
-        Team.removePlayerFromTeam(player, sender)
+
+        return false
+    }
+
+    private fun remove(sender: Player, args: Array<out String>) {
+        if (argumentChecker(sender, args)) return
+        Team.removePlayerFromTeam(Bukkit.getPlayer(args[1])!!, sender)
     }
 
 
     private fun accept(sender: Player, args: Array<out String>) {
-        var game = GamesHandler.playerInGames[sender] ?: return
+        val game = GamesHandler.playerInGames[sender] ?: return
         if (game.teams.find { it.teamMembers.contains(sender) } != null) {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["player-already-in-team"]!!)
             return
@@ -103,17 +109,8 @@ class TeamCommands {
 
 
     private fun invite(sender: Player, args: Array<out String>) {
-        if (args.size <= 1) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!.replace("%arguments%", 2.toString()))
-            return
-        }
-
-        val player = Bukkit.getPlayer(args[1])
-        if (player == null) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace("%player%", args[1]))
-            return
-        }
-        Team.invitePlayerToTeam(player, sender)
+        if (argumentChecker(sender, args)) return
+        Team.invitePlayerToTeam(Bukkit.getPlayer(args[1])!!, sender)
     }
 
 }

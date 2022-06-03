@@ -30,8 +30,8 @@ object Inventories {
         builder.setItem(3 + 9 * 0, Items.teamsAllowedHead)
         addSettingButtonsInColorToInventory(builder, 0, game.teamsAllowed)
         builder.setItem(3 + 9 * 1, Items.teamsSize)
-        if (game.teamsAllowed) addSettingButtonsInColorToInventory(builder, 1, game.teamsAllowed)
-        if (game.teamsAllowed) addSettingButtonsInColorToInventory(builder, 2, game.teamDamage)
+        addSettingButtonsInColorToInventory(builder, 1, game.teamsAllowed)
+        addSettingButtonsInColorToInventory(builder, 2, game.teamDamage)
         builder.setItem(3 + 9 * 2, Items.teamsDamage)
         builder.setItem(3 + 9 * 3, Items.minPlayers)
         addColoredWool(builder, 3)
@@ -71,8 +71,8 @@ object Inventories {
     }
 
     private fun addSettingButtonsInColorToInventory(builder: InventoryBuilder, row: Int, value: Boolean) {
-        var itemGreen: ItemStack = if (value) Items.settingsWoolGreen.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsWoolGreen.clone().build()
-        var itemRed: ItemStack = if (value) Items.settingsWoolRed.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsWoolRed.clone().build()
+        val itemGreen: ItemStack = if (value) Items.settingsWoolGreen.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsWoolGreen.clone().build()
+        val itemRed: ItemStack = if (value) Items.settingsWoolRed.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsWoolRed.clone().build()
         builder.setItem(row * 9 + 6, itemGreen)
         builder.setItem(row * 9 + 7, itemRed)
     }

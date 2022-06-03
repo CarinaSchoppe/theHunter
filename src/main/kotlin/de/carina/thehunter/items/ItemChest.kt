@@ -35,24 +35,15 @@ class ItemChest(private val game: Game) {
         items = addItems(items)
         ammo = ammoAdding(ammo)
 
-        fillChests(inventory, items, ammo)
+        repeater(inventory, items)
+        repeater(inventory, ammo)
         return inventory
     }
 
 
-    private fun fillChests(inventory: Inventory, items: MutableList<ItemStack>, ammo: MutableList<ItemStack>) {
+    private fun repeater(inventory: Inventory, map: MutableList<ItemStack>) {
         repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
-            val item = items[Random().nextInt(items.size)]
-            while (true) {
-                val place = Random().nextInt(54)
-                if (inventory.getItem(place) == null) {
-                    inventory.setItem(place, item)
-                    break
-                }
-            }
-        }
-        repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
-            val item = ammo[Random().nextInt(ammo.size)]
+            val item = map[Random().nextInt(map.size)]
             while (true) {
                 val place = Random().nextInt(54)
                 if (inventory.getItem(place) == null) {
@@ -62,6 +53,7 @@ class ItemChest(private val game: Game) {
             }
         }
     }
+
 
     private fun addItems(items: MutableList<ItemStack>): MutableList<ItemStack> {
         if (game.gameItems.items["EggBomb"] == true) {

@@ -27,8 +27,8 @@ object Sniper {
 
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
-    var reloading = mutableMapOf<Player, Boolean>()
-    var magazine = mutableMapOf<Player, Int>()
+    private var reloading = mutableMapOf<Player, Boolean>()
+    private var magazine = mutableMapOf<Player, Int>()
     fun createSniperGunItem(): ItemStack {
         return ItemBuilder(Material.DIAMOND_HOE).addDisplayName(TheHunter.prefix + "§7Sniper").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
     }

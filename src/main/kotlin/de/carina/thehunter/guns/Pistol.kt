@@ -27,8 +27,8 @@ object Pistol {
 
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
-    var reloading = mutableMapOf<Player, Boolean>()
-    var magazine = mutableMapOf<Player, Int>()
+    private var reloading = mutableMapOf<Player, Boolean>()
+    private var magazine = mutableMapOf<Player, Int>()
     fun createPistolGunItem(): ItemStack {
         return ItemBuilder(Material.WOODEN_HOE).addDisplayName(TheHunter.prefix + "§7Pistol").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
     }

@@ -22,7 +22,7 @@ class WorldboarderController(private val game: Game) {
     var minBorderSize = 100
     var worldBoarderSize = 5000
     var shrinkBoarder = true
-    lateinit var task: BukkitTask
+    private lateinit var task: BukkitTask
     fun shrinkWorld() {
         if (!shrinkBoarder)
             return
