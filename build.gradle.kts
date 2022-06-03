@@ -26,8 +26,6 @@ description = "The theHunter minigame but in a kotlin project remake"
 
 
 repositories {
-    mavenCentral()
-    gradlePluginPortal()
     maven("https://repo.codemc.io/repository/maven-snapshots/")
 }
 
