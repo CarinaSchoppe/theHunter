@@ -70,6 +70,7 @@ object Inventories {
         builder.setItem(row * 9 + 7, Items.settingsWoolRed.build())
     }
 
+
     private fun addSettingButtonsInColorToInventory(builder: InventoryBuilder, row: Int, value: Boolean) {
         val itemGreen: ItemStack = if (value) Items.settingsWoolGreen.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsWoolGreen.clone().build()
         val itemRed: ItemStack = if (value) Items.settingsWoolRed.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsWoolRed.clone().build()

@@ -38,6 +38,11 @@ class BaseCommand : CommandExecutor {
                 return true
             }
 
+            "gui" -> {
+                AnvilGUI().create(sender, commandName, arguments)
+                return true
+            }
+
             "team" -> {
                 TeamCommands().team(sender, commandName, arguments)
                 return true

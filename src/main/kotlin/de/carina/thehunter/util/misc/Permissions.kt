@@ -20,6 +20,7 @@ object Permissions {
     const val TEAM_COMMAND = "theHunter.team"
     const val SETUP_GUI = "theHunter.setupgui"
     const val REMOVE_GAME_COMMAND = "theHunter.remove-game"
+    const val ANVIL_GUI = "theHunter.anvilgui"
     const val START_COMMAND = "theHunter.start"
     const val STATS_COMMAND = "theHunter.stats"
     const val LEAVE_COMMAND = "theHunter.leave"

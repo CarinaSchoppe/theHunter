@@ -34,5 +34,6 @@ object Items {
     val borderSize = ItemBuilder(Material.BARRIER).addDisplayName("§6Border Size").addLore("§7Border Size").build()
     val leaveItem = ItemBuilder(Material.IRON_DOOR).addDisplayName(TheHunter.prefix + "§6Leave").addLore("§7Click to leave the game").addEnchantment(Enchantment.DURABILITY, 1).build()
     val saveButton = ItemBuilder(Material.RED_BED).addDisplayName(TheHunter.prefix + "§6Save Settings").addLore("§7Click to save the settings").addEnchantment(Enchantment.DURABILITY, 1).build()
+    val nameTag = ItemBuilder(Material.NAME_TAG).addDisplayName(TheHunter.prefix + "§6Game Name").addLore("§7Enter the name of the game and click the corresponding item").addEnchantment(Enchantment.DURABILITY, 1).build()
 
 }

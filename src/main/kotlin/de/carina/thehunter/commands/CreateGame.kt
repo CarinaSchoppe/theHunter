@@ -12,6 +12,7 @@
 package de.carina.thehunter.commands
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.util.builder.Inventories
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.Permissions
@@ -34,6 +35,7 @@ class CreateGame {
                 game.create()
                 Util.currentGameSelected[sender as Player] = game
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-created"]!!.replace("%game%", args[1]))
+                sender.openInventory(Inventories.createSettingsInventory(game))
             }
 
             "select" -> {
