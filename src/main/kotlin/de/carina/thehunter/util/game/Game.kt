@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "Game.kt" are protected by copyright.
+ * File created on 6/6/22, 11:42 PM by Carina The Latest changes made by Carina on 6/6/22, 11:15 PM All contents of "Game.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -73,7 +73,8 @@ class Game(var name: String) {
     fun isGameInvalidConfigured(): Boolean {
         if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null || spectatorLocation == null) return true
         if (minPlayers > maxPlayers) return true
-        if (maxPlayers == 0) return true
+        if (maxPlayers <= 0) return true
+        if (minPlayers < 0) return true
         if (worldBoarderController.worldBoarderSize < 50) return true
         if (worldBoarderController.worldBoarderSize < worldBoarderController.minBorderSize) return true
         if (playerSpawns.size - 1 < maxPlayers && !randomPlayerDrop) return true

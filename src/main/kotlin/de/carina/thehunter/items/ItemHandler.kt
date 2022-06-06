@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "ItemHandler.kt" are protected by copyright.
+ * File created on 6/6/22, 11:42 PM by Carina The Latest changes made by Carina on 6/6/22, 11:17 PM All contents of "ItemHandler.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -25,10 +25,9 @@ object ItemHandler {
             return true
         if (!event.player.hasPermission("${Permissions.PERMISSION_PREFIX}.$itemString"))
             return true
-        if (!event.item!!.hasItemMeta()) return false
+        if (!event.item!!.hasItemMeta()) return true
         if (event.item!!.itemMeta != item.itemMeta)
             return true
-
         if (!event.player.inventory.itemInMainHand.hasItemMeta())
             return true
         if (event.player.inventory.itemInMainHand.itemMeta != item.itemMeta)

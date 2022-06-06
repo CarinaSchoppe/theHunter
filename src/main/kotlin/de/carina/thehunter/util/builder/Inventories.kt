@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "Inventories.kt" are protected by copyright.
+ * File created on 6/6/22, 11:42 PM by Carina The Latest changes made by Carina on 6/6/22, 11:42 PM All contents of "Inventories.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -24,12 +24,12 @@ object Inventories {
 
     val gamesInventory = InventoryBuilder(TheHunter.prefix + "§6Games", 54).addGamesToInventory().fillInventory(ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1).build()).create()
     fun createSettingsInventory(game: Game): Inventory {
-        //TODO: Testing
+        //TODO: Testing"
         val builder = InventoryBuilder("§d${game.name}§6: Game Settings", 54)
         builder.setItem(3 + 9 * 0, Items.teamsAllowedHead)
         addSettingButtonsInColorToInventory(builder, 0, game.teamsAllowed)
         builder.setItem(3 + 9 * 1, Items.teamsSize)
-        addSettingButtonsInColorToInventory(builder, 1, game.teamsAllowed)
+        addColoredWool(builder, 1)
         addSettingButtonsInColorToInventory(builder, 2, game.teamDamage)
         builder.setItem(3 + 9 * 2, Items.teamsDamage)
         builder.setItem(3 + 9 * 3, Items.minPlayers)
@@ -65,14 +65,25 @@ object Inventories {
     }
 
     private fun addColoredWool(builder: InventoryBuilder, row: Int) {
-        builder.setItem(row * 9 + 6, Items.settingsWoolGreen.build())
-        builder.setItem(row * 9 + 7, Items.settingsWoolRed.build())
+        val green = Items.settingsWoolGreen.clone().build()
+        green.removeEnchantment(Enchantment.DURABILITY)
+        val red = Items.settingsWoolRed.clone().build()
+        red.removeEnchantment(Enchantment.DURABILITY)
+        builder.setItem(row * 9 + 6, green)
+        builder.setItem(row * 9 + 7, red)
     }
 
 
     private fun addSettingButtonsInColorToInventory(builder: InventoryBuilder, row: Int, value: Boolean) {
-        val itemGreen: ItemStack = if (value) Items.settingsWoolGreen.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsWoolGreen.clone().build()
-        val itemRed: ItemStack = if (value) Items.settingsWoolRed.clone().addEnchantment(Enchantment.DURABILITY, 1).build() else Items.settingsWoolRed.clone().build()
+        val itemGreen: ItemStack = if (value)
+            Items.settingsWoolGreen.clone().addEnchantment(Enchantment.DURABILITY, 1).build()
+        else Items.settingsWoolGreen.clone().build()
+        if (!value) itemGreen.removeEnchantment(Enchantment.DURABILITY)
+        val itemRed: ItemStack = if (!value)
+            Items.settingsWoolRed.clone().addEnchantment(Enchantment.DURABILITY, 1).build()
+        else Items.settingsWoolRed.clone().build()
+
+        if (value) itemRed.removeEnchantment(Enchantment.DURABILITY)
         builder.setItem(row * 9 + 6, itemGreen)
         builder.setItem(row * 9 + 7, itemRed)
     }
