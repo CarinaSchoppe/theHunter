@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 11:42 PM by Carina The Latest changes made by Carina on 6/6/22, 11:15 PM All contents of "Game.kt" are protected by copyright.
+ * File created on 6/7/22, 3:55 PM by Carina The Latest changes made by Carina on 6/7/22, 3:55 PM All contents of "Game.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -104,7 +104,6 @@ class Game(var name: String) {
         spectators.clear()
         playerSpawns.clear()
         teams.clear()
-        gameStates.clear()
         gameEntities.clear()
         signs.clear()
         gameEntities.clear()

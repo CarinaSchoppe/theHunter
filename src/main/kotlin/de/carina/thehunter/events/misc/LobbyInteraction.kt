@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "LobbyInteraction.kt" are protected by copyright.
+ * File created on 6/7/22, 3:55 PM by Carina The Latest changes made by Carina on 6/7/22, 3:50 PM All contents of "LobbyInteraction.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -45,7 +45,8 @@ class LobbyInteraction : Listener {
 
     private fun lobbyDamagePlayerDamager(event: EntityDamageByEntityEvent) {
         if (GamesHandler.playerInGames.containsKey(event.damager) || GamesHandler.spectatorInGames.containsKey(event.damager)) {
-            if (GamesHandler.spectatorInGames[event.damager]!!.currentGameState !is IngameState) {
+            val game = GamesHandler.spectatorInGames[event.damager] ?: GamesHandler.playerInGames[event.damager]
+            if (game!!.currentGameState !is IngameState) {
                 event.isCancelled = true
                 event.damage = 0.0
                 if ((event.damager as Player).inventory.itemInMainHand.itemMeta != Items.leaveItem.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
