@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "EggBomb.kt" are protected by copyright.
+ * File created on 6/7/22, 3:33 AM by Carina The Latest changes made by Carina on 6/7/22, 3:33 AM All contents of "EggBomb.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -25,18 +25,15 @@ import org.bukkit.entity.TNTPrimed
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.ProjectileHitEvent
-import org.bukkit.inventory.ItemStack
 import java.util.*
 
 class EggBomb : Listener {
 
     companion object {
         val bombs = mutableSetOf<TNTPrimed>()
-        fun createEggBomb(): ItemStack {
-            return ItemBuilder(Material.EGG).addDisplayName(TheHunter.prefix + "§eEggBomb").addAmount(Random().nextInt(1, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-amount"] as Int) + 1)).addEnchantment(Enchantment.DURABILITY, 1).addLore(
-                listOf(TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace("%power%", TheHunter.instance.itemSettings.settingsMap["egg-bomb-radius"].toString()))
-            ).build()
-        }
+        val eggBomb = ItemBuilder(Material.EGG).addDisplayName(TheHunter.prefix + "§eEggBomb").addAmount(Random().nextInt(1, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-amount"] as Int) + 1)).addEnchantment(Enchantment.DURABILITY, 1).addLore(
+            listOf(TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace("%power%", TheHunter.instance.itemSettings.settingsMap["egg-bomb-radius"].toString()))
+        ).build()
     }
 
 
@@ -59,7 +56,7 @@ class EggBomb : Listener {
             return
         if (!egg.item.hasItemMeta())
             return
-        if (egg.item.itemMeta != createEggBomb().itemMeta)
+        if (egg.item.itemMeta != eggBomb.itemMeta)
             return
         if (GamesHandler.playerInGames[player]!!.gameItems.items["EggBomb"] == false)
             return
@@ -79,5 +76,5 @@ class EggBomb : Listener {
             GamesHandler.entitiesInGames[tnt] = game
         }, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-delay"] as Int) * 20L)
     }
-
 }
+

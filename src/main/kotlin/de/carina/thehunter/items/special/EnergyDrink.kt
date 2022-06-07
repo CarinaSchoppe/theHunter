@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "EnergyDrink.kt" are protected by copyright.
+ * File created on 6/7/22, 3:33 AM by Carina The Latest changes made by Carina on 6/7/22, 3:33 AM All contents of "EnergyDrink.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -18,7 +18,6 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
@@ -26,15 +25,15 @@ import org.bukkit.potion.PotionEffectType
 class EnergyDrink : Listener {
 
     companion object {
-        fun createEnergyDrinkItem(): ItemStack {
-            return ItemBuilder(Material.POTION).addDisplayName(TheHunter.prefix + "§6Energy-Drink").addLore("§7Energie- gives you some effects on right-clicking").addEnchantment(Enchantment.DURABILITY, 1).build()
-        }
+        val energyDrink =
+            ItemBuilder(Material.POTION).addDisplayName(TheHunter.prefix + "§6Energy-Drink").addLore("§7Energie- gives you some effects on right-clicking").addEnchantment(Enchantment.DURABILITY, 1).build()
+
 
     }
 
     @EventHandler
     fun onEnergyDinkDrink(event: PlayerInteractEvent) {
-        if (ItemHandler.shouldNotInteractWithItem(event, createEnergyDrinkItem(), "EnergyDrink"))
+        if (ItemHandler.shouldNotInteractWithItem(event, energyDrink, "EnergyDrink"))
             return
 
         event.isCancelled = true

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 11:42 PM by Carina The Latest changes made by Carina on 6/6/22, 11:17 PM All contents of "EyeSpy.kt" are protected by copyright.
+ * File created on 6/7/22, 3:33 AM by Carina The Latest changes made by Carina on 6/7/22, 3:33 AM All contents of "EyeSpy.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -25,7 +25,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.inventory.ItemStack
 
 class EyeSpy : Listener {
 
@@ -33,15 +32,14 @@ class EyeSpy : Listener {
         val inEyeSpy = mutableSetOf<Player>()
         val lastPlayerLocation = mutableMapOf<Player, Location>()
         private val mapPlayerTime = mutableMapOf<Player, Int>()
-        fun createEyeSpyItem(): ItemStack {
-            return ItemBuilder(Material.ENDER_EYE).addDisplayName(TheHunter.prefix + "§aEye Spy").addLore("§7This Article will let you see the other player for 10 sec").addLore("§7Right-click to activate").build()
-        }
+        val eyeSpy =
+            ItemBuilder(Material.ENDER_EYE).addDisplayName(TheHunter.prefix + "§aEye Spy").addLore("§7This Article will let you see the other player for 10 sec").addLore("§7Right-click to activate").build()
     }
 
 
     @EventHandler
     fun onEyeSpyUse(event: PlayerInteractEvent) {
-        if (ItemHandler.shouldNotInteractWithItem(event, createEyeSpyItem(), "EyeSpy"))
+        if (ItemHandler.shouldNotInteractWithItem(event, eyeSpy, "EyeSpy"))
             return
 
         if (inEyeSpy.contains(event.player))

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "IngameState.kt" are protected by copyright.
+ * File created on 6/7/22, 3:33 AM by Carina The Latest changes made by Carina on 6/7/22, 3:33 AM All contents of "IngameState.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -15,6 +15,7 @@ import de.carina.thehunter.guns.Ak
 import de.carina.thehunter.guns.Minigun
 import de.carina.thehunter.guns.Pistol
 import de.carina.thehunter.guns.Sniper
+import de.carina.thehunter.items.special.Knife
 import de.carina.thehunter.util.builder.Items
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.misc.PlayerDropping
@@ -124,10 +125,11 @@ class IngameState(game: Game) : GameState(game) {
     private fun givePlayerStartItems() {
         game.players.forEach {
             it.inventory.clear()
-            it.inventory.addItem(Ak.createAkGunItem())
-            it.inventory.addItem(Minigun.createMiniGunItem())
-            it.inventory.addItem(Pistol.createPistolGunItem())
-            it.inventory.addItem(Sniper.createSniperGunItem())
+            it.inventory.addItem(Ak.ak)
+            it.inventory.addItem(Minigun.minigun)
+            it.inventory.addItem(Pistol.pistol)
+            it.inventory.addItem(Sniper.sniper)
+            it.inventory.setItem(8, Knife.knife)
         }
     }
 

@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "JumpStick.kt" are protected by copyright.
+ * File created on 6/7/22, 3:33 AM by Carina The Latest changes made by Carina on 6/7/22, 3:25 AM All contents of "JumpStick.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -20,21 +20,20 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.inventory.ItemStack
 
 class JumpStick : Listener {
 
     companion object {
         val uses = mutableMapOf<Player, Int>()
-        fun createJumpStick(): ItemStack {
-            return ItemBuilder(Material.STICK).addDisplayName(TheHunter.prefix + "§6JumpStick").addLore("§aClick to jump into an direction with power").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
-        }
+        val jumpStick = ItemBuilder(Material.STICK).addDisplayName(TheHunter.prefix + "§6JumpStick").addLore("§aClick to jump into an direction with power").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+
+
     }
 
 
     @EventHandler
     fun onJumpStickUse(event: PlayerInteractEvent) {
-        if (ItemHandler.shouldNotInteractWithItem(event, createJumpStick(), "JumpStrick"))
+        if (ItemHandler.shouldNotInteractWithItem(event, jumpStick, "JumpStrick"))
             return
         val player = event.player
         event.isCancelled = true

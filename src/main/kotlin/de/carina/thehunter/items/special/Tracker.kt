@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "Tracker.kt" are protected by copyright.
+ * File created on 6/7/22, 3:33 AM by Carina The Latest changes made by Carina on 6/7/22, 3:33 AM All contents of "Tracker.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -19,19 +19,18 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.inventory.ItemStack
 
 class Tracker : Listener {
     companion object {
 
-        fun createTrackerItem(): ItemStack {
-            return ItemBuilder(Material.COMPASS).addDisplayName(TheHunter.prefix + "§6Tracker").addLore("§7Click to track a player!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
-        }
+        val tracker = ItemBuilder(Material.COMPASS).addDisplayName(TheHunter.prefix + "§6Tracker").addLore("§7Click to track a player!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+
+
     }
 
     @EventHandler
     fun onPlayerTrack(event: PlayerInteractEvent) {
-        if (ItemHandler.shouldNotInteractWithItem(event, createTrackerItem(), "Tracker"))
+        if (ItemHandler.shouldNotInteractWithItem(event, tracker, "Tracker"))
             return
         event.isCancelled = true
         //get the closest Player to the event.player based on the distance of their location

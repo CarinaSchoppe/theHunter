@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "Swapper.kt" are protected by copyright.
+ * File created on 6/7/22, 3:33 AM by Carina The Latest changes made by Carina on 6/7/22, 3:33 AM All contents of "Swapper.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -20,19 +20,17 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.inventory.ItemStack
 
 class Swapper : Listener {
     companion object {
 
-        fun createSwapperItem(): ItemStack {
-            return ItemBuilder(Material.TNT).addDisplayName(TheHunter.prefix + "§6Swapper").addLore("§7Click to swap with a player!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
-        }
+        val swapper = ItemBuilder(Material.TNT).addDisplayName(TheHunter.prefix + "§6Swapper").addLore("§7Click to swap with a player!").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
+
     }
 
     @EventHandler
     fun onPlayerSwap(event: PlayerInteractEvent) {
-        if (ItemHandler.shouldNotInteractWithItem(event, createSwapperItem(), "Swapper"))
+        if (ItemHandler.shouldNotInteractWithItem(event, swapper, "Swapper"))
             return
         event.isCancelled = true
 

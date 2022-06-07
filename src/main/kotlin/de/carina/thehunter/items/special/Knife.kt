@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "Knife.kt" are protected by copyright.
+ * File created on 6/7/22, 3:33 AM by Carina The Latest changes made by Carina on 6/7/22, 3:33 AM All contents of "Knife.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -20,17 +20,15 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.inventory.ItemStack
 
 class Knife : Listener {
     companion object {
-        fun createKnifeItem(): ItemStack {
-            return ItemBuilder(Material.IRON_SWORD)
-                .addDisplayName(TheHunter.prefix + "§eKnife")
-                .addLore(listOf("§6Knife to kill", "§eLeft-Click to use")).addEnchantment(Enchantment.DURABILITY, 1)
-                .build()
+        val knife = ItemBuilder(Material.IRON_SWORD)
+            .addDisplayName(TheHunter.prefix + "§eKnife")
+            .addLore(listOf("§6Knife to kill", "§eLeft-Click to use")).addEnchantment(Enchantment.DURABILITY, 1)
+            .build()
         }
-    }
+
 
     @EventHandler
     fun onKnifeUse(event: EntityDamageByEntityEvent) {
@@ -38,9 +36,9 @@ class Knife : Listener {
             return
         if (event.damager !is Player)
             return
-        if ((event.damager as Player).inventory.itemInMainHand.itemMeta != createKnifeItem().itemMeta)
+        if ((event.damager as Player).inventory.itemInMainHand.itemMeta != knife.itemMeta)
             return
-        if ((event.damager as Player).inventory.itemInMainHand.itemMeta != createKnifeItem().itemMeta)
+        if ((event.damager as Player).inventory.itemInMainHand.itemMeta != knife.itemMeta)
             return
         if (!GamesHandler.playerInGames.containsKey(event.entity as Player))
             return
