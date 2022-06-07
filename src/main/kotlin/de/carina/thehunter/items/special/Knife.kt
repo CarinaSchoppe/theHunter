@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/7/22, 3:33 AM by Carina The Latest changes made by Carina on 6/7/22, 3:33 AM All contents of "Knife.kt" are protected by copyright.
+ * File created on 6/7/22, 3:37 AM by Carina The Latest changes made by Carina on 6/7/22, 3:36 AM All contents of "Knife.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -27,7 +27,7 @@ class Knife : Listener {
             .addDisplayName(TheHunter.prefix + "§eKnife")
             .addLore(listOf("§6Knife to kill", "§eLeft-Click to use")).addEnchantment(Enchantment.DURABILITY, 1)
             .build()
-        }
+    }
 
 
     @EventHandler
