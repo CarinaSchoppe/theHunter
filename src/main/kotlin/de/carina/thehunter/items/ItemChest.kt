@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "ItemChest.kt" are protected by copyright.
+ * File created on 6/7/22, 3:34 AM by Carina The Latest changes made by Carina on 6/7/22, 3:34 AM All contents of "ItemChest.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -56,47 +56,47 @@ class ItemChest(private val game: Game) {
 
     private fun addItems(items: MutableList<ItemStack>): MutableList<ItemStack> {
         if (game.gameItems.items["EggBomb"] == true) {
-            val item = EggBomb.createEggBomb()
+            val item = EggBomb.eggBomb
             item.amount = game.gameItems.items["eggbomb-amount"] as Int
             items.add(item)
         }
         if (game.gameItems.items["EnergyDrink"] == true) {
-            val item = EnergyDrink.createEnergyDrinkItem()
+            val item = EnergyDrink.energyDrink
             item.amount = game.gameItems.items["energydrink-amount"] as Int
             items.add(item)
         }
         if (game.gameItems.items["EyeSpy"] == true) {
-            val item = EyeSpy.createEyeSpyItem()
+            val item = EyeSpy.eyeSpy
             item.amount = game.gameItems.items["eyespy-amount"] as Int
             items.add(item)
         }
         if (game.gameItems.items["Food"] == true) {
-            val item = Food.createFoodItem()
+            val item = Food.food
             item.amount = game.gameItems.items["food-amount"] as Int
             items.add(item)
         }
         if (game.gameItems.items["Healer"] == true) {
-            val item = Healer.createHealerItem()
+            val item = Healer.healer
             item.amount = game.gameItems.items["healer-amount"] as Int
             items.add(item)
         }
         if (game.gameItems.items["JumpStick"] == true) {
-            val item = JumpStick.createJumpStick()
+            val item = JumpStick.jumpStick
             item.amount = game.gameItems.items["jump-stick-amount"] as Int
             items.add(item)
         }
         if (game.gameItems.items["Knife"] == true) {
-            val item = Knife.createKnifeItem()
+            val item = Knife.knife
             item.amount = game.gameItems.items["knife-amount"] as Int
             items.add(item)
         }
         if (game.gameItems.items["Swapper"] == true) {
-            val item = Swapper.createSwapperItem()
+            val item = Swapper.swapper
             item.amount = game.gameItems.items["swapper-amount"] as Int
             items.add(item)
         }
         if (game.gameItems.items["Tracker"] == true) {
-            val item = Tracker.createTrackerItem()
+            val item = Tracker.tracker
             item.amount = game.gameItems.items["tracker-amount"] as Int
             items.add(item)
         }
