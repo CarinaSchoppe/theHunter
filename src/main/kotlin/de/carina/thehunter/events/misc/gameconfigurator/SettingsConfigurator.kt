@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/7/22, 3:04 AM by Carina The Latest changes made by Carina on 6/7/22, 3:03 AM All contents of "SettingsConfigurator.kt" are protected by copyright.
+ * File created on 6/7/22, 3:19 AM by Carina The Latest changes made by Carina on 6/7/22, 3:19 AM All contents of "SettingsConfigurator.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -51,11 +51,16 @@ class SettingsConfigurator : Listener {
         if (event.currentItem!!.itemMeta == null)
             return
         val item = getItemObject(event) ?: return
-        val type = if (event.currentItem?.type == Material.RED_WOOL) false else if (event.currentItem?.type == Material.GREEN_WOOL) true else return
+        val type = event.currentItem?.type != Material.RED_WOOL
 
         when (item.itemMeta) {
             Items.borderSize.itemMeta -> borderSize(type, event.whoClicked as Player)
-            Items.saveButton.itemMeta -> (event.whoClicked as Player).openInventory(Inventories.setupGameInventory(Util.currentGameSelected[event.whoClicked as Player]!!))
+            Items.saveButton.itemMeta -> {
+                (event.whoClicked as Player).closeInventory()
+                (event.whoClicked as Player).openInventory(Inventories.setupGameInventory(Util.currentGameSelected[event.whoClicked as Player]!!))
+
+            }
+
             Items.minPlayers.itemMeta -> minPlayers(type, event.whoClicked as Player)
             Items.maxPlayers.itemMeta -> maxPlayers(type, event.whoClicked as Player)
             Items.teamsSize.itemMeta -> teamSize(type, event.whoClicked as Player)
@@ -63,6 +68,7 @@ class SettingsConfigurator : Listener {
                 teamsAllowed(type, event.whoClicked as Player)
                 Inventories.itemEnchantmentSwitcher(event)
             }
+
             Items.teamsDamage.itemMeta -> {
                 teamDamage(type, event.whoClicked as Player)
                 Inventories.itemEnchantmentSwitcher(event)
@@ -70,6 +76,7 @@ class SettingsConfigurator : Listener {
         }
 
     }
+
 
     private fun teamsAllowed(type: Boolean, player: Player) {
         if (type) {
@@ -181,11 +188,17 @@ class SettingsConfigurator : Listener {
     }
 
     private fun getItemObject(event: InventoryClickEvent): ItemStack? {
-        if (event.currentItem!!.type == Material.RED_WOOL) {
-            return event.inventory.getItem(event.slot - 4)
-        } else if (event.currentItem!!.type == Material.GREEN_WOOL) {
-            return event.inventory.getItem(event.slot - 3)
+        when (event.currentItem!!.type) {
+            Material.RED_WOOL -> {
+                return event.inventory.getItem(event.slot - 4)
+            }
+
+            Material.GREEN_WOOL -> {
+                return event.inventory.getItem(event.slot - 3)
+            }
+
+            Material.RED_BED -> return event.currentItem!!
+            else -> return null
         }
-        return null
     }
 }

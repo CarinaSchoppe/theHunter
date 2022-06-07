@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "Items.kt" are protected by copyright.
+ * File created on 6/7/22, 3:19 AM by Carina The Latest changes made by Carina on 6/7/22, 3:09 AM All contents of "Items.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -33,7 +33,7 @@ object Items {
     val maxPlayers = ItemBuilder(Material.NETHERITE_INGOT).addDisplayName("§6Max Players").addLore("§7Max Players amount").build()
     val borderSize = ItemBuilder(Material.BARRIER).addDisplayName("§6Border Size").addLore("§7Border Size").build()
     val leaveItem = ItemBuilder(Material.IRON_DOOR).addDisplayName(TheHunter.prefix + "§6Leave").addLore("§7Click to leave the game").addEnchantment(Enchantment.DURABILITY, 1).build()
-    val saveButton = ItemBuilder(Material.RED_BED).addDisplayName(TheHunter.prefix + "§6Save Settings").addLore("§7Click to save the settings").addEnchantment(Enchantment.DURABILITY, 1).build()
+    val saveButton = ItemBuilder(Material.RED_BED).addDisplayName(TheHunter.prefix + "§6Save Settings").addLore("§7Click to save the settings").build()
     val nameTag = ItemBuilder(Material.NAME_TAG).addDisplayName(TheHunter.prefix + "§6Game Name").addLore("§7Enter the name of the game and click the corresponding item").addEnchantment(Enchantment.DURABILITY, 1).build()
 
 }
