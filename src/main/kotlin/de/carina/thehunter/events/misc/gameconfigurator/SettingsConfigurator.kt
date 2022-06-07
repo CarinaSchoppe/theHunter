@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "SettingsConfigurator.kt" are protected by copyright.
+ * File created on 6/7/22, 2:44 AM by Carina The Latest changes made by Carina on 6/7/22, 2:43 AM All contents of "SettingsConfigurator.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -41,23 +41,19 @@ class SettingsConfigurator : Listener {
     @EventHandler
     fun onInteractWithSettings(event: InventoryClickEvent) {
         if (!Util.currentGameSelected.containsKey(event.whoClicked as Player)) return
-
         if (!(event.whoClicked as Player).hasPermission(Permissions.SETTINGS_GUI))
             return
         if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize("§d${Util.currentGameSelected[event.whoClicked as Player]!!.name}§6: Game Settings")))
             return
-
         event.isCancelled = true
         if (event.currentItem == null)
             return
-
         if (event.currentItem!!.itemMeta == null)
             return
-
         val item = getItemObject(event) ?: return
 
-
         val type = if (event.currentItem?.type == Material.RED_WOOL) false else if (event.currentItem?.type == Material.GREEN_WOOL) true else return
+
         when (item.itemMeta) {
             Items.borderSize.itemMeta -> borderSize(type, event.whoClicked as Player)
             Items.saveButton.itemMeta -> Util.currentGameSelected[event.whoClicked as Player]!!.finish()
@@ -70,8 +66,8 @@ class SettingsConfigurator : Listener {
             }
 
             Items.teamsDamage.itemMeta -> {
-                Inventories.itemEnchantmentSwitcher(event)
                 teamDamage(type, event.whoClicked as Player)
+                Inventories.itemEnchantmentSwitcher(event)
             }
         }
 
@@ -81,13 +77,12 @@ class SettingsConfigurator : Listener {
         if (type) {
             if (Util.currentGameSelected[player]!!.teamsAllowed)
                 return
-            Util.currentGameSelected[player]!!.teamsAllowed = false
             player.sendMessage(TheHunter.instance.messages.messagesMap["teams-allowed-enabled"]!!.replace("%game%", Util.currentGameSelected[player]!!.name))
-
+            Util.currentGameSelected[player]!!.teamsAllowed = true
         } else {
             if (!Util.currentGameSelected[player]!!.teamsAllowed)
                 return
-            Util.currentGameSelected[player]!!.teamsAllowed = true
+            Util.currentGameSelected[player]!!.teamsAllowed = false
             player.sendMessage(TheHunter.instance.messages.messagesMap["teams-allowed-disabled"]!!.replace("%game%", Util.currentGameSelected[player]!!.name))
 
         }
@@ -97,14 +92,14 @@ class SettingsConfigurator : Listener {
         if (type) {
             if (Util.currentGameSelected[player]!!.teamDamage)
                 return
-            Util.currentGameSelected[player]!!.teamDamage = false
-            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-teamDamage-enabled"]!!.replace("%game%", Util.currentGameSelected[player]!!.name))
-
+            Util.currentGameSelected[player]!!.teamDamage = true
+            player.sendMessage(TheHunter.instance.messages.messagesMap["team-damage-enabled"]!!.replace("%game%", Util.currentGameSelected[player]!!.name))
         } else {
             if (!Util.currentGameSelected[player]!!.teamDamage)
                 return
-            Util.currentGameSelected[player]!!.teamDamage = true
-            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-teamDamage-disabled"]!!.replace("%game%", Util.currentGameSelected[player]!!.name))
+            println("hier22222")
+            Util.currentGameSelected[player]!!.teamDamage = false
+            player.sendMessage(TheHunter.instance.messages.messagesMap["team-damage-disabled"]!!.replace("%game%", Util.currentGameSelected[player]!!.name))
 
         }
     }
@@ -113,19 +108,19 @@ class SettingsConfigurator : Listener {
     private fun teamSize(type: Boolean, player: Player) {
         if (type) {
             if (Util.currentGameSelected[player]!!.teamMaxSize + 1 > teamSizeHigh) {
-                player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-to-high"]!!.replace("%players%", teamSizeHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+                player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-to-high"]!!.replace("%size%", teamSizeHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
                 return
             }
             Util.currentGameSelected[player]!!.teamMaxSize++
-            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-increased"]!!.replace("%players%", Util.currentGameSelected[player]!!.teamMaxSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-increased"]!!.replace("%size%", Util.currentGameSelected[player]!!.teamMaxSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
 
         } else {
             if (Util.currentGameSelected[player]!!.teamMaxSize - 1 < teamSizeLow) {
-                player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-to-low"]!!.replace("%players%", teamSizeLow.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+                player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-to-low"]!!.replace("%size%", teamSizeLow.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
                 return
             }
             Util.currentGameSelected[player]!!.teamMaxSize--
-            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-reduced"]!!.replace("%players%", Util.currentGameSelected[player]!!.teamMaxSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+            player.sendMessage(TheHunter.instance.messages.messagesMap["teams-size-reduced"]!!.replace("%size%", Util.currentGameSelected[player]!!.teamMaxSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
 
         }
     }
@@ -160,7 +155,7 @@ class SettingsConfigurator : Listener {
             player.sendMessage(TheHunter.instance.messages.messagesMap["max-players-increased"]!!.replace("%players%", Util.currentGameSelected[player]!!.maxPlayers.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
 
         } else {
-            if (Util.currentGameSelected[player]!!.minPlayers - 1 < maxPlayersLow) {
+            if (Util.currentGameSelected[player]!!.maxPlayers - 1 < maxPlayersLow) {
                 player.sendMessage(TheHunter.instance.messages.messagesMap["max-players-to-low"]!!.replace("%players%", maxPlayersLow.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
                 return
             }
@@ -172,27 +167,27 @@ class SettingsConfigurator : Listener {
 
     private fun borderSize(type: Boolean, player: Player) {
         if (type) {
-            if (Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize + 10 > WorldboarderController.toHigh) {
+            if (Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize + 10 > WorldboarderController.toHigh) {
                 player.sendMessage(TheHunter.instance.messages.messagesMap["border-size-to-high"]!!.replace("%size%", WorldboarderController.toHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
                 return
             }
-            Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize += 10
-            player.sendMessage(TheHunter.instance.messages.messagesMap["border-size-plus"]!!.replace("%size%", Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+            Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize += 10
+            player.sendMessage(TheHunter.instance.messages.messagesMap["border-size-plus"]!!.replace("%size%", Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
         } else {
-            if (Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize - 10 > WorldboarderController.toLow) {
-                player.sendMessage(TheHunter.instance.messages.messagesMap["border-size-to-low"]!!.replace("%size%", WorldboarderController.toHigh.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+            if (Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize - 10 < WorldboarderController.toLow) {
+                player.sendMessage(TheHunter.instance.messages.messagesMap["border-size-to-low"]!!.replace("%size%", WorldboarderController.toLow.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
                 return
             }
-            Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize -= 10
-            player.sendMessage(TheHunter.instance.messages.messagesMap["border-size-minus"]!!.replace("%size%", Util.currentGameSelected[player]!!.worldBoarderController.minBorderSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
+            Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize -= 10
+            player.sendMessage(TheHunter.instance.messages.messagesMap["border-size-minus"]!!.replace("%size%", Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize.toString()).replace("%game%", Util.currentGameSelected[player]!!.name))
         }
     }
 
     private fun getItemObject(event: InventoryClickEvent): ItemStack? {
         if (event.currentItem!!.type == Material.RED_WOOL) {
-            return event.inventory.getItem(event.slot - 5)
-        } else if (event.currentItem!!.type == Material.GREEN_WOOL) {
             return event.inventory.getItem(event.slot - 4)
+        } else if (event.currentItem!!.type == Material.GREEN_WOOL) {
+            return event.inventory.getItem(event.slot - 3)
         }
         return null
     }

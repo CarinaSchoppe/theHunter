@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 11:42 PM by Carina The Latest changes made by Carina on 6/6/22, 11:42 PM All contents of "Inventories.kt" are protected by copyright.
+ * File created on 6/7/22, 2:44 AM by Carina The Latest changes made by Carina on 6/7/22, 2:37 AM All contents of "Inventories.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -53,6 +53,7 @@ object Inventories {
         meta.addEnchant(Enchantment.DURABILITY, 1, true)
         item.itemMeta = meta
         event.inventory.setItem(event.slot, item)
+        (event.whoClicked as Player).updateInventory()
         val other = (if (item.type == Material.GREEN_WOOL) event.inventory.getItem(event.slot + 1) else if (item.type == Material.RED_WOOL) event.inventory.getItem(event.slot - 1) else null) ?: return
         val otherMeta = other.itemMeta!!
         //get the slot of the other item
@@ -60,14 +61,13 @@ object Inventories {
         otherMeta.removeEnchant(Enchantment.DURABILITY)
         other.itemMeta = otherMeta
         event.inventory.setItem(otherSlot, other)
-
         (event.whoClicked as Player).updateInventory()
     }
 
     private fun addColoredWool(builder: InventoryBuilder, row: Int) {
-        val green = Items.settingsWoolGreen.clone().build()
+        val green = Items.settingsWoolGreen.clone().addDisplayName("§aPlus").build()
         green.removeEnchantment(Enchantment.DURABILITY)
-        val red = Items.settingsWoolRed.clone().build()
+        val red = Items.settingsWoolRed.clone().addDisplayName("§cMinus").build()
         red.removeEnchantment(Enchantment.DURABILITY)
         builder.setItem(row * 9 + 6, green)
         builder.setItem(row * 9 + 7, red)
@@ -76,12 +76,12 @@ object Inventories {
 
     private fun addSettingButtonsInColorToInventory(builder: InventoryBuilder, row: Int, value: Boolean) {
         val itemGreen: ItemStack = if (value)
-            Items.settingsWoolGreen.clone().addEnchantment(Enchantment.DURABILITY, 1).build()
-        else Items.settingsWoolGreen.clone().build()
+            Items.settingsWoolGreen.clone().addEnchantment(Enchantment.DURABILITY, 1).addDisplayName("§aActivate").build()
+        else Items.settingsWoolGreen.clone().addDisplayName("§aActivate").build()
         if (!value) itemGreen.removeEnchantment(Enchantment.DURABILITY)
         val itemRed: ItemStack = if (!value)
-            Items.settingsWoolRed.clone().addEnchantment(Enchantment.DURABILITY, 1).build()
-        else Items.settingsWoolRed.clone().build()
+            Items.settingsWoolRed.clone().addEnchantment(Enchantment.DURABILITY, 1).addDisplayName("§cDeactivate").build()
+        else Items.settingsWoolRed.clone().addDisplayName("§cDeactivate").build()
 
         if (value) itemRed.removeEnchantment(Enchantment.DURABILITY)
         builder.setItem(row * 9 + 6, itemGreen)
