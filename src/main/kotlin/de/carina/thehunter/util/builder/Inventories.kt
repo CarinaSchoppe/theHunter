@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/7/22, 2:44 AM by Carina The Latest changes made by Carina on 6/7/22, 2:37 AM All contents of "Inventories.kt" are protected by copyright.
+ * File created on 6/7/22, 3:04 AM by Carina The Latest changes made by Carina on 6/7/22, 2:55 AM All contents of "Inventories.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -20,11 +20,10 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
 object Inventories {
-    fun setupGameInventory(game: Game): Inventory = InventoryBuilder("§d${game.name}§6: Game Setup", 18).setItem(0, Items.addLobbyButton).setItem(1, Items.addSpectatorButton).setItem(2, Items.addArenaCenterButton).setItem(3, Items.addSpawnButton).setItem(4, Items.addBackButton).setItem(5, Items.addEndButton).setItem(7, Items.settingsHead).setItem(8, Items.finishButton).fillInventory(ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1).build()).create()
+    fun setupGameInventory(game: Game): Inventory = InventoryBuilder("§d${game.name}§6: Game Setup", 9).setItem(0, Items.addLobbyButton).setItem(1, Items.addSpectatorButton).setItem(2, Items.addArenaCenterButton).setItem(3, Items.addSpawnButton).setItem(4, Items.addBackButton).setItem(5, Items.addEndButton).setItem(7, Items.settingsHead).setItem(8, Items.finishButton).fillInventory(ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1).build()).create()
 
     val gamesInventory = InventoryBuilder(TheHunter.prefix + "§6Games", 54).addGamesToInventory().fillInventory(ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1).build()).create()
     fun createSettingsInventory(game: Game): Inventory {
-        //TODO: Testing"
         val builder = InventoryBuilder("§d${game.name}§6: Game Settings", 54)
         builder.setItem(3 + 9 * 0, Items.teamsAllowedHead)
         addSettingButtonsInColorToInventory(builder, 0, game.teamsAllowed)

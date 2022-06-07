@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/7/22, 2:44 AM by Carina The Latest changes made by Carina on 6/7/22, 2:43 AM All contents of "SettingsConfigurator.kt" are protected by copyright.
+ * File created on 6/7/22, 3:04 AM by Carina The Latest changes made by Carina on 6/7/22, 3:03 AM All contents of "SettingsConfigurator.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -51,12 +51,11 @@ class SettingsConfigurator : Listener {
         if (event.currentItem!!.itemMeta == null)
             return
         val item = getItemObject(event) ?: return
-
         val type = if (event.currentItem?.type == Material.RED_WOOL) false else if (event.currentItem?.type == Material.GREEN_WOOL) true else return
 
         when (item.itemMeta) {
             Items.borderSize.itemMeta -> borderSize(type, event.whoClicked as Player)
-            Items.saveButton.itemMeta -> Util.currentGameSelected[event.whoClicked as Player]!!.finish()
+            Items.saveButton.itemMeta -> (event.whoClicked as Player).openInventory(Inventories.setupGameInventory(Util.currentGameSelected[event.whoClicked as Player]!!))
             Items.minPlayers.itemMeta -> minPlayers(type, event.whoClicked as Player)
             Items.maxPlayers.itemMeta -> maxPlayers(type, event.whoClicked as Player)
             Items.teamsSize.itemMeta -> teamSize(type, event.whoClicked as Player)
@@ -64,7 +63,6 @@ class SettingsConfigurator : Listener {
                 teamsAllowed(type, event.whoClicked as Player)
                 Inventories.itemEnchantmentSwitcher(event)
             }
-
             Items.teamsDamage.itemMeta -> {
                 teamDamage(type, event.whoClicked as Player)
                 Inventories.itemEnchantmentSwitcher(event)
@@ -97,7 +95,6 @@ class SettingsConfigurator : Listener {
         } else {
             if (!Util.currentGameSelected[player]!!.teamDamage)
                 return
-            println("hier22222")
             Util.currentGameSelected[player]!!.teamDamage = false
             player.sendMessage(TheHunter.instance.messages.messagesMap["team-damage-disabled"]!!.replace("%game%", Util.currentGameSelected[player]!!.name))
 

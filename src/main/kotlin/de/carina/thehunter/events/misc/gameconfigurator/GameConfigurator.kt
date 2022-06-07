@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "GameConfigurator.kt" are protected by copyright.
+ * File created on 6/7/22, 3:04 AM by Carina The Latest changes made by Carina on 6/7/22, 3:03 AM All contents of "GameConfigurator.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -26,18 +26,15 @@ class GameConfigurator : Listener {
     @EventHandler
     fun onGameConfigEdit(event: InventoryClickEvent) {
         if (!Util.currentGameSelected.containsKey(event.whoClicked as Player)) return
-        if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize("§d${Util.currentGameSelected[event.whoClicked as Player]}§6: Game Setup")))
-            return
         if (!(event.whoClicked as Player).hasPermission(Permissions.SETUP_GUI))
             return
+        if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize("§d${Util.currentGameSelected[event.whoClicked as Player]!!.name}§6: Game Setup")))
+            return
         event.isCancelled = true
-
         if (event.currentItem == null)
             return
-
         if (event.currentItem!!.itemMeta == null)
             return
-
         when (event.currentItem!!.itemMeta!!) {
             Items.addLobbyButton.itemMeta -> (event.whoClicked as Player).performCommand("thehunter setup config lobbyspawn ${Util.currentGameSelected[event.whoClicked as Player]!!.name}")
             Items.addBackButton.itemMeta -> (event.whoClicked as Player).performCommand("thehunter setup config backspawn ${Util.currentGameSelected[event.whoClicked as Player]!!.name}")
@@ -50,6 +47,5 @@ class GameConfigurator : Listener {
                 (event.whoClicked as Player).openInventory(Inventories.createSettingsInventory(Util.currentGameSelected[event.whoClicked as Player]!!))
             }
         }
-
     }
 }
