@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "TheHunter.kt" are protected by copyright.
+ * File created on 6/7/22, 3:35 AM by Carina The Latest changes made by Carina on 6/7/22, 3:35 AM All contents of "TheHunter.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -38,8 +38,6 @@ class TheHunter : JavaPlugin() {
 
     /*
     TODOS till done:
-    TODO: InventoryCommander
-    TODO: anvilGUI
     TODO: Premium join
     TODO: PlayerHiding
     TODO: TOTAL CHECKUP
@@ -51,12 +49,10 @@ class TheHunter : JavaPlugin() {
       TODO: Spawnteleport testing
       TODO: Damagechecking
       TODO: PlayerChat
-      TODO: PlayerBuild and Breaking
       TODO: Teamfunctionchecks
       TODO: PlayerHeadInLobby
-      TODO: Itemlores in config
 
-      TODO: Transplation INtellij plugin download
+      TODO: Key Promoter X IntelliJ plugin download
      */
 
     companion object {
