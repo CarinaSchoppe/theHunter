@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/7/22, 3:34 AM by Carina The Latest changes made by Carina on 6/7/22, 3:34 AM All contents of "ItemChest.kt" are protected by copyright.
+ * File created on 6/9/22, 8:49 PM by Carina The Latest changes made by Carina on 6/9/22, 5:06 PM All contents of "ItemChest.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -42,6 +42,8 @@ class ItemChest(private val game: Game) {
 
     private fun repeater(inventory: Inventory, map: MutableList<ItemStack>) {
         repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
+            println("Item $it")
+
             val item = map[Random().nextInt(map.size)]
             while (true) {
                 val place = Random().nextInt(54)
@@ -132,7 +134,7 @@ class ItemChest(private val game: Game) {
         if (!game.chestFall)
             return
         repeat(game.chestAmount) {
-
+            println("Chest $it")
             //Location of the Worldboarder Edge
             val locationCenter: Location = game.arenaCenter!!.subtract((game.worldBoarderController.worldBoarderSize / 2).toDouble(), 0.0, (game.worldBoarderController.worldBoarderSize / 2).toDouble())
             val x = Random().nextInt(game.worldBoarderController.worldBoarderSize)

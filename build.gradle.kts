@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/1/22, 4:23 PM by Carina The Latest changes made by Carina on 6/1/22, 4:01 PM All contents of "build.gradle.kts" are protected by copyright.
+ * File created on 6/9/22, 8:49 PM by Carina The Latest changes made by Carina on 6/9/22, 8:49 PM All contents of "build.gradle.kts" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -12,12 +12,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("java-library")
     idea
-    id("io.papermc.paperweight.userdev") version "1.3.5"
-    kotlin("jvm") version "1.7.+"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("xyz.jpenilla.run-paper") version "1.0.6" // Adds runServer and runMojangMappedServer tasks for testing
+    kotlin("jvm") version "+"
+    id("com.github.johnrengelman.shadow") version "+"
+    id("xyz.jpenilla.run-paper") version "+" // Adds runServer and runMojangMappedServer tasks for testing
 }
 
 group = "de.carina"
@@ -26,21 +24,21 @@ description = "The theHunter minigame but in a kotlin project remake"
 
 
 repositories {
+    mavenCentral()
+    gradlePluginPortal()
+    maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
     maven("https://repo.codemc.io/repository/maven-snapshots/")
 }
 
 dependencies {
-    paperDevBundle("1.18.2-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:+")
     testImplementation(kotlin("test"))
-    implementation("net.wesjd:anvilgui:1.5.3-SNAPSHOT")
+    implementation("net.wesjd:anvilgui:+")
 }
 
 
 
 tasks {
-    assemble {
-        dependsOn(reobfJar)
-    }
     runServer {
         minecraftVersion("1.18.2")
     }
@@ -57,10 +55,19 @@ tasks {
     test {
         useJUnitPlatform()
     }
+
+    withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = listOf(
+                "-Xuse-k2",
+                "-Xjdk-release=17"
+            )
+            jvmTarget = "17"
+            languageVersion = "1.7"
+        }
+    }
 }
+
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-}
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
 }
