@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/9/22, 8:49 PM by Carina The Latest changes made by Carina on 6/9/22, 8:49 PM All contents of "build.gradle.kts" are protected by copyright.
+ * File created on 6/14/22, 12:49 PM by Carina The Latest changes made by Carina on 6/13/22, 12:42 PM All contents of "build.gradle.kts" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -19,7 +19,7 @@ plugins {
 }
 
 group = "de.carina"
-version = "1.0.0"
+version = "1.3.4"
 description = "The theHunter minigame but in a kotlin project remake"
 
 
@@ -36,11 +36,9 @@ dependencies {
     implementation("net.wesjd:anvilgui:+")
 }
 
-
-
 tasks {
     runServer {
-        minecraftVersion("1.18.2")
+        minecraftVersion("1.19")
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
