@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/24/22, 9:50 AM by Carina The Latest changes made by Carina on 6/24/22, 9:49 AM All contents of "Game.kt" are protected by copyright.
+ * File created on 7/12/22, 1:05 PM by Carina The Latest changes made by Carina on 6/24/22, 9:50 AM All contents of "Game.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -176,9 +176,8 @@ class Game(var name: String) {
             val fileLocations = File("${BaseFile.gameFolder}/arenas/$fileName/locations.yml")
             val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
 
-            if (ymlLocations.getList("spawn-locations") != null) {
-                game.playerSpawns.addAll(ymlLocations.getList("spawn-locations") as Collection<Location>)
-            }
+            if (ymlLocations.getList("spawn-locations") != null)
+                game.playerSpawns.addAll(ymlLocations.getList("spawn-locations") as MutableList<Location>)
             game.lobbyLocation = ymlLocations.getLocation("lobby-location")!!
             game.backLocation = ymlLocations.getLocation("back-location")!!
             game.endLocation = ymlLocations.getLocation("end-location")!!
