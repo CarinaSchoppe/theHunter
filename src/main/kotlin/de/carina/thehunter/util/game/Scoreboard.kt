@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/6/22, 10:54 PM by Carina The Latest changes made by Carina on 6/6/22, 10:54 PM All contents of "Scoreboard.kt" are protected by copyright.
+ * File created on 8/22/22, 2:30 PM by Carina The Latest changes made by Carina on 8/22/22, 2:30 PM All contents of "Scoreboard.kt" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
  * at Carina Sophie Schoppe. All rights reserved
  * Any type of duplication, distribution, rental, sale, award,
@@ -16,6 +16,7 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
+import org.bukkit.scoreboard.Criteria
 import org.bukkit.scoreboard.DisplaySlot
 import org.bukkit.scoreboard.Objective
 import org.bukkit.scoreboard.Score
@@ -23,7 +24,7 @@ import org.bukkit.scoreboard.Score
 class Scoreboard(val game: Game) {
     private val serverName = ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["server-name"] as String)
     private val scoreboard = Bukkit.getScoreboardManager().newScoreboard
-    private val objective: Objective = scoreboard.registerNewObjective("aaa", "bbb", Component.text(serverName))
+    private val objective: Objective = scoreboard.registerNewObjective("aaa", Criteria.DUMMY, Component.text(serverName))
     private val tsIP = ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["ts-ip"] as String)
 
     fun createNewScoreboard(player: Player) {
