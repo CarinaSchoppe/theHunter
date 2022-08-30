@@ -97,10 +97,8 @@ class Team(var teamLeader: Player) {
         }
 
         fun isTeamMember(player: Player, other: Player): Boolean {
-            if (GamesHandler.playerInGames.containsKey(player)) {
-                if (GamesHandler.playerInGames[player]!!.teams.any { it.teamMembers.contains(other) }) {
-                    return true
-                }
+            if (GamesHandler.playerInGames.containsKey(player) && GamesHandler.playerInGames[player]!!.teams.any { it.teamMembers.contains(other) }) {
+                return true
             }
             return false
         }

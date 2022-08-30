@@ -16,6 +16,7 @@ plugins {
     kotlin("jvm") version "+"
     id("com.github.johnrengelman.shadow") version "+"
     id("xyz.jpenilla.run-paper") version "+" // Adds runServer and runMojangMappedServer tasks for testing
+
 }
 
 group = "de.carina"
@@ -36,13 +37,17 @@ dependencies {
     implementation("net.wesjd:anvilgui:+")
 }
 
+java {
+    // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
+    toolchain.languageVersion.set(JavaLanguageVersion.of(18))
+}
 tasks {
     runServer {
-        minecraftVersion("1.19")
+        minecraftVersion("1.19.2")
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
-        options.release.set(17)
+        options.release.set(18)
     }
     javadoc {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
@@ -50,22 +55,17 @@ tasks {
     processResources {
         filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
     }
-    test {
-        useJUnitPlatform()
-    }
-
     withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf(
                 "-Xuse-k2",
-                "-Xjdk-release=17"
+                "-Xjdk-release=18"
             )
-            jvmTarget = "17"
+            jvmTarget = "18"
             languageVersion = "1.7"
         }
     }
-}
-
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    test {
+        useJUnitPlatform()
+    }
 }

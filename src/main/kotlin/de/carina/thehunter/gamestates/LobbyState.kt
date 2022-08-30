@@ -21,6 +21,7 @@ class LobbyState(game: Game) : GameState(game) {
     }
 
     override fun stop() {
+        return
     }
 
     override val gameStateID: Int = GameStates.LOBBY_STATE.id

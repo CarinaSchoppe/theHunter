@@ -188,17 +188,17 @@ class SettingsConfigurator : Listener {
     }
 
     private fun getItemObject(event: InventoryClickEvent): ItemStack? {
-        when (event.currentItem!!.type) {
+        return when (event.currentItem!!.type) {
             Material.RED_WOOL -> {
-                return event.inventory.getItem(event.slot - 4)
+                event.inventory.getItem(event.slot - 4)
             }
 
             Material.GREEN_WOOL -> {
-                return event.inventory.getItem(event.slot - 3)
+                event.inventory.getItem(event.slot - 3)
             }
 
-            Material.RED_BED -> return event.currentItem!!
-            else -> return null
+            Material.RED_BED -> event.currentItem!!
+            else -> null
         }
     }
 }

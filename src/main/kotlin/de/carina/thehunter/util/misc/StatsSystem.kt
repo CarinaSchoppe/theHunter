@@ -18,7 +18,7 @@ import org.bukkit.entity.Player
 import java.util.*
 
 
-data class StatsPlayer(var kills: Int, var deaths: Int, var points: Int, var KDR: Double, var wins: Int, var loses: Int, var games: Int)
+data class StatsPlayer(var kills: Int, var deaths: Int, var points: Int, var kdr: Double, var wins: Int, var loses: Int, var games: Int)
 
 
 class StatsSystem : BaseFile("stats.yml") {
@@ -29,7 +29,7 @@ class StatsSystem : BaseFile("stats.yml") {
             for (player in playerStats.keys) {
                 TheHunter.instance.statsSystem.yml.set("$player.Kills", playerStats[player]!!.kills)
                 TheHunter.instance.statsSystem.yml.set("$player.Deaths", playerStats[player]!!.deaths)
-                TheHunter.instance.statsSystem.yml.set("$player.KDR", playerStats[player]!!.KDR)
+                TheHunter.instance.statsSystem.yml.set("$player.KDR", playerStats[player]!!.kdr)
                 TheHunter.instance.statsSystem.yml.set("$player.Wins", playerStats[player]!!.wins)
                 TheHunter.instance.statsSystem.yml.set("$player.Loses", playerStats[player]!!.loses)
                 TheHunter.instance.statsSystem.yml.set("$player.Points", playerStats[player]!!.points)
@@ -76,9 +76,9 @@ class StatsSystem : BaseFile("stats.yml") {
         removePointsIfPossible(dead)
         playerStats[killer.uniqueId]!!.kills += 1
         playerStats[killer.uniqueId]!!.points += 5
-        playerStats[killer.uniqueId]!!.KDR = playerStats[killer.uniqueId]!!.kills.toDouble() / playerStats[killer.uniqueId]!!.deaths.toDouble()
+        playerStats[killer.uniqueId]!!.kdr = playerStats[killer.uniqueId]!!.kills.toDouble() / playerStats[killer.uniqueId]!!.deaths.toDouble()
         playerStats[dead.uniqueId]!!.deaths += 1
-        playerStats[dead.uniqueId]!!.KDR = playerStats[dead.uniqueId]!!.kills.toDouble() / playerStats[dead.uniqueId]!!.deaths.toDouble()
+        playerStats[dead.uniqueId]!!.kdr = playerStats[dead.uniqueId]!!.kills.toDouble() / playerStats[dead.uniqueId]!!.deaths.toDouble()
 
         super.addData()
 
@@ -96,7 +96,7 @@ class StatsSystem : BaseFile("stats.yml") {
     fun playerDied(player: Player) {
         removePointsIfPossible(player)
         playerStats[player.uniqueId]!!.deaths += 1
-        playerStats[player.uniqueId]!!.KDR = playerStats[player.uniqueId]!!.kills.toDouble() / playerStats[player.uniqueId]!!.deaths.toDouble()
+        playerStats[player.uniqueId]!!.kdr = playerStats[player.uniqueId]!!.kills.toDouble() / playerStats[player.uniqueId]!!.deaths.toDouble()
         super.addData()
     }
 
@@ -122,7 +122,7 @@ class StatsSystem : BaseFile("stats.yml") {
                 TheHunter.instance.messages.messagesMap["stats-message-own"]!!.replace("%kills%", playerStats[player.uniqueId]!!.kills.toString())
                     .replace("%deaths%", playerStats[player.uniqueId]!!.deaths.toString()).replace("%wins%", playerStats[player.uniqueId]!!.wins.toString())
                     .replace("%games%", playerStats[player.uniqueId]!!.games.toString()).replace("%points%", playerStats[player.uniqueId]!!.points.toString())
-                    .replace("%kd%", playerStats[player.uniqueId]!!.KDR.toString())
+                    .replace("%kd%", playerStats[player.uniqueId]!!.kdr.toString())
                     .replace("%losses%", playerStats[player.uniqueId]!!.loses.toString())
             )
         else
@@ -133,7 +133,7 @@ class StatsSystem : BaseFile("stats.yml") {
                     .replace("%wins%", playerStats[player.uniqueId]!!.wins.toString())
                     .replace("%games%", playerStats[player.uniqueId]!!.games.toString())
                     .replace("%points%", playerStats[player.uniqueId]!!.points.toString())
-                    .replace("%kd%", playerStats[player.uniqueId]!!.KDR.toString())
+                    .replace("%kd%", playerStats[player.uniqueId]!!.kdr.toString())
                     .replace("%losses%", playerStats[player.uniqueId]!!.loses.toString())
                     .replace("%player%", player.name)
             )

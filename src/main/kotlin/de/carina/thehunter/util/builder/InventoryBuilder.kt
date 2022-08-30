@@ -22,10 +22,6 @@ class InventoryBuilder(name: String, size: Int) {
         return inventory
     }
 
-    fun addItem(item: org.bukkit.inventory.ItemStack): InventoryBuilder {
-        inventory.addItem(item)
-        return this
-    }
 
     fun addGamesToInventory(): InventoryBuilder {
         for (game in GamesHandler.games) {

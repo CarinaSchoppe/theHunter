@@ -174,11 +174,9 @@ class GunHandler : Listener {
                 event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-damage"]?.plus(0.0) ?: 5.0
                 return
             }
-        } else if (Pistol.shotBullets.containsKey(player)) {
-            if (Pistol.shotBullets[player]!!.contains(arrow)) {
-                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-damage"]?.plus(0.0) ?: 2.0
-                return
-            }
+        } else if (Pistol.shotBullets.containsKey(player) && Pistol.shotBullets[player]!!.contains(arrow)) {
+            event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-damage"]?.plus(0.0) ?: 2.0
+            return
         }
     }
 }

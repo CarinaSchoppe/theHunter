@@ -69,13 +69,9 @@ class LobbyInteraction : Listener {
     }
 
     private fun lobbyDamagePLayer(event: EntityDamageByEntityEvent) {
-        if (event.entity is Player) {
-            if (GamesHandler.playerInGames.containsKey(event.entity) || GamesHandler.spectatorInGames.containsKey(event.entity)) {
-                if (GamesHandler.playerInGames[event.entity]!!.currentGameState !is IngameState) {
-                    event.isCancelled = true
-                    event.damage = 0.0
-                }
-            }
+        if (event.entity is Player && (GamesHandler.playerInGames.containsKey(event.entity) || GamesHandler.spectatorInGames.containsKey(event.entity)) && GamesHandler.playerInGames[event.entity]!!.currentGameState !is IngameState) {
+            event.isCancelled = true
+            event.damage = 0.0
         }
     }
 
