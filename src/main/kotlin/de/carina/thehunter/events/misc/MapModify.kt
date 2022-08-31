@@ -14,6 +14,7 @@ package de.carina.thehunter.events.misc
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -29,12 +30,12 @@ class MapModify : Listener {
 
         if (GamesHandler.playerInGames[player]!!.currentGameState !is IngameState) {
             event.isCancelled = true
-            player.sendMessage(TheHunter.instance.messages.messagesMap["cant-break-block"]!!.replace("%block%", event.block.type.name))
+            player.sendMessage(TheHunter.instance.messages.messagesMap["cant-break-block"]!!.replace(ConstantStrings.BLOCK_PERCENT, event.block.type.name))
             return
         }
         if (!GamesHandler.playerInGames[player]!!.mapModify) {
             event.isCancelled = true
-            player.sendMessage(TheHunter.instance.messages.messagesMap["cant-break-block"]!!.replace("%block%", event.block.type.name))
+            player.sendMessage(TheHunter.instance.messages.messagesMap["cant-break-block"]!!.replace(ConstantStrings.BLOCK_PERCENT, event.block.type.name))
             return
         }
     }
@@ -47,12 +48,12 @@ class MapModify : Listener {
 
         if (GamesHandler.playerInGames[player]!!.currentGameState !is IngameState) {
             event.isCancelled = true
-            player.sendMessage(TheHunter.instance.messages.messagesMap["cant-place-block"]!!.replace("%block%", event.block.type.name))
+            player.sendMessage(TheHunter.instance.messages.messagesMap["cant-place-block"]!!.replace(ConstantStrings.BLOCK_PERCENT, event.block.type.name))
             return
         }
         if (!GamesHandler.playerInGames[player]!!.mapModify) {
             event.isCancelled = true
-            player.sendMessage(TheHunter.instance.messages.messagesMap["cant-place-block"]!!.replace("%block%", event.block.type.name))
+            player.sendMessage(TheHunter.instance.messages.messagesMap["cant-place-block"]!!.replace(ConstantStrings.BLOCK_PERCENT, event.block.type.name))
             return
         }
     }

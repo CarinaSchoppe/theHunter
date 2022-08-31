@@ -15,17 +15,18 @@ import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.GameStates
 import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.command.CommandSender
 import java.io.File
 
 class DeleteGame {
     fun remove(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "delete", 1, Permissions.REMOVE_GAME_COMMAND))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.DELETE_COMMAND, 1, Permissions.REMOVE_GAME_COMMAND))
             return
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace("%game%", args[0]))
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace(ConstantStrings.GAME_PERCENT, args[0]))
             return
         }
         game.currentGameState = game.gameStates[GameStates.END_STATE.id]
@@ -34,9 +35,9 @@ class DeleteGame {
         GamesHandler.games.remove(game)
         val file = File(BaseFile.gameFolder + "/arenas/${game.name}")
         if (file.deleteRecursively())
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-removed"]!!.replace("%game%", args[0]))
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-removed"]!!.replace(ConstantStrings.GAME_PERCENT, args[0]))
         else
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-could-not-delete"]!!.replace("%game%", args[0]))
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-could-not-delete"]!!.replace(ConstantStrings.GAME_PERCENT, args[0]))
 
     }
 }

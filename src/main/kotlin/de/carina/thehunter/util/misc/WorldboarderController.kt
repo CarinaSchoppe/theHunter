@@ -38,7 +38,6 @@ class WorldboarderController(private val game: Game) {
     }
 
     fun resetWorldBoarder() {
-        //TODO: hier testen und schauen...
         game.arenaCenter!!.world.worldBorder.center = game.arenaCenter!!
         println(game.arenaCenter!!.world.worldBorder.center)
         println(game.arenaCenter!!)

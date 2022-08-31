@@ -42,7 +42,7 @@ class Knife : Listener {
             return
         if (!GamesHandler.playerInGames.containsKey(event.entity as Player))
             return
-        var game = GamesHandler.playerInGames[event.entity as Player]
+        val game = GamesHandler.playerInGames[event.entity as Player]
         if (!GamesHandler.playerInGames[event.entity as Player]!!.players.contains(event.damager as Player))
             return
 

@@ -14,6 +14,7 @@ import de.carina.thehunter.TheHunter
 import de.carina.thehunter.items.ItemHandler
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
@@ -44,7 +45,7 @@ class Tracker : Listener {
         }
 
         event.player.compassTarget = closest.location
-        event.player.sendMessage(TheHunter.instance.messages.messagesMap["tracker-distance"]!!.replace("%player%", closest.name).replace("%distance%", event.player.location.distance(closest.location).toString()))
+        event.player.sendMessage(TheHunter.instance.messages.messagesMap["tracker-distance"]!!.replace(ConstantStrings.PLAYER_PERCENT, closest.name).replace("%distance%", event.player.location.distance(closest.location).toString()))
 
 
     }

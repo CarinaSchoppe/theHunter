@@ -113,7 +113,7 @@ class StatsSystem : BaseFile("stats.yml") {
 
     fun generateStatsMessageForPlayer(sender: Player, player: Player): Boolean {
         if (playerStats[player.uniqueId] == null) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["stats-not-found"]!!.replace("%player%", player.name).replace("%player%", player.name))
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["stats-not-found"]!!.replace(ConstantStrings.PLAYER_SPAWN, player.name).replace(ConstantStrings.PLAYER_PERCENT, player.name))
             return false
         }
 
@@ -135,7 +135,7 @@ class StatsSystem : BaseFile("stats.yml") {
                     .replace("%points%", playerStats[player.uniqueId]!!.points.toString())
                     .replace("%kd%", playerStats[player.uniqueId]!!.kdr.toString())
                     .replace("%losses%", playerStats[player.uniqueId]!!.loses.toString())
-                    .replace("%player%", player.name)
+                    .replace(ConstantStrings.PLAYER_PERCENT, player.name)
             )
 
         return true

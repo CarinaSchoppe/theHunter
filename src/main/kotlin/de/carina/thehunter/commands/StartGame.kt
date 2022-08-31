@@ -14,6 +14,7 @@ package de.carina.thehunter.commands
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.LobbyState
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -21,7 +22,7 @@ import org.bukkit.entity.Player
 class StartGame {
 
     fun start(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "start", 0, Permissions.START_COMMAND))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.START_COMMAND, 0, Permissions.START_COMMAND))
             return
         if (!GamesHandler.playerInGames.containsKey(sender as Player))
             return
@@ -30,7 +31,7 @@ class StartGame {
             return
         if (game.currentCountdown.duration > 5) {
             game.currentCountdown.duration = 5
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-speedup"]!!)
+            sender.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_SPEEDUP]!!)
         }
 
     }

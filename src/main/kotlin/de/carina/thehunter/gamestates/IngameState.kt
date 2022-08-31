@@ -18,6 +18,7 @@ import de.carina.thehunter.guns.Sniper
 import de.carina.thehunter.items.special.Knife
 import de.carina.thehunter.util.builder.Items
 import de.carina.thehunter.util.game.Game
+import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.PlayerDropping
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
@@ -95,7 +96,7 @@ class IngameState(game: Game) : GameState(game) {
                 else -> {
                     game.players.forEach {
                         it.isInvulnerable = true
-                        it.sendMessage(TheHunter.instance.messages.messagesMap["immunity-message"]!!.replace("%time%", game.immunity.toString()))
+                        it.sendMessage(TheHunter.instance.messages.messagesMap["immunity-message"]!!.replace(ConstantStrings.TIME_PERCENT, game.immunity.toString()))
                     }
                 }
             }

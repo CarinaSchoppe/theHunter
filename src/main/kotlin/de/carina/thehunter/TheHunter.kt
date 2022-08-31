@@ -40,6 +40,7 @@ class TheHunter : JavaPlugin() {
     TODO: Price Online Shop
     TODO: Testing (, Damage, multirounds,  hiding,  teams, scoreboards, bugs)
     TODO: NPC?
+    TODO: WORLDBOARDER Reset? all good
     TODO: Hover animation (when scrolling
       TODO: Damagechecking
       TODO: PlayerChat

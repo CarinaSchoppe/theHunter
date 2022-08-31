@@ -16,6 +16,7 @@ import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -31,7 +32,7 @@ class EggBomb : Listener {
     companion object {
         val bombs = mutableSetOf<TNTPrimed>()
         fun eggBomb(game: Game) = ItemBuilder(Material.EGG).addDisplayName(TheHunter.prefix + "§eEggBomb").addEnchantment(Enchantment.DURABILITY, 1).addLore(
-            listOf(TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace("%power%", game.itemSettings.settingsMap["egg-bomb-radius"].toString()))
+            listOf(TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace(ConstantStrings.POWER_PERCENT, game.itemSettings.settingsMap["egg-bomb-radius"].toString()))
         ).build()
     }
 

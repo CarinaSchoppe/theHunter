@@ -16,6 +16,7 @@ import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.game.Team
+import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.Permissions
 import de.carina.thehunter.util.misc.Util
 import org.bukkit.command.CommandSender
@@ -24,11 +25,11 @@ import org.bukkit.scoreboard.DisplaySlot
 
 class LeaveGame {
     fun leave(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "leave", 0, Permissions.LEAVE_COMMAND))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.LEAVE_COMMAND, 0, Permissions.LEAVE_COMMAND))
             return
 
         if (!GamesHandler.playerInGames.containsKey(sender as Player)) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace("%player%", sender.name))
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace(ConstantStrings.PLAYER_PERCENT, sender.name))
             return
         }
         val game = GamesHandler.playerInGames[sender]!!

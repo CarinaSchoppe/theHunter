@@ -12,6 +12,7 @@ package de.carina.thehunter.countdowns
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.Game
+import de.carina.thehunter.util.misc.ConstantStrings
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import java.util.function.Consumer
@@ -22,7 +23,7 @@ class EndCountdown(game: Game) : Countdown(game) {
 
 
     override fun start() {
-        duration = TheHunter.instance.settings.settingsMap["duration-endcountdown"] as Int
+        duration = TheHunter.instance.settings.settingsMap[ConstantStrings.ENDCOUNTDOWN_DURATION] as Int
         Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Consumer {
             if (game.players.isEmpty() && game.spectators.isEmpty()) {
                 stop()
@@ -35,12 +36,12 @@ class EndCountdown(game: Game) : Countdown(game) {
 
                 in 1 until 10 -> {
                     for (player in game.players) {
-                        player.sendMessage(TheHunter.instance.messages.messagesMap["endcountdown-message"]!!.replace("%time%", duration.toString()))
+                        player.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.ENDCOUNTDOWN_MESSAGE]!!.replace("%time%", duration.toString()))
                         player.level = duration
                         player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
                     }
                     for (spectator in game.spectators) {
-                        spectator.sendMessage(TheHunter.instance.messages.messagesMap["endcountdown-message"]!!.replace("%time%", duration.toString()))
+                        spectator.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.ENDCOUNTDOWN_MESSAGE]!!.replace("%time%", duration.toString()))
                         spectator.level = duration
                         spectator.playSound(spectator.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
                     }

@@ -19,12 +19,6 @@ abstract class GameState(val game: Game) {
     abstract val gameStateID: Int
 
     override fun toString(): String {
-        if (this is LobbyState)
-            return "LobbyState"
-        if (this is IngameState)
-            return "InGameState"
-        if (this is EndState)
-            return "EndState"
-        return "Unknown state"
+        return this.javaClass.name
     }
 }

@@ -13,6 +13,7 @@ package de.carina.thehunter.commands
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.builder.Items
+import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.Permissions
 import net.wesjd.anvilgui.AnvilGUI
 import net.wesjd.anvilgui.AnvilGUI.Response
@@ -22,7 +23,7 @@ import java.util.function.BiFunction
 
 class AnvilGUI {
     fun create(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "gui", 0, Permissions.ANVIL_GUI))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.GUI_COMMAND, 0, Permissions.ANVIL_GUI))
             return
 
         (sender as Player).closeInventory()

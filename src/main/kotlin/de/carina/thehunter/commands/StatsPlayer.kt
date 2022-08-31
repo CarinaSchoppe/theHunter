@@ -12,6 +12,7 @@
 package de.carina.thehunter.commands
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
@@ -20,7 +21,7 @@ import org.bukkit.entity.Player
 class StatsPlayer {
 
     fun stats(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "stats", 0, Permissions.STATS_COMMAND))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.STATS_COMMAND, 0, Permissions.STATS_COMMAND))
             return
 
         val player: Player = if (args.isEmpty())

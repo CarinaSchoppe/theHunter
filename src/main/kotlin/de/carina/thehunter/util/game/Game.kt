@@ -18,10 +18,7 @@ import de.carina.thehunter.countdowns.LobbyCountdown
 import de.carina.thehunter.gamestates.*
 import de.carina.thehunter.items.ItemChest
 import de.carina.thehunter.util.files.BaseFile
-import de.carina.thehunter.util.misc.DeathChests
-import de.carina.thehunter.util.misc.MapResetter
-import de.carina.thehunter.util.misc.Util
-import de.carina.thehunter.util.misc.WorldboarderController
+import de.carina.thehunter.util.misc.*
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.block.Sign
@@ -149,7 +146,7 @@ class Game(var name: String) {
         ymlLocations.options().copyDefaults(true)
         ymlLocations.save(fileLocations)
         ymlSettings.save(fileSettings)
-        Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-saved"]!!.replace("%game%", name))
+        Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["game-successfully-saved"]!!.replace(ConstantStrings.GAME_PERCENT, name))
         return true
     }
 

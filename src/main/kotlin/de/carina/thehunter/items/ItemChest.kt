@@ -132,7 +132,7 @@ class ItemChest(private val game: Game) {
             //Location of the Worldboarder Edge
             val x = Random().nextInt(game.worldBoarderController.worldBoarderSize)
             val z = Random().nextInt(game.worldBoarderController.worldBoarderSize)
-            var newLocation = locationCenter.clone().add(x.toDouble(), 170.0, z.toDouble())
+            val newLocation = locationCenter.clone().add(x.toDouble(), 170.0, z.toDouble())
             val chest = locationCenter.world.spawnFallingBlock(newLocation, Material.BEACON.createBlockData())
             chest.velocity = Vector(0.0, -1.5, 0.0)
             chest.dropItem = false

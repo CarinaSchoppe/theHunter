@@ -11,6 +11,7 @@
 package de.carina.thehunter.util.game
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.entity.Player
 
@@ -34,13 +35,13 @@ class Team(var teamLeader: Player) {
         }
 
         if (!GamesHandler.playerInGames.containsKey(playerToAdd)) {
-            leader.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace("%player%", playerToAdd.name))
+            leader.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]!!.replace(ConstantStrings.PLAYER_SPAWN, playerToAdd.name))
             return false
         }
 
         GamesHandler.playerInGames[playerToAdd]!!.teams.forEach {
             if (it.teamMembers.contains(playerToAdd)) {
-                leader.sendMessage(TheHunter.instance.messages.messagesMap["team-player-already-in-other-team"]!!.replace("%player%", playerToAdd.name))
+                leader.sendMessage(TheHunter.instance.messages.messagesMap["team-player-already-in-other-team"]!!.replace(ConstantStrings.PLAYER_PERCENT, playerToAdd.name))
                 return false
             }
         }
@@ -51,7 +52,7 @@ class Team(var teamLeader: Player) {
 
 
         if (invites.contains(playerToAdd)) {
-            leader.sendMessage(TheHunter.instance.messages.messagesMap["player-already-invited"]!!.replace("%player%", playerToAdd.name))
+            leader.sendMessage(TheHunter.instance.messages.messagesMap["player-already-invited"]!!.replace(ConstantStrings.PLAYER_PERCENT, playerToAdd.name))
             return false
         }
 
@@ -62,14 +63,14 @@ class Team(var teamLeader: Player) {
 
         invites.add(playerToAdd)
         playerToAdd.sendMessage(TheHunter.instance.messages.messagesMap["player-is-invited"]!!.replace("%leader%", leader.name))
-        leader.sendMessage(TheHunter.instance.messages.messagesMap["player-invited"]!!.replace("%player%", playerToAdd.name))
+        leader.sendMessage(TheHunter.instance.messages.messagesMap["player-invited"]!!.replace(ConstantStrings.PLAYER_PERCENT, playerToAdd.name))
 
         return true
     }
 
     private fun promoteTeamLeader(player: Player, leader: Player) {
         if (!teamMembers.contains(player)) {
-            leader.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-team"]!!.replace("%player%", player.name))
+            leader.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-team"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
             return
         }
         if (teamLeader != leader) {
@@ -77,11 +78,11 @@ class Team(var teamLeader: Player) {
             return
         }
 
-        teamLeader.sendMessage(TheHunter.instance.messages.messagesMap["player-promote-leader"]!!.replace("%player%", player.name))
+        teamLeader.sendMessage(TheHunter.instance.messages.messagesMap["player-promote-leader"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
         teamLeader = player
         teamLeader.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader"]!!)
         teamMembers.filter { it.name != player.name && it.name != leader.name }.forEach {
-            it.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader-all"]!!.replace("%player%", teamLeader.name))
+            it.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader-all"]!!.replace(ConstantStrings.PLAYER_PERCENT, teamLeader.name))
         }
     }
 
@@ -125,11 +126,11 @@ class Team(var teamLeader: Player) {
                 team.teamLeader = team.teamMembers.first()
                 team.teamLeader.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader"]!!)
                 team.teamMembers.forEach {
-                    it.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader-all"]!!.replace("%player%", team.teamLeader.name))
+                    it.sendMessage(TheHunter.instance.messages.messagesMap["player-new-leader-all"]!!.replace(ConstantStrings.PLAYER_PERCENT, team.teamLeader.name))
                 }
             } else {
                 team.teamMembers.forEach {
-                    it.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team-all"]!!.replace("%player%", player.name))
+                    it.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team-all"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
                 }
             }
 
@@ -161,9 +162,3 @@ class Team(var teamLeader: Player) {
 
 
 }
-
-
-
-
-
-

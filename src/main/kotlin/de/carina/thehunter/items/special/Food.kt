@@ -16,6 +16,7 @@ import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.items.ItemHandler
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
@@ -36,14 +37,14 @@ class Food : Listener {
         if (ItemHandler.shouldNotInteractWithItem(event, food, "Food"))
             return
 
-        if (event.player.foodLevel + GamesHandler.playerInGames[event.player]!!.gameItems.items["food-recharge"] as Int <= 20)
-            event.player.foodLevel += GamesHandler.playerInGames[event.player]!!.gameItems.items["food-recharge"] as Int
+        if (event.player.foodLevel + GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.FOOD_RECHARGE] as Int <= 20)
+            event.player.foodLevel += GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.FOOD_RECHARGE] as Int
         else if (event.player.foodLevel == 20)
             return
         else
             event.player.foodLevel = 20
         ItemHandler.removeOneItemOfPlayer(event.player)
-        event.player.sendMessage(TheHunter.instance.messages.messagesMap["food-recharge"]!!.replace("%recharge%", (GamesHandler.playerInGames[event.player]!!.gameItems.items["food-recharge"] as Int).toString()))
+        event.player.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.FOOD_RECHARGE]!!.replace("%recharge%", (GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.FOOD_RECHARGE] as Int).toString()))
     }
 
     @EventHandler

@@ -16,6 +16,7 @@ import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.builder.Items
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -56,19 +57,19 @@ class PlayerKillsOtherOrDies : Listener {
         }, 1)
         event.deathMessage(Component.text(""))
         playerHiding(player, game, killer)
-        player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-killed-by-other"]!!.replace("%killer%", killer.name))
+        player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-killed-by-other"]!!.replace(ConstantStrings.KILLER_PERCENT, killer.name))
         if (game.checkWinning())
             game.nextGameState()
     }
 
     private fun playerHiding(player: Player, game: Game, killer: Player) {
         game.players.forEach {
-            it.sendMessage(TheHunter.instance.messages.messagesMap["player-killed-by-other"]!!.replace("%player%", player.name).replace("%killer%", killer.name))
+            it.sendMessage(TheHunter.instance.messages.messagesMap["player-killed-by-other"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name).replace(ConstantStrings.KILLER_PERCENT, killer.name))
             it.hidePlayer(TheHunter.instance, player)
             player.hidePlayer(TheHunter.instance, it)
         }
         game.spectators.filter { it.name != player.name }.forEach {
-            it.sendMessage(TheHunter.instance.messages.messagesMap["player-killed-by-other"]!!.replace("%player%", player.name).replace("%killer%", killer.name))
+            it.sendMessage(TheHunter.instance.messages.messagesMap["player-killed-by-other"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name).replace(ConstantStrings.KILLER_PERCENT, killer.name))
             it.hidePlayer(TheHunter.instance, player)
             player.hidePlayer(TheHunter.instance, it)
         }
@@ -88,10 +89,10 @@ class PlayerKillsOtherOrDies : Listener {
         }, 1)
         event.deathMessage(Component.text(""))
         game.players.forEach {
-            it.sendMessage(TheHunter.instance.messages.messagesMap["player-died"]!!.replace("%player%", player.name))
+            it.sendMessage(TheHunter.instance.messages.messagesMap["player-died"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
         }
         game.spectators.filter { it.name != player.name }.forEach {
-            it.sendMessage(TheHunter.instance.messages.messagesMap["player-died"]!!.replace("%player%", player.name))
+            it.sendMessage(TheHunter.instance.messages.messagesMap["player-died"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
         }
         player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-died"]!!)
         if (game.checkWinning())

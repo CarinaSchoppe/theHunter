@@ -13,6 +13,7 @@ package de.carina.thehunter.countdowns
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.Game
+import de.carina.thehunter.util.misc.ConstantStrings
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
@@ -68,10 +69,10 @@ class LobbyCountdown(game: Game) : Countdown(game) {
             }
             if (duration <= 0) {
                 game.players.forEach(Consumer { player ->
-                    player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting"]!!.replace("%time%", duration.toString()))
+                    player.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING]!!.replace(ConstantStrings.TIME_PERCENT, duration.toString()))
                 })
                 game.spectators.forEach(Consumer { player ->
-                    player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting"]!!.replace("%time%", duration.toString()))
+                    player.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING]!!.replace(ConstantStrings.TIME_PERCENT, duration.toString()))
                 })
                 game.nextGameState()
                 it.cancel()
@@ -90,7 +91,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
 
     private fun playerHandler(user: MutableSet<Player>) {
         user.forEach(Consumer { player ->
-            player.sendMessage(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))
+            player.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING_IN]!!.replace(ConstantStrings.TIME_PERCENT, duration.toString()))
             player.level = duration
             player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
         })
@@ -99,12 +100,12 @@ class LobbyCountdown(game: Game) : Countdown(game) {
 
     private fun lobbyCountdown() {
         when (duration) {
-            in 1..TheHunter.instance.settings.settingsMap["duration-speedup"] as Int -> {
+            in 1..TheHunter.instance.settings.settingsMap[ConstantStrings.DURATION_SPEEDUP] as Int -> {
                 game.players.forEach(Consumer { player ->
-                    player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6$duration"), LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))))
+                    player.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6$duration"), LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING_IN]!!.replace(ConstantStrings.TIME_PERCENT, duration.toString()))))
                 })
                 game.spectators.forEach(Consumer { spectator ->
-                    spectator.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6$duration"), LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["game-starting-in"]!!.replace("%time%", duration.toString()))))
+                    spectator.showTitle(Title.title(LegacyComponentSerializer.legacySection().deserialize("§6$duration"), LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING_IN]!!.replace(ConstantStrings.TIME_PERCENT, duration.toString()))))
                 })
                 sendMessageTime()
             }

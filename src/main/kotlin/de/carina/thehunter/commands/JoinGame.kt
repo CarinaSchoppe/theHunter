@@ -16,6 +16,7 @@ import de.carina.thehunter.countdowns.LobbyCountdown
 import de.carina.thehunter.util.builder.Items
 import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.Permissions
 import de.carina.thehunter.util.misc.PlayerTeamHead
 import de.carina.thehunter.util.misc.Util
@@ -27,12 +28,12 @@ import org.bukkit.entity.Player
 class JoinGame {
 
     fun join(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "join", 1, Permissions.JOIN_COMMAND))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.JOIN_COMMAND, 1, Permissions.JOIN_COMMAND))
             return
 
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace("%game%", args[0]))
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace(ConstantStrings.GAME_PERCENT, args[0]))
             return
         }
         if (!playerAddingAndMessaging(sender as Player, game))
@@ -56,16 +57,16 @@ class JoinGame {
             return false
         }
         if (game.players.size + 1 <= game.maxPlayers) {
-            player.sendMessage(TheHunter.instance.messages.messagesMap["join-game-successfully"]!!.replace("%game%", game.name))
+            player.sendMessage(TheHunter.instance.messages.messagesMap["join-game-successfully"]!!.replace(ConstantStrings.GAME_PERCENT, game.name))
             game.players.forEach {
-                it.sendMessage(TheHunter.instance.messages.messagesMap["player-joined-game"]!!.replace("%player%", player.name))
+                it.sendMessage(TheHunter.instance.messages.messagesMap["player-joined-game"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
             }
             game.players.add(player)
             player.allowFlight = false
             GamesHandler.playerInGames[player] = game
             player.teleport(game.lobbyLocation!!)
             game.spectators.forEach {
-                it.sendMessage(TheHunter.instance.messages.messagesMap["player-joined-game"]!!.replace("%player%", player.name))
+                it.sendMessage(TheHunter.instance.messages.messagesMap["player-joined-game"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
             }
         } else {
             GamesHandler.spectatorInGames[player] = game

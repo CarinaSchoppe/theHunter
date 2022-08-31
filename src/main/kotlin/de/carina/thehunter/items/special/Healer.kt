@@ -15,6 +15,7 @@ import de.carina.thehunter.TheHunter
 import de.carina.thehunter.items.ItemHandler
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -33,11 +34,11 @@ class Healer : Listener {
         if (ItemHandler.shouldNotInteractWithItem(event, healer, "Healer"))
             return
         event.isCancelled = true
-        if (event.player.health + GamesHandler.playerInGames[event.player]!!.gameItems.items["healer-amount"] as Int <= 20)
-            event.player.health += GamesHandler.playerInGames[event.player]!!.gameItems.items["healer-amount"] as Int
+        if (event.player.health + GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.HEALER_AMOUNT] as Int <= 20)
+            event.player.health += GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.HEALER_AMOUNT] as Int
         else
             event.player.health = 20.0
         ItemHandler.removeOneItemOfPlayer(event.player)
-        event.player.sendActionBar(LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["healer-message"]!!.replace("%hearts%", (GamesHandler.playerInGames[event.player]!!.gameItems.items["healer-amount"] as Int).toString())))
+        event.player.sendActionBar(LegacyComponentSerializer.legacySection().deserialize(TheHunter.instance.messages.messagesMap["healer-message"]!!.replace("%hearts%", (GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.HEALER_AMOUNT] as Int).toString())))
     }
 }

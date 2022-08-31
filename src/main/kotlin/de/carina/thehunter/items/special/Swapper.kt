@@ -15,6 +15,7 @@ import de.carina.thehunter.TheHunter
 import de.carina.thehunter.items.ItemHandler
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
@@ -42,7 +43,7 @@ class Swapper : Listener {
         val targetLocation = target.location
         target.teleport(event.player.location)
         event.player.teleport(targetLocation)
-        target.sendMessage(TheHunter.instance.messages.messagesMap["player-swapped"]!!.replace("%player%", event.player.name))
-        event.player.sendMessage(TheHunter.instance.messages.messagesMap["player-swapped"]!!.replace("%player%", target.name))
+        target.sendMessage(TheHunter.instance.messages.messagesMap["player-swapped"]!!.replace(ConstantStrings.PLAYER_PERCENT, event.player.name))
+        event.player.sendMessage(TheHunter.instance.messages.messagesMap["player-swapped"]!!.replace(ConstantStrings.PLAYER_SPAWN, target.name))
     }
 }
