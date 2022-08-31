@@ -25,7 +25,7 @@ class DeleteGame {
             return
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!)
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace("%game%", args[0]))
             return
         }
         game.currentGameState = game.gameStates[GameStates.END_STATE.id]

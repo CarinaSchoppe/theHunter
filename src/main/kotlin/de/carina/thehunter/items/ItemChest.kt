@@ -42,8 +42,6 @@ class ItemChest(private val game: Game) {
 
     private fun repeater(inventory: Inventory, map: MutableList<ItemStack>) {
         repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
-            println("Item $it")
-
             val item = map[Random().nextInt(map.size)]
             while (true) {
                 val place = Random().nextInt(54)
@@ -58,7 +56,7 @@ class ItemChest(private val game: Game) {
 
     private fun addItems(items: MutableList<ItemStack>): MutableList<ItemStack> {
         if (game.gameItems.items["EggBomb"] == true) {
-            val item = EggBomb.eggBomb
+            val item = EggBomb.eggBomb(game)
             item.amount = game.gameItems.items["eggbomb-amount"] as Int
             items.add(item)
         }
@@ -87,11 +85,7 @@ class ItemChest(private val game: Game) {
             item.amount = game.gameItems.items["jump-stick-amount"] as Int
             items.add(item)
         }
-        if (game.gameItems.items["Knife"] == true) {
-            val item = Knife.knife
-            item.amount = game.gameItems.items["knife-amount"] as Int
-            items.add(item)
-        }
+
         if (game.gameItems.items["Swapper"] == true) {
             val item = Swapper.swapper
             item.amount = game.gameItems.items["swapper-amount"] as Int
@@ -139,6 +133,7 @@ class ItemChest(private val game: Game) {
             val locationCenter: Location = game.arenaCenter!!.subtract((game.worldBoarderController.worldBoarderSize / 2).toDouble(), 0.0, (game.worldBoarderController.worldBoarderSize / 2).toDouble())
             val x = Random().nextInt(game.worldBoarderController.worldBoarderSize)
             val z = Random().nextInt(game.worldBoarderController.worldBoarderSize)
+            println("X: $x Z: $z center: " + locationCenter.x.toInt() + " " + locationCenter.z.toInt())
             val chest = locationCenter.world.spawnFallingBlock(locationCenter.add(x.toDouble(), 170.0, z.toDouble()), Material.BEACON.createBlockData())
             chest.velocity = Vector(0.0, -1.5, 0.0)
             chest.dropItem = false
@@ -149,6 +144,3 @@ class ItemChest(private val game: Game) {
         }
     }
 }
-
-
-

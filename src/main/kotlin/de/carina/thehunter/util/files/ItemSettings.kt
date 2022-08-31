@@ -11,8 +11,9 @@
 
 package de.carina.thehunter.util.files
 
-class ItemSettings : BaseFile("item-settings.yml") {
+import de.carina.thehunter.util.game.Game
 
+class ItemSettings(val game: Game) : BaseFile("/arenas/${game.name}/item-settings.yml") {
 
     val settingsMap = mutableMapOf<String, Any>()
 
@@ -22,8 +23,8 @@ class ItemSettings : BaseFile("item-settings.yml") {
         }
     }
 
-    override fun addData(): ItemSettings {
 
+    override fun addData(): ItemSettings {
         yml.addDefault("egg-bomb-amount", 4)
         yml.addDefault("egg-bomb-radius", 5)
         yml.addDefault("egg-bomb-delay", 1)

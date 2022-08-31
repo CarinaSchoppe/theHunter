@@ -36,14 +36,14 @@ class Food : Listener {
         if (ItemHandler.shouldNotInteractWithItem(event, food, "Food"))
             return
 
-        event.isCancelled = true
         if (event.player.foodLevel + GamesHandler.playerInGames[event.player]!!.gameItems.items["food-recharge"] as Int <= 20)
             event.player.foodLevel += GamesHandler.playerInGames[event.player]!!.gameItems.items["food-recharge"] as Int
+        else if (event.player.foodLevel == 20)
+            return
         else
             event.player.foodLevel = 20
         ItemHandler.removeOneItemOfPlayer(event.player)
         event.player.sendMessage(TheHunter.instance.messages.messagesMap["food-recharge"]!!.replace("%recharge%", (GamesHandler.playerInGames[event.player]!!.gameItems.items["food-recharge"] as Int).toString()))
-
     }
 
     @EventHandler

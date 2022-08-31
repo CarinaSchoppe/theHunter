@@ -18,6 +18,7 @@ import de.carina.thehunter.countdowns.LobbyCountdown
 import de.carina.thehunter.gamestates.*
 import de.carina.thehunter.items.ItemChest
 import de.carina.thehunter.util.files.BaseFile
+import de.carina.thehunter.util.files.ItemSettings
 import de.carina.thehunter.util.misc.DeathChests
 import de.carina.thehunter.util.misc.MapResetter
 import de.carina.thehunter.util.misc.Util
@@ -44,6 +45,7 @@ class Game(var name: String) {
     lateinit var mapResetter: MapResetter
     lateinit var scoreBoard: Scoreboard
     lateinit var gameItems: GameItems
+    lateinit var itemSettings: ItemSettings
     lateinit var gameChest: ItemChest
     lateinit var deathChests: DeathChests
 
@@ -238,6 +240,7 @@ class Game(var name: String) {
         scoreBoard = Scoreboard(this)
         mapResetter = MapResetter(this)
         gameItems = GameItems(this)
+        itemSettings = ItemSettings(this)
         gameChest = ItemChest(this)
         deathChests = DeathChests(this)
         GamesHandler.setupGames.add(this)
@@ -258,6 +261,7 @@ class Game(var name: String) {
         saveGameToConfig()
         gameItems.saveAllItems()
         gameItems.loadAllItems()
+        itemSettings.addData()
         gameItems.loadAllGunSettings()
         GamesHandler.games.add(this)
         Util.updateGameSigns(this)

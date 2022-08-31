@@ -27,7 +27,7 @@ import java.util.function.Consumer
 
 class IngameState(game: Game) : GameState(game) {
     override fun start() {
-        if (!game.randomPlayerDrop) PlayerDropping.dropPlayers(game) //TODO: Hier
+        if (!game.randomPlayerDrop) PlayerDropping.dropPlayers(game)
         forEachPlayer()
         allPlayerStuffHiding()
         if (game.checkWinning()) {

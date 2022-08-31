@@ -64,9 +64,9 @@ class GameItems(game: Game) {
         ymlItems.addDefault("energydrink-amount", 2)
         ymlItems.addDefault("Food", true)
         ymlItems.addDefault("food-amount", 3)
-        ymlItems.set("jump-stick-uses", 3)
-        ymlItems.set("jump-stick-power", 5)
-        ymlItems.set("food-recharge", 4)
+        ymlItems.addDefault("jump-stick-uses", 3)
+        ymlItems.addDefault("jump-stick-power", 5)
+        ymlItems.addDefault("food-recharge", 4)
 
         //Gun settings
         ymlGuns.addDefault("minigun-damage", 1)
@@ -95,7 +95,6 @@ class GameItems(game: Game) {
         ymlItems.options().copyDefaults(true)
         ymlItems.save(fileItems)
         ymlGuns.options().copyDefaults(true)
-        ymlGuns.save(fileItems)
+        ymlGuns.save(fileGuns)
     }
-
 }

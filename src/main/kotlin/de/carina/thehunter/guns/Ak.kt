@@ -56,7 +56,6 @@ object Ak {
         }
         if (magazine[player]!! <= 0) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
-            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
             reloadGun(player)
             return false
         }

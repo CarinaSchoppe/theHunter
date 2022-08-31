@@ -14,6 +14,7 @@ package de.carina.thehunter.items.special
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.items.ItemHandler
 import de.carina.thehunter.util.builder.ItemBuilder
+import de.carina.thehunter.util.game.Game
 import de.carina.thehunter.util.game.GamesHandler
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
@@ -44,6 +45,9 @@ class EyeSpy : Listener {
 
         if (inEyeSpy.contains(event.player))
             return
+        if (!GamesHandler.playerInGames.containsKey(event.player))
+            return
+        val game = GamesHandler.playerInGames[event.player]!!
         val targets = GamesHandler.playerInGames[event.player]!!.players.filter { it != event.player }
         if (targets.isEmpty())
             return
@@ -51,17 +55,17 @@ class EyeSpy : Listener {
         ItemHandler.removeOneItemOfPlayer(event.player)
         event.isCancelled = true
 
-        setCamera(event.player, target)
+        setCamera(game, event.player, target)
     }
 
 
-    private fun setCamera(player: Player, target: Player) {
+    private fun setCamera(game: Game, player: Player, target: Player) {
         lastPlayerLocation[player] = player.location
         player.teleport(target.location)
         inEyeSpy.add(player)
         player.gameMode = GameMode.SPECTATOR
         player.spectatorTarget = target
-        mapPlayerTime[player] = (TheHunter.instance.itemSettings.settingsMap["eye-spy-duration"]!! as Long).toInt()
+        mapPlayerTime[player] = (game.itemSettings.settingsMap["eye-spy-duration"]!! as Long).toInt()
 
         showingTitle(player)
         TheHunter.instance.server.scheduler.scheduleSyncDelayedTask(TheHunter.instance, {
@@ -69,7 +73,7 @@ class EyeSpy : Listener {
             player.gameMode = GameMode.SURVIVAL
             player.spectatorTarget = null
             inEyeSpy.remove(player)
-        }, 20L * TheHunter.instance.itemSettings.settingsMap["eye-spy-duration"]!! as Long)
+        }, 20L * game.itemSettings.settingsMap["eye-spy-duration"]!! as Long)
     }
 
     private fun showingTitle(player: Player) {

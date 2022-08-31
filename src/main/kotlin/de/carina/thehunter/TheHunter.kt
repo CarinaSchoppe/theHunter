@@ -13,16 +13,12 @@ package de.carina.thehunter
 
 import de.carina.thehunter.commands.BaseCommand
 import de.carina.thehunter.events.game.*
-import de.carina.thehunter.events.misc.BlocksFlyEvent
-import de.carina.thehunter.events.misc.LobbyInteraction
-import de.carina.thehunter.events.misc.MapModify
-import de.carina.thehunter.events.misc.PlayerJoinsServer
+import de.carina.thehunter.events.misc.*
 import de.carina.thehunter.events.misc.gameconfigurator.GameConfigurator
 import de.carina.thehunter.events.misc.gameconfigurator.SettingsConfigurator
 import de.carina.thehunter.guns.GunHandler
 import de.carina.thehunter.items.special.*
 import de.carina.thehunter.util.files.BaseFile
-import de.carina.thehunter.util.files.ItemSettings
 import de.carina.thehunter.util.files.Messages
 import de.carina.thehunter.util.files.Settings
 import de.carina.thehunter.util.game.Game
@@ -56,6 +52,7 @@ class TheHunter : JavaPlugin() {
       TODO: TODO: Items
       TODO: leftclick and rightclick
       TODO: Oveall savety for everything related to  loading and unloading an arena from PixelsJump
+      TODO: item settings individuell per game
 
      */
 
@@ -66,14 +63,12 @@ class TheHunter : JavaPlugin() {
 
     lateinit var settings: Settings
     lateinit var messages: Messages
-    lateinit var itemSettings: ItemSettings
     lateinit var statsSystem: StatsSystem
     val version = "1.0.0"
 
     override fun onEnable() {
         instance = this
         settings = Settings("config.yml").addData()
-        itemSettings = ItemSettings().addData()
         messages = Messages("messages.yml").addData()
         statsSystem = StatsSystem()
         StatsSystem.loadStatsPlayersFromFile()
@@ -117,6 +112,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(TeamDamage(), this)
         pluginManager.registerEvents(MapModify(), this)
         pluginManager.registerEvents(DeathChest(), this)
+        pluginManager.registerEvents(IngameItemUse(), this)
         pluginManager.registerEvents(PlayerChat(), this)
         pluginManager.registerEvents(GameSigns(), this)
         pluginManager.registerEvents(PlayerKillsOtherOrDies(), this)

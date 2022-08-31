@@ -42,6 +42,7 @@ class Knife : Listener {
             return
         if (!GamesHandler.playerInGames.containsKey(event.entity as Player))
             return
+        var game = GamesHandler.playerInGames[event.entity as Player]
         if (!GamesHandler.playerInGames[event.entity as Player]!!.players.contains(event.damager as Player))
             return
 
@@ -49,7 +50,8 @@ class Knife : Listener {
             return
         if (GamesHandler.playerInGames[event.damager as Player]!!.gameItems.items["Knife"] == false)
             return
-        event.damage = TheHunter.instance.itemSettings.settingsMap["knife-damage"] as Double
+
+        event.damage = game!!.itemSettings.settingsMap["knife-damage"] as Double
     }
 
 

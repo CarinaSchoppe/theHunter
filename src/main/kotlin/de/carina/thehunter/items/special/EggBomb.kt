@@ -25,14 +25,13 @@ import org.bukkit.entity.TNTPrimed
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.ProjectileHitEvent
-import java.util.*
 
 class EggBomb : Listener {
 
     companion object {
         val bombs = mutableSetOf<TNTPrimed>()
-        val eggBomb = ItemBuilder(Material.EGG).addDisplayName(TheHunter.prefix + "§eEggBomb").addAmount(Random().nextInt(1, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-amount"] as Int) + 1)).addEnchantment(Enchantment.DURABILITY, 1).addLore(
-            listOf(TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace("%power%", TheHunter.instance.itemSettings.settingsMap["egg-bomb-radius"].toString()))
+        fun eggBomb(game: Game) = ItemBuilder(Material.EGG).addDisplayName(TheHunter.prefix + "§eEggBomb").addEnchantment(Enchantment.DURABILITY, 1).addLore(
+            listOf(TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace("%power%", game.itemSettings.settingsMap["egg-bomb-radius"].toString()))
         ).build()
     }
 
@@ -56,7 +55,7 @@ class EggBomb : Listener {
             return
         if (!egg.item.hasItemMeta())
             return
-        if (egg.item.itemMeta != eggBomb.itemMeta)
+        if (egg.item.itemMeta != eggBomb(game).itemMeta)
             return
         if (GamesHandler.playerInGames[player]!!.gameItems.items["EggBomb"] == false)
             return
@@ -74,7 +73,6 @@ class EggBomb : Listener {
             tnt.source = egg
             bombs.add(tnt)
             GamesHandler.entitiesInGames[tnt] = game
-        }, (TheHunter.instance.itemSettings.settingsMap["egg-bomb-delay"] as Int) * 20L)
+        }, (game.itemSettings.settingsMap["egg-bomb-delay"] as Int) * 20L)
     }
 }
-
