@@ -35,7 +35,7 @@ object Minigun : Gun {
         val arrow = player.launchProjectile(Arrow::class.java, player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-power"]!!))
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
-        GunHandler.removeAmmo(player, 1, Minigun)
+
 
         arrow.shooter = player
         if (shotBullets.containsKey(player)) {
@@ -96,6 +96,9 @@ object Minigun : Gun {
                 magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-ammo"]!!
             else
                 magazine[player] = amount
+            repeat(magazine[player]!!) {
+                GunHandler.removeAmmo(player, Minigun)
+            }
             player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1f, 1f)
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-reload"]!!)

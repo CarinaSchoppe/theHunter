@@ -131,14 +131,14 @@ class GunHandler : Listener {
     }
 
     companion object {
-        fun removeAmmo(player: Player, amount: Int, gun: Gun) {
+        fun removeAmmo(player: Player, gun: Gun) {
             for (itemStack in player.inventory.contents) {
                 if (itemStack == null) continue
                 when (gun) {
                     is Ak -> {
                         if (itemStack.itemMeta != AmmoItems.akAmmo.itemMeta)
                             continue
-                        itemStack.subtract(amount)
+                        itemStack.subtract(1)
                         if (itemStack.amount == 0)
                             player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
                     }
@@ -146,7 +146,7 @@ class GunHandler : Listener {
                     is Minigun -> {
                         if (itemStack.itemMeta != AmmoItems.minigunAmmo.itemMeta)
                             continue
-                        itemStack.subtract(amount)
+                        itemStack.subtract(1)
                         if (itemStack.amount == 0)
                             player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
                     }
@@ -154,7 +154,7 @@ class GunHandler : Listener {
                     is Sniper -> {
                         if (itemStack.itemMeta != AmmoItems.sniperAmmo.itemMeta)
                             continue
-                        itemStack.subtract(amount)
+                        itemStack.subtract(1)
                         if (itemStack.amount == 0)
                             player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
                     }
@@ -162,7 +162,7 @@ class GunHandler : Listener {
                     is Pistol -> {
                         if (itemStack.itemMeta != AmmoItems.pistolAmmo.itemMeta)
                             continue
-                        itemStack.subtract(amount)
+                        itemStack.subtract(1)
                         if (itemStack.amount == 0)
                             player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
                     }

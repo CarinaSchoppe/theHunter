@@ -39,7 +39,6 @@ object Pistol : Gun {
         )
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
-        GunHandler.removeAmmo(player, 1, Pistol)
         arrow.shooter = player
         if (shotBullets.containsKey(player)) {
             shotBullets[player]!!.add(arrow)
@@ -98,11 +97,13 @@ object Pistol : Gun {
                 magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-ammo"]!!
             else
                 magazine[player] = amount
+            repeat(magazine[player]!!) {
+                GunHandler.removeAmmo(player, Pistol)
+            }
             player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1f, 1f)
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-reload"]!!)
     }
-
 
 
     private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
