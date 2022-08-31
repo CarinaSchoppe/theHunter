@@ -38,9 +38,10 @@ class BlocksFlyEvent : Listener {
         GamesHandler.entitiesInGames.remove(tnt)
 
         for (block in event.blockList()) {
+            event.yield = 0f
             if (block.type == Material.BEACON) continue
             game.mapResetter.blocks.add(MapResetter.createBlockString(block))
-            event.yield = 0f
+
             val x = -5f + (Math.random() * (5 + 5 + 1)).toFloat()
             val y = -5f + (Math.random() * (6 + 6 + 1)).toFloat()
             val z = -5f + (Math.random() * (5 + 5 + 1)).toFloat()

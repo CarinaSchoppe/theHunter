@@ -38,17 +38,14 @@ class TheHunter : JavaPlugin() {
     TODO: PlayerHiding
     TODO: TOTAL CHECKUP
     TODO: Price Online Shop
-    TODO: Testing (Boarder, Drops, Damage, multirounds, ammo amountstuff, hiding, countdowns, teams, scoreboards, bugs)
-    TODO: Worldboarder bug
+    TODO: Testing (, Damage, multirounds,  hiding,  teams, scoreboards, bugs)
     TODO: NPC?
     TODO: Hover animation (when scrolling
       TODO: Damagechecking
       TODO: PlayerChat
       TODO: Teamfunctionchecks
       TODO: PlayerHeadInLobby
-      TODO: Item chests
-      TODO: TODO: Items
-      TODO: Oveall savety for everything related to  loading and unloading an arena from PixelsJump
+      TODO: TODO: Items (Eye etc.)
 
      */
 
