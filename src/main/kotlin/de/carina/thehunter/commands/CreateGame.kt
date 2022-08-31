@@ -22,8 +22,7 @@ import org.bukkit.entity.Player
 
 class CreateGame {
     fun create(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "setup", 2, Permissions.SETUP_COMMAND))
-            return
+        if (!CommandUtil.checkCommandBasics(sender, command, args, "setup", 2, Permissions.SETUP_COMMAND)) return
 
         when (args[0].lowercase()) {
             "create" -> {
@@ -56,8 +55,57 @@ class CreateGame {
                 configGame(args, sender as Player)
             }
 
+            "remove" -> {
+                removeLocation(args, sender as Player)
+            }
+
             else -> {
                 sender.sendMessage(TheHunter.instance.messages.messagesMap["no-command-found"]!!.replace("%command%", args[0]))
+            }
+        }
+    }
+
+    private fun removeLocation(args: Array<out String>, sender: CommandSender) {
+        if (args.size != 3) {
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!.replace("%arguments%", 3.toString()))
+            return
+        }
+        val game = GamesHandler.setupGames.find { it.name == args[2] }
+        if (game == null) {
+            sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace("%game%", args[2]))
+            return
+        }
+
+        when (args[1].lowercase()) {
+            "lobbyspawn" -> {
+                game.lobbyLocation = null
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-lobby-removed"]!!.replace("%game%", args[2]))
+            }
+
+            "spectatorspawn" -> {
+                game.spectatorLocation = null
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spectator-removed"]!!.replace("%game%", args[2]))
+            }
+
+            "backspawn" -> {
+                game.backLocation = null
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-back-removed"]!!.replace("%game%", args[2]))
+            }
+
+            "endspawn" -> {
+                game.endLocation = null
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-end-removed"]!!.replace("%game%", args[2]))
+            }
+
+            "arenacenter" -> {
+                game.arenaCenter = null
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-arena-center-removed"]!!.replace("%game%", args[2]))
+
+            }
+
+            "playerspawn" -> {
+                if (game.playerSpawns.isNotEmpty()) game.playerSpawns.remove(game.playerSpawns.last())
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spawn-removed"]!!.replace("%game%", args[2]))
             }
         }
     }
@@ -95,7 +143,7 @@ class CreateGame {
 
             "arenacenter" -> {
                 game.arenaCenter = (sender as Player).location
-                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-arena center-set"]!!.replace("%game%", args[2]))
+                sender.sendMessage(TheHunter.instance.messages.messagesMap["game-arena-center-set"]!!.replace("%game%", args[2]))
 
             }
 
@@ -103,8 +151,7 @@ class CreateGame {
                 if (game.playerSpawns.size < game.maxPlayers) {
                     game.playerSpawns.add((sender as Player).location)
                     sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spawn-set"]!!.replace("%id%", (game.playerSpawns.size - 1).toString()).replace("%game%", args[2]))
-                } else
-                    sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spawns-to-much"]!!.replace("%game%", args[2]).replace("%max%", game.maxPlayers.toString()))
+                } else sender.sendMessage(TheHunter.instance.messages.messagesMap["game-spawns-to-much"]!!.replace("%game%", args[2]).replace("%max%", game.maxPlayers.toString()))
             }
 
             "finish" -> {

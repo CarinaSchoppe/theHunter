@@ -51,8 +51,12 @@ class TheHunter : JavaPlugin() {
       TODO: PlayerChat
       TODO: Teamfunctionchecks
       TODO: PlayerHeadInLobby
+      TODO: Players falling
+      TODO: Item chests
+      TODO: TODO: Items
+      TODO: leftclick and rightclick
+      TODO: Oveall savety for everything related to  loading and unloading an arena from PixelsJump
 
-      TODO: Key Promoter X IntelliJ plugin download
      */
 
     companion object {

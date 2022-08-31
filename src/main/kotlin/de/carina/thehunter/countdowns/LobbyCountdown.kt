@@ -137,7 +137,7 @@ class LobbyCountdown(game: Game) : Countdown(game) {
     }
 
     override fun stop() {
-        TODO("Not yet implemented")
+        return
     }
 
     override var isIdle: Boolean = false

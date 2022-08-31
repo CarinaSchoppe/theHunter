@@ -19,9 +19,9 @@ import de.carina.thehunter.util.misc.Permissions
 import org.bukkit.command.CommandSender
 import java.io.File
 
-class RemoveGame {
+class DeleteGame {
     fun remove(sender: CommandSender, command: String, args: Array<out String>) {
-        if (!CommandUtil.checkCommandBasics(sender, command, args, "remove", 1, Permissions.REMOVE_GAME_COMMAND))
+        if (!CommandUtil.checkCommandBasics(sender, command, args, "delete", 1, Permissions.REMOVE_GAME_COMMAND))
             return
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {

@@ -47,8 +47,8 @@ class BaseCommand : CommandExecutor {
                 return true
             }
 
-            "remove" -> {
-                RemoveGame().remove(sender, commandName, arguments)
+            "delete" -> {
+                DeleteGame().remove(sender, commandName, arguments)
                 return true
             }
 
