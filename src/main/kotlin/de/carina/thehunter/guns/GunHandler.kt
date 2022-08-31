@@ -139,32 +139,25 @@ class GunHandler : Listener {
                         if (itemStack.itemMeta != AmmoItems.akAmmo.itemMeta)
                             continue
                         itemStack.subtract(1)
-                        if (itemStack.amount == 0)
-                            player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
+
                     }
 
                     is Minigun -> {
                         if (itemStack.itemMeta != AmmoItems.minigunAmmo.itemMeta)
                             continue
                         itemStack.subtract(1)
-                        if (itemStack.amount == 0)
-                            player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
-                    }
+                   }
 
                     is Sniper -> {
                         if (itemStack.itemMeta != AmmoItems.sniperAmmo.itemMeta)
                             continue
                         itemStack.subtract(1)
-                        if (itemStack.amount == 0)
-                            player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
                     }
 
                     is Pistol -> {
                         if (itemStack.itemMeta != AmmoItems.pistolAmmo.itemMeta)
                             continue
                         itemStack.subtract(1)
-                        if (itemStack.amount == 0)
-                            player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
                     }
                 }
             }
