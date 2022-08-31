@@ -27,7 +27,7 @@ import java.util.function.Consumer
 
 class IngameState(game: Game) : GameState(game) {
     override fun start() {
-        if (!game.randomPlayerDrop) PlayerDropping.dropPlayers(game)
+        if (game.randomPlayerDrop) PlayerDropping.dropPlayers(game)
         forEachPlayer()
         allPlayerStuffHiding()
         if (game.checkWinning()) {
@@ -43,8 +43,9 @@ class IngameState(game: Game) : GameState(game) {
 
     private fun forEachPlayer() {
         for ((index, player) in game.players.withIndex()) {
-            if (!game.randomPlayerDrop) //TODO: Hier
+            if (!game.randomPlayerDrop)
                 player.teleport(game.playerSpawns[index])
+
             player.isInvulnerable = true
             TheHunter.instance.statsSystem.playerPlaysGame(player)
             game.scoreBoard.createNewScoreboard(player)

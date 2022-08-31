@@ -50,7 +50,7 @@ class TheHunter : JavaPlugin() {
       TODO: Players falling
       TODO: Item chests
       TODO: TODO: Items
-      TODO: leftclick and rightclick
+      TODO: shootspeed
       TODO: Oveall savety for everything related to  loading and unloading an arena from PixelsJump
       TODO: item settings individuell per game
 

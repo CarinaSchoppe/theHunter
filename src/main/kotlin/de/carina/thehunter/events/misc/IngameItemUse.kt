@@ -1,9 +1,11 @@
 package de.carina.thehunter.events.misc
 
 import de.carina.thehunter.items.AmmoItems
+import de.carina.thehunter.items.special.Knife
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
 class IngameItemUse : Listener {
@@ -23,4 +25,12 @@ class IngameItemUse : Listener {
 
     }
 
+    @EventHandler
+    fun onDropKnife(event: PlayerDropItemEvent) {
+        if (!GamesHandler.playerInGames.containsKey(event.player)) return
+        if (event.itemDrop.itemStack.itemMeta != Knife.knife.itemMeta) return
+        event.isCancelled = true
+
+
+    }
 }

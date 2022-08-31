@@ -21,7 +21,7 @@ open class BaseFile(filePath: String) {
     private val file: File
 
     companion object {
-        const val gameFolder = "/plugins/theHunterRemastered"
+        const val gameFolder = "plugins/theHunterRemastered"
     }
 
     init {

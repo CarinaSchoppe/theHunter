@@ -127,14 +127,15 @@ class ItemChest(private val game: Game) {
     fun makeChestsFall() {
         if (!game.chestFall)
             return
+        val locationCenter: Location = game.arenaCenter!!.clone().subtract((game.worldBoarderController.worldBoarderSize / 2).toDouble(), 0.0, (game.worldBoarderController.worldBoarderSize / 2).toDouble())
         repeat(game.chestAmount) {
             println("Chest $it")
             //Location of the Worldboarder Edge
-            val locationCenter: Location = game.arenaCenter!!.subtract((game.worldBoarderController.worldBoarderSize / 2).toDouble(), 0.0, (game.worldBoarderController.worldBoarderSize / 2).toDouble())
+            println("minimum corner: " + locationCenter.x.toInt() + " " + locationCenter.z.toInt())
             val x = Random().nextInt(game.worldBoarderController.worldBoarderSize)
             val z = Random().nextInt(game.worldBoarderController.worldBoarderSize)
-            var newLocation = locationCenter.add(x.toDouble(), 170.0, z.toDouble())
-            println("X: $x Z: $z center: " + locationCenter.x.toInt() + " " + locationCenter.z.toInt() + " new location: " + newLocation.x.toInt() + " z" + newLocation.z.toInt())
+            var newLocation = locationCenter.clone().add(x.toDouble(), 170.0, z.toDouble())
+            println("X: $x Z: $z center: " + game.arenaCenter!!.x.toInt() + " " + game.arenaCenter!!.z.toInt() + " new location: " + newLocation.x.toInt() + " z " + newLocation.z.toInt())
             val chest = locationCenter.world.spawnFallingBlock(newLocation, Material.BEACON.createBlockData())
             chest.velocity = Vector(0.0, -1.5, 0.0)
             chest.dropItem = false
