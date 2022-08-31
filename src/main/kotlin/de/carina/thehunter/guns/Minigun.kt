@@ -36,6 +36,7 @@ object Minigun : Gun {
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
 
+       magazine[player] = magazine[player]!! - 1
 
         arrow.shooter = player
         if (shotBullets.containsKey(player)) {

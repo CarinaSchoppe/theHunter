@@ -40,6 +40,8 @@ object Pistol : Gun {
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
         arrow.shooter = player
+        magazine[player] = magazine[player]!! - 1
+
         if (shotBullets.containsKey(player)) {
             shotBullets[player]!!.add(arrow)
         } else {
