@@ -25,12 +25,21 @@ import org.bukkit.inventory.ItemStack
 object Ak : Gun {
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
-    private var reloading = mutableMapOf<Player, Boolean>()
-    private var magazine = mutableMapOf<Player, Int>()
+    private val reloading = mutableMapOf<Player, Boolean>()
+    private val magazine = mutableMapOf<Player, Int>()
     val ak = ItemBuilder(Material.IRON_HOE).addDisplayName(TheHunter.prefix + "§7AK-47").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
+    private val bulletDelay = mutableMapOf<Player, Boolean>()
 
+    private fun bulletDelayMaker(player: Player) {
+        bulletDelay[player] = true
+        Bukkit.getScheduler().runTaskLater(TheHunter.instance, Runnable {
+            bulletDelay[player] = false
+        }, 5L * GamesHandler.playerInGames[player]!!.gameItems.guns["ak-speed"] as Int)
+    }
 
     private fun shootProjectile(player: Player) {
+
+        bulletDelayMaker(player)
         val arrow = player.launchProjectile(Arrow::class.java, player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["ak-power"]!!))
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
@@ -49,6 +58,8 @@ object Ak : Gun {
             reloading[player] = false
 
         }
+        if (!bulletDelay.containsKey(player))
+            bulletDelay[player] = false
 
         if (!magazine.containsKey(player)) {
             magazine[player] = 0
@@ -60,7 +71,8 @@ object Ak : Gun {
             return false
         }
 
-        shootProjectile(player)
+        if (!bulletDelay[player]!!) shootProjectile(player)
+
         return true
     }
 
@@ -97,8 +109,6 @@ object Ak : Gun {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["ak-reload"]!!)
     }
-
-
 
 
     private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {

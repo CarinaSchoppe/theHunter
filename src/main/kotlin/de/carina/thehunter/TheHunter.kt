@@ -42,17 +42,13 @@ class TheHunter : JavaPlugin() {
     TODO: Worldboarder bug
     TODO: NPC?
     TODO: Hover animation (when scrolling
-      TODO: Spawnteleport testing
       TODO: Damagechecking
       TODO: PlayerChat
       TODO: Teamfunctionchecks
       TODO: PlayerHeadInLobby
-      TODO: Players falling
       TODO: Item chests
       TODO: TODO: Items
-      TODO: shootspeed
       TODO: Oveall savety for everything related to  loading and unloading an arena from PixelsJump
-      TODO: item settings individuell per game
 
      */
 

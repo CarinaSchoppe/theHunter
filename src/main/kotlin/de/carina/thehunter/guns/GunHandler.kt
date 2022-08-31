@@ -31,6 +31,8 @@ class GunHandler : Listener {
         if (!event.player.inventory.itemInMainHand.hasItemMeta())
             return
         if (!event.item!!.hasItemMeta()) return
+        if (!GamesHandler.playerInGames.containsKey(event.player))
+            return
         if (event.action.isLeftClick) {
             if (whenLeftClick(event))
                 return
@@ -146,7 +148,7 @@ class GunHandler : Listener {
                         if (itemStack.itemMeta != AmmoItems.minigunAmmo.itemMeta)
                             continue
                         itemStack.subtract(1)
-                   }
+                    }
 
                     is Sniper -> {
                         if (itemStack.itemMeta != AmmoItems.sniperAmmo.itemMeta)

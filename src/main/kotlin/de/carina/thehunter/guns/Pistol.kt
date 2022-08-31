@@ -24,14 +24,22 @@ import org.bukkit.inventory.ItemStack
 
 object Pistol : Gun {
 
+    private val bulletDelay = mutableMapOf<Player, Boolean>()
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
-    private var reloading = mutableMapOf<Player, Boolean>()
-    private var magazine = mutableMapOf<Player, Int>()
+    private val reloading = mutableMapOf<Player, Boolean>()
+    private val magazine = mutableMapOf<Player, Int>()
     val pistol = ItemBuilder(Material.WOODEN_HOE).addDisplayName(TheHunter.prefix + "§7Pistol").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
 
+    private fun bulletDelayMaker(player: Player) {
+        bulletDelay[player] = true
+        Bukkit.getScheduler().runTaskLater(TheHunter.instance, Runnable {
+            bulletDelay[player] = false
+        }, 5L * GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-speed"] as Int)
+    }
 
     private fun shootProjectile(player: Player) {
+        bulletDelayMaker(player)
         val arrow = player.launchProjectile(
             Arrow::class.java, player.location.direction.multiply(
                 GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-power"]!!
@@ -53,7 +61,8 @@ object Pistol : Gun {
         if (!reloading.containsKey(player)) {
             reloading[player] = false
         }
-
+        if (!bulletDelay.containsKey(player))
+            bulletDelay[player] = false
         if (!magazine.containsKey(player)) {
             magazine[player] = 0
             return false
@@ -64,7 +73,7 @@ object Pistol : Gun {
             return false
         }
 
-        shootProjectile(player)
+        if (!bulletDelay[player]!!) shootProjectile(player)
         return true
     }
 

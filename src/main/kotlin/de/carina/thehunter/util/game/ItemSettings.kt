@@ -9,9 +9,9 @@
  * requires the express written consent of Carina Sophie Schoppe.
  */
 
-package de.carina.thehunter.util.files
+package de.carina.thehunter.util.game
 
-import de.carina.thehunter.util.game.Game
+import de.carina.thehunter.util.files.BaseFile
 
 class ItemSettings(val game: Game) : BaseFile("/arenas/${game.name}/item-settings.yml") {
 
