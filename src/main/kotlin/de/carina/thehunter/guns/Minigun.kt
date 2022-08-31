@@ -22,7 +22,7 @@ import org.bukkit.entity.Arrow
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-object Minigun {
+object Minigun : Gun {
 
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
@@ -35,7 +35,7 @@ object Minigun {
         val arrow = player.launchProjectile(Arrow::class.java, player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-power"]!!))
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
-        GunHandler.removeAmmo(player, 1, AmmoItems.minigunAmmo.itemMeta)
+        GunHandler.removeAmmo(player, 1, Minigun)
 
         arrow.shooter = player
         if (shotBullets.containsKey(player)) {
@@ -45,7 +45,7 @@ object Minigun {
         }
     }
 
-    fun shoot(player: Player): Boolean {
+    override fun shoot(player: Player): Boolean {
         if (!reloading.containsKey(player)) {
             reloading[player] = false
 
@@ -66,7 +66,7 @@ object Minigun {
     }
 
     private fun checkAmmoPossible(player: Player): Boolean {
-        if (!hasAmmo(player)) {
+        if (!player.inventory.containsAtLeast(AmmoItems.minigunAmmo, 1)) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
             return false
         }
@@ -92,17 +92,13 @@ object Minigun {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
             val amount = getAmmoAmount(player, AmmoItems.minigunAmmo)
-            if (amount < GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-ammo"]!!)
+            if (amount >= GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-ammo"]!!)
                 magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-ammo"]!!
             else
                 magazine[player] = amount
             player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1f, 1f)
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-reload"]!!)
-    }
-
-    private fun hasAmmo(player: Player): Boolean {
-        return player.inventory.containsAtLeast(AmmoItems.minigunAmmo, 1)
     }
 
 

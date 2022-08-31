@@ -11,6 +11,7 @@
 package de.carina.thehunter.guns
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.items.AmmoItems
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.Sound
 import org.bukkit.entity.Arrow
@@ -20,7 +21,6 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.inventory.meta.ItemMeta
 
 class GunHandler : Listener {
 
@@ -131,15 +131,41 @@ class GunHandler : Listener {
     }
 
     companion object {
-        fun removeAmmo(player: Player, amount: Int, itemMeta: ItemMeta) {
+        fun removeAmmo(player: Player, amount: Int, gun: Gun) {
             for (itemStack in player.inventory.contents) {
-                if (itemStack != null && itemStack.itemMeta == itemMeta) {
-                    if (player.inventory.itemInMainHand.itemMeta == itemStack.itemMeta) {
+                if (itemStack == null) continue
+                when (gun) {
+                    is Ak -> {
+                        if (itemStack.itemMeta != AmmoItems.akAmmo.itemMeta)
+                            continue
                         itemStack.subtract(amount)
-                        return
+                        if (itemStack.amount == 0)
+                            player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
                     }
-                    itemStack.subtract(amount)
-                    return
+
+                    is Minigun -> {
+                        if (itemStack.itemMeta != AmmoItems.minigunAmmo.itemMeta)
+                            continue
+                        itemStack.subtract(amount)
+                        if (itemStack.amount == 0)
+                            player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
+                    }
+
+                    is Sniper -> {
+                        if (itemStack.itemMeta != AmmoItems.sniperAmmo.itemMeta)
+                            continue
+                        itemStack.subtract(amount)
+                        if (itemStack.amount == 0)
+                            player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
+                    }
+
+                    is Pistol -> {
+                        if (itemStack.itemMeta != AmmoItems.pistolAmmo.itemMeta)
+                            continue
+                        itemStack.subtract(amount)
+                        if (itemStack.amount == 0)
+                            player.inventory.contents[player.inventory.contents.indexOf(itemStack)] = null
+                    }
                 }
             }
             player.updateInventory()

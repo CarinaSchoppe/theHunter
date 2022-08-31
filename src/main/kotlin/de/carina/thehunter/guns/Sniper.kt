@@ -22,7 +22,7 @@ import org.bukkit.entity.Arrow
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-object Sniper {
+object Sniper : Gun {
 
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
@@ -40,7 +40,7 @@ object Sniper {
         )
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
-        GunHandler.removeAmmo(player, 1, AmmoItems.sniperAmmo.itemMeta)
+        GunHandler.removeAmmo(player, 1, Sniper)
 
         arrow.shooter = player
         if (shotBullets.containsKey(player)) {
@@ -50,7 +50,7 @@ object Sniper {
         }
     }
 
-    fun shoot(player: Player): Boolean {
+    override fun shoot(player: Player): Boolean {
         if (!reloading.containsKey(player)) {
             reloading[player] = false
         }
@@ -70,7 +70,7 @@ object Sniper {
     }
 
     private fun checkAmmoPossible(player: Player): Boolean {
-        if (!hasAmmo(player)) {
+        if (!player.inventory.containsAtLeast(AmmoItems.sniperAmmo, 1)) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
             return false
         }
@@ -96,7 +96,7 @@ object Sniper {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
             val amount = getAmmoAmount(player, AmmoItems.sniperAmmo)
-            if (amount < GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!)
+            if (amount >= GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!)
                 magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!
             else
                 magazine[player] = amount
@@ -106,10 +106,6 @@ object Sniper {
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-reload"]!!)
     }
 
-    private fun hasAmmo(player: Player): Boolean {
-        return player.inventory.containsAtLeast(AmmoItems.sniperAmmo, 1)
-
-    }
 
     private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
         var amount = 0

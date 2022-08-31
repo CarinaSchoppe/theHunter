@@ -22,7 +22,7 @@ import org.bukkit.entity.Arrow
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-object Ak {
+object Ak : Gun {
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
     private var reloading = mutableMapOf<Player, Boolean>()
@@ -34,7 +34,7 @@ object Ak {
         val arrow = player.launchProjectile(Arrow::class.java, player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["ak-power"]!!))
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
-        GunHandler.removeAmmo(player, 1, AmmoItems.akAmmo.itemMeta)
+        GunHandler.removeAmmo(player, 1, Ak)
         arrow.shooter = player
         if (shotBullets.containsKey(player)) {
             shotBullets[player]!!.add(arrow)
@@ -44,7 +44,7 @@ object Ak {
     }
 
 
-    fun shoot(player: Player): Boolean {
+    override fun shoot(player: Player): Boolean {
         if (!reloading.containsKey(player)) {
             reloading[player] = false
 
@@ -65,7 +65,7 @@ object Ak {
     }
 
     private fun checkAmmoPossible(player: Player): Boolean {
-        if (!hasAmmo(player)) {
+        if (!player.inventory.containsAtLeast(AmmoItems.akAmmo, 1)) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
             return false
         }
@@ -88,17 +88,14 @@ object Ak {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
             val amount = getAmmoAmount(player, AmmoItems.akAmmo)
-            if (amount < GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!) magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!
+            if (amount >= GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!) magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!
             else magazine[player] = amount
             player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1f, 1f)
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["ak-reload"]!!)
     }
 
-    private fun hasAmmo(player: Player): Boolean {
-        return player.inventory.containsAtLeast(AmmoItems.akAmmo, 1)
 
-    }
 
 
     private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {

@@ -133,8 +133,9 @@ class ItemChest(private val game: Game) {
             val locationCenter: Location = game.arenaCenter!!.subtract((game.worldBoarderController.worldBoarderSize / 2).toDouble(), 0.0, (game.worldBoarderController.worldBoarderSize / 2).toDouble())
             val x = Random().nextInt(game.worldBoarderController.worldBoarderSize)
             val z = Random().nextInt(game.worldBoarderController.worldBoarderSize)
-            println("X: $x Z: $z center: " + locationCenter.x.toInt() + " " + locationCenter.z.toInt())
-            val chest = locationCenter.world.spawnFallingBlock(locationCenter.add(x.toDouble(), 170.0, z.toDouble()), Material.BEACON.createBlockData())
+            var newLocation = locationCenter.add(x.toDouble(), 170.0, z.toDouble())
+            println("X: $x Z: $z center: " + locationCenter.x.toInt() + " " + locationCenter.z.toInt() + " new location: " + newLocation.x.toInt() + " z" + newLocation.z.toInt())
+            val chest = locationCenter.world.spawnFallingBlock(newLocation, Material.BEACON.createBlockData())
             chest.velocity = Vector(0.0, -1.5, 0.0)
             chest.dropItem = false
             chest.setHurtEntities(false)

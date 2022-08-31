@@ -15,7 +15,6 @@ import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.EndState
 import de.carina.thehunter.util.misc.Permissions
 import de.carina.thehunter.util.misc.Util
-import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.block.Sign
@@ -50,7 +49,7 @@ class GameSigns : Listener {
     fun onSignCreate(event: SignChangeEvent) {
         if (!event.player.hasPermission("theHunter.signcreate"))
             return
-        if (event.line(0) != Component.text("[thehunter]"))
+        if (PlainTextComponentSerializer.plainText().serialize(event.line(0)!!).lowercase() != "[thehunter]")
             return
         if (event.line(1) == null)
             return
@@ -67,4 +66,3 @@ class GameSigns : Listener {
 
     }
 }
-

@@ -81,9 +81,10 @@ class PlayerKillsOtherOrDies : Listener {
         if (game.currentGameState !is IngameState)
             return
         TheHunter.instance.statsSystem.playerDied(player)
+
+        generalHandling(player, game)
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Consumer {
             player.spigot().respawn()
-            generalHandling(player, game)
         }, 1)
         event.deathMessage(Component.text(""))
         game.players.forEach {

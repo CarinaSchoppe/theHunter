@@ -38,7 +38,7 @@ class JumpStick : Listener {
         val player = event.player
         event.isCancelled = true
         if (uses.containsKey(player) && uses[player]!! >= GamesHandler.playerInGames[player]!!.gameItems.items["jump-stick-uses"] as Int) {
-            player.sendMessage(TheHunter.instance.messages.messagesMap["jumps-tick-broke"]!!)
+            player.sendMessage(TheHunter.instance.messages.messagesMap["jump-stick-broke"]!!)
             ItemHandler.removeOneItemOfPlayer(event.player)
             uses[player] = 0
             return
