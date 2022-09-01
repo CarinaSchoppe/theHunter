@@ -42,7 +42,7 @@ class ItemChest(private val game: Game) {
 
     private fun repeater(inventory: Inventory, map: MutableList<ItemStack>) {
         repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
-            val item = map[Random().nextInt(map.size)]
+            val item = map[Random().nextInt(map.size + 1)]
             while (true) {
                 val place = Random().nextInt(54)
                 if (inventory.getItem(place) == null) {
