@@ -39,6 +39,7 @@ class TheHunter : JavaPlugin() {
     TODO: PlayerHiding
     TODO: TOTAL CHECKUP
     TODO: Price Online Shop
+    TODO: Teammode
     TODO: Testing (, Damage, multirounds,  hiding,  teams, scoreboards, bugs)
     TODO: NPC?
     TODO: WORLDBOARDER Reset? all good

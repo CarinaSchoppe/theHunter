@@ -26,8 +26,6 @@ class JumpStick : Listener {
     companion object {
         val uses = mutableMapOf<Player, Int>()
         val jumpStick = ItemBuilder(Material.STICK).addDisplayName(TheHunter.prefix + "§6JumpStick").addLore("§aClick to jump into an direction with power").addLore("§7Right-click to activate").addEnchantment(Enchantment.DURABILITY, 1).build()
-
-
     }
 
 

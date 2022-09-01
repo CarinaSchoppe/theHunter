@@ -28,21 +28,16 @@ class ItemChest(private val game: Game) {
     val chests = mutableMapOf<Location, Inventory>()
     fun createItemInventory(): Inventory {
         val inventory = Bukkit.createInventory(null, 54, LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§7Chest"))
-        var items = mutableListOf<ItemStack>()
-        var ammo = mutableListOf<ItemStack>()
-
-        items = addItems(items)
-        ammo = ammoAdding(ammo)
-
-        repeater(inventory, items)
-        repeater(inventory, ammo)
+        repeater(inventory, addItems())
+        repeater(inventory, ammoAdding())
         return inventory
     }
 
 
     private fun repeater(inventory: Inventory, map: MutableList<ItemStack>) {
         repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
-            val item = map[Random().nextInt(map.size + 1)]
+            var index = Random().nextInt(map.size)
+            val item = map[index]
             while (true) {
                 val place = Random().nextInt(54)
                 if (inventory.getItem(place) == null) {
@@ -54,7 +49,8 @@ class ItemChest(private val game: Game) {
     }
 
 
-    private fun addItems(items: MutableList<ItemStack>): MutableList<ItemStack> {
+    private fun addItems(): MutableList<ItemStack> {
+        val items = mutableListOf<ItemStack>()
         if (game.gameItems.items["EggBomb"] == true) {
             val item = EggBomb.eggBomb(game)
             item.amount = game.gameItems.items["eggbomb-amount"] as Int
@@ -100,7 +96,8 @@ class ItemChest(private val game: Game) {
         return items
     }
 
-    private fun ammoAdding(ammo: MutableList<ItemStack>): MutableList<ItemStack> {
+    private fun ammoAdding(): MutableList<ItemStack> {
+        val ammo = mutableListOf<ItemStack>()
         if (game.gameItems.items["PistolAmmo"] == true) {
             val item = AmmoItems.pistolAmmo
             item.amount = game.gameItems.items["pistolammo-amount"] as Int
@@ -111,16 +108,18 @@ class ItemChest(private val game: Game) {
             item.amount = game.gameItems.items["sniperammo-amount"] as Int
             ammo.add(item)
         }
+        if (game.gameItems.items["MinigunAmmo"] == true) {
+            val item = AmmoItems.minigunAmmo
+            item.amount = game.gameItems.items["minigunammo-amount"] as Int
+            ammo.add(item)
+        }
         if (game.gameItems.items["AkAmmo"] == true) {
             val item = AmmoItems.akAmmo
             item.amount = game.gameItems.items["akammo-amount"] as Int
             ammo.add(item)
         }
-        if (game.gameItems.items["MiniGunAmmo"] == true) {
-            val item = AmmoItems.minigunAmmo
-            item.amount = game.gameItems.items["minigunammo-amount"] as Int
-            ammo.add(item)
-        }
+
+
         return ammo
     }
 

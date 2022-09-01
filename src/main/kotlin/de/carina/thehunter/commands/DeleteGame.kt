@@ -17,7 +17,9 @@ import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.Permissions
+import org.bukkit.Sound
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import java.io.File
 
 class DeleteGame {
@@ -32,6 +34,8 @@ class DeleteGame {
         game.currentGameState = game.gameStates[GameStates.END_STATE.id]
         game.nextGameState()
         game.currentGameState.stop()
+        val player = sender as Player
+        player.playSound(player.location, Sound.BLOCK_ANVIL_USE, 1f, 1f)
         GamesHandler.games.remove(game)
         val file = File(BaseFile.gameFolder + "/arenas/${game.name}")
         if (file.deleteRecursively())

@@ -13,10 +13,12 @@ package de.carina.thehunter.gamestates
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.countdowns.Countdowns
 import de.carina.thehunter.util.game.Game
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 
 class EndState(game: Game) : GameState(game) {
     override fun start() {
+
 
         userHandlerShowingAfter(game.spectators.toMutableList())
         userHandlerShowingAfter(game.players.toMutableList())
@@ -28,6 +30,7 @@ class EndState(game: Game) : GameState(game) {
 
     private fun userHandlerShowingAfter(playerList: MutableList<Player>) {
         playerList.forEach {
+            it.playSound(it.location, Sound.ENTITY_ENDER_DRAGON_DEATH, 1f, 1f)
             it.inventory.clear()
             it.teleport(game.endLocation!!)
             for (spectator in game.spectators.toMutableList()) {

@@ -110,7 +110,7 @@ object Minigun : Gun {
             repeat(magazine[player]!!) {
                 GunHandler.removeAmmo(player, Minigun)
             }
-            player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1f, 1f)
+            player.playSound(player.location, Sound.BLOCK_ANVIL_USE, 1f, 1f)
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
         }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-reload"]!!)
     }

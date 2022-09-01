@@ -23,6 +23,7 @@ import de.carina.thehunter.util.misc.PlayerDropping
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import java.util.function.Consumer
 
@@ -88,6 +89,8 @@ class IngameState(game: Game) : GameState(game) {
                 0 -> {
                     game.players.forEach {
                         it.isInvulnerable = false
+                        it.playSound(it.location, Sound.ITEM_GOAT_HORN_SOUND_2, 1F, 1F)
+
                         it.sendMessage(TheHunter.instance.messages.messagesMap["immunity-off"]!!)
                         task.cancel()
                     }
@@ -96,6 +99,7 @@ class IngameState(game: Game) : GameState(game) {
                 else -> {
                     game.players.forEach {
                         it.isInvulnerable = true
+                        it.playSound(it.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
                         it.sendMessage(TheHunter.instance.messages.messagesMap["immunity-message"]!!.replace(ConstantStrings.TIME_PERCENT, game.immunity.toString()))
                     }
                 }
