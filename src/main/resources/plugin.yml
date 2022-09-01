@@ -5,6 +5,10 @@ api-version: 1.19
 author: Carina Sophie Schoppe
 name: TheHunter-Remaster
 commands:
+  start:
+    description: starts the game
+    permission: thehunter.start
+    usage: /start
   theHunter:
     description: The base command of the entire minigame
     usage: /theHunter <command> <arguments>

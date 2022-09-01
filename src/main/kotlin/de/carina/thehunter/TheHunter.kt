@@ -12,6 +12,7 @@
 package de.carina.thehunter
 
 import de.carina.thehunter.commands.BaseCommand
+import de.carina.thehunter.commands.StartCommand
 import de.carina.thehunter.events.game.*
 import de.carina.thehunter.events.misc.*
 import de.carina.thehunter.events.misc.gameconfigurator.GameConfigurator
@@ -87,6 +88,7 @@ class TheHunter : JavaPlugin() {
 
         //Commands:
         getCommand("theHunter")!!.setExecutor(BaseCommand())
+        getCommand("start")!!.setExecutor(StartCommand())
 
         //Events:
         pluginManager.registerEvents(EggBomb(), this)

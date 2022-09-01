@@ -38,7 +38,7 @@ object ConstantStrings {
     const val ARENA_CENTER = "arenacenter"
     const val ENDCOUNTDOWN_MESSAGE = "endcountdown-message"
     const val BLOCK_PERCENT = "%block%"
-    const val ENDCOUNTDOWN_DURATION = "endcountdown-duration"
+    const val ENDCOUNTDOWN_DURATION = "duration-endcountdown"
     const val GAME_STARTING = "game-starting"
     const val TIME_PERCENT = "%time%"
     const val SIZE_PERCENT = "%size%"
