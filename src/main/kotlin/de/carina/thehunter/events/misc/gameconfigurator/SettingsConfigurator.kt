@@ -21,6 +21,7 @@ import de.carina.thehunter.util.misc.WorldboarderController
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -53,6 +54,7 @@ class SettingsConfigurator : Listener {
             return
         val item = getItemObject(event) ?: return
         val type = event.currentItem?.type != Material.RED_WOOL
+        (event.whoClicked as Player).playSound(event.whoClicked, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
 
         when (item.itemMeta) {
             Items.borderSize.itemMeta -> borderSize(type, event.whoClicked as Player)

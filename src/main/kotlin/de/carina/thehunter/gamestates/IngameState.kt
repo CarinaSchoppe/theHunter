@@ -89,7 +89,7 @@ class IngameState(game: Game) : GameState(game) {
                 0 -> {
                     game.players.forEach {
                         it.isInvulnerable = false
-                        it.playSound(it.location, Sound.ITEM_GOAT_HORN_SOUND_2, 1F, 1F)
+                        it.playSound(it.location, Sound.ENTITY_ENDER_DRAGON_GROWL, 1F, 1F)
 
                         it.sendMessage(TheHunter.instance.messages.messagesMap["immunity-off"]!!)
                         task.cancel()

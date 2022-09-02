@@ -22,6 +22,7 @@ import de.carina.thehunter.util.misc.PlayerTeamHead
 import de.carina.thehunter.util.misc.Util
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
+import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
@@ -43,6 +44,7 @@ class JoinGame {
         sender.inventory.setItem(8, Items.leaveItem)
         sender.inventory.setItem(5, PlayerTeamHead.createPlayerHead())
         sender.gameMode = GameMode.SURVIVAL
+        sender.playSound(sender, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
         if (game.currentCountdown is LobbyCountdown) {
             val countdown = game.currentCountdown as LobbyCountdown
             if (!countdown.isRunning && !countdown.isIdle)

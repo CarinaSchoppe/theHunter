@@ -19,6 +19,7 @@ import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.ConstantStrings
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -82,7 +83,7 @@ class PlayerKillsOtherOrDies : Listener {
         if (game.currentGameState !is IngameState)
             return
         TheHunter.instance.statsSystem.playerDied(player)
-
+        player.playSound(player, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 1f)
         generalHandling(player, game)
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Consumer {
             player.spigot().respawn()
