@@ -15,6 +15,7 @@ import de.carina.thehunter.items.ItemHandler
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -35,9 +36,11 @@ class JumpStick : Listener {
             return
         val player = event.player
         event.isCancelled = true
+        player.playSound(player, Sound.BLOCK_POINTED_DRIPSTONE_DRIP_WATER_INTO_CAULDRON, 1f, 1f)
         if (uses.containsKey(player) && uses[player]!! >= GamesHandler.playerInGames[player]!!.gameItems.items["jump-stick-uses"] as Int) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["jump-stick-broke"]!!)
             ItemHandler.removeOneItemOfPlayer(event.player)
+            player.playSound(player, Sound.BLOCK_ANVIL_BREAK, 1f, 1f)
             uses[player] = 0
             return
         }

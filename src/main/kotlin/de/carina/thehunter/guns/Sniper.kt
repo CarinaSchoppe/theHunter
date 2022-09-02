@@ -47,6 +47,7 @@ object Sniper : Gun {
             )
         )
         arrow.damage = 0.0
+        player.playSound(player, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1f, 1f)
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
         magazine[player] = magazine[player]!! - 1
         arrow.shooter = player

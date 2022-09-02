@@ -51,6 +51,7 @@ class PlayerKillsOtherOrDies : Listener {
         val game = GamesHandler.playerInGames[player]!!
         if (game.currentGameState !is IngameState)
             return
+        killer.playSound(killer, Sound.ITEM_GOAT_HORN_SOUND_7, 1f, 1f)
         TheHunter.instance.statsSystem.playerKilledOtherPlayer(killer, player)
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Consumer {
             player.spigot().respawn()

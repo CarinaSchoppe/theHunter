@@ -38,10 +38,10 @@ object Ak : Gun {
     }
 
     private fun shootProjectile(player: Player) {
-
         bulletDelayMaker(player)
         val arrow = player.launchProjectile(Arrow::class.java, player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["ak-power"]!!))
         arrow.damage = 0.0
+        player.playSound(player, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1f, 1f)
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
         arrow.shooter = player
         magazine[player] = magazine[player]!! - 1

@@ -13,6 +13,7 @@ package de.carina.thehunter.events.game
 
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractEvent
@@ -28,6 +29,7 @@ class DeathChest : Listener {
         if (event.clickedBlock!!.type != Material.CHEST) return
         if (!GamesHandler.playerInGames[event.player]!!.deathChests.chests.containsKey(event.clickedBlock!!.location)) return
         event.player.openInventory(GamesHandler.playerInGames[event.player]!!.deathChests.chests[event.clickedBlock!!.location]!!)
+        event.player.playSound(event.player, Sound.BLOCK_CHEST_OPEN, 1f, 1f)
     }
 
 }

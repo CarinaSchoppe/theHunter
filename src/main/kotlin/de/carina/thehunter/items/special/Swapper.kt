@@ -17,6 +17,7 @@ import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.ConstantStrings
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -43,6 +44,8 @@ class Swapper : Listener {
         val targetLocation = target.location
         target.teleport(event.player.location)
         event.player.teleport(targetLocation)
+        event.player.playSound(event.player, Sound.BLOCK_BIG_DRIPLEAF_BREAK, 1f, 1f)
+        target.playSound(target, Sound.BLOCK_BIG_DRIPLEAF_BREAK, 1f, 1f)
         target.sendMessage(TheHunter.instance.messages.messagesMap["player-swapped"]!!.replace(ConstantStrings.PLAYER_PERCENT, event.player.name))
         event.player.sendMessage(TheHunter.instance.messages.messagesMap["player-swapped"]!!.replace(ConstantStrings.PLAYER_SPAWN, target.name))
     }

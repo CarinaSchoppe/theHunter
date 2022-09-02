@@ -45,6 +45,8 @@ object Pistol : Gun {
                 GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-power"]!!
             )
         )
+        player.playSound(player, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1f, 1f)
+
         arrow.damage = 0.0
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
         arrow.shooter = player
