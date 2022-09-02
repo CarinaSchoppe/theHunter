@@ -22,6 +22,7 @@ import net.kyori.adventure.title.Title
 import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -54,7 +55,6 @@ class EyeSpy : Listener {
         val target = targets.random()
         ItemHandler.removeOneItemOfPlayer(event.player)
         event.isCancelled = true
-
         setCamera(game, event.player, target)
     }
 
@@ -62,6 +62,7 @@ class EyeSpy : Listener {
     private fun setCamera(game: Game, player: Player, target: Player) {
         lastPlayerLocation[player] = player.location
         player.teleport(target.location)
+        player.playSound(player, Sound.ITEM_GOAT_HORN_SOUND_1, 1f, 1f)
         inEyeSpy.add(player)
         player.gameMode = GameMode.SPECTATOR
         player.spectatorTarget = target
@@ -73,6 +74,7 @@ class EyeSpy : Listener {
             player.gameMode = GameMode.SURVIVAL
             player.spectatorTarget = null
             inEyeSpy.remove(player)
+            player.playSound(player, Sound.ITEM_GOAT_HORN_SOUND_4, 1f, 1f)
         }, 20L * game.itemSettings.settingsMap["eye-spy-duration"]!! as Long)
     }
 

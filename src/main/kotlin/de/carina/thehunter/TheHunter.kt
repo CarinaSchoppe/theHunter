@@ -46,6 +46,7 @@ class TheHunter : JavaPlugin() {
     TODO: Hover animation (when scrolling
       TODO: Damagechecking
       TODO: PlayerChat
+      TODO: Mysql
       TODO: Teamfunctionchecks
       TODO: PlayerHeadInLobby
       TODO: TODO: Items (Eye etc.)
