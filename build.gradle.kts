@@ -35,6 +35,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:+")
     testImplementation(kotlin("test"))
     implementation("net.wesjd:anvilgui:+")
+    implementation("org.xerial:sqlite-jdbc:+")
 }
 
 java {
