@@ -36,7 +36,7 @@ class Settings(filePath: String) : BaseFile(filePath) {
         yml.addDefault("duration-idle", 10)
         yml.addDefault("scoreboard-enable", true)
         yml.addDefault("mysql", false)
-        yml.addDefault("sql-lite", false)
+        yml.addDefault("sqlite-enable", false)
         yml.addDefault("sqlite-path", "plugins/TheHunter/sqlite.db")
         yml.addDefault("mysql-host", "localhost")
         yml.addDefault("mysql-port", 3306)

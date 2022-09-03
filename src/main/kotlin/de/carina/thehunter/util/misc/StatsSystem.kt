@@ -11,6 +11,7 @@
 package de.carina.thehunter.util.misc
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.util.database.MySQL
 import de.carina.thehunter.util.files.BaseFile
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Bukkit
@@ -23,35 +24,58 @@ data class StatsPlayer(var kills: Int, var deaths: Int, var points: Int, var kdr
 
 class StatsSystem : BaseFile("stats.yml") {
 
+    val mySQL = MySQL()
+
     companion object {
         val playerStats = mutableMapOf<UUID, StatsPlayer>()
         fun saveAllStatsPlayerToFiles() {
             for (player in playerStats.keys) {
-                TheHunter.instance.statsSystem.yml.set("$player.Kills", playerStats[player]!!.kills)
-                TheHunter.instance.statsSystem.yml.set("$player.Deaths", playerStats[player]!!.deaths)
-                TheHunter.instance.statsSystem.yml.set("$player.KDR", playerStats[player]!!.kdr)
-                TheHunter.instance.statsSystem.yml.set("$player.Wins", playerStats[player]!!.wins)
-                TheHunter.instance.statsSystem.yml.set("$player.Loses", playerStats[player]!!.loses)
-                TheHunter.instance.statsSystem.yml.set("$player.Points", playerStats[player]!!.points)
-                TheHunter.instance.statsSystem.yml.set("$player.Games", playerStats[player]!!.games)
-                TheHunter.instance.statsSystem.addData()
-                TheHunter.instance.messages.sendMessageToConsole("stats-system-saved")
+                if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+                    MySQL.connection.prepareStatement(
+                        "REPLACE INTO statsPlayer(uuid, kills, deaths, points, kdr, wins,loses,games) VALUES ('$player', '${playerStats[player]?.kills}', '${playerStats[player]?.deaths}', '${playerStats[player]?.points}', '${playerStats[player]?.kdr}', '${playerStats[player]?.wins}', '${playerStats[player]?.loses}', '${playerStats[player]?.games}')"
+                    )?.executeUpdate()
+                } else {
+                    TheHunter.instance.statsSystem.yml.set("$player.Kills", playerStats[player]!!.kills)
+                    TheHunter.instance.statsSystem.yml.set("$player.Deaths", playerStats[player]!!.deaths)
+                    TheHunter.instance.statsSystem.yml.set("$player.KDR", playerStats[player]!!.kdr)
+                    TheHunter.instance.statsSystem.yml.set("$player.Wins", playerStats[player]!!.wins)
+                    TheHunter.instance.statsSystem.yml.set("$player.Loses", playerStats[player]!!.loses)
+                    TheHunter.instance.statsSystem.yml.set("$player.Points", playerStats[player]!!.points)
+                    TheHunter.instance.statsSystem.yml.set("$player.Games", playerStats[player]!!.games)
+                    TheHunter.instance.statsSystem.addData()
+                    TheHunter.instance.messages.sendMessageToConsole("stats-system-saved")
+                }
             }
         }
 
         fun loadStatsPlayersFromFile() {
-            for (uuid in TheHunter.instance.statsSystem.yml.getKeys(false)) {
-                val player = UUID.fromString(uuid)
-                if (player != null) {
-                    playerStats[player] = StatsPlayer(
-                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Kills"),
-                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Deaths"),
-                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Points"),
-                        TheHunter.instance.statsSystem.yml.getDouble("$uuid.KDR"),
-                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Wins"),
-                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Loses"),
-                        TheHunter.instance.statsSystem.yml.getInt("$uuid.Games")
-                    )
+            if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+                val resultSet = MySQL.connection.prepareStatement("SELECT * FROM statsPlayer")?.executeQuery()
+                while (resultSet?.next()!!) {
+                    val uuid = UUID.fromString(resultSet.getString("uuid"))
+                    val kills = resultSet.getInt("kills")
+                    val deaths = resultSet.getInt("deaths")
+                    val points = resultSet.getInt("points")
+                    val kdr = resultSet.getDouble("kdr")
+                    val wins = resultSet.getInt("wins")
+                    val loses = resultSet.getInt("loses")
+                    val games = resultSet.getInt("games")
+                    playerStats[uuid] = StatsPlayer(kills, deaths, points, kdr, wins, loses, games)
+                }
+            } else {
+                for (uuid in TheHunter.instance.statsSystem.yml.getKeys(false)) {
+                    val player = UUID.fromString(uuid)
+                    if (player != null) {
+                        playerStats[player] = StatsPlayer(
+                            TheHunter.instance.statsSystem.yml.getInt("$uuid.Kills"),
+                            TheHunter.instance.statsSystem.yml.getInt("$uuid.Deaths"),
+                            TheHunter.instance.statsSystem.yml.getInt("$uuid.Points"),
+                            TheHunter.instance.statsSystem.yml.getDouble("$uuid.KDR"),
+                            TheHunter.instance.statsSystem.yml.getInt("$uuid.Wins"),
+                            TheHunter.instance.statsSystem.yml.getInt("$uuid.Loses"),
+                            TheHunter.instance.statsSystem.yml.getInt("$uuid.Games")
+                        )
+                    }
                 }
             }
             Bukkit.getConsoleSender().sendMessage(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§aStats loaded"))
@@ -60,15 +84,21 @@ class StatsSystem : BaseFile("stats.yml") {
     }
 
     fun generateNewStatsPlayer(player: Player) {
-        yml.set(player.uniqueId.toString() + ".Kills", 0)
-        yml.set(player.uniqueId.toString() + ".Deaths", 0)
-        yml.set(player.uniqueId.toString() + ".KDR", 0.0)
-        yml.set(player.uniqueId.toString() + ".Wins", 0)
-        yml.set(player.uniqueId.toString() + ".Loses", 0)
-        yml.set(player.uniqueId.toString() + ".Points", 0)
-        yml.set(player.uniqueId.toString() + ".Games", 0)
+        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+            MySQL.connection.prepareStatement(
+                "INSERT INTO statsPlayer(uuid, kills, deaths, points, kdr, wins,loses,games) VALUES ('${player.uniqueId}', 0, 0, 0,0.0, 0,0,0)"
+            )?.executeUpdate()
+        } else {
+            yml.set(player.uniqueId.toString() + ".Kills", 0)
+            yml.set(player.uniqueId.toString() + ".Deaths", 0)
+            yml.set(player.uniqueId.toString() + ".KDR", 0.0)
+            yml.set(player.uniqueId.toString() + ".Wins", 0)
+            yml.set(player.uniqueId.toString() + ".Loses", 0)
+            yml.set(player.uniqueId.toString() + ".Points", 0)
+            yml.set(player.uniqueId.toString() + ".Games", 0)
+            super.addData()
+        }
         playerStats[player.uniqueId] = StatsPlayer(0, 0, 0, 0.0, 0, 0, 0)
-        super.addData()
     }
 
 
@@ -85,11 +115,20 @@ class StatsSystem : BaseFile("stats.yml") {
     }
 
     fun playerWon(player: Player) {
-        yml.set(player.uniqueId.toString() + ".Wins", yml.getInt(player.uniqueId.toString() + ".Wins") + 1)
-        yml.set(player.uniqueId.toString() + ".Points", yml.getInt(player.uniqueId.toString() + ".Points") + 15)
+        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+            MySQL.connection.prepareStatement(
+                "UPDATE statsPlayer SET wins = wins + 1, points = points + 10, games = games + 1 WHERE uuid = '${player.uniqueId}'"
+            )?.executeUpdate()
+        } else {
+            yml.set(player.uniqueId.toString() + ".Wins", yml.getInt(player.uniqueId.toString() + ".Wins") + 1)
+            yml.set(player.uniqueId.toString() + ".Points", yml.getInt(player.uniqueId.toString() + ".Points") + 10)
+            yml.set(player.uniqueId.toString() + ".Games", yml.getInt(player.uniqueId.toString() + ".Games") + 1)
+            super.addData()
+        }
+
         playerStats[player.uniqueId]!!.wins += 1
         playerStats[player.uniqueId]!!.points += 15
-        super.addData()
+
 
     }
 
