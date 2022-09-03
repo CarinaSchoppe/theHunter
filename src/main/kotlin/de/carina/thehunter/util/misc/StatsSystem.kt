@@ -90,7 +90,7 @@ class StatsSystem : BaseFile("stats.yml") {
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
             MySQL.connection.prepareStatement(
                 "INSERT INTO statsPlayer(uuid, kills, deaths, points, kdr, wins,loses,games) VALUES ('${player.uniqueId}', 0, 0, 0,0.0, 0,0,0)"
-            )?.executeUpdate()
+            )?.execute()
         } else {
             yml.set(player.uniqueId.toString() + ".Kills", 0)
             yml.set(player.uniqueId.toString() + ".Deaths", 0)

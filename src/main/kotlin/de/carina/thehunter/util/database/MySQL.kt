@@ -44,7 +44,7 @@ class MySQL {
         }
 
         val host = TheHunter.instance.settings.settingsMap["mysql-host"]!! as String
-        val port = TheHunter.instance.settings.settingsMap["mysql-port"]!! as String
+        val port = TheHunter.instance.settings.settingsMap["mysql-port"]!! as Int
         val database = TheHunter.instance.settings.settingsMap["mysql-database"]!! as String
         val username = TheHunter.instance.settings.settingsMap["mysql-user"]!! as String
         val password = TheHunter.instance.settings.settingsMap["mysql-password"]!! as String
@@ -74,7 +74,7 @@ class MySQL {
                 ");"
         //execute the sqlCommand on the connection
         val statement = connection.prepareStatement(sqlCommand)
-        statement.execute(sqlCommand)
+        statement.execute()
         return true
     }
 
@@ -93,7 +93,7 @@ class MySQL {
         val connection = DriverManager.getConnection("jdbc:sqlite:${databaseFile.absolutePath}")
         val sqlCommand = "SELECT * FROM statsPlayer"
         val statement = connection.prepareStatement(sqlCommand)
-        val result = statement.executeQuery(sqlCommand)
+        val result = statement.executeQuery()
         while (result.next()) {
             StatsSystem.playerStats[UUID.fromString(result.getString("uuid"))] = StatsPlayer(result.getInt("kills"), result.getInt("deaths"), result.getInt("points"), result.getDouble("kdr"), result.getInt("wins"), result.getInt("loses"), result.getInt("games"))
 
