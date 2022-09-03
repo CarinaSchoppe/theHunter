@@ -48,6 +48,9 @@ class MySQL {
                 val file = File(BaseFile.gameFolder + "/database.db")
                 if (!file.exists()) {
                     file.createNewFile()
+                    TheHunter.instance.settings.settingsMap["sqlite-path"] = file.absolutePath
+                    TheHunter.instance.settings.yml.set("sqlite-path", file.absolutePath)
+                    TheHunter.instance.settings.yml.save(TheHunter.instance.settings.file)
                     Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["prefix"] as String) + "§aCreating own database-file...")
 
                 }
