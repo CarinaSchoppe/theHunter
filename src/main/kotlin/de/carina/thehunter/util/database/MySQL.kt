@@ -1,6 +1,7 @@
 package de.carina.thehunter.util.database
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.misc.StatsPlayer
 import de.carina.thehunter.util.misc.StatsSystem
 import java.io.File
@@ -26,9 +27,20 @@ class MySQL {
 
 
         //check if the .db file exists
-        val databaseFile = File(TheHunter.instance.settings.settingsMap["sqlite-path"]!! as String)
-        if (!databaseFile.exists()) {
-            databaseFile.createNewFile()
+        //get plugins folderpath
+
+        val databaseFile: File = try {
+            val databaseFile = File(TheHunter.instance.settings.settingsMap["sqlite-path"]!! as String)
+            if (!databaseFile.exists()) {
+                databaseFile.createNewFile()
+            }
+            databaseFile
+        } catch (e: Exception) {
+            val file = File(BaseFile.gameFolder + "/database.db")
+            if (!file.exists()) {
+                file.createNewFile()
+            }
+            file
         }
 
         val host = TheHunter.instance.settings.settingsMap["mysql-host"]!! as String
