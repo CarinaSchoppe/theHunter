@@ -4,6 +4,8 @@ import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.files.BaseFile
 import de.carina.thehunter.util.misc.StatsPlayer
 import de.carina.thehunter.util.misc.StatsSystem
+import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import java.io.File
 import java.sql.Connection
 import java.sql.DriverManager
@@ -22,25 +24,38 @@ class MySQL {
     }
 
     private fun createDatabaseIfNotExists(): Boolean {
-        if (!(TheHunter.instance.settings.settingsMap["mysql"]!! as Boolean))
+        if (!(TheHunter.instance.settings.settingsMap["mysql"]!! as Boolean)) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["prefix"] as String) + "§7Using YML-Settings file")
+
             return false
+        }
 
 
         //check if the .db file exists
         //get plugins folderpath
 
-        val databaseFile: File = try {
-            val databaseFile = File(TheHunter.instance.settings.settingsMap["sqlite-path"]!! as String)
-            if (!databaseFile.exists()) {
-                databaseFile.createNewFile()
+        lateinit var databaseFile: File
+        if (TheHunter.instance.settings.settingsMap["sqlite-enable"] as Boolean) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["prefix"] as String) + "§aUsing SQLite-Settings file")
+
+            databaseFile = try {
+                val databaseFile = File(TheHunter.instance.settings.settingsMap["sqlite-path"]!! as String)
+                if (!databaseFile.exists()) {
+                    databaseFile.createNewFile()
+                }
+                databaseFile
+            } catch (e: Exception) {
+                val file = File(BaseFile.gameFolder + "/database.db")
+                if (!file.exists()) {
+                    file.createNewFile()
+                    Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["prefix"] as String) + "§aCreating own database-file...")
+
+                }
+                file
             }
-            databaseFile
-        } catch (e: Exception) {
-            val file = File(BaseFile.gameFolder + "/database.db")
-            if (!file.exists()) {
-                file.createNewFile()
-            }
-            file
+        } else {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["prefix"] as String) + "§aUsing MySQL database connection!")
+
         }
 
         val host = TheHunter.instance.settings.settingsMap["mysql-host"]!! as String
@@ -51,6 +66,7 @@ class MySQL {
         //create a connection to the mysql database
         connection = if (TheHunter.instance.settings.settingsMap["sqlite-enable"] as Boolean) DriverManager.getConnection("jdbc:sqlite:${databaseFile.absolutePath}")
         else DriverManager.getConnection("jdbc:mysql://$host:$port/$database?useSSL=false", username, password)
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["prefix"] as String) + "§aConnected to database!")
 
         createTableStatsPlayer()
 
@@ -75,6 +91,8 @@ class MySQL {
         //execute the sqlCommand on the connection
         val statement = connection.prepareStatement(sqlCommand)
         statement.execute()
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["prefix"] as String) + "§aCreating table statsPlayer...")
+
         return true
     }
 
@@ -91,6 +109,8 @@ class MySQL {
             StatsSystem.playerStats[UUID.fromString(result.getString("uuid"))] = StatsPlayer(result.getInt("kills"), result.getInt("deaths"), result.getInt("points"), result.getDouble("kdr"), result.getInt("wins"), result.getInt("loses"), result.getInt("games"))
 
         }
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["prefix"] as String) + "§aAdded all players from database to playerlist...")
+
         return true
 
     }
