@@ -24,7 +24,10 @@ data class StatsPlayer(var kills: Int, var deaths: Int, var points: Int, var kdr
 
 class StatsSystem : BaseFile("stats.yml") {
 
-    val mySQL = MySQL()
+
+    init {
+        MySQL()
+    }
 
     companion object {
         val playerStats = mutableMapOf<UUID, StatsPlayer>()
@@ -110,33 +113,55 @@ class StatsSystem : BaseFile("stats.yml") {
         playerStats[dead.uniqueId]!!.deaths += 1
         playerStats[dead.uniqueId]!!.kdr = playerStats[dead.uniqueId]!!.kills.toDouble() / playerStats[dead.uniqueId]!!.deaths.toDouble()
 
-        super.addData()
+
+        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+            MySQL.connection.prepareStatement(
+                "UPDATE statsPlayer SET kills = '${playerStats[killer.uniqueId]!!.kills}',  points = '${playerStats[killer.uniqueId]!!.points}', kdr = '${playerStats[killer.uniqueId]!!.kdr}' WHERE uuid = '${killer.uniqueId}'"
+            )?.executeUpdate()
+            MySQL.connection.prepareStatement(
+                "UPDATE statsPlayer SET deaths = '${playerStats[dead.uniqueId]!!.deaths}', points = '${playerStats[dead.uniqueId]!!.points}', kdr = '${playerStats[dead.uniqueId]!!.kdr}' WHERE uuid = '${dead.uniqueId}'"
+            )?.executeUpdate()
+        } else {
+            yml.set(killer.uniqueId.toString() + ".Kills", playerStats[killer.uniqueId]!!.kills)
+            yml.set(killer.uniqueId.toString() + ".Points", playerStats[killer.uniqueId]!!.points)
+            yml.set(dead.uniqueId.toString() + ".Points", playerStats[dead.uniqueId]!!.points)
+            yml.set(killer.uniqueId.toString() + ".KDR", playerStats[killer.uniqueId]!!.kdr)
+            yml.set(dead.uniqueId.toString() + ".Deaths", playerStats[dead.uniqueId]!!.deaths)
+            yml.set(dead.uniqueId.toString() + ".KDR", playerStats[dead.uniqueId]!!.kdr)
+            super.addData()
+        }
 
     }
 
     fun playerWon(player: Player) {
-        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
-            MySQL.connection.prepareStatement(
-                "UPDATE statsPlayer SET wins = wins + 1, points = points + 10, games = games + 1 WHERE uuid = '${player.uniqueId}'"
-            )?.executeUpdate()
-        } else {
-            yml.set(player.uniqueId.toString() + ".Wins", yml.getInt(player.uniqueId.toString() + ".Wins") + 1)
-            yml.set(player.uniqueId.toString() + ".Points", yml.getInt(player.uniqueId.toString() + ".Points") + 10)
-            yml.set(player.uniqueId.toString() + ".Games", yml.getInt(player.uniqueId.toString() + ".Games") + 1)
-            super.addData()
-        }
-
         playerStats[player.uniqueId]!!.wins += 1
         playerStats[player.uniqueId]!!.points += 15
-
-
+        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+            MySQL.connection.prepareStatement(
+                "UPDATE statsPlayer SET wins='${playerStats[player.uniqueId]!!.wins}', points='${playerStats[player.uniqueId]!!.points}' WHERE uuid='${player.uniqueId}'"
+            )?.executeUpdate()
+        } else {
+            yml.set(player.uniqueId.toString() + ".Wins", playerStats[player.uniqueId]!!.wins)
+            yml.set(player.uniqueId.toString() + ".Points", playerStats[player.uniqueId]!!.points)
+            super.addData()
+        }
     }
 
     fun playerDied(player: Player) {
         removePointsIfPossible(player)
         playerStats[player.uniqueId]!!.deaths += 1
         playerStats[player.uniqueId]!!.kdr = playerStats[player.uniqueId]!!.kills.toDouble() / playerStats[player.uniqueId]!!.deaths.toDouble()
-        super.addData()
+        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+            MySQL.connection.prepareStatement(
+                "UPDATE statsPlayer SET deaths = '${playerStats[player.uniqueId]!!.deaths}',points='${playerStats[player.uniqueId]!!.points}', kdr = '${playerStats[player.uniqueId]!!.kdr}' WHERE uuid = '${player.uniqueId}'"
+            )?.executeUpdate()
+        } else {
+            yml.set(player.uniqueId.toString() + ".Deaths", playerStats[player.uniqueId]!!.deaths)
+            yml.set(player.uniqueId.toString() + ".KDR", playerStats[player.uniqueId]!!.kdr)
+            yml.set(player.uniqueId.toString() + ".Points", playerStats[player.uniqueId]!!.points)
+            super.addData()
+        }
+
     }
 
     private fun removePointsIfPossible(player: Player) {
@@ -147,7 +172,12 @@ class StatsSystem : BaseFile("stats.yml") {
 
     fun playerPlaysGame(player: Player) {
         playerStats[player.uniqueId]!!.games += 1
-        super.addData()
+        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+            MySQL.connection.prepareStatement("UPDATE statsPlayer SET games='${playerStats[player.uniqueId]!!.games}' WHERE uuid='${player.uniqueId}'")?.executeUpdate()
+        } else {
+            yml.set(player.uniqueId.toString() + ".Games", playerStats[player.uniqueId]!!.games)
+            super.addData()
+        }
     }
 
     fun generateStatsMessageForPlayer(sender: Player, player: Player): Boolean {
@@ -176,7 +206,6 @@ class StatsSystem : BaseFile("stats.yml") {
                     .replace("%losses%", playerStats[player.uniqueId]!!.loses.toString())
                     .replace(ConstantStrings.PLAYER_PERCENT, player.name)
             )
-
         return true
     }
 

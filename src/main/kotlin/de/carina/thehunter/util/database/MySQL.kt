@@ -26,7 +26,7 @@ class MySQL {
 
 
         //check if the .db file exists
-        var databaseFile = File(TheHunter.instance.settings.settingsMap["sqlite-path"]!! as String)
+        val databaseFile = File(TheHunter.instance.settings.settingsMap["sqlite-path"]!! as String)
         if (!databaseFile.exists()) {
             databaseFile.createNewFile()
         }
