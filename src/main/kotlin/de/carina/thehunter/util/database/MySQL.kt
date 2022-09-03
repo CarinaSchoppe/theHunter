@@ -83,14 +83,7 @@ class MySQL {
             return false
 
 
-        //check if the .db file exists
-        val databaseFile = File(TheHunter.instance.settings.settingsMap["sqlite-path"]!! as String)
-        if (!databaseFile.exists()) {
-            databaseFile.createNewFile()
-        }
-
         //create sqlite connection to databaseFile
-        val connection = DriverManager.getConnection("jdbc:sqlite:${databaseFile.absolutePath}")
         val sqlCommand = "SELECT * FROM statsPlayer"
         val statement = connection.prepareStatement(sqlCommand)
         val result = statement.executeQuery()
