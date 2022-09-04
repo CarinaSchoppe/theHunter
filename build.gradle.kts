@@ -32,6 +32,7 @@ repositories {
 }
 
 dependencies {
+    //    implementation("com.google.code.gson:gson:+") // Gson
     compileOnly("io.papermc.paper:paper-api:+")
     testImplementation(kotlin("test"))
     implementation("net.wesjd:anvilgui:+")
