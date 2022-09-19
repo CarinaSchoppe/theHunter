@@ -16,27 +16,13 @@ import org.bukkit.block.Block
 
 class MapResetter(val game: Game) {
 
-    val blocks = mutableListOf<String>()
+     val blocks = mutableListOf<Block>()
 
     companion object {
-        fun createBlockString(block: Block): String {
-            return block.type.toString() +
-                    ":" + block.world.name +
-                    ":" + block.x +
-                    ":" + block.y +
-                    ":" + block.z
-        }
-
-        fun setBlockFromBlockString(blockString: String) {
-            val split = blockString.split(":")
-            val type = split[0]
-            val world = split[1]
-            val x = split[2].toDouble()
-            val y = split[3].toDouble()
-            val z = split[4].toDouble()
-            val worldObj = Bukkit.getWorld(world)
-            val block = worldObj!!.getBlockAt(x.toInt(), y.toInt(), z.toInt())
-            block.type = org.bukkit.Material.valueOf(type)
+        fun setBlock(block: Block) {
+            val other = Bukkit.getWorld(block.world.name)!!.getBlockAt(block.x, block.y, block.z)
+            other.type = block.type
+            other.blockData = block.blockData
         }
     }
 
@@ -47,7 +33,7 @@ class MapResetter(val game: Game) {
             it.remove()
         }
         blocks.forEach {
-            setBlockFromBlockString(it)
+            setBlock(it)
         }
         blocks.clear()
     }

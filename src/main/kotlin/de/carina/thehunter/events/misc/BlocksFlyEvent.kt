@@ -14,7 +14,6 @@ package de.carina.thehunter.events.misc
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.items.special.EggBomb
 import de.carina.thehunter.util.game.GamesHandler
-import de.carina.thehunter.util.misc.MapResetter
 import org.bukkit.Material
 import org.bukkit.entity.FallingBlock
 import org.bukkit.entity.TNTPrimed
@@ -40,7 +39,7 @@ class BlocksFlyEvent : Listener {
         for (block in event.blockList()) {
             event.yield = 0f
             if (block.type == Material.BEACON) continue
-            game.mapResetter.blocks.add(MapResetter.createBlockString(block))
+            game.mapResetter.blocks.add(block)
 
             val x = -5f + (Math.random() * (5 + 5 + 1)).toFloat()
             val y = -5f + (Math.random() * (6 + 6 + 1)).toFloat()
@@ -68,8 +67,7 @@ class BlocksFlyEvent : Listener {
             GamesHandler.entitiesInGames.remove(event.entity)
         if (game.gameEntities.contains(event.entity))
             game.gameEntities.remove(event.entity)
-        val blockString = Material.AIR.toString() + ":" + block.world.name + ":" + block.x + ":" + block.y + ":" + block.z
-        game.mapResetter.blocks.add(blockString)
+        game.mapResetter.blocks.add(block)
     }
 
 }
