@@ -37,6 +37,7 @@ class EndState(game: Game) : GameState(game) {
                 player.showPlayer(TheHunter.instance, spectator)
             }
         }
+        game.worldBoarderController.resetWorldBoarder()
     }
 
 

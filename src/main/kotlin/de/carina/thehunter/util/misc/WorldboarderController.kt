@@ -38,8 +38,6 @@ class WorldboarderController(private val game: Game) {
 
     fun resetWorldBoarder() {
         game.arenaCenter!!.world.worldBorder.center = game.arenaCenter!!
-        println(game.arenaCenter!!.world.worldBorder.center)
-        println(game.arenaCenter!!)
         game.arenaCenter!!.world.worldBorder.damageAmount = 100.0
         game.arenaCenter!!.world.worldBorder.size = worldBoarderSize.toDouble()
     }

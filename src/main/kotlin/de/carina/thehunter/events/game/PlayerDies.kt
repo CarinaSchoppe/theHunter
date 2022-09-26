@@ -111,6 +111,8 @@ class PlayerDies : Listener {
         fun generalHandling(player: Player, game: Game) {
             game.players.remove(player)
             game.spectators.add(player)
+            GamesHandler.playerInGames.remove(player)
+            GamesHandler.spectatorInGames[player] = game
             player.inventory.clear()
             player.inventory.setItem(8, Items.leaveItem)
             player.inventory.setItem(9, Items.leaveItem)

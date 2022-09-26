@@ -36,7 +36,9 @@ class BlocksFlyEvent : Listener {
         val game = GamesHandler.entitiesInGames[tnt]!!
         GamesHandler.entitiesInGames.remove(tnt)
 
+
         for (block in event.blockList()) {
+            block.drops.clear()
             event.yield = 0f
             if (block.type == Material.BEACON) continue
             game.mapResetter.addBlockToList(block)
@@ -63,15 +65,12 @@ class BlocksFlyEvent : Listener {
             return
 
         val block = event.block
-        println("blocktype: " + block.type)
-
         if (GamesHandler.entitiesInGames.containsKey(event.entity))
             GamesHandler.entitiesInGames.remove(event.entity)
         if (game.gameEntities.contains(event.entity))
             game.gameEntities.remove(event.entity)
 
         game.mapResetter.addBlockToList(block)
-        println("added a block")
     }
 
 }

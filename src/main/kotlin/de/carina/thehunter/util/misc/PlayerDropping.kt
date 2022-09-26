@@ -23,7 +23,6 @@ object PlayerDropping {
             val x = Random().nextInt(game.worldBoarderController.worldBoarderSize).toDouble()
             val z = Random().nextInt(game.worldBoarderController.worldBoarderSize).toDouble()
             player.teleport(locationCenter.clone().add(x, 200.0, z))
-            println("teleported to:$x $z")
         }
     }
 }

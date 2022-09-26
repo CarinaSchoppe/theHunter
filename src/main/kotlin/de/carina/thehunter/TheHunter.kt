@@ -37,14 +37,13 @@ class TheHunter : JavaPlugin() {
     TODOS till done:
     TODO: Premium join
     TODO: Teammode
-    TODO: Testing (, Damage, multirounds,  hiding,  teams, scoreboards, bugs)
-      TODO: PlayerChat
-      TODO: Teamfunctionchecks
-      TODO: PlayerHeadInLobby
+
+      TODO: Teammode
 
      */
 
     /*
+    TODO: scoreboard
     TODO: grenade makes no damage
 
      */

@@ -106,7 +106,7 @@ class Team(var teamLeader: Player) {
 
         fun removePlayerFromTeam(player: Player, leader: Player) {
 
-            val game = GamesHandler.playerInGames[player] ?: return
+            val game = GamesHandler.playerInGames[player] ?: GamesHandler.spectatorInGames[player] ?: return
             val team = game.teams.find { it.teamMembers.contains(player) }
             if (team == null) {
                 player.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_TEAM]!!)

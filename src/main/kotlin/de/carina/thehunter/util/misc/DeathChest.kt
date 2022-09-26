@@ -29,7 +29,7 @@ class DeathChest(private val game: Game) {
             return
 
         val inventory = Bukkit.createInventory(null, 54, Component.text("${player.name}s deathchest"))
-        player.location.block.type = Material.CHEST
+        player.location.block.type = Material.REDSTONE_LAMP
         game.mapResetter.addBlockToList(player.location.block)
 
         inventory.contents = player.inventory.contents.clone()

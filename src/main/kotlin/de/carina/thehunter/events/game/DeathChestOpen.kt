@@ -11,27 +11,42 @@
 package de.carina.thehunter.events.game
 
 import de.carina.thehunter.util.game.GamesHandler
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.inventory.Inventory
 
-class DeathChestOpen :
+class DeathChestOpen : Listener {
 
 
-    Listener {
+    private fun worldEquals(location: Location, other: Location): Boolean {
+        if (location.world.name != other.world.name) return false
 
+        if (location.x.toInt() != other.x.toInt()) return false
+        if (location.y.toInt() != other.y.toInt()) return false
+        return location.z.toInt() == other.z.toInt()
+    }
 
     @EventHandler
     fun onOpenDeathChest(event: PlayerInteractEvent) {
         if (!GamesHandler.playerInGames.containsKey(event.player)) return
-        if (event.action.isLeftClick) return
-        if (event.clickedBlock == null) return
-        if (event.clickedBlock!!.type != Material.CHEST) return
-        if (!GamesHandler.playerInGames[event.player]!!.deathChest.deathChests.containsKey(event.clickedBlock!!.location)) return
+        if (event.clickedBlock?.type != Material.REDSTONE_LAMP) return
+        val inventory: Inventory = GamesHandler.playerInGames[event.player]!!.deathChest.deathChests[GamesHandler.playerInGames[event.player]!!.deathChest.deathChests.keys.first {
+            worldEquals(event.clickedBlock!!.location, it)
+        }] ?: return
+
+
+
+        println("location:" + Location(event.clickedBlock!!.location.world, event.clickedBlock!!.location.x.toInt().toDouble(), event.clickedBlock!!.location.y.toInt().toDouble(), event.clickedBlock!!.location.z.toInt().toDouble()).toString())
+        println("should been:" + GamesHandler.playerInGames[event.player]!!.deathChest.deathChests.keys.toList().first())
+
+
         event.isCancelled = true
-        event.player.openInventory(GamesHandler.playerInGames[event.player]!!.deathChest.deathChests[event.clickedBlock!!.location]!!)
+
+        event.player.openInventory(inventory!!)
         event.player.playSound(event.player, Sound.BLOCK_CHEST_OPEN, 1f, 1f)
     }
 

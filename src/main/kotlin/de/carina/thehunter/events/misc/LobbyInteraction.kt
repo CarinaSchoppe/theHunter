@@ -44,11 +44,13 @@ class LobbyInteraction : Listener {
 
 
     private fun lobbyDamagePlayerDamager(event: EntityDamageByEntityEvent) {
+        if (event.entity !is Player) return
         if (GamesHandler.playerInGames.containsKey(event.damager) || GamesHandler.spectatorInGames.containsKey(event.damager)) {
             val game = GamesHandler.spectatorInGames[event.damager] ?: GamesHandler.playerInGames[event.damager]
             if (game!!.currentGameState !is IngameState) {
                 event.isCancelled = true
                 event.damage = 0.0
+
                 if ((event.damager as Player).inventory.itemInMainHand.itemMeta != Items.leaveItem.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
                     event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
 

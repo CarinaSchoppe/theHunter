@@ -30,20 +30,32 @@ class PlayerChat : Listener {
 
         event.isCancelled = true
         if (LegacyComponentSerializer.builder().build().serialize(event.message()).startsWith("@Team")) {
-            val message = TheHunter.prefix + "§7[§6${event.player.name}§7]§f " + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
-            val team = GamesHandler.playerInGames[event.player]!!.teams.find { it.teamMembers.contains(event.player) }
+            val message = TheHunter.prefix + "§7[TEAM] ${if (GamesHandler.spectatorInGames.containsKey(event.player)) "[Spectator] " else ""}[§6${event.player.name}§7]§f " + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
+
+            val team = GamesHandler.playerInGames[event.player]?.teams?.find {
+                it.teamMembers.contains(event.player)
+            } ?: GamesHandler.spectatorInGames[event.player]?.teams?.find {
+                it.teamMembers.contains(event.player)
+            }
+
             if (team != null) {
                 team.teamMembers.forEach {
-                    it.sendMessage(message)
+                    if (GamesHandler.playerInGames.containsKey(event.player)) {
+                        it.sendMessage(message)
+                    } else {
+                        if (GamesHandler.spectatorInGames.containsKey(it))
+                            it.sendMessage(message)
+                    }
                 }
                 return
             }
         }
         if (GamesHandler.playerInGames.containsKey(event.player)) {
-            val message = TheHunter.prefix + "§7[§6${event.player.name}§7]§f " + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
-            GamesHandler.playerInGames[event.player]!!.players.forEach {
-                it.sendMessage(message)
-            }
+            val message = TheHunter.prefix + "§7${if (GamesHandler.spectatorInGames.containsKey(event.player)) "[Spectator] " else ""}[§6${event.player.name}§7]§f " + LegacyComponentSerializer.builder().build().serialize(event.message()).replace("@Team", "")
+            if (!GamesHandler.spectatorInGames.containsKey(event.player))
+                GamesHandler.playerInGames[event.player]!!.players.forEach {
+                    it.sendMessage(message)
+                }
             GamesHandler.playerInGames[event.player]!!.spectators.forEach {
                 it.sendMessage(message)
             }
