@@ -38,6 +38,8 @@ class MapModify : Listener {
             player.sendMessage(TheHunter.instance.messages.messagesMap["cant-break-block"]!!.replace(ConstantStrings.BLOCK_PERCENT, event.block.type.name))
             return
         }
+
+        GamesHandler.playerInGames[event.player]!!.mapResetter.addBlockToList(event.block)
     }
 
     @EventHandler
@@ -56,5 +58,6 @@ class MapModify : Listener {
             player.sendMessage(TheHunter.instance.messages.messagesMap["cant-place-block"]!!.replace(ConstantStrings.BLOCK_PERCENT, event.block.type.name))
             return
         }
+        GamesHandler.playerInGames[event.player]!!.mapResetter.addBlockToList(event.block)
     }
 }

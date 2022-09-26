@@ -30,9 +30,10 @@ class DeathChest(private val game: Game) {
 
         val inventory = Bukkit.createInventory(null, 54, Component.text("${player.name}s deathchest"))
         player.location.block.type = Material.CHEST
+        game.mapResetter.addBlockToList(player.location.block)
+
         inventory.contents = player.inventory.contents.clone()
         deathChests[player.location] = inventory
-        game.mapResetter.blocks.add(player.location.block)
         player.location.world.spawnEntity(player.location, EntityType.LIGHTNING)
     }
 
