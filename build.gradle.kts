@@ -13,6 +13,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     idea
+    java
     kotlin("jvm") version "+"
     id("com.github.johnrengelman.shadow") version "+"
     id("xyz.jpenilla.run-paper") version "+" // Adds runServer and runMojangMappedServer tasks for testing
@@ -32,6 +33,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.testng:testng:7.1.0")
     //    implementation("com.google.code.gson:gson:+") // Gson
     compileOnly("io.papermc.paper:paper-api:+")
     testImplementation(kotlin("test"))

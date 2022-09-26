@@ -66,7 +66,7 @@ class EyeSpy : Listener {
         inEyeSpy.add(player)
         player.gameMode = GameMode.SPECTATOR
         player.spectatorTarget = target
-        mapPlayerTime[player] = (game.itemSettings.settingsMap["eye-spy-duration"]!! as Long).toInt()
+        mapPlayerTime[player] = (game.itemSettings.settingsMap["eye-spy-duration"]!! as Int)
 
         showingTitle(player)
         TheHunter.instance.server.scheduler.scheduleSyncDelayedTask(TheHunter.instance, {
@@ -75,7 +75,7 @@ class EyeSpy : Listener {
             player.spectatorTarget = null
             inEyeSpy.remove(player)
             player.playSound(player, Sound.ITEM_GOAT_HORN_SOUND_4, 1f, 1f)
-        }, 20L * game.itemSettings.settingsMap["eye-spy-duration"]!! as Long)
+        }, 20L * game.itemSettings.settingsMap["eye-spy-duration"]!! as Int)
     }
 
     private fun showingTitle(player: Player) {

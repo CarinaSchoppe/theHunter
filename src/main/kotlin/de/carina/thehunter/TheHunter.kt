@@ -37,25 +37,28 @@ class TheHunter : JavaPlugin() {
     TODOS till done:
     TODO: Premium join
     TODO: PlayerHiding
-    TODO: TOTAL CHECKUP
-    TODO: Price Online Shop
     TODO: Teammode
     TODO: Testing (, Damage, multirounds,  hiding,  teams, scoreboards, bugs)
-    TODO: NPC?
     TODO: WORLDBOARDER Reset? all good
     TODO: Hover animation (when scrolling
       TODO: Damagechecking
       TODO: PlayerChat
-      TODO: Mysql
       TODO: Teamfunctionchecks
       TODO: PlayerHeadInLobby
       TODO: TODO: Items (Eye etc.)
 
      */
 
+    /*
+    TODO: grenade makes no damage
+    TODO: player hidden after start
+
+     */
+
+
     companion object {
         var prefix = "§8[§6TheHunter§8] §f"
-        lateinit var instance: TheHunter
+        lateinit var instance: TheHunter //todo
     }
 
     lateinit var settings: Settings
@@ -120,6 +123,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(PlayerTeamHead(), this)
         pluginManager.registerEvents(SettingsConfigurator(), this)
         pluginManager.registerEvents(GameConfigurator(), this)
+        pluginManager.registerEvents(PlayerHotbarHover(), this)
 
         loadGamesFromFolders()
 

@@ -28,7 +28,7 @@ object Minigun : Gun {
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
     private val reloading = mutableMapOf<Player, Boolean>()
-    private val magazine = mutableMapOf<Player, Int>()
+    val magazine = mutableMapOf<Player, Int>()
     val minigun = ItemBuilder(Material.STONE_HOE).addDisplayName(TheHunter.prefix + "§7Minigun").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
 
     private fun bulletDelayMaker(player: Player) {

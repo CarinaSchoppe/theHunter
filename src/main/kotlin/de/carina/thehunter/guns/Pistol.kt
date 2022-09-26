@@ -28,7 +28,7 @@ object Pistol : Gun {
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
     private val reloading = mutableMapOf<Player, Boolean>()
-    private val magazine = mutableMapOf<Player, Int>()
+    val magazine = mutableMapOf<Player, Int>()
     val pistol = ItemBuilder(Material.WOODEN_HOE).addDisplayName(TheHunter.prefix + "§7Pistol").addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
 
     private fun bulletDelayMaker(player: Player) {
