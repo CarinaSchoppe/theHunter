@@ -67,6 +67,7 @@ class LobbyInteraction : Listener {
         if (event.entity is Player && (GamesHandler.playerInGames.containsKey(event.entity) || GamesHandler.spectatorInGames.containsKey(event.entity)) && GamesHandler.playerInGames[event.entity]!!.currentGameState !is IngameState) {
             event.isCancelled = true
             event.damage = 0.0
+
         }
     }
 

@@ -42,6 +42,7 @@ class TeamDamage : Listener {
             return
         event.isCancelled = true
         event.damage = 0.0
+
         damager.sendMessage(TheHunter.instance.messages.messagesMap["cant-team-damage"]!!)
     }
 }

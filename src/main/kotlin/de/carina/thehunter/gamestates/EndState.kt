@@ -58,17 +58,6 @@ class EndState(game: Game) : GameState(game) {
         game.spectators.toMutableList().forEach {
             it.performCommand("thehunter leave")
         }
-        game.players.clear()
-        game.spectators.clear()
-        game.gameEntities.clear()
-        game.countdowns.clear()
-        game.gameStates.clear()
-        game.playerSpawns.clear()
-        game.signs.clear()
-        game.teams.clear()
-        game.itemSettings.settingsMap.clear()
-        game.gameChest.chests.clear()
-        game.deathChest.deathChests.clear()
     }
 
     override val gameStateID: Int = GameStates.END_STATE.id

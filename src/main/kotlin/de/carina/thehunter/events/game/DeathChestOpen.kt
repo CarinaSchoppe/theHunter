@@ -37,16 +37,9 @@ class DeathChestOpen : Listener {
         val inventory: Inventory = GamesHandler.playerInGames[event.player]!!.deathChest.deathChests[GamesHandler.playerInGames[event.player]!!.deathChest.deathChests.keys.first {
             worldEquals(event.clickedBlock!!.location, it)
         }] ?: return
-
-
-
-        println("location:" + Location(event.clickedBlock!!.location.world, event.clickedBlock!!.location.x.toInt().toDouble(), event.clickedBlock!!.location.y.toInt().toDouble(), event.clickedBlock!!.location.z.toInt().toDouble()).toString())
-        println("should been:" + GamesHandler.playerInGames[event.player]!!.deathChest.deathChests.keys.toList().first())
-
-
         event.isCancelled = true
 
-        event.player.openInventory(inventory!!)
+        event.player.openInventory(inventory)
         event.player.playSound(event.player, Sound.BLOCK_CHEST_OPEN, 1f, 1f)
     }
 
