@@ -34,12 +34,12 @@ class Team(var teamLeader: Player) {
             return false
         }
 
-        if (!GamesHandler.playerInGames.containsKey(playerToAdd)) {
+        if (!GamesHandler.playerInGames.containsKey(playerToAdd) && !GamesHandler.spectatorInGames.containsKey(playerToAdd)) {
             leader.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]!!.replace(ConstantStrings.PLAYER_SPAWN, playerToAdd.name))
             return false
         }
 
-        GamesHandler.playerInGames[playerToAdd]!!.teams.forEach {
+        (GamesHandler.playerInGames[playerToAdd] ?: GamesHandler.spectatorInGames[playerToAdd])!!.teams.forEach {
             if (it.teamMembers.contains(playerToAdd)) {
                 leader.sendMessage(TheHunter.instance.messages.messagesMap["team-player-already-in-other-team"]!!.replace(ConstantStrings.PLAYER_PERCENT, playerToAdd.name))
                 return false
@@ -98,7 +98,7 @@ class Team(var teamLeader: Player) {
         }
 
         fun isTeamMember(player: Player, other: Player): Boolean {
-            if (GamesHandler.playerInGames.containsKey(player) && GamesHandler.playerInGames[player]!!.teams.any { it.teamMembers.contains(other) }) {
+            if ((GamesHandler.playerInGames.containsKey(player) || GamesHandler.spectatorInGames.containsKey(player)) && (GamesHandler.playerInGames[player] ?: GamesHandler.spectatorInGames[player])!!.teams.any { it.teamMembers.contains(other) }) {
                 return true
             }
             return false
@@ -140,7 +140,7 @@ class Team(var teamLeader: Player) {
             val game = GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader] ?: return
             val team = game.teams.find { it.teamMembers.contains(leader) }
             if (team != null) {
-                team.inviteTeamMember(playerToInvite, leader, GamesHandler.playerInGames[leader]!!)
+                team.inviteTeamMember(playerToInvite, leader, GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!)
             } else {
                 GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!.teams.add(Team(leader))
                 GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!.teams.last().teamMembers.add(leader)
