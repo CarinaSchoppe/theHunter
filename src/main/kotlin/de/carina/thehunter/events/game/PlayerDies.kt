@@ -53,7 +53,7 @@ class PlayerDies : Listener {
             return
         println("player killed other")
         killer.level += 1
-        game.currentGameKills[player] = game.currentGameKills.getOrDefault(killer, 0) + 1
+        game.currentGameKills[killer] = game.currentGameKills.getOrDefault(killer, 0) + 1
         killer.playSound(killer, Sound.ITEM_GOAT_HORN_SOUND_7, 1f, 1f)
         TheHunter.instance.statsSystem.playerKilledOtherPlayer(killer, player)
         game.deathChest.createDeathChest(player)

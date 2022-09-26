@@ -70,7 +70,7 @@ class EggBomb : Listener {
     private fun eggBombBoom(game: Game, event: ProjectileHitEvent, egg: Egg) {
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Runnable {
             val tnt = event.entity.location.world.spawn(event.entity.location, org.bukkit.entity.TNTPrimed::class.java)
-            tnt.fuseTicks = 0
+            tnt.fuseTicks = 2
             tnt.source = egg
             bombs.add(tnt)
             GamesHandler.entitiesInGames[tnt] = game

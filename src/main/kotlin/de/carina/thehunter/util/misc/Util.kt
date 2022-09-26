@@ -36,10 +36,11 @@ object Util {
             player.hidePlayer(TheHunter.instance, it)
         }
 
-        game.spectators.forEach {
-            it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
-        }
-        if (game.currentGameState !is IngameState)
+        if (game.currentGameState !is EndState)
+            game.spectators.forEach {
+                it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
+            }
+        if (game.currentGameState !is IngameState && game.currentGameState !is EndState)
             game.players.forEach {
                 it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
             }

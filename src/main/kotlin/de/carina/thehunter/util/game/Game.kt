@@ -101,14 +101,17 @@ class Game(var name: String) {
     }
 
     private fun clearAll() {
-        players.clear()
-        spectators.clear()
         playerSpawns.clear()
         teams.clear()
-        gameEntities.clear()
         signs.clear()
+        players.clear()
+        spectators.clear()
         gameEntities.clear()
         countdowns.clear()
+        gameStates.clear()
+        itemSettings.settingsMap.clear()
+        gameChest.chests.clear()
+        deathChest.deathChests.clear()
     }
 
     private fun saveGameToConfig(): Boolean {
