@@ -201,14 +201,7 @@ class Game(var name: String) {
 
     fun checkWinning(): Boolean {
         when (players.size) {
-            /*    1 -> {
-                    val message = TheHunter.instance.messages.messagesMap["player-won"]!!.replace("%player%", players.first().name)
-                    for (spectator in spectators)
-                        spectator.sendMessage(message)
-                    players.forEach { it.sendMessage(message) }
-                    TheHunter.instance.statsSystem.playerWon(players.first())
-                    return true
-                }*/
+
             0 -> {
                 val message = TheHunter.instance.messages.messagesMap["game-over"]!!
                 for (spectator in spectators)
@@ -217,14 +210,18 @@ class Game(var name: String) {
             }
 
             else -> {
-                val team: Team = teams.find {
-                    it.teamMembers.contains(players.first())
-                } ?: return false
-                if (!team.teamMembers.containsAll(players))
-                    return false
+                val team = teams.find {
+                    it.teamMembers.containsAll(players)
+                }
+                if (team == null && players.size == 1) {
+                    val message = TheHunter.instance.messages.messagesMap["player-won"]!!.replace("%player%", players.first().name)
+                    for (spectator in spectators) spectator.sendMessage(message)
+                    players.forEach { it.sendMessage(message) }
+                    TheHunter.instance.statsSystem.playerWon(players.first())
+                    return true
+                } else if (team == null) return false
                 val message = TheHunter.instance.messages.messagesMap["team-won"]!!.replace("%leader%", team.teamLeader.name)
-                for (spectator in spectators)
-                    spectator.sendMessage(message)
+                for (spectator in spectators) spectator.sendMessage(message)
                 players.forEach {
                     it.sendMessage(message)
                     TheHunter.instance.statsSystem.playerWon(it)
