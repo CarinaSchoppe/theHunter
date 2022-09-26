@@ -36,7 +36,6 @@ class TheHunter : JavaPlugin() {
     /*
     TODO: Premium join
     TODO: Teammode
-        TODO: scoreboard
     TODO: grenade makes no damage
      */
 

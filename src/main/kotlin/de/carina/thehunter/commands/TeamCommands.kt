@@ -25,20 +25,23 @@ class TeamCommands {
         if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.TEAM_COMMAND, 1, Permissions.TEAM_COMMAND))
             return
 
-        if (!GamesHandler.playerInGames.containsKey(sender as Player) && !GamesHandler.spectatorInGames.containsKey(sender)) {
+        if (GamesHandler.playerInGames.containsKey(sender) || GamesHandler.spectatorInGames.containsKey(sender)) {
+            GamesHandler.playerInGames.keys.forEach {
+                println(it.name)
+            }
             sender.sendMessage(TheHunter.instance.messages.messagesMap["player-own-not-in-game"]!!)
             return
         }
         if (args[0].lowercase() == ConstantStrings.LEAVE_COMMAND) {
-            Team.removePlayerFromTeam(sender, sender)
+            Team.removePlayerFromTeam(sender as Player, sender)
         } else if (args[0].lowercase() == ConstantStrings.INVITE_COMMAND) {
-            invite(sender, args)
+            invite(sender as Player, args)
         } else if (args[0].lowercase() == ConstantStrings.REMOVE_COMMAND) {
-            remove(sender, args)
+            remove(sender as Player, args)
         } else if (args[0].lowercase() == ConstantStrings.ACCEPT_COMMAND) {
-            accept(sender, args)
+            accept(sender as Player, args)
         } else if (args[0].lowercase() == ConstantStrings.PROMOTE_COMMAND) {
-            promote(sender, args)
+            promote(sender as Player, args)
         }
     }
 

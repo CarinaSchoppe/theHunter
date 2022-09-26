@@ -6,7 +6,8 @@ object ConstantStrings {
     const val GUI_COMMAND = "gui"
     const val START_COMMAND = "start"
     const val STATS_COMMAND = "stats"
-    const val TEAM_COMMAND = "team"
+    const val
+            TEAM_COMMAND = "team"
     const val DELETE_COMMAND = "delete"
     const val JOIN_COMMAND = "join"
     const val SETUP_COMMAND = "setup"

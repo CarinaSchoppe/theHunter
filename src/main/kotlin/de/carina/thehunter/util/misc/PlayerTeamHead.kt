@@ -25,9 +25,9 @@ import org.bukkit.inventory.ItemStack
 class PlayerTeamHead : Listener {
 
     companion object {
-        fun createPlayerHead(): ItemStack {
-            return ItemBuilder(Material.PLAYER_HEAD).addDisplayName(TheHunter.prefix + "§7Team-Inviter").addEnchantment(org.bukkit.enchantments.Enchantment.DURABILITY, 1).addLore("§aLeftclick to accept").addLore("§aRightclick to invite").build()
-        }
+        val createPlayerHead: ItemStack =
+            ItemBuilder(Material.PLAYER_HEAD).addDisplayName(TheHunter.prefix + "§7Team-Inviter").addEnchantment(org.bukkit.enchantments.Enchantment.DURABILITY, 1).addLore("§aLeftclick to accept").addLore("§aRightclick to invite").build()
+
     }
 
     @EventHandler
@@ -35,7 +35,7 @@ class PlayerTeamHead : Listener {
 
         if (!event.player.inventory.itemInMainHand.hasItemMeta())
             return
-        if (event.player.inventory.itemInMainHand.itemMeta != createPlayerHead().itemMeta)
+        if (event.player.inventory.itemInMainHand.itemMeta != createPlayerHead.itemMeta)
             return
         if (!event.player.hasPermission(Permissions.PLAYER_INVITER))
             return
@@ -70,7 +70,7 @@ class PlayerTeamHead : Listener {
         if (!game.players.contains(event.entity as Player))
             return
 
-        if ((event.damager as Player).inventory.itemInMainHand.itemMeta != createPlayerHead().itemMeta)
+        if ((event.damager as Player).inventory.itemInMainHand.itemMeta != createPlayerHead.itemMeta)
             return
         (event.damager as Player).performCommand("theHunter team invite " + event.entity.name)
 

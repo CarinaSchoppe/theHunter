@@ -44,7 +44,7 @@ class LobbyInteraction : Listener {
                 event.isCancelled = true
                 event.damage = 0.0
 
-                if ((event.damager as Player).inventory.itemInMainHand.itemMeta != Items.leaveItem.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead().itemMeta)
+                if ((event.damager as Player).inventory.itemInMainHand.itemMeta != Items.leaveItem.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead.itemMeta)
                     event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
 
             }

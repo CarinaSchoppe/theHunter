@@ -42,7 +42,7 @@ class JoinGame {
         Util.updateGameSigns(game)
         sender.inventory.clear()
         sender.inventory.setItem(8, Items.leaveItem)
-        sender.inventory.setItem(5, PlayerTeamHead.createPlayerHead())
+        sender.inventory.setItem(5, PlayerTeamHead.createPlayerHead)
         sender.gameMode = GameMode.SURVIVAL
         sender.playSound(sender, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
         if (game.currentCountdown is LobbyCountdown) {

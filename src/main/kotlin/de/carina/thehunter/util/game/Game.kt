@@ -255,9 +255,7 @@ class Game(var name: String) {
             Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", name))
             return
         }
-        currentGameState.stop()
-        currentGameState = gameStates[GameStates.END_STATE.id]
-        currentGameState.stop()
+
         GamesHandler.setupGames.remove(this)
         GamesHandler.games.remove(this)
         currentGameState = gameStates[GameStates.LOBBY_STATE.id]
