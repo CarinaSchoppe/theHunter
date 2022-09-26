@@ -1,12 +1,5 @@
 /*
- * Copyright Notice for theHunterRemaster
- * Copyright (c) at Carivalna Sophie Schoppe Any2022
- * File created on 8/9/22, 1:24 PM by Carina The Latest changes made by Carina on 8/9/22, 1:19 PM All contents of "CreateGame.kt" are protected by copyright.
- * The copyright law, unless expressly indicated otherwise, is
- * at Carina Sophie Schoppe. All rights reserved
- * Any type of duplication, distribution, rental, sale, award,
- * Public accessibility or other use
- * requires the express written consent of Carina Sophie Schoppe.
+ * Copyright Notice for theHunterRemaster Copyright (c) at Carina Sophie Schoppe 2022 File created on 9/26/22, 11:08 PM by Carina Sophie The Latest changes made by Carina Sophie on 9/2/22, 2:07 PM All contents of "CreateGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is at Carina Sophie Schoppe. All rights reserved Any type of duplication, distribution, rental, sale, award, Public accessibility or other use requires the express written consent of Carina Sophie Schoppe.
  */
 
 package de.carina.thehunter.commands

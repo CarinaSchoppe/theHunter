@@ -1,12 +1,5 @@
 /*
- * Copyright Notice for theHunterRemaster
- * Copyright (c) at Carina Sophie Schoppe 2022
- * File created on 6/7/22, 3:55 PM by Carina The Latest changes made by Carina on 6/7/22, 3:50 PM All contents of "LobbyInteraction.kt" are protected by copyright.
- * The copyright law, unless expressly indicated otherwise, is
- * at Carina Sophie Schoppe. All rights reserved
- * Any type of duplication, distribution, rental, sale, award,
- * Public accessibility or other use
- * requires the express written consent of Carina Sophie Schoppe.
+ * Copyright Notice for theHunterRemaster Copyright (c) at Carina Sophie Schoppe 2022 File created on 9/26/22, 11:08 PM by Carina Sophie The Latest changes made by Carina Sophie on 9/26/22, 10:50 PM All contents of "LobbyInteraction.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is at Carina Sophie Schoppe. All rights reserved Any type of duplication, distribution, rental, sale, award, Public accessibility or other use requires the express written consent of Carina Sophie Schoppe.
  */
 package de.carina.thehunter.events.misc
 
