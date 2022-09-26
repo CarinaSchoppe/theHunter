@@ -13,7 +13,8 @@ package de.carina.thehunter.events.game
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.game.GamesHandler
-import de.carina.thehunter.util.misc.Util
+import de.carina.thehunter.util.misc.ConstantStrings
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -28,27 +29,35 @@ class PlayerDisconnects : Listener {
         val game = GamesHandler.playerInGames[event.player]!!
 
         if (game.currentGameState !is IngameState) {
-            removePlayer(event.player)
+            handlePlayer(event.player)
             return
         } else {
-            game.deathChests.createDeathChest(event.player)
-            removePlayer(event.player)
-            TheHunter.instance.statsSystem.playerDied(event.player)
-            if (game.checkWinning())
-                game.nextGameState()
+            handlePlayer(event.player)
+
         }
     }
 
-    private fun removePlayer(player: Player) {
+
+    private fun handlePlayer(player: Player) {
+        if (!GamesHandler.playerInGames.containsKey(player))
+            return
         val game = GamesHandler.playerInGames[player]!!
-        game.spectators.remove(player)
-        game.players.remove(player)
-        player.inventory.clear()
-        Util.updateGameSigns(game)
-        GamesHandler.playerInGames.remove(player)
-        GamesHandler.spectatorInGames.remove(player)
-        player.teleport(game.backLocation!!)
-        Util.playerHiding(game, player)
+        if (game.currentGameState !is IngameState)
+            return
+        TheHunter.instance.statsSystem.playerDied(player)
+        player.playSound(player, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 1f)
+        game.deathChests.createDeathChest(player)
+
+        PlayerKillsOtherOrDies.generalHandling(player, game)
+
+        game.players.forEach {
+            it.sendMessage(TheHunter.instance.messages.messagesMap["player-died"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
+        }
+        game.spectators.filter { it.name != player.name }.forEach {
+            it.sendMessage(TheHunter.instance.messages.messagesMap["player-died"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
+        }
+        if (game.checkWinning())
+            game.nextGameState()
 
     }
 }

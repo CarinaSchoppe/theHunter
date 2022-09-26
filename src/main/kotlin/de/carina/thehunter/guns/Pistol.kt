@@ -88,9 +88,8 @@ object Pistol : Gun {
     }
 
     fun reloadGun(player: Player) {
+        player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
         if (reloading[player] == true) {
-            player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
-
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
             return
         }

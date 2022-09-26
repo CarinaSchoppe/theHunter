@@ -167,6 +167,8 @@ class GunHandler : Listener {
         }
     }
 
+
+    //TODO: not allways damaage
     @EventHandler
     fun onPlayerHitEvent(event: EntityDamageByEntityEvent) {
         if (event.damager !is Arrow)
@@ -179,24 +181,27 @@ class GunHandler : Listener {
             return
         player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
         (event.entity as Player).playSound(event.entity.location, Sound.ENTITY_PLAYER_HURT, 1f, 1f)
-        if (Ak.shotBullets.containsKey(player)) {
-            if (Ak.shotBullets[player]!!.contains(arrow)) {
-                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-damage"]?.plus(0.0) ?: 3.0
-                return
-            }
-        } else if (Minigun.shotBullets.containsKey(player)) {
-            if (Minigun.shotBullets[player]!!.contains(arrow)) {
-                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-damage"]?.plus(0.0) ?: 1.0
-                return
-            }
+        println("shot was hit")
+        if (Ak.shotBullets[player]?.contains(arrow) == true) {
+            event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-damage"]?.plus(0.0) ?: 3.0
+            Ak.shotBullets[player]!!.remove(arrow)
+            return
+        } else if (Minigun.shotBullets[player]?.contains(arrow) == true) {
 
-        } else if (Sniper.shotBullets.containsKey(player)) {
-            if (Sniper.shotBullets[player]!!.contains(arrow)) {
-                event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-damage"]?.plus(0.0) ?: 5.0
-                return
-            }
-        } else if (Pistol.shotBullets.containsKey(player) && Pistol.shotBullets[player]!!.contains(arrow)) {
+            event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-damage"]?.plus(0.0) ?: 1.0
+            Minigun.shotBullets[player]!!.remove(arrow)
+
+            return
+
+
+        } else if (Sniper.shotBullets[player]?.contains(arrow) == true) {
+            event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-damage"]?.plus(0.0) ?: 6.0
+            Sniper.shotBullets[player]!!.remove(arrow)
+            return
+        } else if (Pistol.shotBullets[player]?.contains(arrow) == true) {
             event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-damage"]?.plus(0.0) ?: 2.0
+            Pistol.shotBullets[player]!!.remove(arrow)
+
             return
         }
     }

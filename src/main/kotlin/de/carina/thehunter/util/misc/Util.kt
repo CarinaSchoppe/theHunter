@@ -41,7 +41,7 @@ object Util {
         }
         if (game.currentGameState !is IngameState)
             game.players.forEach {
-                it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace(ConstantStrings.PLAYERS_PERCENT, player.name))
+                it.sendMessage(TheHunter.instance.messages.messagesMap["player-quit"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
             }
     }
 

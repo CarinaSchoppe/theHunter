@@ -72,7 +72,6 @@ class EyeSpy : Listener {
         TheHunter.instance.server.scheduler.scheduleSyncDelayedTask(TheHunter.instance, {
             player.teleport(lastPlayerLocation[player]!!)
             player.gameMode = GameMode.SURVIVAL
-            player.spectatorTarget = null
             inEyeSpy.remove(player)
             player.playSound(player, Sound.ITEM_GOAT_HORN_SOUND_4, 1f, 1f)
         }, 20L * game.itemSettings.settingsMap["eye-spy-duration"]!! as Int)

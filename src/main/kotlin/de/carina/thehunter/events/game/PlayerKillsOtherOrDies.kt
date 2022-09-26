@@ -31,7 +31,7 @@ class PlayerKillsOtherOrDies : Listener {
     @EventHandler
     fun onPlayerKillsOther(event: PlayerDeathEvent) {
         if (event.entity.killer != null) {
-            if (event.entity.killer == null) {
+            if (event.entity.killer !is Player) {
                 addDeathToPlayer(event, event.player)
             } else {
                 playerKilledOther(event, event.player, event.entity.killer!!)
@@ -51,15 +51,18 @@ class PlayerKillsOtherOrDies : Listener {
         val game = GamesHandler.playerInGames[player]!!
         if (game.currentGameState !is IngameState)
             return
+        println("player killed other")
         killer.playSound(killer, Sound.ITEM_GOAT_HORN_SOUND_7, 1f, 1f)
         TheHunter.instance.statsSystem.playerKilledOtherPlayer(killer, player)
+        game.deathChests.createDeathChest(player)
+
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Consumer {
             player.spigot().respawn()
             generalHandling(player, game)
         }, 1)
         event.deathMessage(Component.text(""))
         playerHiding(player, game, killer)
-        player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-killed-by-other"]!!.replace(ConstantStrings.KILLER_PERCENT, killer.name))
+        player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-killed-by-other"]!!.replace(ConstantStrings.PLAYER_PERCENT, killer.name))
         if (game.checkWinning())
             game.nextGameState()
     }
@@ -85,6 +88,8 @@ class PlayerKillsOtherOrDies : Listener {
             return
         TheHunter.instance.statsSystem.playerDied(player)
         player.playSound(player, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 1f)
+        game.deathChests.createDeathChest(player)
+
         generalHandling(player, game)
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Consumer {
             player.spigot().respawn()
@@ -102,26 +107,25 @@ class PlayerKillsOtherOrDies : Listener {
 
     }
 
-    private fun generalHandling(player: Player, game: Game) {
-        game.deathChests.createDeathChest(player)
-        game.players.remove(player)
-        game.spectators.add(player)
-        player.inventory.clear()
-        player.inventory.setItem(8, Items.leaveItem)
-        player.teleport(game.spectatorLocation!!)
-        player.allowFlight = true
-        player.inventory.setItem(9, Items.leaveItem)
-        Bukkit.getOnlinePlayers().forEach {
-            it.hidePlayer(TheHunter.instance, player)
-            player.hidePlayer(TheHunter.instance, it)
-        }
-        game.players.forEach {
-            player.showPlayer(TheHunter.instance, it)
-            game.scoreBoard.createNewScoreboard(it)
-        }
-        game.spectators.forEach {
-            game.scoreBoard.createNewScoreboard(it)
-        }
+    companion object {
+        fun generalHandling(player: Player, game: Game) {
+            game.players.remove(player)
+            game.spectators.add(player)
+            player.inventory.clear()
+            player.inventory.setItem(8, Items.leaveItem)
+            player.inventory.setItem(9, Items.leaveItem)
+            player.teleport(game.spectatorLocation!!)
+            player.allowFlight = true
+            Bukkit.getOnlinePlayers().forEach {
+                it.hidePlayer(TheHunter.instance, player)
+                if (!game.players.contains(it))
+                    player.hidePlayer(TheHunter.instance, it)
+                if (game.players.contains(it) || game.spectators.contains(it))
+                    game.scoreBoard.createNewScoreboard(it)
+            }
 
+
+        }
     }
+
 }
