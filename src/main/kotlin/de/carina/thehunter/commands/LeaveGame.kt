@@ -34,11 +34,11 @@ class LeaveGame {
         }
         val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender] ?: return
         if (game.currentGameState !is IngameState) {
-            removePlayer(sender)
+            removePlayer(game, sender)
             return
         } else {
             game.deathChest.createDeathChest(sender)
-            removePlayer(sender)
+            removePlayer(game, sender)
             TheHunter.instance.statsSystem.playerDied(sender)
             if (game.checkWinning())
                 game.nextGameState()
@@ -47,8 +47,7 @@ class LeaveGame {
 
     }
 
-    private fun removePlayer(player: Player) {
-        val game = GamesHandler.playerInGames[player]!!
+    private fun removePlayer(game: Game, player: Player) {
         val team = game.teams.find { it.teamMembers.contains(player) }
         if (team != null) {
             Team.removePlayerFromTeam(player, player)

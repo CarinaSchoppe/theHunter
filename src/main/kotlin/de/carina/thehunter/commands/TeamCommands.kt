@@ -25,7 +25,7 @@ class TeamCommands {
         if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.TEAM_COMMAND, 1, Permissions.TEAM_COMMAND))
             return
 
-        if (!GamesHandler.playerInGames.containsKey(sender as Player)) {
+        if (!GamesHandler.playerInGames.containsKey(sender as Player) && !GamesHandler.spectatorInGames.containsKey(sender)) {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["player-own-not-in-game"]!!)
             return
         }
@@ -72,7 +72,7 @@ class TeamCommands {
 
 
     private fun accept(sender: Player, args: Array<out String>) {
-        val game = GamesHandler.playerInGames[sender] ?: return
+        val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender] ?: return
         if (game.teams.find { it.teamMembers.contains(sender) } != null) {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["player-already-in-team"]!!)
             return
@@ -88,7 +88,7 @@ class TeamCommands {
             return
         }
 
-        val team = GamesHandler.playerInGames[sender]!!.teams.find { it.teamLeader.name == player.name }
+        val team = (GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender])!!.teams.find { it.teamLeader.name == player.name }
         if (team == null) {
             sender.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]!!)
             return

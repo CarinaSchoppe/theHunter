@@ -119,7 +119,7 @@ class Team(var teamLeader: Player) {
             team.teamMembers.remove(player)
             player.sendMessage(TheHunter.instance.messages.messagesMap["player-left-team"]!!)
             if (team.teamMembers.isEmpty()) {
-                GamesHandler.playerInGames[player]!!.teams.remove(team)
+                (GamesHandler.playerInGames[player] ?: GamesHandler.spectatorInGames[player])!!.teams.remove(team)
                 return
             }
             if (team.teamLeader == player) {
@@ -137,19 +137,19 @@ class Team(var teamLeader: Player) {
         }
 
         fun invitePlayerToTeam(playerToInvite: Player, leader: Player) {
-            val game = GamesHandler.playerInGames[leader] ?: return
+            val game = GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader] ?: return
             val team = game.teams.find { it.teamMembers.contains(leader) }
             if (team != null) {
                 team.inviteTeamMember(playerToInvite, leader, GamesHandler.playerInGames[leader]!!)
             } else {
-                GamesHandler.playerInGames[leader]!!.teams.add(Team(leader))
-                GamesHandler.playerInGames[leader]!!.teams.last().teamMembers.add(leader)
-                GamesHandler.playerInGames[leader]!!.teams.last().inviteTeamMember(playerToInvite, leader, GamesHandler.playerInGames[leader]!!)
+                GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!.teams.add(Team(leader))
+                GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!.teams.last().teamMembers.add(leader)
+                GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!.teams.last().inviteTeamMember(playerToInvite, leader, GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!)
             }
         }
 
         fun promoteNewTeamLeader(player: Player, leader: Player) {
-            val game = GamesHandler.playerInGames[leader] ?: return
+            val game = GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[player] ?: return
             val team = game.teams.find { it.teamMembers.contains(leader) }
             if (team != null) {
                 team.promoteTeamLeader(player, leader)

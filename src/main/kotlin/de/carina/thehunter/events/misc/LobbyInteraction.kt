@@ -30,16 +30,9 @@ class LobbyInteraction : Listener {
     fun onDropInLobby(event: PlayerDropItemEvent) {
         if (!GamesHandler.playerInGames.containsKey(event.player) && !GamesHandler.spectatorInGames.containsKey(event.player))
             return
-        if (GamesHandler.playerInGames.containsKey(event.player)) {
-            if (GamesHandler.playerInGames[event.player]!!.currentGameState !is IngameState)
-                event.isCancelled = true
-            return
-        }
-        if (GamesHandler.spectatorInGames.containsKey(event.player)) {
-            if (GamesHandler.spectatorInGames[event.player]!!.currentGameState !is IngameState)
-                event.isCancelled = true
-            return
-        }
+        if (GamesHandler.playerInGames.containsKey(event.player) || GamesHandler.spectatorInGames.containsKey(event.player) && (GamesHandler.playerInGames[event.player] ?: GamesHandler.spectatorInGames[event.player]!!).currentGameState !is IngameState)
+            event.isCancelled = true
+
     }
 
 

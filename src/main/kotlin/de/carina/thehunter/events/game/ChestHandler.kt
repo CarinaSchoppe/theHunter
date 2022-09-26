@@ -31,7 +31,7 @@ class ChestHandler : Listener {
         if (event.clickedBlock!!.type != org.bukkit.Material.BEACON)
             return
 
-        val game = GamesHandler.playerInGames[event.player]!!
+        val game = GamesHandler.playerInGames[event.player] ?: return
         if (game.gameChest.chests.containsKey(event.clickedBlock!!.location)) {
             event.player.openInventory(game.gameChest.chests[event.clickedBlock!!.location]!!)
         } else {
