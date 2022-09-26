@@ -2,6 +2,7 @@ package de.carina.thehunter.util.database
 
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.files.BaseFile
+import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.StatsPlayer
 import de.carina.thehunter.util.misc.StatsSystem
 import org.bukkit.Bukkit
@@ -39,7 +40,7 @@ class MySQL {
             Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["prefix"] as String) + "§aUsing SQLite-Settings file")
 
             databaseFile = try {
-                val databaseFile = File(TheHunter.instance.settings.settingsMap["sqlite-path"]!! as String)
+                val databaseFile = File(TheHunter.instance.settings.settingsMap[ConstantStrings.SQLITE_PATH]!! as String)
                 if (!databaseFile.exists()) {
                     databaseFile.createNewFile()
                 }
@@ -48,8 +49,8 @@ class MySQL {
                 val file = File(BaseFile.gameFolder + "/database.db")
                 if (!file.exists()) {
                     file.createNewFile()
-                    TheHunter.instance.settings.settingsMap["sqlite-path"] = file.absolutePath
-                    TheHunter.instance.settings.yml.set("sqlite-path", file.absolutePath)
+                    TheHunter.instance.settings.settingsMap[ConstantStrings.SQLITE_PATH] = file.absolutePath
+                    TheHunter.instance.settings.yml.set(ConstantStrings.SQLITE_PATH, file.absolutePath)
                     TheHunter.instance.settings.yml.save(TheHunter.instance.settings.file)
                     Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["prefix"] as String) + "§aCreating own database-file...")
 

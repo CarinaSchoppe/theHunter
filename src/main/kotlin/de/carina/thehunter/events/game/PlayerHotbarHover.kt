@@ -5,6 +5,7 @@ import de.carina.thehunter.guns.Minigun
 import de.carina.thehunter.guns.Pistol
 import de.carina.thehunter.guns.Sniper
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -26,19 +27,19 @@ class PlayerHotbarHover : Listener {
                 }
 
                 Pistol.pistol.itemMeta -> {
-                    val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-ammo"]!!
+                    val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.PISTOL_AMMO]!!
                     val currentAmmo = Pistol.magazine.getOrDefault(player, 0)
                     player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
                 }
 
                 Sniper.sniper.itemMeta -> {
-                    val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!
+                    val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.SNIPER_AMMO]!!
                     val currentAmmo = Sniper.magazine.getOrDefault(player, 0)
                     player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
                 }
 
                 Minigun.minigun.itemMeta -> {
-                    val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-ammo"]!!
+                    val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.MINIGUN_AMMO]!!
                     val currentAmmo = Minigun.magazine.getOrDefault(player, 0)
                     player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
                 }

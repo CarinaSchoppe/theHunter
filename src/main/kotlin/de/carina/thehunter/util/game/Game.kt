@@ -142,7 +142,7 @@ class Game(var name: String) {
         val fileLocations = File("${BaseFile.gameFolder}/arenas/$name/locations.yml")
         val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
 
-        if (playerSpawns.isNotEmpty()) ymlLocations.addDefault("spawn-locations", playerSpawns)
+        if (playerSpawns.isNotEmpty()) ymlLocations.addDefault(ConstantStrings.SPAWN_LOCATIONS, playerSpawns)
         ymlLocations.addDefault("arena-center", arenaCenter)
         ymlLocations.addDefault("spectator-location", spectatorLocation)
         ymlLocations.addDefault("lobby-location", lobbyLocation)
@@ -182,8 +182,8 @@ class Game(var name: String) {
             val fileLocations = File("${BaseFile.gameFolder}/arenas/$fileName/locations.yml")
             val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
 
-            if (ymlLocations.getList("spawn-locations") != null)
-                game.playerSpawns.addAll(ymlLocations.getList("spawn-locations") as MutableList<Location>)
+            if (ymlLocations.getList(ConstantStrings.SPAWN_LOCATIONS) != null)
+                game.playerSpawns.addAll(ymlLocations.getList(ConstantStrings.SPAWN_LOCATIONS) as MutableList<Location>)
             game.lobbyLocation = ymlLocations.getLocation("lobby-location")!!
             game.backLocation = ymlLocations.getLocation("back-location")!!
             game.endLocation = ymlLocations.getLocation("end-location")!!

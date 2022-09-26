@@ -12,6 +12,7 @@
 package de.carina.thehunter.util.game
 
 import de.carina.thehunter.util.files.BaseFile
+import de.carina.thehunter.util.misc.ConstantStrings
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 
@@ -72,7 +73,7 @@ class GameItems(game: Game) {
         ymlGuns.addDefault("minigun-damage", 1)
         ymlGuns.addDefault("minigun-speed", 1)
         ymlGuns.addDefault("minigun-reload", 10)
-        ymlGuns.addDefault("minigun-ammo", 50)
+        ymlGuns.addDefault(ConstantStrings.MINIGUN_AMMO, 50)
         ymlGuns.addDefault("minigun-power", 7)
         ymlGuns.addDefault("ak-damage", 3)
         ymlGuns.addDefault("ak-speed", 2)
@@ -82,12 +83,12 @@ class GameItems(game: Game) {
         ymlGuns.addDefault("sniper-damage", 6)
         ymlGuns.addDefault("sniper-speed", 5)
         ymlGuns.addDefault("sniper-reload", 15)
-        ymlGuns.addDefault("sniper-ammo", 7)
+        ymlGuns.addDefault(ConstantStrings.SNIPER_AMMO, 7)
         ymlGuns.addDefault("sniper-power", 12)
         ymlGuns.addDefault("pistol-damage", 2)
         ymlGuns.addDefault("pistol-speed", 3)
         ymlGuns.addDefault("pistol-reload", 5)
-        ymlGuns.addDefault("pistol-ammo", 12)
+        ymlGuns.addDefault(ConstantStrings.PISTOL_AMMO, 12)
         ymlGuns.addDefault("pistol-power", 5)
 
 

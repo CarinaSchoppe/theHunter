@@ -11,6 +11,7 @@
 
 package de.carina.thehunter.util.files
 
+import de.carina.thehunter.util.misc.ConstantStrings
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -37,7 +38,7 @@ class Settings(filePath: String) : BaseFile(filePath) {
         yml.addDefault("scoreboard-enable", true)
         yml.addDefault("mysql", true)
         yml.addDefault("sqlite-enable", true)
-        yml.addDefault("sqlite-path", "plugins/TheHunter/sqlite.db")
+        yml.addDefault(ConstantStrings.SQLITE_PATH, "plugins/TheHunter/sqlite.db")
         yml.addDefault("mysql-host", "localhost")
         yml.addDefault("mysql-port", 3306)
         yml.addDefault("mysql-database", "thehunter")

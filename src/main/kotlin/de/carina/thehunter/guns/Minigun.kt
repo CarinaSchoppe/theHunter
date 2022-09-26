@@ -15,6 +15,7 @@ import de.carina.thehunter.events.game.PlayerHotbarHover
 import de.carina.thehunter.items.AmmoItems
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
+import de.carina.thehunter.util.misc.ConstantStrings
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -88,7 +89,7 @@ object Minigun : Gun {
     }
 
     fun reloadGun(player: Player) {
-        if (magazine.getOrDefault(player, 0) >= GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-ammo"]!!)
+        if (magazine.getOrDefault(player, 0) >= GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.MINIGUN_AMMO]!!)
             return
         player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
 
@@ -108,8 +109,8 @@ object Minigun : Gun {
             reloading[player] = false
             val amount = getAmmoAmount(player, AmmoItems.minigunAmmo)
             val old = magazine.getOrDefault(player, 0)
-            if (amount + old >= GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-ammo"]!!) {
-                magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-ammo"]!!
+            if (amount + old >= GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.MINIGUN_AMMO]!!) {
+                magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.MINIGUN_AMMO]!!
             } else
                 magazine[player] = amount + old
             repeat(magazine[player]!! - old) {

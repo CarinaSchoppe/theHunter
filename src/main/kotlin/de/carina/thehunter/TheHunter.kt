@@ -41,7 +41,7 @@ class TheHunter : JavaPlugin() {
 
     companion object {
         var prefix = "§8[§6TheHunter§8] §f"
-        lateinit var instance: TheHunter //todo
+        lateinit var instance: TheHunter
     }
 
     lateinit var settings: Settings

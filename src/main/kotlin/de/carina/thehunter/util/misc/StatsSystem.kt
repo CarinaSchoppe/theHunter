@@ -39,11 +39,11 @@ class StatsSystem : BaseFile("stats.yml") {
                     )?.executeUpdate()
                 } else {
                     TheHunter.instance.statsSystem.yml.set("$player.Kills", playerStats[player]!!.kills)
-                    TheHunter.instance.statsSystem.yml.set("$player.Deaths", playerStats[player]!!.deaths)
+                    TheHunter.instance.statsSystem.yml.set("$player${ConstantStrings.DOT_DEATHS}", playerStats[player]!!.deaths)
                     TheHunter.instance.statsSystem.yml.set("$player.KDR", playerStats[player]!!.kdr)
                     TheHunter.instance.statsSystem.yml.set("$player.Wins", playerStats[player]!!.wins)
                     TheHunter.instance.statsSystem.yml.set("$player.Loses", playerStats[player]!!.loses)
-                    TheHunter.instance.statsSystem.yml.set("$player.Points", playerStats[player]!!.points)
+                    TheHunter.instance.statsSystem.yml.set("$player${ConstantStrings.DOT_POINTS}", playerStats[player]!!.points)
                     TheHunter.instance.statsSystem.yml.set("$player.Games", playerStats[player]!!.games)
                     TheHunter.instance.statsSystem.addData()
                     TheHunter.instance.messages.sendMessageToConsole("stats-system-saved")
@@ -71,8 +71,8 @@ class StatsSystem : BaseFile("stats.yml") {
                     if (player != null) {
                         playerStats[player] = StatsPlayer(
                             TheHunter.instance.statsSystem.yml.getInt("$uuid.Kills"),
-                            TheHunter.instance.statsSystem.yml.getInt("$uuid.Deaths"),
-                            TheHunter.instance.statsSystem.yml.getInt("$uuid.Points"),
+                            TheHunter.instance.statsSystem.yml.getInt("$uuid${ConstantStrings.DOT_DEATHS}"),
+                            TheHunter.instance.statsSystem.yml.getInt("$uuid${ConstantStrings.DOT_POINTS}"),
                             TheHunter.instance.statsSystem.yml.getDouble("$uuid.KDR"),
                             TheHunter.instance.statsSystem.yml.getInt("$uuid.Wins"),
                             TheHunter.instance.statsSystem.yml.getInt("$uuid.Loses"),
@@ -96,11 +96,11 @@ class StatsSystem : BaseFile("stats.yml") {
                 )?.execute()
         } else {
             yml.set(player.uniqueId.toString() + ".Kills", 0)
-            yml.set(player.uniqueId.toString() + ".Deaths", 0)
+            yml.set(player.uniqueId.toString() + ConstantStrings.DOT_DEATHS, 0)
             yml.set(player.uniqueId.toString() + ".KDR", 0.0)
             yml.set(player.uniqueId.toString() + ".Wins", 0)
             yml.set(player.uniqueId.toString() + ".Loses", 0)
-            yml.set(player.uniqueId.toString() + ".Points", 0)
+            yml.set(player.uniqueId.toString() + ConstantStrings.DOT_POINTS, 0)
             yml.set(player.uniqueId.toString() + ".Games", 0)
             super.addData()
         }
@@ -126,10 +126,10 @@ class StatsSystem : BaseFile("stats.yml") {
             )?.executeUpdate()
         } else {
             yml.set(killer.uniqueId.toString() + ".Kills", playerStats[killer.uniqueId]!!.kills)
-            yml.set(killer.uniqueId.toString() + ".Points", playerStats[killer.uniqueId]!!.points)
-            yml.set(dead.uniqueId.toString() + ".Points", playerStats[dead.uniqueId]!!.points)
+            yml.set(killer.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[killer.uniqueId]!!.points)
+            yml.set(dead.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[dead.uniqueId]!!.points)
             yml.set(killer.uniqueId.toString() + ".KDR", playerStats[killer.uniqueId]!!.kdr)
-            yml.set(dead.uniqueId.toString() + ".Deaths", playerStats[dead.uniqueId]!!.deaths)
+            yml.set(dead.uniqueId.toString() + ConstantStrings.DOT_DEATHS, playerStats[dead.uniqueId]!!.deaths)
             yml.set(dead.uniqueId.toString() + ".KDR", playerStats[dead.uniqueId]!!.kdr)
             super.addData()
         }
@@ -145,7 +145,7 @@ class StatsSystem : BaseFile("stats.yml") {
             )?.executeUpdate()
         } else {
             yml.set(player.uniqueId.toString() + ".Wins", playerStats[player.uniqueId]!!.wins)
-            yml.set(player.uniqueId.toString() + ".Points", playerStats[player.uniqueId]!!.points)
+            yml.set(player.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[player.uniqueId]!!.points)
             super.addData()
         }
     }
@@ -159,9 +159,9 @@ class StatsSystem : BaseFile("stats.yml") {
                 "UPDATE statsPlayer SET deaths = '${playerStats[player.uniqueId]!!.deaths}',points='${playerStats[player.uniqueId]!!.points}', kdr = '${playerStats[player.uniqueId]!!.kdr}' WHERE uuid = '${player.uniqueId}'"
             )?.executeUpdate()
         } else {
-            yml.set(player.uniqueId.toString() + ".Deaths", playerStats[player.uniqueId]!!.deaths)
+            yml.set(player.uniqueId.toString() + ConstantStrings.DOT_DEATHS, playerStats[player.uniqueId]!!.deaths)
             yml.set(player.uniqueId.toString() + ".KDR", playerStats[player.uniqueId]!!.kdr)
-            yml.set(player.uniqueId.toString() + ".Points", playerStats[player.uniqueId]!!.points)
+            yml.set(player.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[player.uniqueId]!!.points)
             super.addData()
         }
 
