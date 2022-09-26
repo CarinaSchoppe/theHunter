@@ -88,9 +88,12 @@ class StatsSystem : BaseFile("stats.yml") {
 
     fun generateNewStatsPlayer(player: Player) {
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
-            MySQL.connection.prepareStatement(
-                "INSERT INTO statsPlayer(uuid, kills, deaths, points, kdr, wins,loses,games) VALUES ('${player.uniqueId}', 0, 0, 0,0.0, 0,0,0)"
-            )?.execute()
+            //check if player is not allready in database
+
+            if (!MySQL.connection.prepareStatement("SELECT * FROM statsPLayer WHERE uuid = '${player.uniqueId}' LIMIT 1").executeQuery().next())
+                MySQL.connection.prepareStatement(
+                    "INSERT INTO statsPlayer(uuid, kills, deaths, points, kdr, wins,loses,games) VALUES ('${player.uniqueId}', 0, 0, 0,0.0,0,0,0)"
+                )?.execute()
         } else {
             yml.set(player.uniqueId.toString() + ".Kills", 0)
             yml.set(player.uniqueId.toString() + ".Deaths", 0)
