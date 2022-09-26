@@ -17,8 +17,8 @@ class PlayerHotbarHover : Listener {
 
     companion object {
 
-        fun updateHotbar(item: ItemStack, player: Player) {
-            when (item.itemMeta) {
+        fun updateHotbar(item: ItemStack?, player: Player) {
+            when (item?.itemMeta) {
                 Ak.ak.itemMeta -> {
                     val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!
                     val currentAmmo = Ak.magazine.getOrDefault(player, 0)
@@ -54,7 +54,7 @@ class PlayerHotbarHover : Listener {
     fun onPlayerInventoryHover(event: PlayerItemHeldEvent) {
         if (!GamesHandler.playerInGames.containsKey(event.player))
             return
-        val item = event.player.inventory.getItem(event.newSlot)!!
+        val item = event.player.inventory.getItem(event.newSlot)
 
         updateHotbar(item, event.player)
 

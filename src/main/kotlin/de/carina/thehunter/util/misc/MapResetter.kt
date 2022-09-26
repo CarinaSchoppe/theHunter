@@ -36,8 +36,6 @@ class MapResetter(val game: Game) {
 
             world.getBlockAt(x, y, z).type = type
             world.getBlockAt(x, y, z).blockData = blockData
-
-
         }
     }
 
