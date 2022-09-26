@@ -66,6 +66,7 @@ class Game(var name: String) {
     var immunity = 10
     var teamDamage = false
     var mapModify = false
+    var regenerate = false
 
 
     fun isGameInvalidConfigured(): Boolean {
@@ -122,6 +123,7 @@ class Game(var name: String) {
         ymlSettings.addDefault("random-drop", randomPlayerDrop)
         ymlSettings.addDefault("immunity", immunity)
         ymlSettings.addDefault("map-modify", mapModify)
+        ymlSettings.addDefault("player-regenerate", regenerate)
         ymlSettings.addDefault("max-players", maxPlayers)
         ymlSettings.addDefault("min-players", minPlayers)
         ymlSettings.addDefault("world-boarder-size", worldBoarderController.worldBoarderSize)
@@ -166,6 +168,7 @@ class Game(var name: String) {
             game.immunity = ymlSettings.getInt("immunity")
             game.mapModify = ymlSettings.getBoolean("map-modify")
             game.teamDamage = ymlSettings.getBoolean("team-damage")
+            game.regenerate = ymlSettings.getBoolean("player-regenerate")
             game.worldBoarderController.worldBoarderSize = ymlSettings.getInt("world-boarder-size")
             game.worldBoarderController.shrinkSpeed = ymlSettings.getInt("worldboarder-shrinkspeed")
             game.worldBoarderController.minBorderSize = ymlSettings.getInt("worldboarder-min-border-size")

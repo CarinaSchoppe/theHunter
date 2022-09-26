@@ -25,6 +25,18 @@ class EndState(game: Game) : GameState(game) {
 
         game.currentCountdown = game.countdowns[Countdowns.END_COUNTDOWN.id]
         game.currentCountdown.start()
+
+        game.spectators.forEach { spectator ->
+            game.spectators.forEach {
+                spectator.showPlayer(TheHunter.instance, it)
+                it.showPlayer(TheHunter.instance, spectator)
+            }
+        }
+        game.players.forEach { player ->
+            game.spectators.forEach { spectator ->
+                player.showPlayer(TheHunter.instance, spectator)
+            }
+        }
     }
 
 
@@ -33,10 +45,6 @@ class EndState(game: Game) : GameState(game) {
             it.playSound(it.location, Sound.ENTITY_ENDER_DRAGON_DEATH, 1f, 1f)
             it.inventory.clear()
             it.teleport(game.endLocation!!)
-            for (spectator in game.spectators.toMutableList()) {
-                spectator.showPlayer(TheHunter.instance, it)
-                it.showPlayer(TheHunter.instance, spectator)
-            }
         }
     }
 

@@ -47,6 +47,6 @@ class Swapper : Listener {
         event.player.playSound(event.player, Sound.BLOCK_BIG_DRIPLEAF_BREAK, 1f, 1f)
         target.playSound(target, Sound.BLOCK_BIG_DRIPLEAF_BREAK, 1f, 1f)
         target.sendMessage(TheHunter.instance.messages.messagesMap["player-swapped"]!!.replace(ConstantStrings.PLAYER_PERCENT, event.player.name))
-        event.player.sendMessage(TheHunter.instance.messages.messagesMap["player-swapped"]!!.replace(ConstantStrings.PLAYER_SPAWN, target.name))
+        event.player.sendMessage(TheHunter.instance.messages.messagesMap["player-swapped"]!!.replace(ConstantStrings.PLAYER_PERCENT, target.name))
     }
 }

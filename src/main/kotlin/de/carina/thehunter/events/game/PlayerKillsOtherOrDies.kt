@@ -106,9 +106,9 @@ class PlayerKillsOtherOrDies : Listener {
         game.deathChests.createDeathChest(player)
         game.players.remove(player)
         game.spectators.add(player)
+        player.inventory.clear()
         player.inventory.setItem(8, Items.leaveItem)
         player.teleport(game.spectatorLocation!!)
-        player.inventory.clear()
         player.allowFlight = true
         player.inventory.setItem(9, Items.leaveItem)
         Bukkit.getOnlinePlayers().forEach {

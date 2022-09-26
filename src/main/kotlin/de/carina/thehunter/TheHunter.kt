@@ -124,6 +124,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(SettingsConfigurator(), this)
         pluginManager.registerEvents(GameConfigurator(), this)
         pluginManager.registerEvents(PlayerHotbarHover(), this)
+        pluginManager.registerEvents(PlayerRegenerateIngame(), this)
 
         loadGamesFromFolders()
 
