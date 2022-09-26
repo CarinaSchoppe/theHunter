@@ -30,7 +30,7 @@ class Team(var teamLeader: Player) {
             return false
         }
         if (teamMembers.contains(playerToAdd)) {
-            TheHunter.instance.messages.sendMessageToPlayer(leader, "team-player-already-in-team")
+            TheHunter.instance.messages.sendMessageToPlayer(leader, "team-player-already-in-own-team".replace(ConstantStrings.PLAYER_PERCENT, playerToAdd.name))
             return false
         }
 
@@ -142,9 +142,9 @@ class Team(var teamLeader: Player) {
             if (team != null) {
                 team.inviteTeamMember(playerToInvite, leader, GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!)
             } else {
-                GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!.teams.add(Team(leader))
-                GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!.teams.last().teamMembers.add(leader)
-                GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!.teams.last().inviteTeamMember(playerToInvite, leader, GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!)
+                (GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader])!!.teams.add(Team(leader))
+                (GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader])!!.teams.last().teamMembers.add(leader)
+                (GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader])!!.teams.last().inviteTeamMember(playerToInvite, leader, GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader]!!)
             }
         }
 

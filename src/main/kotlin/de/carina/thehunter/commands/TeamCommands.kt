@@ -25,10 +25,7 @@ class TeamCommands {
         if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.TEAM_COMMAND, 1, Permissions.TEAM_COMMAND))
             return
 
-        if (GamesHandler.playerInGames.containsKey(sender) || GamesHandler.spectatorInGames.containsKey(sender)) {
-            GamesHandler.playerInGames.keys.forEach {
-                println(it.name)
-            }
+        if (!GamesHandler.playerInGames.containsKey(sender) && !GamesHandler.spectatorInGames.containsKey(sender)) {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["player-own-not-in-game"]!!)
             return
         }
