@@ -166,7 +166,6 @@ class GunHandler : Listener {
     }
 
 
-    //TODO: not allways damaage
     @EventHandler
     fun onPlayerHitEvent(event: EntityDamageByEntityEvent) {
         if (event.damager !is Arrow)

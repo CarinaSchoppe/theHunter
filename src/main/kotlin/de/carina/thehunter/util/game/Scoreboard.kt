@@ -11,7 +11,6 @@
 package de.carina.thehunter.util.game
 
 import de.carina.thehunter.TheHunter
-import de.carina.thehunter.util.misc.StatsSystem
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -31,7 +30,7 @@ class Scoreboard(val game: Game) {
         val objective: Objective = scoreboard.registerNewObjective("aaa", Criteria.DUMMY, Component.text(serverName))
         objective.displaySlot = DisplaySlot.SIDEBAR
 
-        val six = objective.getScore("§fKills: §d${StatsSystem.playerStats[player.uniqueId]!!.kills}")
+        val six = objective.getScore("§fKills: §d${game.currentGameKills.getOrDefault(player, 0)}")
         val five = objective.getScore("§aAlive Players:")
         val four = objective.getScore("§f" + game.players.size)
         val three = objective.getScore("§eMap Name:")

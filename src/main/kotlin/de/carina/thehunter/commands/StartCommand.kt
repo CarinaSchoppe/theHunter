@@ -12,7 +12,7 @@ class StartCommand : CommandExecutor {
         if (sender !is Player)
             return false
 
-        if (!GamesHandler.playerInGames.containsKey(sender))
+        if (!GamesHandler.playerInGames.containsKey(sender) && !GamesHandler.spectatorInGames.containsKey(sender))
             return false
         sender.performCommand("thehunter start")
         return false

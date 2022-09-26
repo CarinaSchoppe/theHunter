@@ -46,6 +46,7 @@ class IngameState(game: Game) : GameState(game) {
 
     private fun forEachPlayer() {
         for ((index, player) in game.players.withIndex()) {
+            player.level = 0
             if (!game.randomPlayerDrop)
                 player.teleport(game.playerSpawns[index])
 

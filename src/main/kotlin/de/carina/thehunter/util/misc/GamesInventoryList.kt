@@ -25,7 +25,6 @@ class GamesInventoryList : Listener {
     @EventHandler
     fun onInventoryJoin(event: InventoryClickEvent) {
         if (PlainTextComponentSerializer.plainText().serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§6Games"))) {
-            //TODO: Test hier
             return
         }
         event.isCancelled = true

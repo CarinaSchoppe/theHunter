@@ -47,6 +47,7 @@ class Game(var name: String) {
 
 
     val countdowns = mutableListOf<Countdown>()
+    val currentGameKills = mutableMapOf<Player, Int>()
     val players = mutableSetOf<Player>()
     val spectators = mutableSetOf<Player>()
     val playerSpawns = mutableListOf<Location>()
@@ -89,6 +90,7 @@ class Game(var name: String) {
             currentGameState = gameStates[GameStates.END_STATE.id]
             clearAll()
             GamesHandler.games.remove(this)
+
             loadGameFromConfig(name)
         } else {
             currentGameState.stop()

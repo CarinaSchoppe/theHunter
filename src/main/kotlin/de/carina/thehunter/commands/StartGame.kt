@@ -24,10 +24,10 @@ class StartGame {
     fun start(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.START_COMMAND, 0, Permissions.START_COMMAND))
             return
-        if (!GamesHandler.playerInGames.containsKey(sender as Player))
+        if (!GamesHandler.playerInGames.containsKey(sender as Player) && !GamesHandler.spectatorInGames.containsKey(sender))
             return
-        val game = GamesHandler.playerInGames[sender]
-        if (game!!.currentGameState !is LobbyState)
+        val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender]!!
+        if (game.currentGameState !is LobbyState)
             return
         if (game.currentCountdown.duration > 5) {
             game.currentCountdown.duration = 5

@@ -28,11 +28,11 @@ class LeaveGame {
         if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.LEAVE_COMMAND, 0, Permissions.LEAVE_COMMAND))
             return
 
-        if (!GamesHandler.playerInGames.containsKey(sender as Player)) {
+        if (!GamesHandler.playerInGames.containsKey(sender as Player) && !GamesHandler.spectatorInGames.containsKey(sender)) {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace(ConstantStrings.PLAYER_PERCENT, sender.name))
             return
         }
-        val game = GamesHandler.playerInGames[sender]!!
+        val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender] ?: return
         if (game.currentGameState !is IngameState) {
             removePlayer(sender)
             return
@@ -60,6 +60,7 @@ class LeaveGame {
         player.teleport(game.backLocation!!)
         Util.updateGameSigns(game)
         player.inventory.clear()
+        player.level = 0
         player.scoreboard.clearSlot(DisplaySlot.SIDEBAR)
 
         playerMessagesAndHiding(game, player)

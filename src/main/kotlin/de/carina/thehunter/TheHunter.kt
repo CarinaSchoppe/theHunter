@@ -34,18 +34,10 @@ import java.io.File
 class TheHunter : JavaPlugin() {
 
     /*
-    TODOS till done:
     TODO: Premium join
     TODO: Teammode
-
-      TODO: Teammode
-
-     */
-
-    /*
-    TODO: scoreboard
+        TODO: scoreboard
     TODO: grenade makes no damage
-
      */
 
 

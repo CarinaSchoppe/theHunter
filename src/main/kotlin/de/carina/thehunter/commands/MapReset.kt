@@ -20,10 +20,7 @@ class MapReset {
         if (!CommandUtil.checkCommandBasics(sender, command, args, ConstantStrings.MAP_RESET_COMMAND, 0, Permissions.MAPRESET_COMMAND))
             return
 
-        if (!GamesHandler.playerInGames.containsKey(sender) && !GamesHandler.spectatorInGames.containsKey(sender))
-            return
-
-        val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender]
-        game!!.mapResetter.resetMap()
+        val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender] ?: return
+        game.mapResetter.resetMap()
     }
 }
