@@ -18,6 +18,7 @@ import de.carina.thehunter.guns.Sniper
 import de.carina.thehunter.items.special.Knife
 import de.carina.thehunter.util.builder.Items
 import de.carina.thehunter.util.game.Game
+import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.ConstantStrings
 import de.carina.thehunter.util.misc.PlayerDropping
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
@@ -57,13 +58,11 @@ class IngameState(game: Game) : GameState(game) {
     }
 
     private fun playerHiding(player: Player) {
-        Bukkit.getOnlinePlayers().forEach {
+        Bukkit.getOnlinePlayers().filter { !GamesHandler.playerInGames[player]!!.players.contains(it) }.forEach {
             player.hidePlayer(TheHunter.instance, it)
             it.hidePlayer(TheHunter.instance, player)
         }
-        game.players.forEach {
-            it.showPlayer(TheHunter.instance, player)
-        }
+
         game.spectators.forEach(Consumer { spectator ->
             spectator.showPlayer(TheHunter.instance, player)
             spectator.allowFlight = true

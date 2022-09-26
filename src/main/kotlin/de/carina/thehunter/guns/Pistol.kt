@@ -70,7 +70,6 @@ object Pistol : Gun {
             return false
         }
         if (magazine[player]!! <= 0) {
-            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
             reloadGun(player)
             return false
         }

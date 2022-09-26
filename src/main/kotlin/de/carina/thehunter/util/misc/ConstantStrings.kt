@@ -12,6 +12,7 @@ object ConstantStrings {
     const val SETUP_COMMAND = "setup"
     const val LEAVE_COMMAND = "leave"
     const val INVENTORY_COMMAND = "inventory"
+    const val PLAYER_NOT_IN_TEAM = "player-not-in-team"
     const val SETTINGS_COMMAND = "settings"
     const val MAP_RESET_COMMAND = "mapreset"
     const val NOT_ENOUGH_ARGUMENTS = "not-enough-arguments"

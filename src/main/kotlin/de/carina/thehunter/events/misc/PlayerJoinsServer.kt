@@ -13,13 +13,15 @@ package de.carina.thehunter.events.misc
 import de.carina.thehunter.TheHunter
 import de.carina.thehunter.util.game.GamesHandler
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 
 class PlayerJoinsServer : Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     fun onPlayerJoinServer(event: PlayerJoinEvent) {
+        event.player.inventory.clear()
         TheHunter.instance.statsSystem.generateNewStatsPlayer(event.player)
         GamesHandler.playerInGames.keys.forEach {
             it.hidePlayer(TheHunter.instance, event.player)

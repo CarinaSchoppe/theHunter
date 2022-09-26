@@ -27,9 +27,8 @@ class WorldboarderController(private val game: Game) {
             return
 
         resetWorldBoarder()
-        Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
-            if
-                    (game.arenaCenter!!.world.worldBorder.size - 1 >= minBorderSize) {
+        task = Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
+            if (game.arenaCenter!!.world.worldBorder.size - 1 >= minBorderSize) {
                 game.arenaCenter!!.world.worldBorder.size -= 1
             } else {
                 task.cancel()

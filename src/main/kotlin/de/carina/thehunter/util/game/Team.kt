@@ -70,7 +70,7 @@ class Team(var teamLeader: Player) {
 
     private fun promoteTeamLeader(player: Player, leader: Player) {
         if (!teamMembers.contains(player)) {
-            leader.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-team"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
+            leader.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_TEAM]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))
             return
         }
         if (teamLeader != leader) {
@@ -109,7 +109,7 @@ class Team(var teamLeader: Player) {
             val game = GamesHandler.playerInGames[player] ?: return
             val team = game.teams.find { it.teamMembers.contains(player) }
             if (team == null) {
-                player.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-team"]!!)
+                player.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_TEAM]!!)
                 return
             }
             if (leader != player && team.teamLeader != leader) {
@@ -154,7 +154,7 @@ class Team(var teamLeader: Player) {
             if (team != null) {
                 team.promoteTeamLeader(player, leader)
             } else {
-                player.sendMessage(TheHunter.instance.messages.messagesMap["player-not-in-team"]!!)
+                player.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_TEAM]!!)
             }
         }
 
