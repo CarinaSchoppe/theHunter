@@ -26,7 +26,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.PlayerDeathEvent
 import java.util.function.Consumer
 
-class PlayerKillsOtherOrDies : Listener {
+class PlayerDies : Listener {
 
     @EventHandler
     fun onPlayerKillsOther(event: PlayerDeathEvent) {
@@ -54,7 +54,7 @@ class PlayerKillsOtherOrDies : Listener {
         println("player killed other")
         killer.playSound(killer, Sound.ITEM_GOAT_HORN_SOUND_7, 1f, 1f)
         TheHunter.instance.statsSystem.playerKilledOtherPlayer(killer, player)
-        game.deathChests.createDeathChest(player)
+        game.deathChest.createDeathChest(player)
 
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Consumer {
             player.spigot().respawn()
@@ -86,10 +86,10 @@ class PlayerKillsOtherOrDies : Listener {
         val game = GamesHandler.playerInGames[player]!!
         if (game.currentGameState !is IngameState)
             return
+
         TheHunter.instance.statsSystem.playerDied(player)
         player.playSound(player, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 1f)
-        game.deathChests.createDeathChest(player)
-
+        game.deathChest.createDeathChest(player)
         generalHandling(player, game)
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Consumer {
             player.spigot().respawn()

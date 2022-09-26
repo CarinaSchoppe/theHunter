@@ -46,9 +46,9 @@ class PlayerDisconnects : Listener {
             return
         TheHunter.instance.statsSystem.playerDied(player)
         player.playSound(player, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 1f)
-        game.deathChests.createDeathChest(player)
+        game.deathChest.createDeathChest(player)
 
-        PlayerKillsOtherOrDies.generalHandling(player, game)
+        PlayerDies.generalHandling(player, game)
 
         game.players.forEach {
             it.sendMessage(TheHunter.instance.messages.messagesMap["player-died"]!!.replace(ConstantStrings.PLAYER_PERCENT, player.name))

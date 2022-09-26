@@ -104,12 +104,13 @@ object Pistol : Gun {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
             val amount = getAmmoAmount(player, AmmoItems.pistolAmmo)
-            if (amount >= GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-ammo"]!!)
+            var old = magazine.getOrDefault(player, 0)
+            if (amount + magazine.getOrDefault(player, 0) >= GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-ammo"]!!) {
                 magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-ammo"]!!
-            else
-                magazine[player] = amount
-            repeat(magazine[player]!!) {
-                GunHandler.removeAmmo(player, Pistol)
+            } else
+                magazine[player] = amount + magazine.getOrDefault(player, 0)
+            repeat(magazine[player]!! - old) {
+                GunHandler.removeAmmo(player, Sniper)
             }
             player.playSound(player.location, Sound.BLOCK_ANVIL_USE, 1f, 1f)
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)

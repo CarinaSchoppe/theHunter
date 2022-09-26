@@ -103,11 +103,12 @@ object Sniper : Gun {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
             val amount = getAmmoAmount(player, AmmoItems.sniperAmmo)
-            if (amount >= GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!)
+            var old = magazine.getOrDefault(player, 0)
+            if (amount + magazine.getOrDefault(player, 0) >= GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!) {
                 magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!
-            else
-                magazine[player] = amount
-            repeat(magazine[player]!!) {
+            } else
+                magazine[player] = amount + magazine.getOrDefault(player, 0)
+            repeat(magazine[player]!! - old) {
                 GunHandler.removeAmmo(player, Sniper)
             }
             player.playSound(player.location, Sound.BLOCK_ANVIL_USE, 1f, 1f)

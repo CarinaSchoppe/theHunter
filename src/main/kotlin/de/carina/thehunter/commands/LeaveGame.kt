@@ -37,7 +37,7 @@ class LeaveGame {
             removePlayer(sender)
             return
         } else {
-            game.deathChests.createDeathChest(sender)
+            game.deathChest.createDeathChest(sender)
             removePlayer(sender)
             TheHunter.instance.statsSystem.playerDied(sender)
             if (game.checkWinning())

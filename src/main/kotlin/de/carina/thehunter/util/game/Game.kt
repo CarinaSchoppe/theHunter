@@ -43,7 +43,7 @@ class Game(var name: String) {
     lateinit var gameItems: GameItems
     lateinit var itemSettings: ItemSettings
     lateinit var gameChest: ItemChest
-    lateinit var deathChests: DeathChests
+    lateinit var deathChest: DeathChest
 
 
     val countdowns = mutableListOf<Countdown>()
@@ -241,7 +241,7 @@ class Game(var name: String) {
         gameItems = GameItems(this)
         itemSettings = ItemSettings(this)
         gameChest = ItemChest(this)
-        deathChests = DeathChests(this)
+        deathChest = DeathChest(this)
         GamesHandler.setupGames.add(this)
     }
 

@@ -47,6 +47,10 @@ class PlayerHotbarHover : Listener {
                 val currentAmmo = Minigun.magazine.getOrDefault(event.player, 0)
                 event.player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
             }
+
+            else -> {
+                event.player.sendActionBar(Component.text(""))
+            }
         }
 
     }
