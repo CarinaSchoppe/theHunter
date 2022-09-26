@@ -11,6 +11,7 @@
 package de.carina.thehunter.guns
 
 import de.carina.thehunter.TheHunter
+import de.carina.thehunter.events.game.PlayerHotbarHover
 import de.carina.thehunter.items.AmmoItems
 import de.carina.thehunter.util.builder.ItemBuilder
 import de.carina.thehunter.util.game.GamesHandler
@@ -51,6 +52,8 @@ object Sniper : Gun {
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
         magazine[player] = magazine[player]!! - 1
         arrow.shooter = player
+        PlayerHotbarHover.updateHotbar(sniper, player)
+
         if (shotBullets.containsKey(player)) {
             shotBullets[player]!!.add(arrow)
         } else {
@@ -87,6 +90,8 @@ object Sniper : Gun {
     }
 
     fun reloadGun(player: Player) {
+        if (magazine.getOrDefault(player, 0) >= GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!)
+            return
         player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
         if (reloading[player] == true) {
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
@@ -103,14 +108,16 @@ object Sniper : Gun {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
             val amount = getAmmoAmount(player, AmmoItems.sniperAmmo)
-            var old = magazine.getOrDefault(player, 0)
-            if (amount + magazine.getOrDefault(player, 0) >= GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!) {
+            val old = magazine.getOrDefault(player, 0)
+            if (amount + old >= GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!) {
                 magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!
             } else
-                magazine[player] = amount + magazine.getOrDefault(player, 0)
+                magazine[player] = amount + old
             repeat(magazine[player]!! - old) {
                 GunHandler.removeAmmo(player, Sniper)
             }
+            PlayerHotbarHover.updateHotbar(sniper, player)
+
             player.playSound(player.location, Sound.BLOCK_ANVIL_USE, 1f, 1f)
 
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)

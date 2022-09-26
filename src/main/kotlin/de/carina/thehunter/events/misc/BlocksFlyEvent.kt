@@ -68,6 +68,7 @@ class BlocksFlyEvent : Listener {
         if (game.gameEntities.contains(event.entity))
             game.gameEntities.remove(event.entity)
         game.mapResetter.blocks.add(block)
+        println("added a block")
     }
 
 }

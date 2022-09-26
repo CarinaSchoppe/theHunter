@@ -49,7 +49,7 @@ class EyeSpy : Listener {
         if (!GamesHandler.playerInGames.containsKey(event.player))
             return
         val game = GamesHandler.playerInGames[event.player]!!
-        val targets = GamesHandler.playerInGames[event.player]!!.players.filter { it != event.player }
+        val targets = GamesHandler.playerInGames[event.player]!!.players.filter { it != event.player && it.gameMode != GameMode.SPECTATOR }
         if (targets.isEmpty())
             return
         val target = targets.random()

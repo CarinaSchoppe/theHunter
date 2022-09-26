@@ -6,52 +6,57 @@ import de.carina.thehunter.guns.Pistol
 import de.carina.thehunter.guns.Sniper
 import de.carina.thehunter.util.game.GamesHandler
 import net.kyori.adventure.text.Component
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerItemHeldEvent
+import org.bukkit.inventory.ItemStack
 
 class PlayerHotbarHover : Listener {
 
 
-    @EventHandler
-    fun onPlayerInventoryHover(event: PlayerItemHeldEvent) {
+    companion object {
 
-        if (!GamesHandler.playerInGames.containsKey(event.player))
-            return
+        fun updateHotbar(item: ItemStack, player: Player) {
+            when (item.itemMeta) {
+                Ak.ak.itemMeta -> {
+                    val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!
+                    val currentAmmo = Ak.magazine.getOrDefault(player, 0)
+                    player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
+                }
 
-        if (!(event.player.inventory.getItem(event.newSlot) != null && event.player.inventory.getItem(event.newSlot)?.hasItemMeta() == true))
-            return
+                Pistol.pistol.itemMeta -> {
+                    val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-ammo"]!!
+                    val currentAmmo = Pistol.magazine.getOrDefault(player, 0)
+                    player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
+                }
 
-        val item = event.player.inventory.getItem(event.newSlot)!!
-        when (item.itemMeta) {
-            Ak.ak.itemMeta -> {
-                val maxAmmoAmount = GamesHandler.playerInGames[event.player]!!.gameItems.guns["ak-ammo"]!!
-                val currentAmmo = Ak.magazine.getOrDefault(event.player, 0)
-                event.player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
-            }
+                Sniper.sniper.itemMeta -> {
+                    val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-ammo"]!!
+                    val currentAmmo = Sniper.magazine.getOrDefault(player, 0)
+                    player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
+                }
 
-            Pistol.pistol.itemMeta -> {
-                val maxAmmoAmount = GamesHandler.playerInGames[event.player]!!.gameItems.guns["pistol-ammo"]!!
-                val currentAmmo = Pistol.magazine.getOrDefault(event.player, 0)
-                event.player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
-            }
+                Minigun.minigun.itemMeta -> {
+                    val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-ammo"]!!
+                    val currentAmmo = Minigun.magazine.getOrDefault(player, 0)
+                    player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
+                }
 
-            Sniper.sniper.itemMeta -> {
-                val maxAmmoAmount = GamesHandler.playerInGames[event.player]!!.gameItems.guns["sniper-ammo"]!!
-                val currentAmmo = Sniper.magazine.getOrDefault(event.player, 0)
-                event.player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
-            }
-
-            Minigun.minigun.itemMeta -> {
-                val maxAmmoAmount = GamesHandler.playerInGames[event.player]!!.gameItems.guns["minigun-ammo"]!!
-                val currentAmmo = Minigun.magazine.getOrDefault(event.player, 0)
-                event.player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
-            }
-
-            else -> {
-                event.player.sendActionBar(Component.text(""))
+                else -> {
+                    player.sendActionBar(Component.text(""))
+                }
             }
         }
+    }
+
+    @EventHandler
+    fun onPlayerInventoryHover(event: PlayerItemHeldEvent) {
+        if (!GamesHandler.playerInGames.containsKey(event.player))
+            return
+        val item = event.player.inventory.getItem(event.newSlot)!!
+
+        updateHotbar(item, event.player)
 
     }
 

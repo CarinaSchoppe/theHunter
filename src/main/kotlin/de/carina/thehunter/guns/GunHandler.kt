@@ -117,8 +117,6 @@ class GunHandler : Listener {
 
     @EventHandler
     fun onGunDrop(event: PlayerDropItemEvent) {
-
-
         if (!event.itemDrop.itemStack.hasItemMeta())
             return
         if (event.itemDrop.itemStack.itemMeta == Ak.ak.itemMeta ||

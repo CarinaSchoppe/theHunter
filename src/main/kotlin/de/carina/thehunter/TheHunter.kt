@@ -118,6 +118,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(PlayerDies(), this)
         pluginManager.registerEvents(PlayerDisconnects(), this)
         pluginManager.registerEvents(GamesInventoryList(), this)
+        pluginManager.registerEvents(DeathChestOpen(), this)
         pluginManager.registerEvents(LobbyInteraction(), this)
         pluginManager.registerEvents(PlayerTeamHead(), this)
         pluginManager.registerEvents(SettingsConfigurator(), this)

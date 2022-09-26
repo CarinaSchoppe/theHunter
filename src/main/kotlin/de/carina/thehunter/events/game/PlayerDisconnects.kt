@@ -14,6 +14,7 @@ import de.carina.thehunter.TheHunter
 import de.carina.thehunter.gamestates.IngameState
 import de.carina.thehunter.util.game.GamesHandler
 import de.carina.thehunter.util.misc.ConstantStrings
+import net.kyori.adventure.text.Component
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -28,6 +29,7 @@ class PlayerDisconnects : Listener {
             return
         val game = GamesHandler.playerInGames[event.player]!!
 
+        event.quitMessage(Component.text(""))
         if (game.currentGameState !is IngameState) {
             handlePlayer(event.player)
             return
