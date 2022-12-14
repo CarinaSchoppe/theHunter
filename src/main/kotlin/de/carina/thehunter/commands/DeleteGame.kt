@@ -24,6 +24,7 @@ class DeleteGame {
             sender.sendMessage(TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace(ConstantStrings.GAME_PERCENT, args[0]))
             return
         }
+
         game.currentGameState = game.gameStates[GameStates.END_STATE.id]
         game.nextGameState()
         game.currentGameState.stop()
