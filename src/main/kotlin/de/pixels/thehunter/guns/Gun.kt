@@ -20,20 +20,20 @@ abstract class Gun {
     protected abstract var ammo: ItemStack
 
     abstract var gun: ItemStack
-    protected val bulletDelay = mutableMapOf<Player, Boolean>()
+    private val bulletDelay = mutableMapOf<Player, Boolean>()
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
-    protected val reloading = mutableMapOf<Player, Boolean>()
+    private val reloading = mutableMapOf<Player, Boolean>()
     val magazine = mutableMapOf<Player, Int>()
 
 
-    protected fun bulletDelayMaker(player: Player) {
+    private fun bulletDelayMaker(player: Player) {
         bulletDelay[player] = true
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Runnable {
             bulletDelay[player] = false
         }, 5L * GamesHandler.playerInGames[player]!!.gameItems.guns["$gunName-speed"] as Int)
     }
 
-    protected fun shootProjectile(player: Player) {
+    private fun shootProjectile(player: Player) {
         bulletDelayMaker(player)
         val arrow = player.launchProjectile(
             Arrow::class.java, player.location.direction.multiply(

@@ -17,7 +17,7 @@ object Rifle : Gun() {
     override var ammo: ItemStack = AmmoItems.rifleAmmo
     override var ammoString: String = ConstantStrings.RIFLE_AMMO
     override var gunName: String = "rifle"
-    override var gun = ItemBuilder(Material.IRON_HOE).addDisplayName(TheHunter.prefix + "§7AK-47")
+    override var gun = ItemBuilder(Material.IRON_HOE).addDisplayName(TheHunter.prefix + "§7Rifle")
         .addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
 
 
