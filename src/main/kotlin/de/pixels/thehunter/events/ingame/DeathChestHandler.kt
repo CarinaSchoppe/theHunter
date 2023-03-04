@@ -3,7 +3,7 @@
  */
 package de.pixels.thehunter.events.ingame
 
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.util.game.management.GamesHandler
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Sound

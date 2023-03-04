@@ -4,8 +4,8 @@
 package de.pixels.thehunter.guns
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.items.AmmoItems
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.items.general.AmmoItems
+import de.pixels.thehunter.util.game.management.GamesHandler
 import org.bukkit.Sound
 import org.bukkit.entity.Arrow
 import org.bukkit.entity.Player

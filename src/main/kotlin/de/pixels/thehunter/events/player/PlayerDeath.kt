@@ -6,9 +6,9 @@ package de.pixels.thehunter.events.player
 
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.util.builder.Items
-import de.pixels.thehunter.util.game.Game
-import de.pixels.thehunter.util.game.GamesHandler
-import de.pixels.thehunter.util.misc.DeathHandler
+import de.pixels.thehunter.util.game.management.Game
+import de.pixels.thehunter.util.game.management.GamesHandler
+import de.pixels.thehunter.util.game.ingame.DeathHandler
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.Sound

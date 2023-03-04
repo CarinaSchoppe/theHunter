@@ -10,7 +10,7 @@ import de.pixels.thehunter.util.builder.Items
 import de.pixels.thehunter.util.misc.ConstantStrings
 import de.pixels.thehunter.util.misc.Permissions
 import de.pixels.thehunter.util.misc.Util
-import de.pixels.thehunter.util.misc.WorldboarderController
+import de.pixels.thehunter.util.game.ingame.WorldboarderController
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.Material

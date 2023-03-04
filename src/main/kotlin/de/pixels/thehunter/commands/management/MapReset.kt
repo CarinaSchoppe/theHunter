@@ -4,7 +4,7 @@
 package de.pixels.thehunter.commands.management
 
 import de.pixels.thehunter.commands.CommandUtil
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.misc.ConstantStrings
 import de.pixels.thehunter.util.misc.Permissions
 import org.bukkit.command.CommandSender

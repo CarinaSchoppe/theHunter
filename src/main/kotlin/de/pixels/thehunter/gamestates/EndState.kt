@@ -5,7 +5,7 @@ package de.pixels.thehunter.gamestates
 
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.countdowns.Countdowns
-import de.pixels.thehunter.util.game.Game
+import de.pixels.thehunter.util.game.management.Game
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 

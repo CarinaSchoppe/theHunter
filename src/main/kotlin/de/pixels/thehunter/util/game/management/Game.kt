@@ -1,7 +1,7 @@
 /*
  * Copyright Notice for theHunterRemaster Copyright (c) at Carina Sophie Schoppe 2022 File created on 9/26/22, 11:08 PM by Carina Sophie The Latest changes made by Carina Sophie on 9/26/22, 10:58 PM All contents of "Game.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is at Carina Sophie Schoppe. All rights reserved Any type of duplication, distribution, rental, sale, award, Public accessibility or other use requires the express written consent of Carina Sophie Schoppe.
  */
-package de.pixels.thehunter.util.game
+package de.pixels.thehunter.util.game.management
 
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.countdowns.Countdown
@@ -9,8 +9,14 @@ import de.pixels.thehunter.countdowns.Countdowns
 import de.pixels.thehunter.countdowns.EndCountdown
 import de.pixels.thehunter.countdowns.LobbyCountdown
 import de.pixels.thehunter.gamestates.*
-import de.pixels.thehunter.items.ItemChest
+import de.pixels.thehunter.items.util.ItemChest
 import de.pixels.thehunter.util.files.BaseFile
+import de.pixels.thehunter.util.game.ingame.DeathChest
+import de.pixels.thehunter.util.game.ingame.MapResetter
+import de.pixels.thehunter.util.game.ingame.Scoreboard
+import de.pixels.thehunter.util.game.ingame.WorldboarderController
+import de.pixels.thehunter.util.misc.ConstantStrings
+import de.pixels.thehunter.util.misc.Util
 import de.pixels.thehunter.util.misc.*
 import org.bukkit.Bukkit
 import org.bukkit.Location

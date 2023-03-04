@@ -5,7 +5,7 @@
 package de.pixels.thehunter.countdowns
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.util.game.Game
+import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.misc.ConstantStrings
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title

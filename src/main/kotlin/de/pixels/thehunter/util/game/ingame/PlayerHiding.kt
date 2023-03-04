@@ -1,8 +1,8 @@
-package de.pixels.thehunter.util.misc
+package de.pixels.thehunter.util.game.ingame
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.util.game.Game
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.util.game.management.Game
+import de.pixels.thehunter.util.game.management.GamesHandler
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 

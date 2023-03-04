@@ -1,11 +1,12 @@
 /*
  * Copyright Notice for theHunterRemaster Copyright (c) at Carina Sophie Schoppe 2022 File created on 9/26/22, 11:08 PM by Carina Sophie The Latest changes made by Carina Sophie on 9/26/22, 11:06 PM All contents of "StatsSystem.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is at Carina Sophie Schoppe. All rights reserved Any type of duplication, distribution, rental, sale, award, Public accessibility or other use requires the express written consent of Carina Sophie Schoppe.
  */
-package de.pixels.thehunter.util.misc
+package de.pixels.thehunter.util.game.management
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.util.database.MySQL
+import de.pixels.thehunter.util.database.DatabaseHandler
 import de.pixels.thehunter.util.files.BaseFile
+import de.pixels.thehunter.util.misc.ConstantStrings
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -27,7 +28,7 @@ class StatsSystem : BaseFile("stats.yml") {
 
 
     init {
-        MySQL()
+        DatabaseHandler()
     }
 
     companion object {
@@ -35,7 +36,7 @@ class StatsSystem : BaseFile("stats.yml") {
         fun saveAllStatsPlayerToFiles() {
             for (player in playerStats.keys) {
                 if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
-                    MySQL.connection.prepareStatement(
+                    DatabaseHandler.connection.prepareStatement(
                         "REPLACE INTO statsPlayer(uuid, kills, deaths, points, kdr, wins,loses,games) VALUES ('$player', '${playerStats[player]?.kills}', '${playerStats[player]?.deaths}', '${playerStats[player]?.points}', '${playerStats[player]?.kdr}', '${playerStats[player]?.wins}', '${playerStats[player]?.loses}', '${playerStats[player]?.games}')"
                     )?.executeUpdate()
                 } else {
@@ -60,7 +61,7 @@ class StatsSystem : BaseFile("stats.yml") {
 
         fun loadStatsPlayersFromFile() {
             if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
-                val resultSet = MySQL.connection.prepareStatement("SELECT * FROM statsPlayer")?.executeQuery()
+                val resultSet = DatabaseHandler.connection.prepareStatement("SELECT * FROM statsPlayer")?.executeQuery()
                 while (resultSet?.next()!!) {
                     val uuid = UUID.fromString(resultSet.getString("uuid"))
                     val kills = resultSet.getInt("kills")
@@ -98,10 +99,10 @@ class StatsSystem : BaseFile("stats.yml") {
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
             //check if player is not allready in database
 
-            if (!MySQL.connection.prepareStatement("SELECT * FROM statsPLayer WHERE uuid = '${player.uniqueId}' LIMIT 1")
+            if (!DatabaseHandler.connection.prepareStatement("SELECT * FROM statsPLayer WHERE uuid = '${player.uniqueId}' LIMIT 1")
                     .executeQuery().next()
             )
-                MySQL.connection.prepareStatement(
+                DatabaseHandler.connection.prepareStatement(
                     "INSERT INTO statsPlayer(uuid, kills, deaths, points, kdr, wins,loses,games) VALUES ('${player.uniqueId}', 0, 0, 0,0.0,0,0,0)"
                 )?.execute()
         } else {
@@ -130,10 +131,10 @@ class StatsSystem : BaseFile("stats.yml") {
 
 
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
-            MySQL.connection.prepareStatement(
+            DatabaseHandler.connection.prepareStatement(
                 "UPDATE statsPlayer SET kills = '${playerStats[killer.uniqueId]!!.kills}',  points = '${playerStats[killer.uniqueId]!!.points}', kdr = '${playerStats[killer.uniqueId]!!.kdr}' WHERE uuid = '${killer.uniqueId}'"
             )?.executeUpdate()
-            MySQL.connection.prepareStatement(
+            DatabaseHandler.connection.prepareStatement(
                 "UPDATE statsPlayer SET deaths = '${playerStats[dead.uniqueId]!!.deaths}', points = '${playerStats[dead.uniqueId]!!.points}', kdr = '${playerStats[dead.uniqueId]!!.kdr}' WHERE uuid = '${dead.uniqueId}'"
             )?.executeUpdate()
         } else {
@@ -152,7 +153,7 @@ class StatsSystem : BaseFile("stats.yml") {
         playerStats[player.uniqueId]!!.wins += 1
         playerStats[player.uniqueId]!!.points += 15
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
-            MySQL.connection.prepareStatement(
+            DatabaseHandler.connection.prepareStatement(
                 "UPDATE statsPlayer SET wins='${playerStats[player.uniqueId]!!.wins}', points='${playerStats[player.uniqueId]!!.points}' WHERE uuid='${player.uniqueId}'"
             )?.executeUpdate()
         } else {
@@ -168,7 +169,7 @@ class StatsSystem : BaseFile("stats.yml") {
         playerStats[player.uniqueId]!!.kdr =
             playerStats[player.uniqueId]!!.kills.toDouble() / playerStats[player.uniqueId]!!.deaths.toDouble()
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
-            MySQL.connection.prepareStatement(
+            DatabaseHandler.connection.prepareStatement(
                 "UPDATE statsPlayer SET deaths = '${playerStats[player.uniqueId]!!.deaths}',points='${playerStats[player.uniqueId]!!.points}', kdr = '${playerStats[player.uniqueId]!!.kdr}' WHERE uuid = '${player.uniqueId}'"
             )?.executeUpdate()
         } else {
@@ -189,7 +190,7 @@ class StatsSystem : BaseFile("stats.yml") {
     fun playerPlaysGame(player: Player) {
         playerStats[player.uniqueId]!!.games += 1
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
-            MySQL.connection.prepareStatement("UPDATE statsPlayer SET games='${playerStats[player.uniqueId]!!.games}' WHERE uuid='${player.uniqueId}'")
+            DatabaseHandler.connection.prepareStatement("UPDATE statsPlayer SET games='${playerStats[player.uniqueId]!!.games}' WHERE uuid='${player.uniqueId}'")
                 ?.executeUpdate()
         } else {
             yml.set(player.uniqueId.toString() + ".Games", playerStats[player.uniqueId]!!.games)

@@ -3,7 +3,7 @@
  */
 package de.pixels.thehunter.util.builder
 
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.util.game.management.GamesHandler
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Bukkit
 import org.bukkit.Material

@@ -2,12 +2,14 @@
  * Copyright Notice for theHunterRemaster Copyright (c) at Carina Sophie Schoppe 2022 File created on 9/26/22, 11:08 PM by Carina Sophie The Latest changes made by Carina Sophie on 8/31/22, 6:08 PM All contents of "GameSigns.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is at Carina Sophie Schoppe. All rights reserved Any type of duplication, distribution, rental, sale, award, Public accessibility or other use requires the express written consent of Carina Sophie Schoppe.
  */
 
-package de.pixels.thehunter.util.game
+package de.pixels.thehunter.util.game.ingame
 
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.gamestates.EndState
 import de.pixels.thehunter.gamestates.IngameState
 import de.pixels.thehunter.gamestates.LobbyState
+import de.pixels.thehunter.util.game.management.Game
+import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.misc.Permissions
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer

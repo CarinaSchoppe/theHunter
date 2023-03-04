@@ -10,22 +10,20 @@ import de.pixels.thehunter.guns.Rifle
 import de.pixels.thehunter.guns.Sniper
 import de.pixels.thehunter.items.special.Knife
 import de.pixels.thehunter.util.builder.Items
-import de.pixels.thehunter.util.game.Game
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.misc.ConstantStrings
-import de.pixels.thehunter.util.misc.PlayerDropping
+import de.pixels.thehunter.util.game.ingame.PlayerDropping
+import de.pixels.thehunter.util.game.ingame.PlayerHiding
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.entity.Player
-import java.util.function.Consumer
 
 class IngameState(game: Game) : GameState(game) {
     override fun start() {
         if (game.randomPlayerDrop) PlayerDropping.dropPlayers(game)
         forEachPlayer()
-        allPlayerStuffHiding()
         if (game.checkWinning()) {
             game.nextGameState()
             return
@@ -52,31 +50,24 @@ class IngameState(game: Game) : GameState(game) {
                     LegacyComponentSerializer.legacySection().deserialize("§6Lets Play!")
                 )
             )
-            playerHiding(player)
+
+            PlayerHiding.showPlayerToOnlyGamePlayingPlayers(player)
+            PlayerHiding.showOnlyActiveGamePlayingPlayersToPlayer(player)
+        }
+
+        for (spectator in game.spectators) {
+            game.spectatorLocation?.let { spectator.teleport(it) }
+            spectator.showTitle(
+                Title.title(
+                    LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix),
+                    LegacyComponentSerializer.legacySection().deserialize("§6Lets Watch!")
+                )
+            )
+            PlayerHiding.hidePlayerToAll(spectator)
+            PlayerHiding.showOnlyActiveGamePlayingPlayersToPlayer(spectator)
         }
     }
 
-    private fun playerHiding(player: Player) {
-        Bukkit.getOnlinePlayers().filter { !GamesHandler.playerInGames[player]!!.players.contains(it) }.forEach {
-            player.hidePlayer(TheHunter.instance, it)
-            it.hidePlayer(TheHunter.instance, player)
-        }
-
-        game.spectators.forEach(Consumer { spectator ->
-            spectator.showPlayer(TheHunter.instance, player)
-            spectator.allowFlight = true
-        })
-    }
-
-    private fun allPlayerStuffHiding() {
-        Bukkit.getOnlinePlayers().forEach {
-            game.spectators.forEach(Consumer { spectator ->
-                if (!game.players.contains(it))
-                    spectator.hidePlayer(TheHunter.instance, it)
-                it.hidePlayer(TheHunter.instance, spectator)
-            })
-        }
-    }
 
     private fun startImmunityCounter() {
         Bukkit.getScheduler().runTaskTimer(TheHunter.instance, { task ->
@@ -114,21 +105,23 @@ class IngameState(game: Game) : GameState(game) {
 
     override fun stop() {
         for (player in game.players) {
-            player.activePotionEffects.clear()
-            player.inventory.clear()
-            player.teleport(game.endLocation!!)
-            player.inventory.setItem(8, Items.leaveItem)
-            player.level = 0
-            player.allowFlight = false
+            playerHandlingAfterGame(player)
         }
         for (spectator in game.spectators) {
-            spectator.allowFlight = false
-            spectator.activePotionEffects.clear()
-            spectator.inventory.clear()
-            spectator.teleport(game.endLocation!!)
-            spectator.level = 0
+            playerHandlingAfterGame(spectator)
         }
         game.worldBoarderController.resetWorldBoarder()
+    }
+
+    private fun playerHandlingAfterGame(player: Player) {
+        player.activePotionEffects.clear()
+        player.inventory.clear()
+        player.teleport(game.endLocation!!)
+        player.inventory.setItem(8, Items.leaveItem)
+        player.level = 0
+        player.allowFlight = false
+        PlayerHiding.showPlayerToOnlyGamePlayingPlayers(player)
+        PlayerHiding.showGamePlayingPlayersToPlayer(player)
     }
 
     private fun givePlayerStartItems() {

@@ -3,7 +3,7 @@
  */
 package de.pixels.thehunter.gamestates
 
-import de.pixels.thehunter.util.game.Game
+import de.pixels.thehunter.util.game.management.Game
 
 abstract class GameState(val game: Game) {
 

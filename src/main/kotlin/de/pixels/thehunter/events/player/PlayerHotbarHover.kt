@@ -8,7 +8,7 @@ import de.pixels.thehunter.guns.Minigun
 import de.pixels.thehunter.guns.Pistol
 import de.pixels.thehunter.guns.Rifle
 import de.pixels.thehunter.guns.Sniper
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.misc.ConstantStrings
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player

@@ -4,7 +4,7 @@
 package de.pixels.thehunter.util.builder
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.util.game.Game
+import de.pixels.thehunter.util.game.management.Game
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player

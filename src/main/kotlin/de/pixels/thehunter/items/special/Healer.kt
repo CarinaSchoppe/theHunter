@@ -5,9 +5,9 @@
 package de.pixels.thehunter.items.special
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.items.ItemHandler
+import de.pixels.thehunter.items.util.ItemHandler
 import de.pixels.thehunter.util.builder.ItemBuilder
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.misc.ConstantStrings
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Material

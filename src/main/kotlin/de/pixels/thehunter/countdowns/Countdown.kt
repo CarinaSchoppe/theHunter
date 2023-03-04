@@ -4,7 +4,7 @@
 
 package de.pixels.thehunter.countdowns
 
-import de.pixels.thehunter.util.game.Game
+import de.pixels.thehunter.util.game.management.Game
 
 abstract class Countdown(val game: Game) {
 

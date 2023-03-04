@@ -4,7 +4,7 @@
 package de.pixels.thehunter.items.special
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.items.ItemHandler
+import de.pixels.thehunter.items.util.ItemHandler
 import de.pixels.thehunter.util.builder.ItemBuilder
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment

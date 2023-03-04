@@ -4,7 +4,7 @@
 package de.pixels.thehunter.gamestates
 
 import de.pixels.thehunter.countdowns.Countdowns
-import de.pixels.thehunter.util.game.Game
+import de.pixels.thehunter.util.game.management.Game
 
 class LobbyState(game: Game) : GameState(game) {
     override fun start() {

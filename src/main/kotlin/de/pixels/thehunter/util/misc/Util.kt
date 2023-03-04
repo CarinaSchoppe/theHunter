@@ -3,7 +3,7 @@
  */
 package de.pixels.thehunter.util.misc
 
-import de.pixels.thehunter.util.game.Game
+import de.pixels.thehunter.util.game.management.Game
 import org.bukkit.entity.Player
 
 object Util {

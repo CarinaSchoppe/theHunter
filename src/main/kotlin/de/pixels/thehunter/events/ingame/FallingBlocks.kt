@@ -6,7 +6,7 @@ package de.pixels.thehunter.events.ingame
 
 import de.pixels.thehunter.gamestates.IngameState
 import de.pixels.thehunter.items.special.EggBomb
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.util.game.management.GamesHandler
 import org.bukkit.Material
 import org.bukkit.entity.FallingBlock
 import org.bukkit.entity.TNTPrimed

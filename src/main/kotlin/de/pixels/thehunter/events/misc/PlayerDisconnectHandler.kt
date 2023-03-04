@@ -3,7 +3,7 @@
  */
 package de.pixels.thehunter.events.misc
 
-import de.pixels.thehunter.util.misc.DeathHandler
+import de.pixels.thehunter.util.game.ingame.DeathHandler
 import net.kyori.adventure.text.Component
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener

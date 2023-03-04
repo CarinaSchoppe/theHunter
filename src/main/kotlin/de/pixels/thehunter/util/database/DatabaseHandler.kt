@@ -7,8 +7,8 @@ package de.pixels.thehunter.util.database
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.util.files.BaseFile
 import de.pixels.thehunter.util.misc.ConstantStrings
-import de.pixels.thehunter.util.misc.StatsPlayer
-import de.pixels.thehunter.util.misc.StatsSystem
+import de.pixels.thehunter.util.game.management.StatsPlayer
+import de.pixels.thehunter.util.game.management.StatsSystem
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import java.io.File
@@ -16,7 +16,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.util.*
 
-class MySQL {
+class DatabaseHandler {
 
     init {
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {

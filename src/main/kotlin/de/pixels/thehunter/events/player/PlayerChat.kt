@@ -5,7 +5,7 @@
 package de.pixels.thehunter.events.player
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.util.game.management.GamesHandler
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.event.EventHandler

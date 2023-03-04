@@ -6,8 +6,8 @@ package de.pixels.thehunter.events.ingame
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.gamestates.IngameState
 import de.pixels.thehunter.util.builder.Items
-import de.pixels.thehunter.util.game.GamesHandler
-import de.pixels.thehunter.util.misc.PlayerTeamHead
+import de.pixels.thehunter.util.game.management.GamesHandler
+import de.pixels.thehunter.util.game.ingame.PlayerTeamHead
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener

@@ -4,15 +4,19 @@
 
 package de.pixels.thehunter.events.ingame
 
-import de.pixels.thehunter.items.AmmoItems
+import de.pixels.thehunter.guns.Minigun
+import de.pixels.thehunter.guns.Pistol
+import de.pixels.thehunter.guns.Rifle
+import de.pixels.thehunter.guns.Sniper
+import de.pixels.thehunter.items.general.AmmoItems
 import de.pixels.thehunter.items.special.Knife
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.util.game.management.GamesHandler
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
-class ItemInteraction : Listener {
+class WeaponInteraction : Listener {
 
     @EventHandler
     fun playerUsesAmmoItems(event: PlayerInteractEvent) {
@@ -21,6 +25,10 @@ class ItemInteraction : Listener {
         if (event.item == null)
             return
         when (event.item!!.itemMeta) {
+            Sniper.gun.itemMeta -> event.isCancelled = true
+            Rifle.gun.itemMeta -> event.isCancelled = true
+            Pistol.gun.itemMeta -> event.isCancelled = true
+            Minigun.gun.itemMeta -> event.isCancelled = true
             AmmoItems.sniperAmmo.itemMeta -> event.isCancelled = true
             AmmoItems.minigunAmmo.itemMeta -> event.isCancelled = true
             AmmoItems.rifleAmmo.itemMeta -> event.isCancelled = true

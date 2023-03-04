@@ -4,7 +4,7 @@
 package de.pixels.thehunter.events.player
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.util.game.GamesHandler
+import de.pixels.thehunter.util.game.management.GamesHandler
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
