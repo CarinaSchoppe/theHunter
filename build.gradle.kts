@@ -33,7 +33,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.testng:testng:7.1.0")
     //    implementation("com.google.code.gson:gson:+") // Gson
     compileOnly("io.papermc.paper:paper-api:+")
     testImplementation(kotlin("test"))
@@ -47,7 +46,7 @@ java {
 }
 tasks {
     runServer {
-        minecraftVersion("1.19.2")
+        minecraftVersion("1.19.3")
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
@@ -63,10 +62,10 @@ tasks {
         kotlinOptions {
             freeCompilerArgs = listOf(
                 "-Xuse-k2",
-                "-Xjdk-release=18"
+                "-Xjdk-release=19"
             )
-            jvmTarget = "18"
-            languageVersion = "1.7"
+            jvmTarget = "19"
+            languageVersion = "1.9"
         }
     }
     test {

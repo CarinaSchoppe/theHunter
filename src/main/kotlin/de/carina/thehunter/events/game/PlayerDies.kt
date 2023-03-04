@@ -119,8 +119,6 @@ class PlayerDies : Listener {
                 if (game.players.contains(it) || game.spectators.contains(it))
                     game.scoreBoard.createNewScoreboard(it)
             }
-
-
         }
     }
 
