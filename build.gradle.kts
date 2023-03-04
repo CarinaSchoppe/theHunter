@@ -12,8 +12,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    idea
-    java
+    id("idea")
+    id("java")
     kotlin("jvm") version "+"
     id("com.github.johnrengelman.shadow") version "+"
     id("xyz.jpenilla.run-paper") version "+" // Adds runServer and runMojangMappedServer tasks for testing
@@ -65,7 +65,7 @@ tasks {
                 "-Xjdk-release=19"
             )
             jvmTarget = "19"
-            languageVersion = "1.9"
+            languageVersion = "2.0"
         }
     }
     test {
