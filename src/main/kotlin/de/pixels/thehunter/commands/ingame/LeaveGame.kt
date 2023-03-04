@@ -7,13 +7,13 @@ package de.pixels.thehunter.commands.ingame
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.commands.CommandUtil
 import de.pixels.thehunter.gamestates.IngameState
-import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.ingame.GameSigns
+import de.pixels.thehunter.util.game.ingame.PlayerHiding
+import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.game.management.Team
 import de.pixels.thehunter.util.misc.ConstantStrings
 import de.pixels.thehunter.util.misc.Permissions
-import de.pixels.thehunter.util.game.ingame.PlayerHiding
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.scoreboard.DisplaySlot
