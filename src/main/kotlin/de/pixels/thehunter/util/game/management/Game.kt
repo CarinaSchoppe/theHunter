@@ -180,7 +180,7 @@ class Game(var name: String) {
             val fileLocations = File("${BaseFile.gameFolder}/arenas/$fileName/locations.yml")
             val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
 
-            if (ymlLocations.getList(ConstantStrings.SPAWN_LOCATIONS) != null)
+            if (ymlLocations.getList(ConstantStrings.SPAWN_LOCATIONS) != null && ymlLocations.getList(ConstantStrings.SPAWN_LOCATIONS) is MutableList<*>)
                 game.playerSpawns.addAll(ymlLocations.getList(ConstantStrings.SPAWN_LOCATIONS) as MutableList<Location>)
             game.lobbyLocation = ymlLocations.getLocation("lobby-location")!!
             game.backLocation = ymlLocations.getLocation("back-location")!!

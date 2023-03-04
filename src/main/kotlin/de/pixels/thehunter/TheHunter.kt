@@ -32,9 +32,12 @@ import java.io.File
 class TheHunter : JavaPlugin() {
 
     /*
+
+    TODO: Villager Clickable somehow
+    TODO: Perks
+    TODO: Achivements
     TODO: Premium join
     TODO: grenade makes no damage
-    TODO: Code Cleanup
      */
 
 
