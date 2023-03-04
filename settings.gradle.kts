@@ -8,6 +8,8 @@
  * Public accessibility or other use
  * requires the express written consent of Carina Sophie Schoppe.
  */
-
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version ("+")
+}
 
 rootProject.name = "theHunterRemaster"

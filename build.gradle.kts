@@ -12,9 +12,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    `java-library`
     id("idea")
-    id("java")
     kotlin("jvm") version "+"
+    id("io.papermc.paperweight.userdev") version "+"
     id("com.github.johnrengelman.shadow") version "+"
     id("xyz.jpenilla.run-paper") version "+" // Adds runServer and runMojangMappedServer tasks for testing
 
@@ -34,7 +35,7 @@ repositories {
 
 dependencies {
     //    implementation("com.google.code.gson:gson:+") // Gson
-    compileOnly("io.papermc.paper:paper-api:+")
+    paperweight.paperDevBundle("+")
     testImplementation(kotlin("test"))
     implementation("net.wesjd:anvilgui:+")
     implementation("org.xerial:sqlite-jdbc:+")
@@ -45,7 +46,8 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(19))
 }
 tasks {
-    runServer {
+
+runServer {
         minecraftVersion("1.19.3")
     }
     compileJava {
