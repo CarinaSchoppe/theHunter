@@ -10,7 +10,7 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 
-class PlayerJoinsServer : Listener {
+class ServerJoinHandler : Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     fun onPlayerJoinServer(event: PlayerJoinEvent) {
@@ -26,4 +26,6 @@ class PlayerJoinsServer : Listener {
         }
 
     }
+
+
 }

@@ -9,8 +9,8 @@ import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 
 object AmmoItems {
-    val akAmmo = ItemBuilder(Material.FIRE_CHARGE).addDisplayName(TheHunter.prefix + "§6AK-Ammo")
-        .addLore("§7Is used to shoot with the Ak").addEnchantment(Enchantment.DURABILITY, 1).build()
+    val akAmmo = ItemBuilder(Material.FIRE_CHARGE).addDisplayName(TheHunter.prefix + "§6Rifle-Ammo")
+        .addLore("§7Is used to shoot with the Rifle").addEnchantment(Enchantment.DURABILITY, 1).build()
     val minigunAmmo = ItemBuilder(Material.SNOWBALL).addDisplayName(TheHunter.prefix + "§6Minigun-Ammo")
         .addLore("§7Is used to shoot with the Minigun").addEnchantment(Enchantment.DURABILITY, 1).build()
     val pistolAmmo = ItemBuilder(Material.ARROW).addDisplayName(TheHunter.prefix + "§6Pistol-Ammo")

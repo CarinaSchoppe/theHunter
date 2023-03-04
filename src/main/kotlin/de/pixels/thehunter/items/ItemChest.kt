@@ -110,9 +110,9 @@ class ItemChest(private val game: Game) {
             item.amount = game.gameItems.items["minigunammo-amount"] as Int
             ammo.add(item)
         }
-        if (game.gameItems.items["AkAmmo"] == true) {
+        if (game.gameItems.items["RifleAmmo"] == true) {
             val item = AmmoItems.akAmmo
-            item.amount = game.gameItems.items["akammo-amount"] as Int
+            item.amount = game.gameItems.items["rifleammo-amount"] as Int
             ammo.add(item)
         }
 

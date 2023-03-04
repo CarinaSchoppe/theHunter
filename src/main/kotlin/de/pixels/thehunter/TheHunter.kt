@@ -5,11 +5,13 @@
 package de.pixels.thehunter
 
 import de.pixels.thehunter.commands.BaseCommand
-import de.pixels.thehunter.commands.StartCommand
-import de.pixels.thehunter.events.game.*
-import de.pixels.thehunter.events.misc.*
-import de.pixels.thehunter.events.misc.gameconfigurator.GameConfigurator
-import de.pixels.thehunter.events.misc.gameconfigurator.SettingsConfigurator
+import de.pixels.thehunter.commands.ingame.StartCommand
+import de.pixels.thehunter.events.gameconfigurator.GameConfigurator
+import de.pixels.thehunter.events.gameconfigurator.SettingsConfigurator
+import de.pixels.thehunter.events.ingame.*
+import de.pixels.thehunter.events.misc.PlayerDisconnectHandler
+import de.pixels.thehunter.events.misc.ServerJoinHandler
+import de.pixels.thehunter.events.player.*
 import de.pixels.thehunter.guns.GunHandler
 import de.pixels.thehunter.items.special.*
 import de.pixels.thehunter.util.files.BaseFile
@@ -74,8 +76,8 @@ class TheHunter : JavaPlugin() {
 
         //Events:
         pluginManager.registerEvents(EggBomb(), this)
-        pluginManager.registerEvents(BlocksFlyEvent(), this)
-        pluginManager.registerEvents(PlayerJoinsServer(), this)
+        pluginManager.registerEvents(FallingBlocks(), this)
+        pluginManager.registerEvents(ServerJoinHandler(), this)
         pluginManager.registerEvents(Knife(), this)
         pluginManager.registerEvents(EyeSpy(), this)
         pluginManager.registerEvents(Healer(), this)
@@ -84,18 +86,18 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(Food(), this)
         pluginManager.registerEvents(EnergyDrink(), this)
         pluginManager.registerEvents(JumpStick(), this)
-        pluginManager.registerEvents(ChestHandler(), this)
+        pluginManager.registerEvents(LootChestHandler(), this)
         pluginManager.registerEvents(AmmoHandler(), this)
         pluginManager.registerEvents(GunHandler(), this)
         pluginManager.registerEvents(TeamDamage(), this)
-        pluginManager.registerEvents(MapModify(), this)
-        pluginManager.registerEvents(IngameItemUse(), this)
+        pluginManager.registerEvents(MapModification(), this)
+        pluginManager.registerEvents(ItemInteraction(), this)
         pluginManager.registerEvents(PlayerChat(), this)
         pluginManager.registerEvents(GameSigns(), this)
-        pluginManager.registerEvents(PlayerDies(), this)
-        pluginManager.registerEvents(PlayerDisconnects(), this)
+        pluginManager.registerEvents(PlayerDeath(), this)
+        pluginManager.registerEvents(PlayerDisconnectHandler(), this)
         pluginManager.registerEvents(GamesInventoryList(), this)
-        pluginManager.registerEvents(DeathChestOpen(), this)
+        pluginManager.registerEvents(DeathChestHandler(), this)
         pluginManager.registerEvents(LobbyInteraction(), this)
         pluginManager.registerEvents(PlayerTeamHead(), this)
         pluginManager.registerEvents(SettingsConfigurator(), this)

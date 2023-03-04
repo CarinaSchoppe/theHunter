@@ -4,6 +4,11 @@
 package de.pixels.thehunter.commands
 
 import de.pixels.thehunter.TheHunter
+import de.pixels.thehunter.commands.ingame.*
+import de.pixels.thehunter.commands.management.AnvilGUI
+import de.pixels.thehunter.commands.management.CreateGame
+import de.pixels.thehunter.commands.management.DeleteGame
+import de.pixels.thehunter.commands.management.MapReset
 import de.pixels.thehunter.util.misc.ConstantStrings
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor

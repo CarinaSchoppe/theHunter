@@ -4,9 +4,9 @@
 package de.pixels.thehunter.gamestates
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.guns.Ak
 import de.pixels.thehunter.guns.Minigun
 import de.pixels.thehunter.guns.Pistol
+import de.pixels.thehunter.guns.Rifle
 import de.pixels.thehunter.guns.Sniper
 import de.pixels.thehunter.items.special.Knife
 import de.pixels.thehunter.util.builder.Items
@@ -134,7 +134,7 @@ class IngameState(game: Game) : GameState(game) {
     private fun givePlayerStartItems() {
         game.players.forEach {
             it.inventory.clear()
-            it.inventory.addItem(Ak.ak)
+            it.inventory.addItem(Rifle.rifle)
             it.inventory.addItem(Minigun.minigun)
             it.inventory.addItem(Pistol.pistol)
             it.inventory.addItem(Sniper.sniper)

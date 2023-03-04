@@ -6,8 +6,9 @@ package de.pixels.thehunter.util.game
 
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.gamestates.EndState
+import de.pixels.thehunter.gamestates.IngameState
+import de.pixels.thehunter.gamestates.LobbyState
 import de.pixels.thehunter.util.misc.Permissions
-import de.pixels.thehunter.util.misc.Util
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.block.Sign
@@ -17,6 +18,34 @@ import org.bukkit.event.block.SignChangeEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
 class GameSigns : Listener {
+    companion object {
+        fun updateGameSigns(game: Game) {
+            for (sign in game.signs) {
+                sign.line(0, LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix))
+                sign.line(1, LegacyComponentSerializer.legacySection().deserialize(game.name))
+                if (game.currentGameState is LobbyState) {
+                    sign.line(3, LegacyComponentSerializer.legacySection().deserialize("§aLobby"))
+                    if (game.players.size < game.maxPlayers) sign.line(
+                        2,
+                        LegacyComponentSerializer.legacySection()
+                            .deserialize("§7[§6" + game.players.size + " §7|§6" + game.maxPlayers + "§7]")
+                    ) else sign.line(
+                        2,
+                        LegacyComponentSerializer.legacySection()
+                            .deserialize("§7[§c" + game.players.size + " §7|§c" + game.maxPlayers + "§7]")
+                    )
+                } else if (game.currentGameState is IngameState) sign.line(
+                    2,
+                    LegacyComponentSerializer.legacySection().deserialize("§6RUNNING")
+                ) else if (game.currentGameState is EndState) {
+                    sign.line(2, LegacyComponentSerializer.legacySection().deserialize("§cENDING"))
+                    sign.line(3, LegacyComponentSerializer.legacySection().deserialize("§aReady Restart"))
+                }
+                sign.update(true)
+            }
+        }
+    }
+
     @EventHandler
     fun onSignClick(event: PlayerInteractEvent) {
         if (!event.action.isRightClick)
@@ -38,7 +67,7 @@ class GameSigns : Listener {
                 "theHunter join " + PlainTextComponentSerializer.plainText().serialize(sign.line(1))
             )
             game.signs.add(sign)
-            Util.updateGameSigns(game)
+            updateGameSigns(game)
         }
     }
 

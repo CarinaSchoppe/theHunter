@@ -2,18 +2,15 @@
  * Copyright Notice for theHunterRemaster Copyright (c) at Carina Sophie Schoppe 2022 File created on 9/26/22, 11:08 PM by Carina Sophie The Latest changes made by Carina Sophie on 9/26/22, 10:10 PM All contents of "JoinGame.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is at Carina Sophie Schoppe. All rights reserved Any type of duplication, distribution, rental, sale, award, Public accessibility or other use requires the express written consent of Carina Sophie Schoppe.
  */
 
-package de.pixels.thehunter.commands
+package de.pixels.thehunter.commands.ingame
 
 import de.pixels.thehunter.TheHunter
+import de.pixels.thehunter.commands.CommandUtil
 import de.pixels.thehunter.countdowns.LobbyCountdown
 import de.pixels.thehunter.util.builder.Items
 import de.pixels.thehunter.util.game.Game
 import de.pixels.thehunter.util.game.GamesHandler
-import de.pixels.thehunter.util.misc.ConstantStrings
-import de.pixels.thehunter.util.misc.Permissions
-import de.pixels.thehunter.util.misc.PlayerTeamHead
-import de.pixels.thehunter.util.misc.Util
-import org.bukkit.Bukkit
+import de.pixels.thehunter.util.misc.*
 import org.bukkit.GameMode
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
@@ -56,7 +53,8 @@ class JoinGame {
             if (!countdown.isRunning && !countdown.isIdle)
                 countdown.start()
         }
-        playerHiding(sender, game)
+        PlayerHiding.showPlayerToOnlyGamePlayingPlayers(sender)
+        PlayerHiding.showOnlyActiveGamePlayingPlayersToPlayer(sender)
     }
 
     private fun playerAddingAndMessaging(player: Player, game: Game): Boolean {
@@ -101,19 +99,4 @@ class JoinGame {
         return true
     }
 
-    private fun playerHiding(player: Player, game: Game) {
-        Bukkit.getOnlinePlayers().forEach {
-            it.hidePlayer(TheHunter.instance, player)
-            player.hidePlayer(TheHunter.instance, it)
-        }
-        game.players.forEach {
-            if (game.players.contains(player))
-                it.showPlayer(TheHunter.instance, player)
-            player.showPlayer(TheHunter.instance, it)
-        }
-        game.spectators.forEach {
-            if (game.players.contains(player))
-                it.showPlayer(TheHunter.instance, player)
-        }
-    }
 }

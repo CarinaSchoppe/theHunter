@@ -4,7 +4,7 @@
 package de.pixels.thehunter.guns
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.events.game.PlayerHotbarHover
+import de.pixels.thehunter.events.player.PlayerHotbarHover
 import de.pixels.thehunter.items.AmmoItems
 import de.pixels.thehunter.util.builder.ItemBuilder
 import de.pixels.thehunter.util.game.GamesHandler
@@ -16,12 +16,12 @@ import org.bukkit.entity.Arrow
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-object Ak : Gun {
+object Rifle : Gun {
 
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
     private val reloading = mutableMapOf<Player, Boolean>()
     val magazine = mutableMapOf<Player, Int>()
-    val ak = ItemBuilder(Material.IRON_HOE).addDisplayName(TheHunter.prefix + "§7AK-47")
+    val rifle = ItemBuilder(Material.IRON_HOE).addDisplayName(TheHunter.prefix + "§7AK-47")
         .addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
     private val bulletDelay = mutableMapOf<Player, Boolean>()
 
@@ -29,21 +29,21 @@ object Ak : Gun {
         bulletDelay[player] = true
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Runnable {
             bulletDelay[player] = false
-        }, 5L * GamesHandler.playerInGames[player]!!.gameItems.guns["ak-speed"] as Int)
+        }, 5L * GamesHandler.playerInGames[player]!!.gameItems.guns["rifle-speed"] as Int)
     }
 
     private fun shootProjectile(player: Player) {
         bulletDelayMaker(player)
         val arrow = player.launchProjectile(
             Arrow::class.java,
-            player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["ak-power"]!!)
+            player.location.direction.multiply(GamesHandler.playerInGames[player]!!.gameItems.guns["rifle-power"]!!)
         )
         arrow.damage = 0.0
         player.playSound(player, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1f, 1f)
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
         arrow.shooter = player
         magazine[player] = magazine[player]!! - 1
-        PlayerHotbarHover.updateHotbar(ak, player)
+        PlayerHotbarHover.updateHotbar(rifle, player)
 
         if (shotBullets.containsKey(player)) {
             shotBullets[player]!!.add(arrow)
@@ -66,7 +66,7 @@ object Ak : Gun {
             return false
         }
         if (magazine[player]!! <= 0) {
-            reloadGun(player)
+            reload(player)
             return false
         }
 
@@ -83,8 +83,9 @@ object Ak : Gun {
         return true
     }
 
-    fun reloadGun(player: Player) {
-        if (magazine.getOrDefault(player, 0) >= GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!)
+
+    override fun reload(player: Player) {
+        if (magazine.getOrDefault(player, 0) >= GamesHandler.playerInGames[player]!!.gameItems.guns["rifle-ammo"]!!)
             return
         player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
         if (reloading[player] == true) {
@@ -94,25 +95,21 @@ object Ak : Gun {
         if (!checkAmmoPossible(player)) return
         player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
         reloading[player] = true
-        reload(player)
-    }
-
-    private fun reload(player: Player) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
             val amount = getAmmoAmount(player, AmmoItems.akAmmo)
             val old = magazine.getOrDefault(player, 0)
-            if (amount + old >= GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!) {
-                magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!
+            if (amount + old >= GamesHandler.playerInGames[player]!!.gameItems.guns["rifle-ammo"]!!) {
+                magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns["rifle-ammo"]!!
             } else
                 magazine[player] = amount + old
             repeat(magazine[player]!! - old) {
                 GunHandler.removeAmmo(player, Sniper)
             }
-            PlayerHotbarHover.updateHotbar(ak, player)
+            PlayerHotbarHover.updateHotbar(rifle, player)
             player.playSound(player.location, Sound.BLOCK_ANVIL_USE, 1f, 1f)
             player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
-        }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["ak-reload"]!!)
+        }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["rifle-reload"]!!)
     }
 
 

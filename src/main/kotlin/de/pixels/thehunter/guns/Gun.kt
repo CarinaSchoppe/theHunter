@@ -10,5 +10,5 @@ interface Gun {
 
     fun shoot(player: Player): Boolean
 
-
+    fun reload(player: Player)
 }

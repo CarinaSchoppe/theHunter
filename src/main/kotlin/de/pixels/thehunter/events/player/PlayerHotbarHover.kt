@@ -2,11 +2,11 @@
  * Copyright Notice for theHunterRemaster Copyright (c) at Carina Sophie Schoppe 2022 File created on 9/26/22, 11:08 PM by Carina Sophie The Latest changes made by Carina Sophie on 9/26/22, 11:02 PM All contents of "PlayerHotbarHover.kt" are protected by copyright. The copyright law, unless expressly indicated otherwise, is at Carina Sophie Schoppe. All rights reserved Any type of duplication, distribution, rental, sale, award, Public accessibility or other use requires the express written consent of Carina Sophie Schoppe.
  */
 
-package de.pixels.thehunter.events.game
+package de.pixels.thehunter.events.player
 
-import de.pixels.thehunter.guns.Ak
 import de.pixels.thehunter.guns.Minigun
 import de.pixels.thehunter.guns.Pistol
+import de.pixels.thehunter.guns.Rifle
 import de.pixels.thehunter.guns.Sniper
 import de.pixels.thehunter.util.game.GamesHandler
 import de.pixels.thehunter.util.misc.ConstantStrings
@@ -24,9 +24,9 @@ class PlayerHotbarHover : Listener {
 
         fun updateHotbar(item: ItemStack?, player: Player) {
             when (item?.itemMeta) {
-                Ak.ak.itemMeta -> {
+                Rifle.rifle.itemMeta -> {
                     val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!
-                    val currentAmmo = Ak.magazine.getOrDefault(player, 0)
+                    val currentAmmo = Rifle.magazine.getOrDefault(player, 0)
                     player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
                 }
 

@@ -38,9 +38,9 @@ class GunHandler : Listener {
 
     private fun whenLeftClick(event: PlayerInteractEvent): Boolean {
         when (event.item!!.itemMeta) {
-            Ak.ak.itemMeta -> {
-                if (!event.player.hasPermission("thehunter.ak")) return true
-                Ak.reloadGun(event.player)
+            Rifle.rifle.itemMeta -> {
+                if (!event.player.hasPermission("thehunter.rifle")) return true
+                Rifle.reloadGun(event.player)
                 return true
             }
 
@@ -69,13 +69,13 @@ class GunHandler : Listener {
 
     private fun whenRightClick(event: PlayerInteractEvent): Boolean {
         when (event.item!!.itemMeta) {
-            Ak.ak.itemMeta -> {
-                if (!event.player.hasPermission("thehunter.ak")) return true
+            Rifle.rifle.itemMeta -> {
+                if (!event.player.hasPermission("thehunter.Rifle")) return true
                 if (event.player.isSneaking) {
-                    Ak.reloadGun(event.player)
+                    Rifle.reloadGun(event.player)
                     return true
                 }
-                Ak.shoot(event.player)
+                Rifle.shoot(event.player)
             }
 
             Minigun.minigun.itemMeta -> {
@@ -112,7 +112,7 @@ class GunHandler : Listener {
     fun onGunDrop(event: PlayerDropItemEvent) {
         if (!event.itemDrop.itemStack.hasItemMeta())
             return
-        if (event.itemDrop.itemStack.itemMeta == Ak.ak.itemMeta ||
+        if (event.itemDrop.itemStack.itemMeta == Rifle.rifle.itemMeta ||
             event.itemDrop.itemStack.itemMeta == Minigun.minigun.itemMeta ||
             event.itemDrop.itemStack.itemMeta == Sniper.sniper.itemMeta ||
             event.itemDrop.itemStack.itemMeta == Pistol.pistol.itemMeta
@@ -133,7 +133,7 @@ class GunHandler : Listener {
             for (itemStack in player.inventory.contents) {
                 if (itemStack == null) continue
                 when (gun) {
-                    is Ak -> {
+                    is Rifle -> {
                         if (itemStack.itemMeta != AmmoItems.akAmmo.itemMeta)
                             continue
                         itemStack.subtract(1)
@@ -177,9 +177,9 @@ class GunHandler : Listener {
         player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
         (event.entity as Player).playSound(event.entity.location, Sound.ENTITY_PLAYER_HURT, 1f, 1f)
         println("shot was hit")
-        if (Ak.shotBullets[player]?.contains(arrow) == true) {
-            event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-damage"]?.plus(0.0) ?: 3.0
-            Ak.shotBullets[player]!!.remove(arrow)
+        if (Rifle.shotBullets[player]?.contains(arrow) == true) {
+            event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["rifle-damage"]?.plus(0.0) ?: 3.0
+            Rifle.shotBullets[player]!!.remove(arrow)
             return
         } else if (Minigun.shotBullets[player]?.contains(arrow) == true) {
 

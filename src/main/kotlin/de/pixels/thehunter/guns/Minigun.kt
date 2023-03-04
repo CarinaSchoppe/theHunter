@@ -4,7 +4,7 @@
 package de.pixels.thehunter.guns
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.events.game.PlayerHotbarHover
+import de.pixels.thehunter.events.player.PlayerHotbarHover
 import de.pixels.thehunter.items.AmmoItems
 import de.pixels.thehunter.util.builder.ItemBuilder
 import de.pixels.thehunter.util.game.GamesHandler
@@ -68,7 +68,7 @@ object Minigun : Gun {
             return false
         }
         if (magazine[player]!! <= 0) {
-            reloadGun(player)
+            reload(player)
             return false
         }
 
@@ -86,6 +86,11 @@ object Minigun : Gun {
     }
 
     fun reloadGun(player: Player) {
+
+        reload(player)
+    }
+
+    override fun reload(player: Player) {
         if (magazine.getOrDefault(
                 player,
                 0
@@ -102,10 +107,7 @@ object Minigun : Gun {
             return
         player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
         reloading[player] = true
-        reload(player)
-    }
 
-    private fun reload(player: Player) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
             val amount = getAmmoAmount(player, AmmoItems.minigunAmmo)

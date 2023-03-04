@@ -3,76 +3,11 @@
  */
 package de.pixels.thehunter.util.misc
 
-import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.gamestates.EndState
-import de.pixels.thehunter.gamestates.IngameState
-import de.pixels.thehunter.gamestates.LobbyState
 import de.pixels.thehunter.util.game.Game
-import de.pixels.thehunter.util.game.GamesHandler
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
 object Util {
 
-    fun playerHiding(game: Game, player: Player) {
-        for (players in Bukkit.getOnlinePlayers()) {
-            players.showPlayer(TheHunter.instance, player)
-            player.showPlayer(TheHunter.instance, players)
-        }
-        GamesHandler.playerInGames.keys.forEach {
-            it.hidePlayer(TheHunter.instance, player)
-            player.hidePlayer(TheHunter.instance, it)
-        }
-        GamesHandler.spectatorInGames.keys.forEach {
-            it.hidePlayer(TheHunter.instance, player)
-            player.hidePlayer(TheHunter.instance, it)
-        }
-
-        if (game.currentGameState !is EndState)
-            game.spectators.forEach {
-                it.sendMessage(
-                    TheHunter.instance.messages.messagesMap["player-quit"]!!.replace(
-                        ConstantStrings.PLAYER_PERCENT,
-                        player.name
-                    )
-                )
-            }
-        if (game.currentGameState !is IngameState && game.currentGameState !is EndState)
-            game.players.forEach {
-                it.sendMessage(
-                    TheHunter.instance.messages.messagesMap["player-quit"]!!.replace(
-                        ConstantStrings.PLAYER_PERCENT,
-                        player.name
-                    )
-                )
-            }
-    }
-
     var currentGameSelected = mutableMapOf<Player, Game>()
-    fun updateGameSigns(game: Game) {
-        for (sign in game.signs) {
-            sign.line(0, LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix))
-            sign.line(1, LegacyComponentSerializer.legacySection().deserialize(game.name))
-            if (game.currentGameState is LobbyState) {
-                sign.line(3, LegacyComponentSerializer.legacySection().deserialize("§aLobby"))
-                if (game.players.size < game.maxPlayers) sign.line(
-                    2,
-                    LegacyComponentSerializer.legacySection()
-                        .deserialize("§7[§6" + game.players.size + " §7|§6" + game.maxPlayers + "§7]")
-                ) else sign.line(
-                    2,
-                    LegacyComponentSerializer.legacySection()
-                        .deserialize("§7[§c" + game.players.size + " §7|§c" + game.maxPlayers + "§7]")
-                )
-            } else if (game.currentGameState is IngameState) sign.line(
-                2,
-                LegacyComponentSerializer.legacySection().deserialize("§6RUNNING")
-            ) else if (game.currentGameState is EndState) {
-                sign.line(2, LegacyComponentSerializer.legacySection().deserialize("§cENDING"))
-                sign.line(3, LegacyComponentSerializer.legacySection().deserialize("§aReady Restart"))
-            }
-            sign.update(true)
-        }
-    }
+
 }
