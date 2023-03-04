@@ -62,6 +62,7 @@ tasks {
         kotlinOptions {
             jvmTarget = "19"
             languageVersion = "2.0"
+            apiVersion = "2.0"
         }
     }
     test {
