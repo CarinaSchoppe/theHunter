@@ -38,28 +38,28 @@ class GunHandler : Listener {
 
     private fun whenLeftClick(event: PlayerInteractEvent): Boolean {
         when (event.item!!.itemMeta) {
-            Rifle.rifle.itemMeta -> {
+            Rifle.gun.itemMeta -> {
                 if (!event.player.hasPermission("thehunter.rifle")) return true
-                Rifle.reloadGun(event.player)
+                Rifle.reload(event.player)
                 return true
             }
 
-            Minigun.minigun.itemMeta -> {
+            Minigun.gun.itemMeta -> {
                 if (!event.player.hasPermission("thehunter.minigun")) return true
-                Minigun.reloadGun(event.player)
+                Minigun.reload(event.player)
                 return true
             }
 
-            Pistol.pistol.itemMeta -> {
+            Pistol.gun.itemMeta -> {
                 if (!event.player.hasPermission("thehunter.pistol")) return true
-                Pistol.reloadGun(event.player)
+                Pistol.reload(event.player)
                 return true
             }
 
-            Sniper.sniper.itemMeta -> {
+            Sniper.gun.itemMeta -> {
                 if (!event.player.hasPermission("thehunter.sniper")) return true
 
-                Sniper.reloadGun(event.player)
+                Sniper.reload(event.player)
                 return true
             }
         }
@@ -69,37 +69,37 @@ class GunHandler : Listener {
 
     private fun whenRightClick(event: PlayerInteractEvent): Boolean {
         when (event.item!!.itemMeta) {
-            Rifle.rifle.itemMeta -> {
+            Rifle.gun.itemMeta -> {
                 if (!event.player.hasPermission("thehunter.Rifle")) return true
                 if (event.player.isSneaking) {
-                    Rifle.reloadGun(event.player)
+                    Rifle.reload(event.player)
                     return true
                 }
                 Rifle.shoot(event.player)
             }
 
-            Minigun.minigun.itemMeta -> {
+            Minigun.gun.itemMeta -> {
                 if (!event.player.hasPermission("thehunter.minigun")) return true
                 if (event.player.isSneaking) {
-                    Minigun.reloadGun(event.player)
+                    Minigun.reload(event.player)
                     return true
                 }
                 Minigun.shoot(event.player)
             }
 
-            Pistol.pistol.itemMeta -> {
+            Pistol.gun.itemMeta -> {
                 if (!event.player.hasPermission("thehunter.pistol")) return true
                 if (event.player.isSneaking) {
-                    Pistol.reloadGun(event.player)
+                    Pistol.reload(event.player)
                     return true
                 }
                 Pistol.shoot(event.player)
             }
 
-            Sniper.sniper.itemMeta -> {
+            Sniper.gun.itemMeta -> {
                 if (!event.player.hasPermission("thehunter.sniper")) return true
                 if (event.player.isSneaking) {
-                    Sniper.reloadGun(event.player)
+                    Sniper.reload(event.player)
                     return true
                 }
                 Sniper.shoot(event.player)
@@ -110,18 +110,12 @@ class GunHandler : Listener {
 
     @EventHandler
     fun onGunDrop(event: PlayerDropItemEvent) {
-        if (!event.itemDrop.itemStack.hasItemMeta())
-            return
-        if (event.itemDrop.itemStack.itemMeta == Rifle.rifle.itemMeta ||
-            event.itemDrop.itemStack.itemMeta == Minigun.minigun.itemMeta ||
-            event.itemDrop.itemStack.itemMeta == Sniper.sniper.itemMeta ||
-            event.itemDrop.itemStack.itemMeta == Pistol.pistol.itemMeta
-        ) {
+        if (!event.itemDrop.itemStack.hasItemMeta()) return
+        if (event.itemDrop.itemStack.itemMeta == Rifle.gun.itemMeta || event.itemDrop.itemStack.itemMeta == Minigun.gun.itemMeta || event.itemDrop.itemStack.itemMeta == Sniper.gun.itemMeta || event.itemDrop.itemStack.itemMeta == Pistol.gun.itemMeta) {
             event.isCancelled = true
             event.player.sendMessage(
                 TheHunter.instance.messages.messagesMap["cant-drop-item"]!!.replace(
-                    "%item%",
-                    event.itemDrop.itemStack.type.toString()
+                    "%item%", event.itemDrop.itemStack.type.toString()
                 )
             )
             return
@@ -134,8 +128,7 @@ class GunHandler : Listener {
                 if (itemStack == null) continue
                 when (gun) {
                     is Rifle -> {
-                        if (itemStack.itemMeta != AmmoItems.akAmmo.itemMeta)
-                            continue
+                        if (itemStack.itemMeta != AmmoItems.rifleAmmo.itemMeta) continue
                         itemStack.subtract(1)
 
                     }

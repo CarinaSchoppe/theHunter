@@ -134,10 +134,10 @@ class IngameState(game: Game) : GameState(game) {
     private fun givePlayerStartItems() {
         game.players.forEach {
             it.inventory.clear()
-            it.inventory.addItem(Rifle.rifle)
-            it.inventory.addItem(Minigun.minigun)
-            it.inventory.addItem(Pistol.pistol)
-            it.inventory.addItem(Sniper.sniper)
+            it.inventory.addItem(Rifle.gun)
+            it.inventory.addItem(Minigun.gun)
+            it.inventory.addItem(Pistol.gun)
+            it.inventory.addItem(Sniper.gun)
             it.inventory.setItem(8, Knife.knife)
         }
     }

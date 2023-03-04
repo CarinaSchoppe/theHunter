@@ -23,7 +23,7 @@ class ItemInteraction : Listener {
         when (event.item!!.itemMeta) {
             AmmoItems.sniperAmmo.itemMeta -> event.isCancelled = true
             AmmoItems.minigunAmmo.itemMeta -> event.isCancelled = true
-            AmmoItems.akAmmo.itemMeta -> event.isCancelled = true
+            AmmoItems.rifleAmmo.itemMeta -> event.isCancelled = true
             AmmoItems.pistolAmmo.itemMeta -> event.isCancelled = true
         }
 

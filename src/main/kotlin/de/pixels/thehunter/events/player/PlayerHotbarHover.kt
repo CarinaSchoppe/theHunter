@@ -24,27 +24,27 @@ class PlayerHotbarHover : Listener {
 
         fun updateHotbar(item: ItemStack?, player: Player) {
             when (item?.itemMeta) {
-                Rifle.rifle.itemMeta -> {
+                Rifle.gun.itemMeta -> {
                     val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns["ak-ammo"]!!
                     val currentAmmo = Rifle.magazine.getOrDefault(player, 0)
                     player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
                 }
 
-                Pistol.pistol.itemMeta -> {
+                Pistol.gun.itemMeta -> {
                     val maxAmmoAmount =
                         GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.PISTOL_AMMO]!!
                     val currentAmmo = Pistol.magazine.getOrDefault(player, 0)
                     player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
                 }
 
-                Sniper.sniper.itemMeta -> {
+                Sniper.gun.itemMeta -> {
                     val maxAmmoAmount =
                         GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.SNIPER_AMMO]!!
                     val currentAmmo = Sniper.magazine.getOrDefault(player, 0)
                     player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
                 }
 
-                Minigun.minigun.itemMeta -> {
+                Minigun.gun.itemMeta -> {
                     val maxAmmoAmount =
                         GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.MINIGUN_AMMO]!!
                     val currentAmmo = Minigun.magazine.getOrDefault(player, 0)

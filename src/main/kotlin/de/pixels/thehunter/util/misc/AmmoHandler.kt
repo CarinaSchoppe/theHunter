@@ -23,7 +23,7 @@ class AmmoHandler : Listener {
             return
         else if (event.item!!.itemMeta != AmmoItems.minigunAmmo.itemMeta)
             return
-        else if (event.item!!.itemMeta != AmmoItems.akAmmo.itemMeta)
+        else if (event.item!!.itemMeta != AmmoItems.rifleAmmo.itemMeta)
             return
         if (!GamesHandler.playerInGames.containsKey(event.player))
             return
