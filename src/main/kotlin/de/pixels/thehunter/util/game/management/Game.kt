@@ -11,13 +11,8 @@ import de.pixels.thehunter.countdowns.LobbyCountdown
 import de.pixels.thehunter.gamestates.*
 import de.pixels.thehunter.items.util.ItemChest
 import de.pixels.thehunter.util.files.BaseFile
-import de.pixels.thehunter.util.game.ingame.DeathChest
-import de.pixels.thehunter.util.game.ingame.MapResetter
-import de.pixels.thehunter.util.game.ingame.Scoreboard
-import de.pixels.thehunter.util.game.ingame.WorldboarderController
+import de.pixels.thehunter.util.game.ingame.*
 import de.pixels.thehunter.util.misc.ConstantStrings
-import de.pixels.thehunter.util.misc.Util
-import de.pixels.thehunter.util.misc.*
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.block.Sign
@@ -84,7 +79,7 @@ class Game(var name: String) {
         if (currentGameState is EndState) {
             currentGameState.stop()
             currentGameState = gameStates[GameStates.LOBBY_STATE.id]
-            Util.updateGameSigns(this)
+            GameSigns.updateGameSigns(this)
             currentGameState = gameStates[GameStates.END_STATE.id]
             clearAll()
             GamesHandler.games.remove(this)
@@ -93,7 +88,7 @@ class Game(var name: String) {
         } else {
             currentGameState.stop()
             currentGameState = gameStates[gameStates.indexOf(currentGameState) + 1]
-            Util.updateGameSigns(this)
+            GameSigns.updateGameSigns(this)
             currentGameState.start()
         }
     }
@@ -271,7 +266,7 @@ class Game(var name: String) {
         itemSettings.addData()
         gameItems.loadAllGunSettings()
         GamesHandler.games.add(this)
-        Util.updateGameSigns(this)
+        GameSigns.updateGameSigns(this)
         Bukkit.getConsoleSender()
             .sendMessage(TheHunter.instance.messages.messagesMap["loaded-game-successfully"]!!.replace("%game%", name))
 

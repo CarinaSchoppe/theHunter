@@ -8,14 +8,13 @@ import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.commands.CommandUtil
 import de.pixels.thehunter.countdowns.LobbyCountdown
 import de.pixels.thehunter.util.builder.Items
+import de.pixels.thehunter.util.game.ingame.GameSigns
 import de.pixels.thehunter.util.game.ingame.PlayerHiding
 import de.pixels.thehunter.util.game.ingame.PlayerTeamHead
 import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.misc.ConstantStrings
 import de.pixels.thehunter.util.misc.Permissions
-import de.pixels.thehunter.util.misc.Util
-import de.pixels.thehunter.util.misc.*
 import org.bukkit.GameMode
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
@@ -47,7 +46,7 @@ class JoinGame {
         }
         if (!playerAddingAndMessaging(sender as Player, game))
             return
-        Util.updateGameSigns(game)
+        GameSigns.updateGameSigns(game)
         sender.inventory.clear()
         sender.inventory.setItem(8, Items.leaveItem)
         sender.inventory.setItem(5, PlayerTeamHead.createPlayerHead)

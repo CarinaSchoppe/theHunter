@@ -17,14 +17,13 @@ import de.pixels.thehunter.items.special.*
 import de.pixels.thehunter.util.files.BaseFile
 import de.pixels.thehunter.util.files.Messages
 import de.pixels.thehunter.util.files.Settings
-import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.ingame.GameSigns
 import de.pixels.thehunter.util.game.ingame.GamesInventoryList
 import de.pixels.thehunter.util.game.ingame.PlayerTeamHead
+import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.game.management.StatsSystem
 import de.pixels.thehunter.util.misc.Autoupdater
-import de.pixels.thehunter.util.misc.*
 import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin
@@ -91,7 +90,6 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(EnergyDrink(), this)
         pluginManager.registerEvents(JumpStick(), this)
         pluginManager.registerEvents(LootChestHandler(), this)
-        pluginManager.registerEvents(AmmoHandler(), this)
         pluginManager.registerEvents(GunHandler(), this)
         pluginManager.registerEvents(TeamDamage(), this)
         pluginManager.registerEvents(MapModification(), this)
