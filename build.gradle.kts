@@ -60,10 +60,6 @@ tasks {
     }
     withType<KotlinCompile> {
         kotlinOptions {
-            freeCompilerArgs = listOf(
-                "-Xuse-k2",
-                "-Xjdk-release=19"
-            )
             jvmTarget = "19"
             languageVersion = "2.0"
         }
