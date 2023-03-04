@@ -26,13 +26,13 @@ class EggBomb : Listener {
         val bombs = mutableSetOf<TNTPrimed>()
         fun eggBomb(game: Game) = ItemBuilder(Material.EGG).addDisplayName(TheHunter.prefix + "§eEggBomb")
             .addEnchantment(Enchantment.DURABILITY, 1).addLore(
-            listOf(
-                TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace(
-                    ConstantStrings.POWER_PERCENT,
-                    game.itemSettings.settingsMap["egg-bomb-radius"].toString()
+                listOf(
+                    TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace(
+                        ConstantStrings.POWER_PERCENT,
+                        game.itemSettings.settingsMap["egg-bomb-radius"].toString()
+                    )
                 )
-            )
-        ).build()
+            ).build()
     }
 
 

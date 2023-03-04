@@ -18,9 +18,10 @@ object Inventories {
             .setItem(1, Items.addSpectatorButton).setItem(2, Items.addArenaCenterButton)
             .setItem(3, Items.addSpawnButton).setItem(4, Items.addBackButton).setItem(5, Items.addEndButton)
             .setItem(7, Items.settingsHead).setItem(8, Items.finishButton).fillInventory(
-            ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1)
-                .build()
-        ).create()
+                ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("")
+                    .addEnchantment(Enchantment.DURABILITY, 1)
+                    .build()
+            ).create()
 
     val gamesInventory = InventoryBuilder(TheHunter.prefix + "§6Games", 54).addGamesToInventory().fillInventory(
         ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1)

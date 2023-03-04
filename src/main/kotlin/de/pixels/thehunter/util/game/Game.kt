@@ -70,8 +70,7 @@ class Game(var name: String) {
         if (minPlayers < 0) return true
         if (worldBoarderController.worldBoarderSize < 50) return true
         if (worldBoarderController.worldBoarderSize < worldBoarderController.minBorderSize) return true
-        if (playerSpawns.size - 1 < maxPlayers && !randomPlayerDrop) return true
-        return false
+        return playerSpawns.size - 1 < maxPlayers && !randomPlayerDrop
     }
 
 

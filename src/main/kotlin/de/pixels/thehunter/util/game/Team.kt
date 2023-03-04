@@ -137,12 +137,8 @@ class Team(var teamLeader: Player) {
         }
 
         fun isTeamMember(player: Player, other: Player): Boolean {
-            if ((GamesHandler.playerInGames.containsKey(player) || GamesHandler.spectatorInGames.containsKey(player)) && (GamesHandler.playerInGames[player]
-                    ?: GamesHandler.spectatorInGames[player])!!.teams.any { it.teamMembers.contains(other) }
-            ) {
-                return true
-            }
-            return false
+            return (GamesHandler.playerInGames.containsKey(player) || GamesHandler.spectatorInGames.containsKey(player)) && (GamesHandler.playerInGames[player]
+                ?: GamesHandler.spectatorInGames[player])!!.teams.any { it.teamMembers.contains(other) }
         }
 
         fun removePlayerFromTeam(player: Player, leader: Player) {
