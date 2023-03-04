@@ -12,7 +12,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    `java-library`
     id("idea")
     kotlin("jvm") version "+"
     id("io.papermc.paperweight.userdev") version "+"
@@ -43,7 +42,7 @@ dependencies {
 
 java {
     // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
-    toolchain.languageVersion.set(JavaLanguageVersion.of(19))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 tasks {
 
@@ -52,7 +51,7 @@ runServer {
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
-        options.release.set(19)
+        options.release.set(17)
     }
     javadoc {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
@@ -62,7 +61,7 @@ runServer {
     }
     withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "19"
+            jvmTarget = "17"
             languageVersion = "2.0"
             apiVersion = "2.0"
         }
