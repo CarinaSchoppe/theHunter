@@ -4,21 +4,22 @@
 package de.pixels.thehunter.util.misc
 
 object Permissions {
-    const val MAPRESET_COMMAND = "theHunter.mapreset"
-    const val JOIN_COMMAND = "theHunter.join"
-    const val SETTINGS_GUI = "theHunter.settingsgui"
-    const val EGG_BOMB = "theHunter.eggbomb"
-    const val SETUP_COMMAND = "theHunter.setup"
-    const val TEAM_COMMAND = "theHunter.team"
-    const val SETUP_GUI = "theHunter.setupgui"
-    const val REMOVE_GAME_COMMAND = "theHunter.remove-game"
-    const val ANVIL_GUI = "theHunter.anvilgui"
-    const val START_COMMAND = "theHunter.start"
-    const val STATS_COMMAND = "theHunter.stats"
-    const val LEAVE_COMMAND = "theHunter.leave"
-    const val GAMES_INVENTORY = "theHunter.inventory"
+
+    const val MAPRESET_COMMAND = "mapreset"
+    const val JOIN_COMMAND = "join"
+    const val SETTINGS_GUI = "settingsgui"
+    const val EGG_BOMB = "eggbomb"
+    const val SETUP_COMMAND = "setup"
+    const val TEAM_COMMAND = "team"
+    const val SETUP_GUI = "setupgui"
+    const val REMOVE_GAME_COMMAND = "remove-game"
+    const val ANVIL_GUI = "anvilgui"
+    const val START_COMMAND = "start"
+    const val STATS_COMMAND = "stats"
+    const val LEAVE_COMMAND = "leave"
+    const val GAMES_INVENTORY = "inventory"
     const val PERMISSION_PREFIX = "theHunter"
-    const val PLAYER_INVITER = "theHunter.playerinviter"
-    const val SIGN_JOIN = "theHunter.signjoin"
+    const val PLAYER_INVITER = "playerinviter"
+    const val SIGN_JOIN = "signjoin"
 
 }

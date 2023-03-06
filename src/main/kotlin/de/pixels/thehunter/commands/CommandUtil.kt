@@ -5,6 +5,7 @@ package de.pixels.thehunter.commands
 
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.util.misc.ConstantStrings
+import de.pixels.thehunter.util.misc.Permissions
 import org.bukkit.command.CommandSender
 
 object CommandUtil {
@@ -37,7 +38,7 @@ object CommandUtil {
             return false
         }
 
-        if (!player.hasPermission(permissions)) {
+        if (!player.hasPermission(Permissions.PERMISSION_PREFIX + permissions)) {
             player.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.NO_PERMISSION]!!)
             return false
         }

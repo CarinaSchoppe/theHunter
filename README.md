@@ -9,3 +9,4 @@ Its a total recode of the old work of genius project
 
 TODO:
 Add perks
+Clickable NPC
