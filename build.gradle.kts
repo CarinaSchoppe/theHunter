@@ -14,7 +14,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("idea")
     kotlin("jvm") version "+"
-    id("io.papermc.paperweight.userdev") version "+"
+   // id("io.papermc.paperweight.userdev") version "+"
     id("com.github.johnrengelman.shadow") version "+"
     id("xyz.jpenilla.run-paper") version "+" // Adds runServer and runMojangMappedServer tasks for testing
 
@@ -34,7 +34,8 @@ repositories {
 
 dependencies {
     //    implementation("com.google.code.gson:gson:+") // Gson
-    paperweight.paperDevBundle("+")
+    // paperweight.paperDevBundle("+")
+    compileOnly("io.papermc.paper:paper-api:+")
     testImplementation(kotlin("test"))
     implementation("net.wesjd:anvilgui:+")
     implementation("org.xerial:sqlite-jdbc:+")
@@ -42,7 +43,7 @@ dependencies {
 
 java {
     // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(19))
 }
 tasks {
 
@@ -51,7 +52,7 @@ runServer {
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
-        options.release.set(17)
+        options.release.set(19)
     }
     javadoc {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
@@ -61,7 +62,7 @@ runServer {
     }
     withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "17"
+            jvmTarget = "19"
             languageVersion = "2.0"
             apiVersion = "2.0"
         }
