@@ -20,6 +20,7 @@ import de.pixels.thehunter.util.files.Settings
 import de.pixels.thehunter.util.game.ingame.GameSigns
 import de.pixels.thehunter.util.game.ingame.GamesInventoryList
 import de.pixels.thehunter.util.game.ingame.PlayerTeamHead
+import de.pixels.thehunter.util.game.ingame.achivements.AchivementManager
 import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.game.management.StatsSystem
@@ -109,6 +110,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(GameConfigurator(), this)
         pluginManager.registerEvents(PlayerHotbarHover(), this)
         pluginManager.registerEvents(PlayerRegenerateIngame(), this)
+        AchivementManager.registerAchivements(this)
 
         loadGamesFromFolders()
 
