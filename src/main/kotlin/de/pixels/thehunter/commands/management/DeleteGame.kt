@@ -11,30 +11,31 @@ import de.pixels.thehunter.util.files.BaseFile
 import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.misc.ConstantStrings
 import de.pixels.thehunter.util.misc.Permissions
+import java.io.File
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import java.io.File
 
 class DeleteGame {
     fun remove(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(
-                sender,
-                command,
-                args,
-                ConstantStrings.DELETE_COMMAND,
-                1,
-                Permissions.REMOVE_GAME_COMMAND
-            )
+                        sender,
+                        command,
+                        args,
+                        ConstantStrings.DELETE_COMMAND,
+                        1,
+                        Permissions.REMOVE_GAME_COMMAND
+                )
         )
-            return
+                return
+
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {
             sender.sendMessage(
-                TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace(
-                    ConstantStrings.GAME_PERCENT,
-                    args[0]
-                )
+                    TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace(
+                            ConstantStrings.GAME_PERCENT,
+                            args[0]
+                    )
             )
             return
         }
@@ -47,19 +48,16 @@ class DeleteGame {
         GamesHandler.games.remove(game)
         val file = File(BaseFile.gameFolder + "/arenas/${game.name}")
         if (file.deleteRecursively())
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap["game-successfully-removed"]!!.replace(
-                    ConstantStrings.GAME_PERCENT,
-                    args[0]
+                sender.sendMessage(
+                        TheHunter.instance.messages.messagesMap["game-successfully-removed"]!!
+                                .replace(ConstantStrings.GAME_PERCENT, args[0])
                 )
-            )
         else
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap["game-could-not-delete"]!!.replace(
-                    ConstantStrings.GAME_PERCENT,
-                    args[0]
+                sender.sendMessage(
+                        TheHunter.instance.messages.messagesMap["game-could-not-delete"]!!.replace(
+                                ConstantStrings.GAME_PERCENT,
+                                args[0]
+                        )
                 )
-            )
-
     }
 }

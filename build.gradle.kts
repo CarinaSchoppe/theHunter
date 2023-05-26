@@ -48,7 +48,7 @@ java {
 tasks {
 
 runServer {
-        minecraftVersion("1.19.3")
+        minecraftVersion("1.19.4")
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
