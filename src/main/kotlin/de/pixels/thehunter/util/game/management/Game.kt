@@ -184,8 +184,8 @@ class Game(var name: String) {
             game?.spectatorLocation = ymlLocations.getLocation("spectator-location")
             game?.finish()
             game?.currentGameState = game?.gameStates?.get(GameStates.LOBBY_STATE.id) ?: return
-            game.currentGameState.start()
-            game.worldBoarderController.resetWorldBoarder()
+            game.currentGameState?.start()
+            game.worldBoarderController?.resetWorldBoarder()
         }
 
 
