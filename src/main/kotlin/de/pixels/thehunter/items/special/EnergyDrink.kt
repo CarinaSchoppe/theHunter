@@ -34,7 +34,7 @@ class EnergyDrink : Listener {
         event.isCancelled = true
         ItemHandler.removeOneItemOfPlayer(event.player)
         event.player.addPotionEffects(createAndAddPotionEffects())
-        event.player.sendMessage(TheHunter.instance.messages.messagesMap["energydrink-consumed"]!!)
+        TheHunter.instance.messages.messagesMap["energydrink-consumed"]?.let { event.player.sendMessage(it) }
 
     }
 

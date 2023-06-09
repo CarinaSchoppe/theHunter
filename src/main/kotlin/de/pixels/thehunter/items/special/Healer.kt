@@ -30,18 +30,20 @@ class Healer : Listener {
         event.isCancelled = true
         if (event.player.health == 20.0)
             return
-        if (event.player.health + GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.HEALER_AMOUNT] as Int <= 20)
-            event.player.health += GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.HEALER_AMOUNT] as Int
+        if (event.player.health + GamesHandler.playerInGames[event.player]?.gameItems?.items?.get(ConstantStrings.HEALER_AMOUNT) as Int <= 20)
+            event.player.health += GamesHandler.playerInGames[event.player]?.gameItems?.items?.get(ConstantStrings.HEALER_AMOUNT) as Int
         else
             event.player.health = 20.0
         ItemHandler.removeOneItemOfPlayer(event.player)
-        event.player.sendActionBar(
+
+        TheHunter.instance.messages.messagesMap["healer-message"]?.let {
             LegacyComponentSerializer.legacySection().deserialize(
-                TheHunter.instance.messages.messagesMap["healer-message"]!!.replace(
+                it.replace(
                     "%heal%",
-                    (GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.HEALER_AMOUNT] as Int).toString()
+                    (GamesHandler.playerInGames[event.player]?.gameItems?.items?.get(ConstantStrings.HEALER_AMOUNT) as Int).toString()
                 )
             )
-        )
+        }.let { event.player.sendActionBar(it ?: return) }
+        
     }
 }

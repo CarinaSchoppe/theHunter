@@ -20,7 +20,7 @@ import de.pixels.thehunter.util.files.Settings
 import de.pixels.thehunter.util.game.ingame.GameSigns
 import de.pixels.thehunter.util.game.ingame.GamesInventoryList
 import de.pixels.thehunter.util.game.ingame.PlayerTeamHead
-import de.pixels.thehunter.util.game.ingame.achivements.AchivementManager
+import de.pixels.thehunter.util.game.ingame.achievements.AchievementManager
 import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.game.management.StatsSystem
@@ -33,12 +33,12 @@ import java.io.File
 class TheHunter : JavaPlugin() {
 
     /*
-
     TODO: Villager Clickable somehow
     TODO: Perks
-    TODO: Achivements
+    TODO: Achievements
     TODO: Premium join
     TODO: grenade makes no damage
+    TODO: Legacy code umändern 
      */
 
 
@@ -50,7 +50,7 @@ class TheHunter : JavaPlugin() {
     lateinit var settings: Settings
     lateinit var messages: Messages
     lateinit var statsSystem: StatsSystem
-    val version = "1.0.0"
+    val version = "1.2.6.1"
 
     override fun onEnable() {
         instance = this
@@ -78,8 +78,8 @@ class TheHunter : JavaPlugin() {
     private fun initialize(pluginManager: PluginManager) {
 
         //Commands:
-        getCommand("theHunter")!!.setExecutor(BaseCommand())
-        getCommand("start")!!.setExecutor(StartCommand())
+        getCommand("theHunter")?.setExecutor(BaseCommand())
+        getCommand("start")?.setExecutor(StartCommand())
 
         //Events:
         pluginManager.registerEvents(EggBomb(), this)
@@ -110,7 +110,7 @@ class TheHunter : JavaPlugin() {
         pluginManager.registerEvents(GameConfigurator(), this)
         pluginManager.registerEvents(PlayerHotbarHover(), this)
         pluginManager.registerEvents(PlayerRegenerateIngame(), this)
-        AchivementManager.registerAchivements(this)
+        AchievementManager.registerAchievements(this)
 
         loadGamesFromFolders()
 
@@ -119,11 +119,11 @@ class TheHunter : JavaPlugin() {
 
 
     private fun loadGamesFromFolders() {
-        val folder = File(BaseFile.gameFolder + "/arenas/")
+        val folder = File(BaseFile.GAME_FOLDER + "/arenas/")
         if (!folder.exists()) {
             folder.mkdirs()
         }
-        val files = folder.listFiles()
+        val files = folder.listFiles() ?: return
 
         for (file in files) {
             if (file.isDirectory) {

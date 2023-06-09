@@ -29,17 +29,19 @@ object CommandUtil {
         val player: org.bukkit.entity.Player = sender
 
         if (args.size < minArgs) {
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["not-enough-arguments"]!!.replace(
-                    ConstantStrings.ARGUMENTS_PERCENT,
-                    "$minArgs"
+            TheHunter.instance.messages.messagesMap["not-enough-arguments"]?.let {
+                player.sendMessage(
+                    it.replace(
+                        ConstantStrings.ARGUMENTS_PERCENT,
+                        "$minArgs"
+                    )
                 )
-            )
+            }
             return false
         }
 
         if (!player.hasPermission(Permissions.PERMISSION_PREFIX + permissions)) {
-            player.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.NO_PERMISSION]!!)
+            TheHunter.instance.messages.messagesMap[ConstantStrings.NO_PERMISSION]?.let { player.sendMessage(it) }
             return false
         }
 

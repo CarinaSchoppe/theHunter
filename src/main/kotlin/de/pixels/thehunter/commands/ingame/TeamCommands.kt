@@ -28,31 +28,43 @@ class TeamCommands {
             return
 
         if (!GamesHandler.playerInGames.containsKey(sender) && !GamesHandler.spectatorInGames.containsKey(sender)) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["player-own-not-in-game"]!!)
+            TheHunter.instance.messages.messagesMap["player-own-not-in-game"]?.let { sender.sendMessage(it) }
             return
         }
-        if (args[0].lowercase() == ConstantStrings.LEAVE_COMMAND) {
-            Team.removePlayerFromTeam(sender as Player, sender)
-        } else if (args[0].lowercase() == ConstantStrings.INVITE_COMMAND) {
-            invite(sender as Player, args)
-        } else if (args[0].lowercase() == ConstantStrings.REMOVE_COMMAND) {
-            remove(sender as Player, args)
-        } else if (args[0].lowercase() == ConstantStrings.ACCEPT_COMMAND) {
-            accept(sender as Player, args)
-        } else if (args[0].lowercase() == ConstantStrings.PROMOTE_COMMAND) {
-            promote(sender as Player, args)
+        when {
+            args[0].lowercase() == ConstantStrings.LEAVE_COMMAND -> {
+                Team.removePlayerFromTeam(sender as Player, sender)
+            }
+
+            args[0].lowercase() == ConstantStrings.INVITE_COMMAND -> {
+                invite(sender as Player, args)
+            }
+
+            args[0].lowercase() == ConstantStrings.REMOVE_COMMAND -> {
+                remove(sender as Player, args)
+            }
+
+            args[0].lowercase() == ConstantStrings.ACCEPT_COMMAND -> {
+                accept(sender as Player, args)
+            }
+
+            args[0].lowercase() == ConstantStrings.PROMOTE_COMMAND -> {
+                promote(sender as Player, args)
+            }
         }
     }
 
     private fun promote(sender: Player, args: Array<out String>) {
         val player = Bukkit.getPlayer(args[1])
         if (player == null) {
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]!!.replace(
-                    ConstantStrings.PLAYER_PERCENT,
-                    args[1]
+            TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let {
+                sender.sendMessage(
+                    it.replace(
+                        ConstantStrings.PLAYER_PERCENT,
+                        args[1]
+                    )
                 )
-            )
+            }
             return
         }
         Team.promoteNewTeamLeader(player, sender)
@@ -60,22 +72,26 @@ class TeamCommands {
 
     private fun argumentChecker(sender: Player, args: Array<out String>): Boolean {
         if (args.size <= 1) {
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]!!.replace(
-                    ConstantStrings.ARGUMENTS_PERCENT,
-                    2.toString()
+            TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
+                sender.sendMessage(
+                    it.replace(
+                        ConstantStrings.ARGUMENTS_PERCENT,
+                        2.toString()
+                    )
                 )
-            )
+            }
             return true
         }
         val player = Bukkit.getPlayer(args[1])
         if (player == null) {
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]!!.replace(
-                    ConstantStrings.PLAYER_PERCENT,
-                    args[1]
+            TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let {
+                sender.sendMessage(
+                    it.replace(
+                        ConstantStrings.PLAYER_PERCENT,
+                        args[1]
+                    )
                 )
-            )
+            }
             return true
         }
 
@@ -91,53 +107,61 @@ class TeamCommands {
     private fun accept(sender: Player, args: Array<out String>) {
         val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender] ?: return
         if (game.teams.find { it.teamMembers.contains(sender) } != null) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["player-already-in-team"]!!)
+            TheHunter.instance.messages.messagesMap["player-already-in-team"]?.let { sender.sendMessage(it) }
             return
         }
 
+
+
         if (args.size <= 1) {
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]!!.replace(
-                    ConstantStrings.ARGUMENTS_PERCENT,
-                    2.toString()
+            TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
+                sender.sendMessage(
+                    it.replace(
+                        ConstantStrings.ARGUMENTS_PERCENT,
+                        2.toString()
+                    )
                 )
-            )
+            }
             return
         }
         val player = Bukkit.getPlayer(args[1])
         if (player == null) {
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]!!.replace(
-                    ConstantStrings.PLAYER_PERCENT,
-                    args[1]
+            TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let {
+                sender.sendMessage(
+                    it.replace(
+                        ConstantStrings.PLAYER_PERCENT,
+                        args[1]
+                    )
                 )
-            )
+            }
             return
         }
 
         val team = (GamesHandler.playerInGames[sender]
             ?: GamesHandler.spectatorInGames[sender])!!.teams.find { it.teamLeader.name == player.name }
         if (team == null) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]!!)
+            TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let { sender.sendMessage(it) }
             return
         }
 
         if (!team.invites.contains(sender)) {
-            sender.sendMessage(TheHunter.instance.messages.messagesMap["player-own-not-invited"]!!)
+            TheHunter.instance.messages.messagesMap["player-own-not-invited"]?.let { sender.sendMessage(it) }
             return
         }
 
         team.invites.remove(sender)
         team.teamMembers.forEach {
-            it.sendMessage(
-                TheHunter.instance.messages.messagesMap["player-joined-team-all"]!!.replace(
-                    ConstantStrings.PLAYER_PERCENT,
-                    sender.name
+            TheHunter.instance.messages.messagesMap["player-joined-team-all"]?.let { str ->
+                it.sendMessage(
+                    str.replace(
+                        ConstantStrings.PLAYER_PERCENT,
+                        sender.name
+                    )
                 )
-            )
+            }
         }
         team.teamMembers.add(sender)
-        sender.sendMessage(TheHunter.instance.messages.messagesMap["player-joined-team"]!!)
+        TheHunter.instance.messages.messagesMap["player-joined-team"]?.let { sender.sendMessage(it) }
     }
 
 

@@ -4,13 +4,9 @@
 
 package de.pixels.thehunter.events.player
 
-import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.util.builder.Items
 import de.pixels.thehunter.util.game.ingame.DeathHandler
-import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler
 import net.kyori.adventure.text.Component
-import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -31,11 +27,10 @@ class PlayerDeath : Listener {
     }
 
     private fun playerKilledOther(event: PlayerDeathEvent, player: Player, killer: Player) {
-        if (!GamesHandler.playerInGames.containsKey(killer))
+        if (!GamesHandler.playerInGames.containsKey(killer) || GamesHandler.playerInGames[player] != GamesHandler.playerInGames[killer])
             return
-        if (GamesHandler.playerInGames[player] != GamesHandler.playerInGames[killer])
-            return
-        val game = GamesHandler.playerInGames[player]!!
+
+        val game = GamesHandler.playerInGames[player] ?: return
         killer.level += 1
         game.currentGameKills[killer] = game.currentGameKills.getOrDefault(killer, 0) + 1
         killer.playSound(killer, Sound.ITEM_GOAT_HORN_SOUND_7, 1f, 1f)
@@ -47,26 +42,5 @@ class PlayerDeath : Listener {
 
     }
 
-
-    companion object {
-        fun generalHandling(player: Player, game: Game) {
-            game.players.remove(player)
-            game.spectators.add(player)
-            GamesHandler.playerInGames.remove(player)
-            GamesHandler.spectatorInGames[player] = game
-            player.inventory.clear()
-            player.inventory.setItem(8, Items.leaveItem)
-            player.inventory.setItem(9, Items.leaveItem)
-            player.teleport(game.spectatorLocation!!)
-            player.allowFlight = true
-            Bukkit.getOnlinePlayers().forEach {
-                it.hidePlayer(TheHunter.instance, player)
-                if (!game.players.contains(it))
-                    player.hidePlayer(TheHunter.instance, it)
-                if (game.players.contains(it) || game.spectators.contains(it))
-                    game.scoreBoard.createNewScoreboard(it)
-            }
-        }
-    }
 
 }

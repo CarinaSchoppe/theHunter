@@ -30,25 +30,25 @@ abstract class Gun {
         bulletDelay[player] = true
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Runnable {
             bulletDelay[player] = false
-        }, 5L * GamesHandler.playerInGames[player]!!.gameItems.guns["$gunName-speed"] as Int)
+        }, 5L * GamesHandler.playerInGames[player]?.gameItems?.guns?.get("$gunName-speed") as Int)
     }
 
     private fun shootProjectile(player: Player) {
         bulletDelayMaker(player)
         val arrow = player.launchProjectile(
             Arrow::class.java, player.location.direction.multiply(
-                GamesHandler.playerInGames[player]!!.gameItems.guns["$gunName-power"]!!
+                GamesHandler.playerInGames[player]?.gameItems?.guns?.get("$gunName-power") ?: return
             )
         )
         arrow.damage = 0.0
         player.playSound(player, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1f, 1f)
         player.world.playSound(player.location, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f)
-        magazine[player] = magazine[player]!! - 1
+        magazine[player] = magazine[player] as Int - 1
         arrow.shooter = player
         PlayerHotbarHover.updateHotbar(gun, player)
 
         if (shotBullets.containsKey(player)) {
-            shotBullets[player]!!.add(arrow)
+            shotBullets[player]?.add(arrow)
         } else {
             shotBullets[player] = mutableSetOf(arrow)
         }
@@ -69,13 +69,13 @@ abstract class Gun {
             return false
         }
 
-        if (!bulletDelay[player]!!) shootProjectile(player)
+        if (bulletDelay[player] == false) shootProjectile(player)
         return true
     }
 
     private fun checkAmmoPossible(player: Player): Boolean {
         if (!player.inventory.containsAtLeast(ammo, 1)) {
-            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]!!)
+            TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]?.let { player.sendMessage(it) }
             return false
         }
         return true
@@ -86,25 +86,25 @@ abstract class Gun {
         if (magazine.getOrDefault(
                 player,
                 0
-            ) >= GamesHandler.playerInGames[player]!!.gameItems.guns[ammoString]!!
+            ) >= (GamesHandler.playerInGames[player]?.gameItems?.guns?.get(ammoString) ?: return)
         )
             return
         player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
         if (reloading[player] == true) {
-            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
+            TheHunter.instance.messages.messagesMap["gun-reloading"]?.let { player.sendMessage(it) }
             return
         }
         if (!checkAmmoPossible(player))
             return
 
-        player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reloading"]!!)
+        TheHunter.instance.messages.messagesMap["gun-reloading"]?.let { player.sendMessage(it) }
         reloading[player] = true
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
             val amount = getAmmoAmount(player, ammo)
             val old = magazine.getOrDefault(player, 0)
             if (amount + old >= GamesHandler.playerInGames[player]!!.gameItems.guns[ammoString]!!) {
-                magazine[player] = GamesHandler.playerInGames[player]!!.gameItems.guns[ammoString]!!
+                magazine[player] = GamesHandler.playerInGames[player]?.gameItems?.guns?.get(ammoString) ?: return@scheduleSyncDelayedTask
             } else
                 magazine[player] = amount + old
             repeat(magazine[player]!! - old) {
@@ -114,17 +114,15 @@ abstract class Gun {
 
             player.playSound(player.location, Sound.BLOCK_ANVIL_USE, 1f, 1f)
 
-            player.sendMessage(TheHunter.instance.messages.messagesMap["gun-reload-done"]!!)
-        }, 20L * GamesHandler.playerInGames[player]!!.gameItems.guns["$gunName-reload"]!!)
+            TheHunter.instance.messages.messagesMap["gun-reload-done"]?.let { player.sendMessage(it) }
+        }, 20L * (GamesHandler.playerInGames[player]?.gameItems?.guns?.get("$gunName-reload") ?: return))
     }
 
 
     private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
         var amount = 0
         for (item in player.inventory.contents) {
-            if (item == null)
-                continue
-            if (!item.hasItemMeta())
+            if (item == null || !item.hasItemMeta())
                 continue
             if (item.itemMeta == ammo.itemMeta)
                 amount += item.amount

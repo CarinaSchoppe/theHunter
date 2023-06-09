@@ -14,17 +14,33 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 
+/**
+ * Represents the base command executor for handling various sub-commands.
+ * Takes user input as sub-command and redirects it to the appropriate class.
+ * If the sub-command doesn't match any available commands, an error message is sent to the user.
+ */
 class BaseCommand : CommandExecutor {
 
 
+    /**
+     * Executes the main game command and handles different sub-commands based on user input.
+     * @param sender CommandSender instance representing the sender of the command.
+     * @param command Command instance representing the command that is being executed.
+     * @param label String representing the actual alias used in the command.
+     * @param args Array of String arguments passed along with the command.
+     * @return Boolean indicating whether the sub-command was executed successfully or not.
+     *         True if the sub-command matched and was executed, False otherwise.
+     */
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.isEmpty()) {
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]!!.replace(
-                    ConstantStrings.ARGUMENTS_PERCENT,
-                    1.toString()
+            TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
+                sender.sendMessage(
+                    it.replace(
+                        ConstantStrings.ARGUMENTS_PERCENT,
+                        1.toString()
+                    )
                 )
-            )
+            }
             return false
         }
 
@@ -87,12 +103,14 @@ class BaseCommand : CommandExecutor {
             }
         }
 
-        sender.sendMessage(
-            TheHunter.instance.messages.messagesMap["no-command-found"]!!.replace(
-                "%command%",
-                commandName
+        TheHunter.instance.messages.messagesMap["no-command-found"]?.let {
+            sender.sendMessage(
+                it.replace(
+                    "%command%",
+                    commandName
+                )
             )
-        )
+        }
         return false
     }
 }

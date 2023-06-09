@@ -40,19 +40,19 @@ class StatsSystem : BaseFile("stats.yml") {
                         "REPLACE INTO statsPlayer(uuid, kills, deaths, points, kdr, wins,loses,games) VALUES ('$player', '${playerStats[player]?.kills}', '${playerStats[player]?.deaths}', '${playerStats[player]?.points}', '${playerStats[player]?.kdr}', '${playerStats[player]?.wins}', '${playerStats[player]?.loses}', '${playerStats[player]?.games}')"
                     )?.executeUpdate()
                 } else {
-                    TheHunter.instance.statsSystem.yml.set("$player.Kills", playerStats[player]!!.kills)
-                    TheHunter.instance.statsSystem.yml.set(
+                    TheHunter.instance.statsSystem.yml["$player.Kills", playerStats[player]?.kills]
+                    TheHunter.instance.statsSystem.yml[
                         "$player${ConstantStrings.DOT_DEATHS}",
-                        playerStats[player]!!.deaths
-                    )
-                    TheHunter.instance.statsSystem.yml.set("$player.KDR", playerStats[player]!!.kdr)
-                    TheHunter.instance.statsSystem.yml.set("$player.Wins", playerStats[player]!!.wins)
-                    TheHunter.instance.statsSystem.yml.set("$player.Loses", playerStats[player]!!.loses)
-                    TheHunter.instance.statsSystem.yml.set(
+                        playerStats[player]?.deaths
+                    ]
+                    TheHunter.instance.statsSystem.yml["$player.KDR", playerStats[player]?.kdr]
+                    TheHunter.instance.statsSystem.yml["$player.Wins", playerStats[player]?.wins]
+                    TheHunter.instance.statsSystem.yml["$player.Loses", playerStats[player]?.loses]
+                    TheHunter.instance.statsSystem.yml[
                         "$player${ConstantStrings.DOT_POINTS}",
-                        playerStats[player]!!.points
-                    )
-                    TheHunter.instance.statsSystem.yml.set("$player.Games", playerStats[player]!!.games)
+                        playerStats[player]?.points
+                    ]
+                    TheHunter.instance.statsSystem.yml["$player.Games", playerStats[player]?.games]
                     TheHunter.instance.statsSystem.addData()
                     TheHunter.instance.messages.sendMessageToConsole("stats-system-saved")
                 }
@@ -62,7 +62,7 @@ class StatsSystem : BaseFile("stats.yml") {
         fun loadStatsPlayersFromFile() {
             if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
                 val resultSet = DatabaseHandler.connection.prepareStatement("SELECT * FROM statsPlayer")?.executeQuery()
-                while (resultSet?.next()!!) {
+                while (resultSet?.next() ?: return) {
                     val uuid = UUID.fromString(resultSet.getString("uuid"))
                     val kills = resultSet.getInt("kills")
                     val deaths = resultSet.getInt("deaths")
@@ -106,13 +106,13 @@ class StatsSystem : BaseFile("stats.yml") {
                     "INSERT INTO statsPlayer(uuid, kills, deaths, points, kdr, wins,loses,games) VALUES ('${player.uniqueId}', 0, 0, 0,0.0,0,0,0)"
                 )?.execute()
         } else {
-            yml.set(player.uniqueId.toString() + ".Kills", 0)
-            yml.set(player.uniqueId.toString() + ConstantStrings.DOT_DEATHS, 0)
-            yml.set(player.uniqueId.toString() + ".KDR", 0.0)
-            yml.set(player.uniqueId.toString() + ".Wins", 0)
-            yml.set(player.uniqueId.toString() + ".Loses", 0)
-            yml.set(player.uniqueId.toString() + ConstantStrings.DOT_POINTS, 0)
-            yml.set(player.uniqueId.toString() + ".Games", 0)
+            yml[player.uniqueId.toString() + ".Kills", 0]
+            yml[player.uniqueId.toString() + ConstantStrings.DOT_DEATHS, 0]
+            yml[player.uniqueId.toString() + ".KDR", 0.0]
+            yml[player.uniqueId.toString() + ".Wins", 0]
+            yml[player.uniqueId.toString() + ".Loses", 0]
+            yml[player.uniqueId.toString() + ConstantStrings.DOT_POINTS, 0]
+            yml[player.uniqueId.toString() + ".Games", 0]
             super.addData()
         }
         playerStats[player.uniqueId] = StatsPlayer(0, 0, 0, 0.0, 0, 0, 0)
@@ -121,119 +121,128 @@ class StatsSystem : BaseFile("stats.yml") {
 
     fun playerKilledOtherPlayer(killer: Player, dead: Player) {
         removePointsIfPossible(dead)
-        playerStats[killer.uniqueId]!!.kills += 1
-        playerStats[killer.uniqueId]!!.points += 5
-        playerStats[killer.uniqueId]!!.kdr =
-            playerStats[killer.uniqueId]!!.kills.toDouble() / playerStats[killer.uniqueId]!!.deaths.toDouble()
-        playerStats[dead.uniqueId]!!.deaths += 1
-        playerStats[dead.uniqueId]!!.kdr =
-            playerStats[dead.uniqueId]!!.kills.toDouble() / playerStats[dead.uniqueId]!!.deaths.toDouble()
+        playerStats[killer.uniqueId]?.kills = playerStats[killer.uniqueId]?.kills?.plus(1) ?: return
+        playerStats[killer.uniqueId]?.points = playerStats[killer.uniqueId]?.points?.plus(5) ?: return
+        playerStats[killer.uniqueId]?.kdr =
+            (playerStats[killer.uniqueId]?.kills?.toDouble() ?: 1.0) / (playerStats[killer.uniqueId]?.deaths?.toDouble() ?: 1.0)
+        playerStats[dead.uniqueId]?.deaths = playerStats[dead.uniqueId]?.deaths?.plus(1) ?: return
+        playerStats[dead.uniqueId]?.kdr =
+            (playerStats[dead.uniqueId]?.kills?.toDouble() ?: 1.0) / (playerStats[dead.uniqueId]?.deaths?.toDouble() ?: 1.0)
 
 
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
             DatabaseHandler.connection.prepareStatement(
-                "UPDATE statsPlayer SET kills = '${playerStats[killer.uniqueId]!!.kills}',  points = '${playerStats[killer.uniqueId]!!.points}', kdr = '${playerStats[killer.uniqueId]!!.kdr}' WHERE uuid = '${killer.uniqueId}'"
+                "UPDATE statsPlayer SET kills = '${playerStats[killer.uniqueId]?.kills}',  points = '${playerStats[killer.uniqueId]?.points}', kdr = '${playerStats[killer.uniqueId]?.kdr}' WHERE uuid = '${killer.uniqueId}'"
             )?.executeUpdate()
             DatabaseHandler.connection.prepareStatement(
-                "UPDATE statsPlayer SET deaths = '${playerStats[dead.uniqueId]!!.deaths}', points = '${playerStats[dead.uniqueId]!!.points}', kdr = '${playerStats[dead.uniqueId]!!.kdr}' WHERE uuid = '${dead.uniqueId}'"
+                "UPDATE statsPlayer SET deaths = '${playerStats[dead.uniqueId]?.deaths}', points = '${playerStats[dead.uniqueId]?.points}', kdr = '${playerStats[dead.uniqueId]?.kdr}' WHERE uuid = '${dead.uniqueId}'"
             )?.executeUpdate()
         } else {
-            yml.set(killer.uniqueId.toString() + ".Kills", playerStats[killer.uniqueId]!!.kills)
-            yml.set(killer.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[killer.uniqueId]!!.points)
-            yml.set(dead.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[dead.uniqueId]!!.points)
-            yml.set(killer.uniqueId.toString() + ".KDR", playerStats[killer.uniqueId]!!.kdr)
-            yml.set(dead.uniqueId.toString() + ConstantStrings.DOT_DEATHS, playerStats[dead.uniqueId]!!.deaths)
-            yml.set(dead.uniqueId.toString() + ".KDR", playerStats[dead.uniqueId]!!.kdr)
+            yml[killer.uniqueId.toString() + ".Kills", playerStats[killer.uniqueId]?.kills]
+            yml[killer.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[killer.uniqueId]?.points]
+            yml[dead.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[dead.uniqueId]?.points]
+            yml[killer.uniqueId.toString() + ".KDR", playerStats[killer.uniqueId]?.kdr]
+            yml[dead.uniqueId.toString() + ConstantStrings.DOT_DEATHS, playerStats[dead.uniqueId]?.deaths]
+            yml[dead.uniqueId.toString() + ".KDR", playerStats[dead.uniqueId]?.kdr]
             super.addData()
         }
 
     }
 
     fun playerWon(player: Player) {
-        playerStats[player.uniqueId]!!.wins += 1
-        playerStats[player.uniqueId]!!.points += 15
+        playerStats[player.uniqueId]?.wins = playerStats[player.uniqueId]?.wins?.plus(1) ?: return
+        playerStats[player.uniqueId]?.points = playerStats[player.uniqueId]?.points?.plus(15) ?: return
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
             DatabaseHandler.connection.prepareStatement(
-                "UPDATE statsPlayer SET wins='${playerStats[player.uniqueId]!!.wins}', points='${playerStats[player.uniqueId]!!.points}' WHERE uuid='${player.uniqueId}'"
+                "UPDATE statsPlayer SET wins='${playerStats[player.uniqueId]?.wins}', points='${playerStats[player.uniqueId]?.points}' WHERE uuid='${player.uniqueId}'"
             )?.executeUpdate()
         } else {
-            yml.set(player.uniqueId.toString() + ".Wins", playerStats[player.uniqueId]!!.wins)
-            yml.set(player.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[player.uniqueId]!!.points)
+            yml[player.uniqueId.toString() + ".Wins", playerStats[player.uniqueId]?.wins]
+            yml[player.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[player.uniqueId]?.points]
             super.addData()
         }
     }
 
     fun playerDied(player: Player) {
         removePointsIfPossible(player)
-        playerStats[player.uniqueId]!!.deaths += 1
-        playerStats[player.uniqueId]!!.kdr =
-            playerStats[player.uniqueId]!!.kills.toDouble() / playerStats[player.uniqueId]!!.deaths.toDouble()
+        playerStats[player.uniqueId]?.deaths = playerStats[player.uniqueId]?.deaths?.plus(1) ?: return
+        playerStats[player.uniqueId]?.kdr =
+            (playerStats[player.uniqueId]?.kills?.toDouble() ?: 1.0) / (playerStats[player.uniqueId]?.deaths?.toDouble() ?: 1.0)
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
             DatabaseHandler.connection.prepareStatement(
-                "UPDATE statsPlayer SET deaths = '${playerStats[player.uniqueId]!!.deaths}',points='${playerStats[player.uniqueId]!!.points}', kdr = '${playerStats[player.uniqueId]!!.kdr}' WHERE uuid = '${player.uniqueId}'"
+                "UPDATE statsPlayer SET deaths = '${playerStats[player.uniqueId]?.deaths}',points='${playerStats[player.uniqueId]?.points}', kdr = '${playerStats[player.uniqueId]?.kdr}' WHERE uuid = '${player.uniqueId}'"
             )?.executeUpdate()
         } else {
-            yml.set(player.uniqueId.toString() + ConstantStrings.DOT_DEATHS, playerStats[player.uniqueId]!!.deaths)
-            yml.set(player.uniqueId.toString() + ".KDR", playerStats[player.uniqueId]!!.kdr)
-            yml.set(player.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[player.uniqueId]!!.points)
+            yml[player.uniqueId.toString() + ConstantStrings.DOT_DEATHS, playerStats[player.uniqueId]?.deaths]
+            yml[player.uniqueId.toString() + ".KDR", playerStats[player.uniqueId]?.kdr]
+            yml[player.uniqueId.toString() + ConstantStrings.DOT_POINTS, playerStats[player.uniqueId]?.points]
             super.addData()
         }
 
     }
 
     private fun removePointsIfPossible(player: Player) {
-        if (playerStats[player.uniqueId]!!.points >= 5) {
-            playerStats[player.uniqueId]!!.points -= 5
+        if (5 <= playerStats[player.uniqueId]?.points!!) {
+            playerStats[player.uniqueId]?.points = playerStats[player.uniqueId]?.points?.minus(5) ?: return
         }
     }
 
     fun playerPlaysGame(player: Player) {
-        playerStats[player.uniqueId]!!.games += 1
+        playerStats[player.uniqueId]?.games = playerStats[player.uniqueId]?.games?.plus(1) ?: return
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
-            DatabaseHandler.connection.prepareStatement("UPDATE statsPlayer SET games='${playerStats[player.uniqueId]!!.games}' WHERE uuid='${player.uniqueId}'")
+            DatabaseHandler.connection.prepareStatement("UPDATE statsPlayer SET games='${playerStats[player.uniqueId]?.games}' WHERE uuid='${player.uniqueId}'")
                 ?.executeUpdate()
         } else {
-            yml.set(player.uniqueId.toString() + ".Games", playerStats[player.uniqueId]!!.games)
+            yml[player.uniqueId.toString() + ".Games", playerStats[player.uniqueId]?.games]
             super.addData()
         }
     }
 
     fun generateStatsMessageForPlayer(sender: Player, player: Player): Boolean {
         if (playerStats[player.uniqueId] == null) {
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap["stats-not-found"]!!.replace(
-                    ConstantStrings.PLAYER_SPAWN,
-                    player.name
-                ).replace(ConstantStrings.PLAYER_PERCENT, player.name)
-            )
+            TheHunter.instance.messages.messagesMap["stats-not-found"]?.replace(
+                ConstantStrings.PLAYER_SPAWN,
+                player.name
+            )?.let {
+                sender.sendMessage(
+                    it.replace(ConstantStrings.PLAYER_PERCENT, player.name)
+                )
+            }
             return false
         }
 
         if (sender.uniqueId == player.uniqueId)
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap["stats-message-own"]!!.replace(
+
+            TheHunter.instance.messages.messagesMap["stats-message-own"].let {
+                it?.replace(
                     "%kills%",
-                    playerStats[player.uniqueId]!!.kills.toString()
-                )
-                    .replace("%deaths%", playerStats[player.uniqueId]!!.deaths.toString())
-                    .replace("%wins%", playerStats[player.uniqueId]!!.wins.toString())
-                    .replace("%games%", playerStats[player.uniqueId]!!.games.toString())
-                    .replace("%points%", playerStats[player.uniqueId]!!.points.toString())
-                    .replace("%kd%", playerStats[player.uniqueId]!!.kdr.toString())
-                    .replace("%losses%", playerStats[player.uniqueId]!!.loses.toString())
-            )
+                    playerStats[player.uniqueId]?.kills.toString()
+                )?.replace("%deaths%", playerStats[player.uniqueId]?.deaths.toString())
+                    ?.replace("%wins%", playerStats[player.uniqueId]?.wins.toString())
+                    ?.replace("%games%", playerStats[player.uniqueId]?.games.toString())
+                    ?.replace("%points%", playerStats[player.uniqueId]?.points.toString())
+                    ?.replace("%kd%", playerStats[player.uniqueId]?.kdr.toString())
+                    ?.replace("%losses%", playerStats[player.uniqueId]?.loses.toString())?.let { message ->
+                        sender.sendMessage(
+                            message
+                        )
+                    }
+            }
         else
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap["stats-message-other"]!!
-                    .replace("%kills%", playerStats[player.uniqueId]!!.kills.toString())
-                    .replace("%deaths%", playerStats[player.uniqueId]!!.deaths.toString())
-                    .replace("%wins%", playerStats[player.uniqueId]!!.wins.toString())
-                    .replace("%games%", playerStats[player.uniqueId]!!.games.toString())
-                    .replace("%points%", playerStats[player.uniqueId]!!.points.toString())
-                    .replace("%kd%", playerStats[player.uniqueId]!!.kdr.toString())
-                    .replace("%losses%", playerStats[player.uniqueId]!!.loses.toString())
-                    .replace(ConstantStrings.PLAYER_PERCENT, player.name)
-            )
+            TheHunter.instance.messages.messagesMap["stats-message-other"]?.let {
+                sender.sendMessage(
+                    it
+                        .replace("%kills%", playerStats[player.uniqueId]?.kills.toString())
+                        .replace("%deaths%", playerStats[player.uniqueId]?.deaths.toString())
+                        .replace("%wins%", playerStats[player.uniqueId]?.wins.toString())
+                        .replace("%games%", playerStats[player.uniqueId]?.games.toString())
+                        .replace("%points%", playerStats[player.uniqueId]?.points.toString())
+                        .replace("%kd%", playerStats[player.uniqueId]?.kdr.toString())
+                        .replace("%losses%", playerStats[player.uniqueId]?.loses.toString())
+                        .replace(ConstantStrings.PLAYER_PERCENT, player.name)
+                )
+            }
+
         return true
     }
 

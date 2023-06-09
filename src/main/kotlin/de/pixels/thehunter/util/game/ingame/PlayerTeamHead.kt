@@ -29,19 +29,14 @@ class PlayerTeamHead : Listener {
     @EventHandler
     fun onItemAccept(event: PlayerInteractAtEntityEvent) {
 
-        if (!event.player.inventory.itemInMainHand.hasItemMeta())
+
+        if (!event.player.inventory.itemInMainHand.hasItemMeta() || event.player.inventory.itemInMainHand.itemMeta != createPlayerHead.itemMeta || !event.player.hasPermission(Permissions.PLAYER_INVITER) || !GamesHandler.playerInGames.containsKey(event.player))
             return
-        if (event.player.inventory.itemInMainHand.itemMeta != createPlayerHead.itemMeta)
+
+        val game = GamesHandler.playerInGames[event.player] ?: return
+        if (game.currentGameState !is LobbyState || event.rightClicked !is Player)
             return
-        if (!event.player.hasPermission(Permissions.PLAYER_INVITER))
-            return
-        if (!GamesHandler.playerInGames.containsKey(event.player))
-            return
-        val game = GamesHandler.playerInGames[event.player]!!
-        if (game.currentGameState !is LobbyState)
-            return
-        if (event.rightClicked !is Player)
-            return
+
         val player = event.rightClicked as Player
         if (!game.players.contains(player))
             return
@@ -50,23 +45,10 @@ class PlayerTeamHead : Listener {
 
     @EventHandler
     fun onPlayerInvite(event: EntityDamageByEntityEvent) {
-        if (event.entity !is Player)
+        if (event.entity !is Player || event.damager !is Player || !event.damager.hasPermission(Permissions.PLAYER_INVITER) || !GamesHandler.playerInGames.containsKey(event.damager))
             return
-        if (event.damager !is Player)
-            return
-
-        if (!event.damager.hasPermission(Permissions.PLAYER_INVITER))
-            return
-        if (!GamesHandler.playerInGames.containsKey(event.damager))
-            return
-        val game = GamesHandler.playerInGames[event.damager]!!
-        if (game.currentGameState !is LobbyState)
-            return
-
-        if (!game.players.contains(event.entity as Player))
-            return
-
-        if ((event.damager as Player).inventory.itemInMainHand.itemMeta != createPlayerHead.itemMeta)
+        val game = GamesHandler.playerInGames[event.damager] ?: return
+        if (game.currentGameState !is LobbyState || !game.players.contains(event.entity as Player) || (event.damager as Player).inventory.itemInMainHand.itemMeta != createPlayerHead.itemMeta)
             return
         (event.damager as Player).performCommand("theHunter team invite " + event.entity.name)
 

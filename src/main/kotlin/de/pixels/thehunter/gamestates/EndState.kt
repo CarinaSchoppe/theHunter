@@ -38,7 +38,7 @@ class EndState(game: Game) : GameState(game) {
         playerList.forEach {
             it.playSound(it.location, Sound.ENTITY_ENDER_DRAGON_DEATH, 1f, 1f)
             it.inventory.clear()
-            it.teleport(game.endLocation!!)
+            it.teleport(game.endLocation ?: return@forEach)
         }
     }
 

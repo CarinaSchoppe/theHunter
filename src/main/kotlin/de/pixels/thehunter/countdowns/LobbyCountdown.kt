@@ -38,12 +38,14 @@ class LobbyCountdown(game: Game) : Countdown(game) {
             if (duration == 0) {
                 duration = TheHunter.instance.settings.settingsMap["duration-idle"] as Int
                 game.players.forEach(Consumer { player ->
-                    player.sendMessage(
-                        TheHunter.instance.messages.messagesMap["game-waiting-for-players"]!!.replace(
-                            "%current%",
-                            game.players.size.toString()
-                        ).replace("%max%", game.maxPlayers.toString())
-                    )
+                    TheHunter.instance.messages.messagesMap["game-waiting-for-players"]?.replace(
+                        "%current%",
+                        game.players.size.toString()
+                    )?.let { message ->
+                        player.sendMessage(
+                            message.replace("%max%", game.maxPlayers.toString())
+                        )
+                    }
                 })
             }
             duration -= 1
@@ -67,20 +69,24 @@ class LobbyCountdown(game: Game) : Countdown(game) {
             }
             if (duration <= 0) {
                 game.players.forEach(Consumer { player ->
-                    player.sendMessage(
-                        TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING]!!.replace(
-                            ConstantStrings.TIME_PERCENT,
-                            duration.toString()
+                    TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING]?.let { message ->
+                        player.sendMessage(
+                            message.replace(
+                                ConstantStrings.TIME_PERCENT,
+                                duration.toString()
+                            )
                         )
-                    )
+                    }
                 })
                 game.spectators.forEach(Consumer { player ->
-                    player.sendMessage(
-                        TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING]!!.replace(
-                            ConstantStrings.TIME_PERCENT,
-                            duration.toString()
+                    TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING]?.let { message ->
+                        player.sendMessage(
+                            message.replace(
+                                ConstantStrings.TIME_PERCENT,
+                                duration.toString()
+                            )
                         )
-                    )
+                    }
                 })
                 game.nextGameState()
                 it.cancel()
@@ -99,12 +105,14 @@ class LobbyCountdown(game: Game) : Countdown(game) {
 
     private fun playerHandler(user: MutableSet<Player>) {
         user.forEach(Consumer { player ->
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING_IN]!!.replace(
-                    ConstantStrings.TIME_PERCENT,
-                    duration.toString()
+            TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING_IN]?.let {
+                player.sendMessage(
+                    it.replace(
+                        ConstantStrings.TIME_PERCENT,
+                        duration.toString()
+                    )
                 )
-            )
+            }
             player.level = duration
             player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
         })
@@ -119,10 +127,10 @@ class LobbyCountdown(game: Game) : Countdown(game) {
                         Title.title(
                             LegacyComponentSerializer.legacySection().deserialize("§6$duration"),
                             LegacyComponentSerializer.legacySection().deserialize(
-                                TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING_IN]!!.replace(
+                                TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING_IN]?.replace(
                                     ConstantStrings.TIME_PERCENT,
                                     duration.toString()
-                                )
+                                ) ?: ""
                             )
                         )
                     )
@@ -132,10 +140,10 @@ class LobbyCountdown(game: Game) : Countdown(game) {
                         Title.title(
                             LegacyComponentSerializer.legacySection().deserialize("§6$duration"),
                             LegacyComponentSerializer.legacySection().deserialize(
-                                TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING_IN]!!.replace(
+                                TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING_IN]?.replace(
                                     ConstantStrings.TIME_PERCENT,
                                     duration.toString()
-                                )
+                                ) ?: ""
                             )
                         )
                     )

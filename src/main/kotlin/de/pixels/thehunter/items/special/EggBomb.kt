@@ -27,10 +27,10 @@ class EggBomb : Listener {
         fun eggBomb(game: Game) = ItemBuilder(Material.EGG).addDisplayName(TheHunter.prefix + "§eEggBomb")
             .addEnchantment(Enchantment.DURABILITY, 1).addLore(
                 listOf(
-                    TheHunter.instance.messages.messagesMap["egg-bomb-message"]!!.replace(
+                    TheHunter.instance.messages.messagesMap["egg-bomb-message"]?.replace(
                         ConstantStrings.POWER_PERCENT,
                         game.itemSettings.settingsMap["egg-bomb-radius"].toString()
-                    )
+                    ) ?: "",
                 )
             ).build()
     }
@@ -45,23 +45,14 @@ class EggBomb : Listener {
             return
         val player = egg.shooter as org.bukkit.entity.Player
         //Check if the egg is the same egg as an EggBomb item
-        if (!player.hasPermission(Permissions.EGG_BOMB))
-            return
-        if (!GamesHandler.playerInGames.containsKey(player))
+        if (!player.hasPermission(Permissions.EGG_BOMB) || !GamesHandler.playerInGames.containsKey(player))
             return
 
-        val game = GamesHandler.playerInGames[player]!!
-        if (game.currentGameState !is IngameState)
-            return
-        if (!egg.item.hasItemMeta())
-            return
-        if (egg.item.itemMeta != eggBomb(game).itemMeta)
-            return
-        if (GamesHandler.playerInGames[player]!!.gameItems.items["EggBomb"] == false)
+        val game = GamesHandler.playerInGames[player] ?: return
+
+        if (game.currentGameState !is IngameState || !egg.item.hasItemMeta() || egg.item.itemMeta != eggBomb(game).itemMeta || GamesHandler.playerInGames[player]!!.gameItems.items["EggBomb"] == false || GamesHandler.playerInGames[player]!!.currentGameState !is IngameState)
             return
 
-        if (GamesHandler.playerInGames[player]!!.currentGameState !is IngameState)
-            return
         eggBombBoom(game, event, egg)
     }
 

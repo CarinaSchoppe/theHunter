@@ -4,15 +4,11 @@
 
 package de.pixels.thehunter.commands.management
 
-import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.commands.CommandUtil
-import de.pixels.thehunter.util.builder.Items
 import de.pixels.thehunter.util.misc.ConstantStrings
 import de.pixels.thehunter.util.misc.Permissions
-import net.wesjd.anvilgui.AnvilGUI
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import java.util.*
 
 class AnvilGUI {
     fun create(sender: CommandSender, command: String, args: Array<out String>) {
@@ -28,11 +24,13 @@ class AnvilGUI {
             return
 
         (sender as Player).closeInventory()
-        AnvilGUI.Builder().itemLeft(Items.nameTag).title("Game Name").plugin(TheHunter.instance)
-            .onComplete { completion ->
+
+        /*TODO: ERROR HERE
+           
+           AnvilGUI.Builder().itemLeft(Items.nameTag).title("Game Name").plugin(TheHunter.instance).onComplete { completion ->
                 completion.player.performCommand("theHunter setup create ${completion.text}")
                 return@onComplete Arrays.asList(AnvilGUI.ResponseAction.close())
-            }.open(sender)
+            }.open(sender)*/
 
     }
 

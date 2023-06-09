@@ -195,11 +195,11 @@ class Messages(filePath: String) : BaseFile(filePath) {
     }
 
     fun sendMessageToPlayer(player: Player, messagePath: String) {
-        player.sendMessage(messagesMap[messagePath]!!)
+        messagesMap[messagePath]?.let { player.sendMessage(it) }
     }
 
     fun sendMessageToConsole(messagePath: String) {
-        Bukkit.getConsoleSender().sendMessage(messagesMap[messagePath]!!)
+        messagesMap[messagePath]?.let { Bukkit.getConsoleSender().sendMessage(it) }
     }
 
 

@@ -65,12 +65,8 @@ class Game(var name: String) {
 
 
     fun isGameInvalidConfigured(): Boolean {
-        if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null || spectatorLocation == null) return true
-        if (minPlayers > maxPlayers) return true
-        if (maxPlayers <= 0) return true
-        if (minPlayers < 0) return true
-        if (worldBoarderController.worldBoarderSize < 50) return true
-        if (worldBoarderController.worldBoarderSize < worldBoarderController.minBorderSize) return true
+        if (lobbyLocation == null || backLocation == null || endLocation == null || arenaCenter == null || spectatorLocation == null || minPlayers > maxPlayers || maxPlayers <= 0 || minPlayers < 0 || worldBoarderController.worldBoarderSize < 50 || worldBoarderController.worldBoarderSize < worldBoarderController.minBorderSize) return true
+
         return playerSpawns.size - 1 < maxPlayers && !randomPlayerDrop
     }
 
@@ -112,7 +108,7 @@ class Game(var name: String) {
         if (backLocation == null) return false
         if (lobbyLocation == null) return false
         if (endLocation == null) return false
-        val fileSettings = File("${BaseFile.gameFolder}/arenas/$name/settings.yml")
+        val fileSettings = File("${BaseFile.GAME_FOLDER}/arenas/$name/settings.yml")
         val ymlSettings = YamlConfiguration.loadConfiguration(fileSettings)
 
         ymlSettings.addDefault("game-name", name)
@@ -132,7 +128,7 @@ class Game(var name: String) {
         ymlSettings.addDefault("worldboarder-min-border-size", worldBoarderController.minBorderSize)
         ymlSettings.addDefault("worldboarder-shrinkboarder", worldBoarderController.shrinkBoarder)
 
-        val fileLocations = File("${BaseFile.gameFolder}/arenas/$name/locations.yml")
+        val fileLocations = File("${BaseFile.GAME_FOLDER}/arenas/$name/locations.yml")
         val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
 
         if (playerSpawns.isNotEmpty()) ymlLocations.addDefault(ConstantStrings.SPAWN_LOCATIONS, playerSpawns)
@@ -146,49 +142,51 @@ class Game(var name: String) {
         ymlLocations.options().copyDefaults(true)
         ymlLocations.save(fileLocations)
         ymlSettings.save(fileSettings)
-        Bukkit.getConsoleSender().sendMessage(
-            TheHunter.instance.messages.messagesMap["game-successfully-saved"]!!.replace(
-                ConstantStrings.GAME_PERCENT,
-                name
+        TheHunter.instance.messages.messagesMap["game-successfully-saved"]?.let {
+            Bukkit.getConsoleSender().sendMessage(
+                it.replace(
+                    ConstantStrings.GAME_PERCENT,
+                    name
+                )
             )
-        )
+        }
         return true
     }
 
     companion object {
         fun loadGameFromConfig(fileName: String) {
-            val fileSettings = File("${BaseFile.gameFolder}/arenas/$fileName/settings.yml")
+            val fileSettings = File("${BaseFile.GAME_FOLDER}/arenas/$fileName/settings.yml")
             val ymlSettings = YamlConfiguration.loadConfiguration(fileSettings)
-            val game = Game(ymlSettings.getString("game-name")!!)
-            game.create()
-            game.chestFall = ymlSettings.getBoolean("chest-fall")
-            game.chestAmount = ymlSettings.getInt("chest-amount")
-            game.randomPlayerDrop = ymlSettings.getBoolean("random-drop")
-            game.maxPlayers = ymlSettings.getInt("max-players")
-            game.minPlayers = ymlSettings.getInt("min-players")
-            game.teamsAllowed = ymlSettings.getBoolean("teams-allowed")
-            game.teamMaxSize = ymlSettings.getInt("team-max-size")
-            game.immunity = ymlSettings.getInt("immunity")
-            game.mapModify = ymlSettings.getBoolean("map-modify")
-            game.teamDamage = ymlSettings.getBoolean("team-damage")
-            game.regenerate = ymlSettings.getBoolean("player-regenerate")
-            game.worldBoarderController.worldBoarderSize = ymlSettings.getInt("world-boarder-size")
-            game.worldBoarderController.shrinkSpeed = ymlSettings.getInt("worldboarder-shrinkspeed")
-            game.worldBoarderController.minBorderSize = ymlSettings.getInt("worldboarder-min-border-size")
-            game.worldBoarderController.shrinkBoarder = ymlSettings.getBoolean("worldboarder-shrinkboarder")
+            val game = ymlSettings.getString("game-name")?.let { Game(it) }
+            game?.create()
+            game?.chestFall = ymlSettings.getBoolean("chest-fall")
+            game?.chestAmount = ymlSettings.getInt("chest-amount")
+            game?.randomPlayerDrop = ymlSettings.getBoolean("random-drop")
+            game?.maxPlayers = ymlSettings.getInt("max-players")
+            game?.minPlayers = ymlSettings.getInt("min-players")
+            game?.teamsAllowed = ymlSettings.getBoolean("teams-allowed")
+            game?.teamMaxSize = ymlSettings.getInt("team-max-size")
+            game?.immunity = ymlSettings.getInt("immunity")
+            game?.mapModify = ymlSettings.getBoolean("map-modify")
+            game?.teamDamage = ymlSettings.getBoolean("team-damage")
+            game?.regenerate = ymlSettings.getBoolean("player-regenerate")
+            game?.worldBoarderController?.worldBoarderSize = ymlSettings.getInt("world-boarder-size")
+            game?.worldBoarderController?.shrinkSpeed = ymlSettings.getInt("worldboarder-shrinkspeed")
+            game?.worldBoarderController?.minBorderSize = ymlSettings.getInt("worldboarder-min-border-size")
+            game?.worldBoarderController?.shrinkBoarder = ymlSettings.getBoolean("worldboarder-shrinkboarder")
 
-            val fileLocations = File("${BaseFile.gameFolder}/arenas/$fileName/locations.yml")
+            val fileLocations = File("${BaseFile.GAME_FOLDER}/arenas/$fileName/locations.yml")
             val ymlLocations = YamlConfiguration.loadConfiguration(fileLocations)
 
             if (ymlLocations.getList(ConstantStrings.SPAWN_LOCATIONS) != null && ymlLocations.getList(ConstantStrings.SPAWN_LOCATIONS) is MutableList<*>)
-                game.playerSpawns.addAll(ymlLocations.getList(ConstantStrings.SPAWN_LOCATIONS) as MutableList<Location>)
-            game.lobbyLocation = ymlLocations.getLocation("lobby-location")!!
-            game.backLocation = ymlLocations.getLocation("back-location")!!
-            game.endLocation = ymlLocations.getLocation("end-location")!!
-            game.arenaCenter = ymlLocations.getLocation("arena-center")!!
-            game.spectatorLocation = ymlLocations.getLocation("spectator-location")!!
-            game.finish()
-            game.currentGameState = game.gameStates[GameStates.LOBBY_STATE.id]
+                game?.playerSpawns?.addAll(ymlLocations.getList(ConstantStrings.SPAWN_LOCATIONS) as MutableList<Location>)
+            game?.lobbyLocation = ymlLocations.getLocation("lobby-location")
+            game?.backLocation = ymlLocations.getLocation("back-location")
+            game?.endLocation = ymlLocations.getLocation("end-location")
+            game?.arenaCenter = ymlLocations.getLocation("arena-center")
+            game?.spectatorLocation = ymlLocations.getLocation("spectator-location")
+            game?.finish()
+            game?.currentGameState = game?.gameStates?.get(GameStates.LOBBY_STATE.id) ?: return
             game.currentGameState.start()
             game.worldBoarderController.resetWorldBoarder()
         }
@@ -201,9 +199,9 @@ class Game(var name: String) {
         when (players.size) {
 
             0 -> {
-                val message = TheHunter.instance.messages.messagesMap["game-over"]!!
+                val message = TheHunter.instance.messages.messagesMap["game-over"]
                 for (spectator in spectators)
-                    spectator.sendMessage(message)
+                    message?.let { spectator.sendMessage(it) }
                 return true
             }
 
@@ -212,20 +210,20 @@ class Game(var name: String) {
                     it.teamMembers.containsAll(players)
                 }
                 if (team == null && players.size == 1) {
-                    val message = TheHunter.instance.messages.messagesMap["player-won"]!!.replace(
+                    val message = TheHunter.instance.messages.messagesMap["player-won"]?.replace(
                         "%player%",
                         players.first().name
                     )
-                    for (spectator in spectators) spectator.sendMessage(message)
-                    players.forEach { it.sendMessage(message) }
+                    for (spectator in spectators) message?.let { spectator.sendMessage(it) }
+                    players.forEach { message?.let { message -> it.sendMessage(message) } }
                     TheHunter.instance.statsSystem.playerWon(players.first())
                     return true
                 } else if (team == null) return false
                 val message =
-                    TheHunter.instance.messages.messagesMap["team-won"]!!.replace("%leader%", team.teamLeader.name)
-                for (spectator in spectators) spectator.sendMessage(message)
+                    TheHunter.instance.messages.messagesMap["team-won"]?.replace("%leader%", team.teamLeader.name)
+                for (spectator in spectators) message?.let { spectator.sendMessage(it) }
                 players.forEach {
-                    it.sendMessage(message)
+                    message?.let { message -> it.sendMessage(message) }
                     TheHunter.instance.statsSystem.playerWon(it)
                 }
                 return true
@@ -251,8 +249,10 @@ class Game(var name: String) {
 
     fun finish() {
         if (isGameInvalidConfigured()) {
-            Bukkit.getConsoleSender()
-                .sendMessage(TheHunter.instance.messages.messagesMap["wrong-config"]!!.replace("%game%", name))
+            TheHunter.instance.messages.messagesMap["wrong-config"]?.let {
+                Bukkit.getConsoleSender()
+                    .sendMessage(it.replace("%game%", name))
+            }
             return
         }
 
@@ -267,8 +267,10 @@ class Game(var name: String) {
         gameItems.loadAllGunSettings()
         GamesHandler.games.add(this)
         GameSigns.updateGameSigns(this)
-        Bukkit.getConsoleSender()
-            .sendMessage(TheHunter.instance.messages.messagesMap["loaded-game-successfully"]!!.replace("%game%", name))
+        TheHunter.instance.messages.messagesMap["loaded-game-successfully"]?.let {
+            Bukkit.getConsoleSender()
+                .sendMessage(it.replace("%game%", name))
+        }
 
     }
 

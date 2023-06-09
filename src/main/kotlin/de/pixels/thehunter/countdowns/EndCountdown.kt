@@ -28,23 +28,27 @@ class EndCountdown(game: Game) : Countdown(game) {
                 }
 
                 in 1 until 10 -> {
-                    for (player in game.players) {
-                        player.sendMessage(
-                            TheHunter.instance.messages.messagesMap[ConstantStrings.ENDCOUNTDOWN_MESSAGE]!!.replace(
-                                "%time%",
-                                duration.toString()
+                    this.game.players.forEach { player ->
+                        TheHunter.instance.messages.messagesMap[ConstantStrings.ENDCOUNTDOWN_MESSAGE]?.let { message ->
+                            player.sendMessage(
+                                message.replace(
+                                    "%time%",
+                                    duration.toString()
+                                )
                             )
-                        )
+                        }
                         player.level = duration
                         player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
                     }
-                    for (spectator in game.spectators) {
-                        spectator.sendMessage(
-                            TheHunter.instance.messages.messagesMap[ConstantStrings.ENDCOUNTDOWN_MESSAGE]!!.replace(
-                                "%time%",
-                                duration.toString()
+                    game.spectators.forEach { spectator ->
+                        TheHunter.instance.messages.messagesMap[ConstantStrings.ENDCOUNTDOWN_MESSAGE]?.let { message ->
+                            spectator.sendMessage(
+                                message.replace(
+                                    "%time%",
+                                    duration.toString()
+                                )
                             )
-                        )
+                        }
                         spectator.level = duration
                         spectator.playSound(spectator.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
                     }

@@ -16,7 +16,7 @@ class Settings(filePath: String) : BaseFile(filePath) {
 
     private fun fillSettingsMap() {
         for (key in yml.getKeys(false)) {
-            settingsMap[key] = yml.get(key) as Any
+            settingsMap[key] = yml[key] as Any
         }
         Bukkit.getConsoleSender().sendMessage(
             LegacyComponentSerializer.legacySection().deserialize(

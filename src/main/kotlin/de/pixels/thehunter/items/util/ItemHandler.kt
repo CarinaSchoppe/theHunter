@@ -14,26 +14,11 @@ import org.bukkit.inventory.ItemStack
 object ItemHandler {
 
     fun shouldNotInteractWithItem(event: PlayerInteractEvent, item: ItemStack, itemString: String): Boolean {
-        if (event.item == null)
-            return true
-        if (!event.player.hasPermission("${Permissions.PERMISSION_PREFIX}.$itemString"))
-            return true
-        if (!event.item!!.hasItemMeta()) return true
-        if (event.item!!.itemMeta != item.itemMeta)
-            return true
-        if (!event.player.inventory.itemInMainHand.hasItemMeta())
-            return true
-        if (event.player.inventory.itemInMainHand.itemMeta != item.itemMeta)
-            return true
-        if (!GamesHandler.playerInGames.containsKey(event.player))
-            return true
-        if (!event.action.isRightClick)
-            return true
 
-        if (GamesHandler.playerInGames[event.player]!!.currentGameState !is IngameState)
-            return true
-
-        if (GamesHandler.playerInGames[event.player]!!.gameItems.items[itemString] == false)
+        if (event.item == null || !event.player.hasPermission("${Permissions.PERMISSION_PREFIX}.$itemString") || event.item?.hasItemMeta() == false || event.item?.itemMeta != item.itemMeta || !event.player.inventory.itemInMainHand.hasItemMeta() || event.player.inventory.itemInMainHand.itemMeta != item.itemMeta || !GamesHandler.playerInGames.containsKey(event.player) || !event.action.isRightClick || GamesHandler.playerInGames[event.player]?.currentGameState !is IngameState || GamesHandler.playerInGames[event.player]?.gameItems?.items?.get(
+                itemString
+            ) == false
+        )
             return true
         event.isCancelled = true
         return false
@@ -43,7 +28,6 @@ object ItemHandler {
         val item = player.inventory.itemInMainHand
         if (item.amount == 1) {
             player.inventory.setItemInMainHand(null)
-            return
         } else {
             item.amount -= 1
             player.inventory.setItemInMainHand(item)

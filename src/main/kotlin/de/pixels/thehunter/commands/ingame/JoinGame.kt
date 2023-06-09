@@ -36,12 +36,14 @@ class JoinGame {
 
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace(
-                    ConstantStrings.GAME_PERCENT,
-                    args[0]
+            TheHunter.instance.messages.messagesMap["game-not-exists"]?.let {
+                sender.sendMessage(
+                    it.replace(
+                        ConstantStrings.GAME_PERCENT,
+                        args[0]
+                    )
                 )
-            )
+            }
             return
         }
         if (!playerAddingAndMessaging(sender as Player, game))
@@ -63,41 +65,47 @@ class JoinGame {
 
     private fun playerAddingAndMessaging(player: Player, game: Game): Boolean {
         if (GamesHandler.playerInGames.containsKey(player) || GamesHandler.spectatorInGames.containsKey(player)) {
-            player.sendMessage(TheHunter.instance.messages.messagesMap["player-already-in-game"]!!)
+            TheHunter.instance.messages.messagesMap["player-already-in-game"]?.let { player.sendMessage(it) }
             return false
         }
         if (game.players.size + 1 <= game.maxPlayers) {
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["join-game-successfully"]!!.replace(
-                    ConstantStrings.GAME_PERCENT,
-                    game.name
-                )
-            )
-            game.players.forEach {
-                it.sendMessage(
-                    TheHunter.instance.messages.messagesMap["player-joined-game"]!!.replace(
-                        ConstantStrings.PLAYER_PERCENT,
-                        player.name
+            TheHunter.instance.messages.messagesMap["join-game-successfully"]?.let {
+                player.sendMessage(
+                    it.replace(
+                        ConstantStrings.GAME_PERCENT,
+                        game.name
                     )
                 )
+            }
+            game.players.forEach {
+                TheHunter.instance.messages.messagesMap["player-joined-game"]?.let { message ->
+                    it.sendMessage(
+                        message.replace(
+                            ConstantStrings.PLAYER_PERCENT,
+                            player.name
+                        )
+                    )
+                }
             }
             game.players.add(player)
             player.allowFlight = false
             GamesHandler.playerInGames[player] = game
             player.teleport(game.lobbyLocation!!)
             game.spectators.forEach {
-                it.sendMessage(
-                    TheHunter.instance.messages.messagesMap["player-joined-game"]!!.replace(
-                        ConstantStrings.PLAYER_PERCENT,
-                        player.name
+                TheHunter.instance.messages.messagesMap["player-joined-game"]?.let { message ->
+                    it.sendMessage(
+                        message.replace(
+                            ConstantStrings.PLAYER_PERCENT,
+                            player.name
+                        )
                     )
-                )
+                }
             }
         } else {
             GamesHandler.spectatorInGames[player] = game
             game.spectators.add(player)
             player.allowFlight = false
-            player.sendMessage(TheHunter.instance.messages.messagesMap["game-full-spectator"]!!)
+            TheHunter.instance.messages.messagesMap["game-full-spectator"]?.let { player.sendMessage(it) }
             player.teleport(game.lobbyLocation!!)
         }
         return true

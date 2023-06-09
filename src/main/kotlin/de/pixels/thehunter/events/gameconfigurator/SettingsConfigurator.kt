@@ -24,32 +24,30 @@ import org.bukkit.inventory.ItemStack
 class SettingsConfigurator : Listener {
 
     companion object {
-        private const val minPlayersHigh = 20
-        private const val minPlayersLow = 1
-        private const val maxPlayersHigh = 50
-        private const val maxPlayersLow = 2
-        private const val teamSizeLow = 2
-        private const val teamSizeHigh = 4
+        private const val MIN_PLAYER_HEIGHT = 20
+        private const val MIN_PLAYERS_LOW = 1
+        private const val MAX_PLAYERS_HEIGHT = 50
+        private const val MAX_PLAYERS_LOW = 2
+        private const val TEAM_SIZE_LOW = 2
+        private const val TEAM_SIZE = 4
     }
 
 
     @EventHandler
     fun onInteractWithSettings(event: InventoryClickEvent) {
-        if (!Util.currentGameSelected.containsKey(event.whoClicked as Player)) return
-        if (!(event.whoClicked as Player).hasPermission(Permissions.SETTINGS_GUI))
-            return
+        if (!Util.currentGameSelected.containsKey(event.whoClicked as Player) || !(event.whoClicked as Player).hasPermission(Permissions.SETTINGS_GUI)) return
+  
         if (PlainTextComponentSerializer.plainText()
                 .serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(
                 LegacyComponentSerializer.legacySection()
-                    .deserialize("§d${Util.currentGameSelected[event.whoClicked as Player]!!.name}§6: Game Settings")
+                    .deserialize("§d${Util.currentGameSelected[event.whoClicked as Player]?.name}§6: Game Settings")
             )
         )
             return
         event.isCancelled = true
-        if (event.currentItem == null)
+        if (event.currentItem == null || event.currentItem!!.itemMeta == null)
             return
-        if (event.currentItem!!.itemMeta == null)
-            return
+
         val item = getItemObject(event) ?: return
         val type = event.currentItem?.type != Material.RED_WOOL
         (event.whoClicked as Player).playSound(event.whoClicked, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
@@ -81,50 +79,58 @@ class SettingsConfigurator : Listener {
 
     private fun teamsAllowed(type: Boolean, player: Player) {
         if (type) {
-            if (Util.currentGameSelected[player]!!.teamsAllowed)
+            if (Util.currentGameSelected[player]?.teamsAllowed == true)
                 return
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["teams-allowed-enabled"]!!.replace(
-                    ConstantStrings.GAME_PERCENT,
-                    Util.currentGameSelected[player]!!.name
+            TheHunter.instance.messages.messagesMap["teams-allowed-enabled"]?.let {
+                player.sendMessage(
+                    it.replace(
+                        ConstantStrings.GAME_PERCENT,
+                        Util.currentGameSelected[player]?.name ?: ""
+                    )
                 )
-            )
-            Util.currentGameSelected[player]!!.teamsAllowed = true
+            }
+            Util.currentGameSelected[player]?.teamsAllowed = true
         } else {
-            if (!Util.currentGameSelected[player]!!.teamsAllowed)
+            if (Util.currentGameSelected[player]?.teamsAllowed == false)
                 return
-            Util.currentGameSelected[player]!!.teamsAllowed = false
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["teams-allowed-disabled"]!!.replace(
-                    ConstantStrings.GAME_PERCENT,
-                    Util.currentGameSelected[player]!!.name
+            Util.currentGameSelected[player]?.teamsAllowed = false
+            TheHunter.instance.messages.messagesMap["teams-allowed-disabled"]?.let {
+                player.sendMessage(
+                    it.replace(
+                        ConstantStrings.GAME_PERCENT,
+                        Util.currentGameSelected[player]?.name ?: ""
+                    )
                 )
-            )
+            }
 
         }
     }
 
     private fun teamDamage(type: Boolean, player: Player) {
         if (type) {
-            if (Util.currentGameSelected[player]!!.teamDamage)
+            if (Util.currentGameSelected[player]?.teamDamage == true)
                 return
-            Util.currentGameSelected[player]!!.teamDamage = true
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["team-damage-enabled"]!!.replace(
-                    ConstantStrings.GAME_PERCENT,
-                    Util.currentGameSelected[player]!!.name
+            Util.currentGameSelected[player]?.teamDamage = true
+            TheHunter.instance.messages.messagesMap["team-damage-enabled"]?.let {
+                player.sendMessage(
+                    it.replace(
+                        ConstantStrings.GAME_PERCENT,
+                        Util.currentGameSelected[player]?.name ?: ""
+                    )
                 )
-            )
+            }
         } else {
-            if (!Util.currentGameSelected[player]!!.teamDamage)
+            if (Util.currentGameSelected[player]?.teamDamage == false)
                 return
-            Util.currentGameSelected[player]!!.teamDamage = false
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["team-damage-disabled"]!!.replace(
-                    ConstantStrings.GAME_PERCENT,
-                    Util.currentGameSelected[player]!!.name
+            Util.currentGameSelected[player]?.teamDamage = false
+            TheHunter.instance.messages.messagesMap["team-damage-disabled"]?.let {
+                player.sendMessage(
+                    it.replace(
+                        ConstantStrings.GAME_PERCENT,
+                        Util.currentGameSelected[player]?.name ?: ""
+                    )
                 )
-            )
+            }
 
         }
     }
@@ -132,11 +138,11 @@ class SettingsConfigurator : Listener {
 
     private fun teamSize(type: Boolean, player: Player) {
         if (type) {
-            if (Util.currentGameSelected[player]!!.teamMaxSize + 1 > teamSizeHigh) {
+            if (Util.currentGameSelected[player]!!.teamMaxSize + 1 > TEAM_SIZE) {
                 player.sendMessage(
                     TheHunter.instance.messages.messagesMap["teams-size-to-high"]!!.replace(
                         ConstantStrings.SIZE_PERCENT,
-                        teamSizeHigh.toString()
+                        TEAM_SIZE.toString()
                     ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
                 )
                 return
@@ -150,11 +156,11 @@ class SettingsConfigurator : Listener {
             )
 
         } else {
-            if (Util.currentGameSelected[player]!!.teamMaxSize - 1 < teamSizeLow) {
+            if (Util.currentGameSelected[player]!!.teamMaxSize - 1 < TEAM_SIZE_LOW) {
                 player.sendMessage(
                     TheHunter.instance.messages.messagesMap["teams-size-to-low"]!!.replace(
                         ConstantStrings.SIZE_PERCENT,
-                        teamSizeLow.toString()
+                        TEAM_SIZE_LOW.toString()
                     ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
                 )
                 return
@@ -172,11 +178,11 @@ class SettingsConfigurator : Listener {
 
     private fun minPlayers(type: Boolean, player: Player) {
         if (type) {
-            if (Util.currentGameSelected[player]!!.minPlayers + 1 > minPlayersHigh) {
+            if (Util.currentGameSelected[player]!!.minPlayers + 1 > MIN_PLAYER_HEIGHT) {
                 player.sendMessage(
                     TheHunter.instance.messages.messagesMap["min-players-to-high"]!!.replace(
                         ConstantStrings.PLAYERS_PERCENT,
-                        minPlayersHigh.toString()
+                        MIN_PLAYER_HEIGHT.toString()
                     ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
                 )
                 return
@@ -190,11 +196,11 @@ class SettingsConfigurator : Listener {
             )
 
         } else {
-            if (Util.currentGameSelected[player]!!.minPlayers - 1 < minPlayersLow) {
+            if (Util.currentGameSelected[player]!!.minPlayers - 1 < MIN_PLAYERS_LOW) {
                 player.sendMessage(
                     TheHunter.instance.messages.messagesMap["min-players-to-low"]!!.replace(
                         ConstantStrings.PLAYERS_PERCENT,
-                        minPlayersLow.toString()
+                        MIN_PLAYERS_LOW.toString()
                     ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
                 )
                 return
@@ -212,11 +218,11 @@ class SettingsConfigurator : Listener {
 
     private fun maxPlayers(type: Boolean, player: Player) {
         if (type) {
-            if (Util.currentGameSelected[player]!!.maxPlayers + 1 > maxPlayersHigh) {
+            if (Util.currentGameSelected[player]!!.maxPlayers + 1 > MAX_PLAYERS_HEIGHT) {
                 player.sendMessage(
                     TheHunter.instance.messages.messagesMap["max-players-to-high"]!!.replace(
                         ConstantStrings.PLAYERS_PERCENT,
-                        maxPlayersHigh.toString()
+                        MAX_PLAYERS_HEIGHT.toString()
                     ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
                 )
                 return
@@ -230,11 +236,11 @@ class SettingsConfigurator : Listener {
             )
 
         } else {
-            if (Util.currentGameSelected[player]!!.maxPlayers - 1 < maxPlayersLow) {
+            if (Util.currentGameSelected[player]!!.maxPlayers - 1 < MAX_PLAYERS_LOW) {
                 player.sendMessage(
                     TheHunter.instance.messages.messagesMap["max-players-to-low"]!!.replace(
                         ConstantStrings.PLAYERS_PERCENT,
-                        maxPlayersLow.toString()
+                        MAX_PLAYERS_LOW.toString()
                     ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
                 )
                 return
@@ -252,11 +258,11 @@ class SettingsConfigurator : Listener {
 
     private fun borderSize(type: Boolean, player: Player) {
         if (type) {
-            if (Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize + 10 > WorldboarderController.toHigh) {
+            if (Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize + 10 > WorldboarderController.TO_HIGH) {
                 player.sendMessage(
                     TheHunter.instance.messages.messagesMap["border-size-to-high"]!!.replace(
                         ConstantStrings.SIZE_PERCENT,
-                        WorldboarderController.toHigh.toString()
+                        WorldboarderController.TO_HIGH.toString()
                     ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
                 )
                 return
@@ -269,11 +275,11 @@ class SettingsConfigurator : Listener {
                 ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
             )
         } else {
-            if (Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize - 10 < WorldboarderController.toLow) {
+            if (Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize - 10 < WorldboarderController.TO_LOW) {
                 player.sendMessage(
                     TheHunter.instance.messages.messagesMap["border-size-to-low"]!!.replace(
                         ConstantStrings.SIZE_PERCENT,
-                        WorldboarderController.toLow.toString()
+                        WorldboarderController.TO_LOW.toString()
                     ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
                 )
                 return

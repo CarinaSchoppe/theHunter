@@ -36,22 +36,19 @@ class EyeSpy : Listener {
 
     @EventHandler
     fun onEyeSpyUse(event: PlayerInteractEvent) {
-        if (ItemHandler.shouldNotInteractWithItem(event, eyeSpy, "EyeSpy"))
+        if (ItemHandler.shouldNotInteractWithItem(event, eyeSpy, "EyeSpy") || inEyeSpy.contains(event.player) || !GamesHandler.playerInGames.containsKey(event.player))
             return
 
-        if (inEyeSpy.contains(event.player))
-            return
-        if (!GamesHandler.playerInGames.containsKey(event.player))
-            return
-        val game = GamesHandler.playerInGames[event.player]!!
+        val game = GamesHandler.playerInGames[event.player]
         val targets =
-            GamesHandler.playerInGames[event.player]!!.players.filter { it != event.player && it.gameMode != GameMode.SPECTATOR }
-        if (targets.isEmpty())
+            GamesHandler.playerInGames[event.player]?.players?.filter { it != event.player && it.gameMode != GameMode.SPECTATOR }
+        if (targets != null && targets.isEmpty()) {
             return
-        val target = targets.random()
+        }
+        val target = targets?.random()
         ItemHandler.removeOneItemOfPlayer(event.player)
         event.isCancelled = true
-        setCamera(game, event.player, target)
+        setCamera(game ?: return, event.player, target ?: return)
     }
 
 
@@ -62,40 +59,22 @@ class EyeSpy : Listener {
         inEyeSpy.add(player)
         player.gameMode = GameMode.SPECTATOR
         player.spectatorTarget = target
-        mapPlayerTime[player] = (game.itemSettings.settingsMap["eye-spy-duration"]!! as Int)
+        mapPlayerTime[player] = (game.itemSettings.settingsMap["eye-spy-duration"] as Int)
 
         showingTitle(player)
         TheHunter.instance.server.scheduler.scheduleSyncDelayedTask(TheHunter.instance, {
-            player.teleport(lastPlayerLocation[player]!!)
+            lastPlayerLocation[player]?.let { player.teleport(it) }
             player.gameMode = GameMode.SURVIVAL
             inEyeSpy.remove(player)
             player.playSound(player, Sound.ITEM_GOAT_HORN_SOUND_4, 1f, 1f)
-        }, 20L * game.itemSettings.settingsMap["eye-spy-duration"]!! as Int)
+        }, 20L * game.itemSettings.settingsMap["eye-spy-duration"] as Int)
     }
 
     private fun showingTitle(player: Player) {
         TheHunter.instance.server.scheduler.scheduleSyncRepeatingTask(TheHunter.instance, {
-            mapPlayerTime[player] = mapPlayerTime[player]!! - 1
-            when (mapPlayerTime[player]!!) {
-                3 -> {
-                    player.showTitle(
-                        Title.title(
-                            LegacyComponentSerializer.legacySection().deserialize("§6${mapPlayerTime[player]}"),
-                            Component.text("")
-                        )
-                    )
-                }
-
-                2 -> {
-                    player.showTitle(
-                        Title.title(
-                            LegacyComponentSerializer.legacySection().deserialize("§6${mapPlayerTime[player]}"),
-                            Component.text("")
-                        )
-                    )
-                }
-
-                1 -> {
+            mapPlayerTime[player] = mapPlayerTime[player]?.minus(1) ?: return@scheduleSyncRepeatingTask
+            when (mapPlayerTime[player]) {
+                1 or 2 or 3 -> {
                     player.showTitle(
                         Title.title(
                             LegacyComponentSerializer.legacySection().deserialize("§6${mapPlayerTime[player]}"),

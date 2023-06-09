@@ -17,95 +17,88 @@ import org.bukkit.event.player.PlayerInteractEvent
 
 class GunHandler : Listener {
 
+    /**
+     * Handles the player shooting event for different types of guns in the game.
+     *
+     * This event fires when a player interact with their gun (left or right click). Based on the player's action and the type of gun,
+     * it calls the appropriate shooting or reloading functionality for the corresponding gun if the player has the required permission.
+     */
     @EventHandler
     fun onPlayerShoot(event: PlayerInteractEvent) {
-        if (event.item == null) return
+        if (event.item == null || !event.player.inventory.itemInMainHand.hasItemMeta() || !event.item!!.hasItemMeta() || !GamesHandler.playerInGames.containsKey(event.player)) return
 
-        if (!event.player.inventory.itemInMainHand.hasItemMeta())
-            return
-        if (!event.item!!.hasItemMeta()) return
-        if (!GamesHandler.playerInGames.containsKey(event.player))
-            return
         if (event.action.isLeftClick) {
-            if (whenLeftClick(event))
-                return
+            whenLeftClick(event)
         } else {
-            if (whenRightClick(event))
-                return
-
+            whenRightClick(event)
         }
     }
 
-    private fun whenLeftClick(event: PlayerInteractEvent): Boolean {
+
+    private fun whenLeftClick(event: PlayerInteractEvent) {
         when (event.item!!.itemMeta) {
             Rifle.gun.itemMeta -> {
-                if (!event.player.hasPermission("thehunter.rifle")) return true
+                if (!event.player.hasPermission("thehunter.rifle")) return 
                 Rifle.reload(event.player)
-                return true
             }
 
             Minigun.gun.itemMeta -> {
-                if (!event.player.hasPermission("thehunter.minigun")) return true
+                if (!event.player.hasPermission("thehunter.minigun")) return
                 Minigun.reload(event.player)
-                return true
             }
 
             Pistol.gun.itemMeta -> {
-                if (!event.player.hasPermission("thehunter.pistol")) return true
+                if (!event.player.hasPermission("thehunter.pistol")) return 
                 Pistol.reload(event.player)
-                return true
             }
 
             Sniper.gun.itemMeta -> {
-                if (!event.player.hasPermission("thehunter.sniper")) return true
+                if (!event.player.hasPermission("thehunter.sniper")) return 
 
                 Sniper.reload(event.player)
-                return true
             }
         }
-        return true
-
     }
 
-    private fun whenRightClick(event: PlayerInteractEvent): Boolean {
-        when (event.item!!.itemMeta) {
+    private fun whenRightClick(event: PlayerInteractEvent) {
+        when (event.item?.itemMeta) {
             Rifle.gun.itemMeta -> {
-                if (!event.player.hasPermission("thehunter.Rifle")) return true
+                if (!event.player.hasPermission("thehunter.Rifle")) return
                 if (event.player.isSneaking) {
                     Rifle.reload(event.player)
-                    return true
+                    return 
                 }
                 Rifle.shoot(event.player)
             }
 
             Minigun.gun.itemMeta -> {
-                if (!event.player.hasPermission("thehunter.minigun")) return true
+                if (!event.player.hasPermission("thehunter.minigun")) return 
                 if (event.player.isSneaking) {
                     Minigun.reload(event.player)
-                    return true
+                    return
                 }
                 Minigun.shoot(event.player)
             }
 
             Pistol.gun.itemMeta -> {
-                if (!event.player.hasPermission("thehunter.pistol")) return true
+                if (!event.player.hasPermission("thehunter.pistol")) return 
                 if (event.player.isSneaking) {
                     Pistol.reload(event.player)
-                    return true
+                    return
                 }
                 Pistol.shoot(event.player)
             }
 
             Sniper.gun.itemMeta -> {
-                if (!event.player.hasPermission("thehunter.sniper")) return true
+                if (!event.player.hasPermission("thehunter.sniper")) return 
                 if (event.player.isSneaking) {
                     Sniper.reload(event.player)
-                    return true
+                    return
                 }
                 Sniper.shoot(event.player)
             }
         }
-        return true
+        return 
     }
 
     @EventHandler
@@ -113,11 +106,13 @@ class GunHandler : Listener {
         if (!event.itemDrop.itemStack.hasItemMeta()) return
         if (event.itemDrop.itemStack.itemMeta == Rifle.gun.itemMeta || event.itemDrop.itemStack.itemMeta == Minigun.gun.itemMeta || event.itemDrop.itemStack.itemMeta == Sniper.gun.itemMeta || event.itemDrop.itemStack.itemMeta == Pistol.gun.itemMeta) {
             event.isCancelled = true
-            event.player.sendMessage(
-                TheHunter.instance.messages.messagesMap["cant-drop-item"]!!.replace(
-                    "%item%", event.itemDrop.itemStack.type.toString()
+            TheHunter.instance.messages.messagesMap["cant-drop-item"]?.let {
+                event.player.sendMessage(
+                    it.replace(
+                        "%item%", event.itemDrop.itemStack.type.toString()
+                    )
                 )
-            )
+            }
             return
         }
     }
@@ -152,7 +147,6 @@ class GunHandler : Listener {
                     }
                 }
             }
-            player.updateInventory()
         }
     }
 
@@ -170,27 +164,35 @@ class GunHandler : Listener {
         player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
         (event.entity as Player).playSound(event.entity.location, Sound.ENTITY_PLAYER_HURT, 1f, 1f)
         println("shot was hit")
-        if (Rifle.shotBullets[player]?.contains(arrow) == true) {
-            event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["rifle-damage"]?.plus(0.0) ?: 3.0
-            Rifle.shotBullets[player]!!.remove(arrow)
-            return
-        } else if (Minigun.shotBullets[player]?.contains(arrow) == true) {
+        when {
+            Rifle.shotBullets[player]?.contains(arrow) == true -> {
+                event.damage = GamesHandler.playerInGames[player]?.gameItems?.guns?.get("rifle-damage")?.plus(0.0) ?: 3.0
+                Rifle.shotBullets[player]?.remove(arrow)
+                return
+            }
 
-            event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["minigun-damage"]?.plus(0.0) ?: 1.0
-            Minigun.shotBullets[player]!!.remove(arrow)
+            Minigun.shotBullets[player]?.contains(arrow) == true -> {
 
-            return
+                event.damage = GamesHandler.playerInGames[player]?.gameItems?.guns?.get("minigun-damage")?.plus(0.0) ?: 1.0
+                Minigun.shotBullets[player]?.remove(arrow)
+
+                return
 
 
-        } else if (Sniper.shotBullets[player]?.contains(arrow) == true) {
-            event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["sniper-damage"]?.plus(0.0) ?: 6.0
-            Sniper.shotBullets[player]!!.remove(arrow)
-            return
-        } else if (Pistol.shotBullets[player]?.contains(arrow) == true) {
-            event.damage = GamesHandler.playerInGames[player]!!.gameItems.guns["pistol-damage"]?.plus(0.0) ?: 2.0
-            Pistol.shotBullets[player]!!.remove(arrow)
+            }
 
-            return
+            Sniper.shotBullets[player]?.contains(arrow) == true -> {
+                event.damage = GamesHandler.playerInGames[player]?.gameItems?.guns?.get("sniper-damage")?.plus(0.0) ?: 6.0
+                Sniper.shotBullets[player]?.remove(arrow)
+                return
+            }
+
+            Pistol.shotBullets[player]?.contains(arrow) == true -> {
+                event.damage = GamesHandler.playerInGames[player]?.gameItems?.guns?.get("pistol-damage")?.plus(0.0) ?: 2.0
+                Pistol.shotBullets[player]?.remove(arrow)
+
+                return
+            }
         }
     }
 }

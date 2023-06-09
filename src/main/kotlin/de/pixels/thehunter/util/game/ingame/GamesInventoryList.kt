@@ -20,15 +20,12 @@ class GamesInventoryList : Listener {
         if (PlainTextComponentSerializer.plainText()
                 .serialize(event.view.title()) != PlainTextComponentSerializer.plainText()
                 .serialize(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§6Games"))
+            || event.currentItem == null || event.currentItem?.type != Material.ACACIA_SIGN
         ) {
             return
         }
         event.isCancelled = true
-        if (event.currentItem == null)
-            return
-        if (event.currentItem!!.type != Material.ACACIA_SIGN)
-            return
-        val arenaName = PlainTextComponentSerializer.plainText().serialize(event.currentItem!!.itemMeta.displayName()!!)
+        val arenaName = PlainTextComponentSerializer.plainText().serialize(event.currentItem?.itemMeta?.displayName() ?: return)
         if (event.whoClicked !is Player)
             return
         (event.whoClicked as Player).performCommand("thehunter join $arenaName")

@@ -14,11 +14,11 @@ open class BaseFile(filePath: String) {
     val file: File
 
     companion object {
-        const val gameFolder = "plugins/theHunterRemastered"
+        const val GAME_FOLDER = "plugins/theHunterRemastered"
     }
 
     init {
-        file = File("$gameFolder/$filePath")
+        file = File("$GAME_FOLDER/$filePath")
         yml = YamlConfiguration.loadConfiguration(file)
     }
 

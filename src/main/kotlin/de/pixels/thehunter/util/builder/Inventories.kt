@@ -7,7 +7,6 @@ import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.util.game.management.Game
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
-import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
@@ -52,28 +51,34 @@ object Inventories {
 
 
     fun itemEnchantmentSwitcher(event: InventoryClickEvent) {
-        val item = event.currentItem!!
-        val meta = item.itemMeta!!
-        if (item.enchantments.isNotEmpty()) return
+        val item = event.currentItem ?: return
+        val meta = item.itemMeta ?: return
 
-        if (item.type != Material.RED_WOOL && item.type != Material.GREEN_WOOL) return
+        if (item.enchantments.isNotEmpty() || item.type != Material.RED_WOOL && item.type != Material.GREEN_WOOL) return
         meta.addEnchant(Enchantment.DURABILITY, 1, true)
         item.itemMeta = meta
         event.inventory.setItem(event.slot, item)
-        (event.whoClicked as Player).updateInventory()
         val other =
-            (if (item.type == Material.GREEN_WOOL) event.inventory.getItem(event.slot + 1) else if (item.type == Material.RED_WOOL) event.inventory.getItem(
-                event.slot - 1
-            ) else null) ?: return
-        val otherMeta = other.itemMeta!!
+            (when (item.type) {
+                Material.GREEN_WOOL -> event.inventory.getItem(event.slot + 1)
+                Material.RED_WOOL -> event.inventory.getItem(
+                    event.slot - 1
+                )
+
+                else -> null
+            }) ?: return
+        val otherMeta = other.itemMeta ?: return
         //get the slot of the other item
         val otherSlot =
-            if (other.type == Material.RED_WOOL) event.slot + 1 else if (other.type == Material.GREEN_WOOL) event.slot - 1 else null
-                ?: return
+            when (other.type) {
+                Material.RED_WOOL -> event.slot + 1
+                Material.GREEN_WOOL -> event.slot - 1
+                else -> null
+                    ?: return
+            }
         otherMeta.removeEnchant(Enchantment.DURABILITY)
         other.itemMeta = otherMeta
         event.inventory.setItem(otherSlot, other)
-        (event.whoClicked as Player).updateInventory()
     }
 
     private fun addColoredWool(builder: InventoryBuilder, row: Int) {

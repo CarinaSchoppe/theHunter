@@ -61,9 +61,9 @@ class LeaveGame {
 
     private fun removePlayer(game: Game, player: Player) {
         val team = game.teams.find { it.teamMembers.contains(player) }
-        if (team != null) {
+        if (team != null) 
             Team.removePlayerFromTeam(player, player)
-        }
+
         game.spectators.remove(player)
         game.players.remove(player)
         GamesHandler.playerInGames.remove(player)
@@ -82,7 +82,7 @@ class LeaveGame {
         if (team != null)
             Team.removePlayerFromTeam(player, player)
 
-        player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-quit"]!!)
+        TheHunter.instance.messages.messagesMap["player-own-quit"]?.let { player.sendMessage(it) }
 
         PlayerHiding.showOnlyNonPlayingPlayersToPlayer(player)
         PlayerHiding.showPlayerOnlyToNonPlayingPlayers(player)

@@ -32,19 +32,21 @@ class Food : Listener {
         if (ItemHandler.shouldNotInteractWithItem(event, food, "Food"))
             return
 
-        if (event.player.foodLevel + GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.FOOD_RECHARGE] as Int <= 20)
-            event.player.foodLevel += GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.FOOD_RECHARGE] as Int
+        if (event.player.foodLevel + GamesHandler.playerInGames[event.player]?.gameItems?.items?.get(ConstantStrings.FOOD_RECHARGE) as Int <= 20)
+            event.player.foodLevel += GamesHandler.playerInGames[event.player]?.gameItems?.items?.get(ConstantStrings.FOOD_RECHARGE) as Int
         else if (event.player.foodLevel == 20)
             return
         else
             event.player.foodLevel = 20
         ItemHandler.removeOneItemOfPlayer(event.player)
-        event.player.sendMessage(
-            TheHunter.instance.messages.messagesMap[ConstantStrings.FOOD_RECHARGE]!!.replace(
-                "%recharge%",
-                (GamesHandler.playerInGames[event.player]!!.gameItems.items[ConstantStrings.FOOD_RECHARGE] as Int).toString()
+        TheHunter.instance.messages.messagesMap[ConstantStrings.FOOD_RECHARGE]?.let {
+            event.player.sendMessage(
+                it.replace(
+                    "%recharge%",
+                    (GamesHandler.playerInGames[event.player]?.gameItems?.items?.get(ConstantStrings.FOOD_RECHARGE) as Int).toString()
+                )
             )
-        )
+        }
     }
 
     @EventHandler
@@ -52,12 +54,9 @@ class Food : Listener {
         if (event.entity !is Player)
             return
         val player = event.entity as Player
-        if (!GamesHandler.playerInGames.containsKey(player))
+        if (!GamesHandler.playerInGames.containsKey(player) || GamesHandler.playerInGames[player]?.currentGameState !is IngameState || GamesHandler.playerInGames[player]?.gameItems?.items?.get("Food") != false)
             return
-        if (GamesHandler.playerInGames[player]!!.currentGameState !is IngameState)
-            return
-        if (GamesHandler.playerInGames[player]!!.gameItems.items["Food"] != false)
-            return
+
 
         player.foodLevel = 20
         event.isCancelled = true

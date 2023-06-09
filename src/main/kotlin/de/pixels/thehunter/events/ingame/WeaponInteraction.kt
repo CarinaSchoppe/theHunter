@@ -20,10 +20,9 @@ class WeaponInteraction : Listener {
 
     @EventHandler
     fun playerUsesAmmoItems(event: PlayerInteractEvent) {
-        if (!GamesHandler.playerInGames.containsKey(event.player))
+        if (!GamesHandler.playerInGames.containsKey(event.player) || event.item == null)
             return
-        if (event.item == null)
-            return
+
         when (event.item!!.itemMeta) {
             Sniper.gun.itemMeta -> event.isCancelled = true
             Rifle.gun.itemMeta -> event.isCancelled = true
@@ -39,10 +38,7 @@ class WeaponInteraction : Listener {
 
     @EventHandler
     fun onDropKnife(event: PlayerDropItemEvent) {
-        if (!GamesHandler.playerInGames.containsKey(event.player)) return
-        if (event.itemDrop.itemStack.itemMeta != Knife.knife.itemMeta) return
+        if (!GamesHandler.playerInGames.containsKey(event.player) || event.itemDrop.itemStack.itemMeta != Knife.knife.itemMeta) return
         event.isCancelled = true
-
-
     }
 }

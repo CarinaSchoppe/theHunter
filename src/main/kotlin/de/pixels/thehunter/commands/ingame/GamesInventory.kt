@@ -35,12 +35,11 @@ class GamesInventory {
                 ConstantStrings.SETTINGS_COMMAND,
                 0,
                 Permissions.SETTINGS_GUI
-            )
+            ) || !Util.currentGameSelected.containsKey(sender)
         )
             return
 
-        if (!Util.currentGameSelected.containsKey(sender))
-            return
+
         (sender as Player).openInventory(Inventories.createSettingsInventory(Util.currentGameSelected[sender]!!))
     }
 }

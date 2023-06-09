@@ -24,7 +24,7 @@ class LobbyInteraction : Listener {
         if (!GamesHandler.playerInGames.containsKey(event.player) && !GamesHandler.spectatorInGames.containsKey(event.player))
             return
         if (GamesHandler.playerInGames.containsKey(event.player) || GamesHandler.spectatorInGames.containsKey(event.player) && (GamesHandler.playerInGames[event.player]
-                ?: GamesHandler.spectatorInGames[event.player]!!).currentGameState !is IngameState
+                ?: GamesHandler.spectatorInGames[event.player])?.currentGameState !is IngameState
         )
             event.isCancelled = true
 
@@ -40,7 +40,7 @@ class LobbyInteraction : Listener {
                 event.damage = 0.0
 
                 if ((event.damager as Player).inventory.itemInMainHand.itemMeta != Items.leaveItem.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead.itemMeta)
-                    event.damager.sendMessage(TheHunter.instance.messages.messagesMap["no-lobby-damage"]!!)
+                    TheHunter.instance.messages.messagesMap["no-lobby-damage"]?.let { event.damager.sendMessage(it) }
 
             }
         }
@@ -61,7 +61,7 @@ class LobbyInteraction : Listener {
     private fun lobbyDamagePLayer(event: EntityDamageByEntityEvent) {
         if (event.entity is Player && (GamesHandler.playerInGames.containsKey(event.entity) || GamesHandler.spectatorInGames.containsKey(
                 event.entity
-            )) && GamesHandler.playerInGames[event.entity]!!.currentGameState !is IngameState
+            )) && GamesHandler.playerInGames[event.entity]?.currentGameState !is IngameState
         ) {
             event.isCancelled = true
             event.damage = 0.0
@@ -100,12 +100,10 @@ class LobbyInteraction : Listener {
                 if (GamesHandler.playerInGames.containsKey(event.whoClicked)) GamesHandler.playerInGames[event.whoClicked] else GamesHandler.spectatorInGames[event.whoClicked]
             if (game!!.currentGameState !is IngameState) {
                 event.isCancelled = true
-                (event.whoClicked as Player).updateInventory()
                 return
             } else {
                 if (GamesHandler.spectatorInGames.containsKey(event.whoClicked)) {
                     event.isCancelled = true
-                    (event.whoClicked as Player).updateInventory()
                     return
                 }
             }

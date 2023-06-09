@@ -34,7 +34,7 @@ class ItemChest(private val game: Game) {
 
     private fun repeater(inventory: Inventory, map: MutableList<ItemStack>) {
         repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
-            var index = Random().nextInt(map.size)
+            val index = Random().nextInt(map.size)
             val item = map[index]
             while (true) {
                 val place = Random().nextInt(54)
@@ -49,46 +49,62 @@ class ItemChest(private val game: Game) {
 
     private fun addItems(): MutableList<ItemStack> {
         val items = mutableListOf<ItemStack>()
-        if (game.gameItems.items["EggBomb"] == true) {
-            val item = EggBomb.eggBomb(game)
-            item.amount = game.gameItems.items["eggbomb-amount"] as Int
-            items.add(item)
+        when {
+            game.gameItems.items["EggBomb"] == true -> {
+                val item = EggBomb.eggBomb(game)
+                item.amount = game.gameItems.items["eggbomb-amount"] as Int
+                items.add(item)
+            }
         }
-        if (game.gameItems.items["EnergyDrink"] == true) {
-            val item = EnergyDrink.energyDrink
-            item.amount = game.gameItems.items["energydrink-amount"] as Int
-            items.add(item)
+        when {
+            game.gameItems.items["EnergyDrink"] == true -> {
+                val item = EnergyDrink.energyDrink
+                item.amount = game.gameItems.items["energydrink-amount"] as Int
+                items.add(item)
+            }
         }
-        if (game.gameItems.items["EyeSpy"] == true) {
-            val item = EyeSpy.eyeSpy
-            item.amount = game.gameItems.items["eyespy-amount"] as Int
-            items.add(item)
+        when {
+            game.gameItems.items["EyeSpy"] == true -> {
+                val item = EyeSpy.eyeSpy
+                item.amount = game.gameItems.items["eyespy-amount"] as Int
+                items.add(item)
+            }
         }
-        if (game.gameItems.items["Food"] == true) {
-            val item = Food.food
-            item.amount = game.gameItems.items["food-amount"] as Int
-            items.add(item)
+        when {
+            game.gameItems.items["Food"] == true -> {
+                val item = Food.food
+                item.amount = game.gameItems.items["food-amount"] as Int
+                items.add(item)
+            }
         }
-        if (game.gameItems.items["Healer"] == true) {
-            val item = Healer.healer
-            item.amount = game.gameItems.items["healer-amount"] as Int
-            items.add(item)
+        when {
+            game.gameItems.items["Healer"] == true -> {
+                val item = Healer.healer
+                item.amount = game.gameItems.items["healer-amount"] as Int
+                items.add(item)
+            }
         }
-        if (game.gameItems.items["JumpStick"] == true) {
-            val item = JumpStick.jumpStick
-            item.amount = game.gameItems.items["jump-stick-amount"] as Int
-            items.add(item)
+        when {
+            game.gameItems.items["JumpStick"] == true -> {
+                val item = JumpStick.jumpStick
+                item.amount = game.gameItems.items["jump-stick-amount"] as Int
+                items.add(item)
+            }
         }
 
-        if (game.gameItems.items["Swapper"] == true) {
-            val item = Swapper.swapper
-            item.amount = game.gameItems.items["swapper-amount"] as Int
-            items.add(item)
+        when {
+            game.gameItems.items["Swapper"] == true -> {
+                val item = Swapper.swapper
+                item.amount = game.gameItems.items["swapper-amount"] as Int
+                items.add(item)
+            }
         }
-        if (game.gameItems.items["Tracker"] == true) {
-            val item = Tracker.tracker
-            item.amount = game.gameItems.items["tracker-amount"] as Int
-            items.add(item)
+        when {
+            game.gameItems.items["Tracker"] == true -> {
+                val item = Tracker.tracker
+                item.amount = game.gameItems.items["tracker-amount"] as Int
+                items.add(item)
+            }
         }
 
         return items
@@ -96,25 +112,33 @@ class ItemChest(private val game: Game) {
 
     private fun ammoAdding(): MutableList<ItemStack> {
         val ammo = mutableListOf<ItemStack>()
-        if (game.gameItems.items["PistolAmmo"] == true) {
-            val item = AmmoItems.pistolAmmo
-            item.amount = game.gameItems.items["pistolammo-amount"] as Int
-            ammo.add(item)
+        when {
+            game.gameItems.items["PistolAmmo"] == true -> {
+                val item = AmmoItems.pistolAmmo
+                item.amount = game.gameItems.items["pistolammo-amount"] as Int
+                ammo.add(item)
+            }
         }
-        if (game.gameItems.items["SniperAmmo"] == true) {
-            val item = AmmoItems.sniperAmmo
-            item.amount = game.gameItems.items["sniperammo-amount"] as Int
-            ammo.add(item)
+        when {
+            game.gameItems.items["SniperAmmo"] == true -> {
+                val item = AmmoItems.sniperAmmo
+                item.amount = game.gameItems.items["sniperammo-amount"] as Int
+                ammo.add(item)
+            }
         }
-        if (game.gameItems.items["MinigunAmmo"] == true) {
-            val item = AmmoItems.minigunAmmo
-            item.amount = game.gameItems.items["minigunammo-amount"] as Int
-            ammo.add(item)
+        when {
+            game.gameItems.items["MinigunAmmo"] == true -> {
+                val item = AmmoItems.minigunAmmo
+                item.amount = game.gameItems.items["minigunammo-amount"] as Int
+                ammo.add(item)
+            }
         }
-        if (game.gameItems.items["RifleAmmo"] == true) {
-            val item = AmmoItems.rifleAmmo
-            item.amount = game.gameItems.items["rifleammo-amount"] as Int
-            ammo.add(item)
+        when {
+            game.gameItems.items["RifleAmmo"] == true -> {
+                val item = AmmoItems.rifleAmmo
+                item.amount = game.gameItems.items["rifleammo-amount"] as Int
+                ammo.add(item)
+            }
         }
 
 

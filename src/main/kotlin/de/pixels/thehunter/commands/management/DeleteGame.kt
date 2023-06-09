@@ -11,10 +11,10 @@ import de.pixels.thehunter.util.files.BaseFile
 import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.misc.ConstantStrings
 import de.pixels.thehunter.util.misc.Permissions
-import java.io.File
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import java.io.File
 
 class DeleteGame {
     fun remove(sender: CommandSender, command: String, args: Array<out String>) {
@@ -31,12 +31,14 @@ class DeleteGame {
 
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {
-            sender.sendMessage(
-                    TheHunter.instance.messages.messagesMap["game-not-exists"]!!.replace(
-                            ConstantStrings.GAME_PERCENT,
-                            args[0]
+            TheHunter.instance.messages.messagesMap["game-not-exists"]?.let {
+                sender.sendMessage(
+                    it.replace(
+                        ConstantStrings.GAME_PERCENT,
+                        args[0]
                     )
-            )
+                )
+            }
             return
         }
 
@@ -46,18 +48,22 @@ class DeleteGame {
         val player = sender as Player
         player.playSound(player.location, Sound.BLOCK_ANVIL_USE, 1f, 1f)
         GamesHandler.games.remove(game)
-        val file = File(BaseFile.gameFolder + "/arenas/${game.name}")
+        val file = File(BaseFile.GAME_FOLDER + "/arenas/${game.name}")
         if (file.deleteRecursively())
+            TheHunter.instance.messages.messagesMap["game-successfully-removed"]?.let {
                 sender.sendMessage(
-                        TheHunter.instance.messages.messagesMap["game-successfully-removed"]!!
-                                .replace(ConstantStrings.GAME_PERCENT, args[0])
+                    it
+                        .replace(ConstantStrings.GAME_PERCENT, args[0])
                 )
+            }
         else
+            TheHunter.instance.messages.messagesMap["game-could-not-delete"]?.let {
                 sender.sendMessage(
-                        TheHunter.instance.messages.messagesMap["game-could-not-delete"]!!.replace(
-                                ConstantStrings.GAME_PERCENT,
-                                args[0]
-                        )
+                    it.replace(
+                        ConstantStrings.GAME_PERCENT,
+                        args[0]
+                    )
                 )
+            }
     }
 }

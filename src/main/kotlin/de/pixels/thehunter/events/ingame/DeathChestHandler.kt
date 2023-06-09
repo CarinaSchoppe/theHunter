@@ -15,21 +15,17 @@ import org.bukkit.inventory.Inventory
 class DeathChestHandler : Listener {
 
     private fun worldEquals(location: Location, other: Location): Boolean {
-        if (location.world.name != other.world.name) return false
-
-        if (location.x.toInt() != other.x.toInt()) return false
-        if (location.y.toInt() != other.y.toInt()) return false
+        if (location.world.name != other.world.name || location.x.toInt() != other.x.toInt() || location.y.toInt() != other.y.toInt()) return false
         return location.z.toInt() == other.z.toInt()
     }
 
     @EventHandler
     fun onOpenDeathChest(event: PlayerInteractEvent) {
-        if (!GamesHandler.playerInGames.containsKey(event.player)) return
-        if (event.clickedBlock?.type != Material.REDSTONE_LAMP) return
+        if (!GamesHandler.playerInGames.containsKey(event.player) || event.clickedBlock?.type != Material.REDSTONE_LAMP) return
         val inventory: Inventory =
-            GamesHandler.playerInGames[event.player]!!.deathChest.deathChests[GamesHandler.playerInGames[event.player]!!.deathChest.deathChests.keys.first {
+            GamesHandler.playerInGames[event.player]?.deathChest?.deathChests?.get(GamesHandler.playerInGames[event.player]?.deathChest?.deathChests?.keys?.first {
                 worldEquals(event.clickedBlock!!.location, it)
-            }] ?: return
+            }) ?: return
         event.isCancelled = true
 
         event.player.openInventory(inventory)

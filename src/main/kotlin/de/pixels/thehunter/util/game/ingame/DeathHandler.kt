@@ -28,7 +28,7 @@ class DeathHandler(private val player: Player) {
     fun deathPreChecks(): DeathHandler? {
         if (!GamesHandler.playerInGames.containsKey(player))
             return null
-        game = GamesHandler.playerInGames[player]!!
+        game = GamesHandler.playerInGames[player] ?: return null
 
         if (game.currentGameState !is IngameState)
             return null
@@ -43,54 +43,63 @@ class DeathHandler(private val player: Player) {
         }
 
         game.players.forEach {
-            it.sendMessage(
-                TheHunter.instance.messages.messagesMap["player-died"]!!.replace(
-                    ConstantStrings.PLAYER_PERCENT,
-                    player.name
+            TheHunter.instance.messages.messagesMap["player-died"]?.let { message ->
+                it.sendMessage(
+                    message.replace(
+                        ConstantStrings.PLAYER_PERCENT,
+                        player.name
+                    )
                 )
-            )
+            }
         }
         game.spectators.filter { it.name != player.name }.forEach {
-            it.sendMessage(
-                TheHunter.instance.messages.messagesMap["player-died"]!!.replace(
-                    ConstantStrings.PLAYER_PERCENT,
-                    player.name
+            TheHunter.instance.messages.messagesMap["player-died"]?.let { message ->
+                it.sendMessage(
+                    message.replace(
+                        ConstantStrings.PLAYER_PERCENT,
+                        player.name
+                    )
                 )
-            )
+            }
         }
-        try {
-            player.sendMessage(TheHunter.instance.messages.messagesMap["player-own-died"]!!)
-        } catch (_: Exception) {
-        }
+
+        TheHunter.instance.messages.messagesMap["player-own-died"]?.let { player.sendMessage(it) }
+     
 
         return this
     }
 
     private fun deathMessageKilledToAll(): DeathHandler {
         game.players.forEach {
-            it.sendMessage(
-                TheHunter.instance.messages.messagesMap["player-killed-by-other"]!!.replace(
-                    ConstantStrings.PLAYER_PERCENT,
-                    player.name
-                ).replace(ConstantStrings.KILLER_PERCENT, killer!!.name)
-            )
+            TheHunter.instance.messages.messagesMap["player-killed-by-other"]?.replace(
+                ConstantStrings.PLAYER_PERCENT,
+                player.name
+            )?.let { str ->
+                it.sendMessage(
+                    str.replace(ConstantStrings.KILLER_PERCENT, killer?.name ?: "")
+                )
+            }
 
         }
         game.spectators.filter { it.name != player.name }.forEach {
-            it.sendMessage(
-                TheHunter.instance.messages.messagesMap["player-killed-by-other"]!!.replace(
-                    ConstantStrings.PLAYER_PERCENT,
-                    player.name
-                ).replace(ConstantStrings.KILLER_PERCENT, killer!!.name)
-            )
+            TheHunter.instance.messages.messagesMap["player-killed-by-other"]?.replace(
+                ConstantStrings.PLAYER_PERCENT,
+                player.name
+            )?.let { str ->
+                it.sendMessage(
+                    str.replace(ConstantStrings.KILLER_PERCENT, killer?.name ?: "")
+                )
+            }
 
         }
-        player.sendMessage(
-            TheHunter.instance.messages.messagesMap["player-own-killed-by-other"]!!.replace(
-                ConstantStrings.PLAYER_PERCENT,
-                killer!!.name
+        TheHunter.instance.messages.messagesMap["player-own-killed-by-other"]?.let {
+            player.sendMessage(
+                it.replace(
+                    ConstantStrings.PLAYER_PERCENT,
+                    killer?.name ?: ""
+                )
             )
-        )
+        }
         return this
     }
 
@@ -102,7 +111,7 @@ class DeathHandler(private val player: Player) {
     }
 
     private fun playerKilledByOthersStatsHandling(): DeathHandler {
-        TheHunter.instance.statsSystem.playerKilledOtherPlayer(killer!!, player)
+        killer?.let { TheHunter.instance.statsSystem.playerKilledOtherPlayer(it, player) }
 
         return this
     }
@@ -126,14 +135,11 @@ class DeathHandler(private val player: Player) {
         GamesHandler.spectatorInGames[player] = game
 
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Consumer {
-            try {
-                player.spigot().respawn()
-            } catch (_: Exception) {
-            }
+            player.spigot().respawn()
             player.inventory.clear()
             player.inventory.setItem(8, Items.leaveItem)
             player.inventory.setItem(9, Items.leaveItem)
-            player.teleport(game.spectatorLocation!!)
+            game.spectatorLocation?.let { user -> player.teleport(user) }
         }, 1)
 
         PlayerHiding.hidePlayerToAll(player)

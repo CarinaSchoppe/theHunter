@@ -25,23 +25,12 @@ class Knife : Listener {
 
     @EventHandler
     fun onKnifeUse(event: EntityDamageByEntityEvent) {
-        if (event.entity !is Player)
-            return
-        if (event.damager !is Player)
-            return
-        if ((event.damager as Player).inventory.itemInMainHand.itemMeta != knife.itemMeta)
-            return
-        if ((event.damager as Player).inventory.itemInMainHand.itemMeta != knife.itemMeta)
-            return
-        if (!GamesHandler.playerInGames.containsKey(event.entity as Player))
+
+        if (event.entity !is Player || event.damager !is Player || (event.damager as Player).inventory.itemInMainHand.itemMeta != knife.itemMeta || (event.damager as Player).inventory.itemInMainHand.itemMeta != knife.itemMeta || !GamesHandler.playerInGames.containsKey(event.entity as Player))
             return
         val game = GamesHandler.playerInGames[event.entity as Player]
-        if (!GamesHandler.playerInGames[event.entity as Player]!!.players.contains(event.damager as Player))
-            return
 
-        if (GamesHandler.playerInGames[event.entity as Player]!!.currentGameState !is IngameState)
-            return
-        if (GamesHandler.playerInGames[event.damager as Player]!!.gameItems.items["Knife"] == false)
+        if (GamesHandler.playerInGames[event.entity as Player]?.players?.contains(event.damager as Player) == false || GamesHandler.playerInGames[event.entity as Player]?.currentGameState !is IngameState || GamesHandler.playerInGames[event.damager as Player]?.gameItems?.items?.get("Knife") == false)
             return
 
         event.damage = game!!.itemSettings.settingsMap["knife-damage"] as Double

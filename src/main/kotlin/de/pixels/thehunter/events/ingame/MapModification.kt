@@ -21,28 +21,32 @@ class MapModification : Listener {
         if (!GamesHandler.playerInGames.containsKey(player))
             return
 
-        if (GamesHandler.playerInGames[player]!!.currentGameState !is IngameState) {
+        if (GamesHandler.playerInGames[player]?.currentGameState !is IngameState) {
             event.isCancelled = true
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["cant-break-block"]!!.replace(
-                    ConstantStrings.BLOCK_PERCENT,
-                    event.block.type.name
+            TheHunter.instance.messages.messagesMap["cant-break-block"]?.let {
+                player.sendMessage(
+                    it.replace(
+                        ConstantStrings.BLOCK_PERCENT,
+                        event.block.type.name
+                    )
                 )
-            )
+            }
             return
         }
-        if (!GamesHandler.playerInGames[player]!!.mapModify) {
+        if (GamesHandler.playerInGames[player]?.mapModify == false) {
             event.isCancelled = true
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["cant-break-block"]!!.replace(
-                    ConstantStrings.BLOCK_PERCENT,
-                    event.block.type.name
+            TheHunter.instance.messages.messagesMap["cant-break-block"]?.let {
+                player.sendMessage(
+                    it.replace(
+                        ConstantStrings.BLOCK_PERCENT,
+                        event.block.type.name
+                    )
                 )
-            )
+            }
             return
         }
 
-        GamesHandler.playerInGames[event.player]!!.mapResetter.addBlockToList(event.block)
+        GamesHandler.playerInGames[event.player]?.mapResetter?.addBlockToList(event.block)
     }
 
     @EventHandler
@@ -51,26 +55,30 @@ class MapModification : Listener {
         if (!GamesHandler.playerInGames.containsKey(player))
             return
 
-        if (GamesHandler.playerInGames[player]!!.currentGameState !is IngameState) {
+        if (GamesHandler.playerInGames[player]?.currentGameState !is IngameState) {
             event.isCancelled = true
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["cant-place-block"]!!.replace(
-                    ConstantStrings.BLOCK_PERCENT,
-                    event.block.type.name
+            TheHunter.instance.messages.messagesMap["cant-place-block"]?.let {
+                player.sendMessage(
+                    it.replace(
+                        ConstantStrings.BLOCK_PERCENT,
+                        event.block.type.name
+                    )
                 )
-            )
+            }
             return
         }
-        if (!GamesHandler.playerInGames[player]!!.mapModify) {
+        if (GamesHandler.playerInGames[player]?.mapModify == false) {
             event.isCancelled = true
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["cant-place-block"]!!.replace(
-                    ConstantStrings.BLOCK_PERCENT,
-                    event.block.type.name
+            TheHunter.instance.messages.messagesMap["cant-place-block"]?.let {
+                player.sendMessage(
+                    it.replace(
+                        ConstantStrings.BLOCK_PERCENT,
+                        event.block.type.name
+                    )
                 )
-            )
+            }
             return
         }
-        GamesHandler.playerInGames[event.player]!!.mapResetter.addBlockToList(event.block)
+        GamesHandler.playerInGames[event.player]?.mapResetter?.addBlockToList(event.block)
     }
 }

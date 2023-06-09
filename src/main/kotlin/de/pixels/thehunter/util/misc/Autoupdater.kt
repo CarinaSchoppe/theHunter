@@ -25,12 +25,12 @@ class Autoupdater {
                 val version: String = BufferedReader(InputStreamReader(con.inputStream)).readLine()
                 if (version != TheHunter.instance.version) {
 
-                    Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["autoupdate"]!!)
+                    TheHunter.instance.messages.messagesMap["autoupdate"]?.let { Bukkit.getConsoleSender().sendMessage(it) }
                 } else {
-                    Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["update-true"]!!)
+                    TheHunter.instance.messages.messagesMap["update-true"]?.let { Bukkit.getConsoleSender().sendMessage(it) }
                 }
             } catch (ex: Exception) {
-                Bukkit.getConsoleSender().sendMessage(TheHunter.instance.messages.messagesMap["update-error"]!!)
+                TheHunter.instance.messages.messagesMap["update-error"]?.let { Bukkit.getConsoleSender().sendMessage(it) }
             }
         }
     }

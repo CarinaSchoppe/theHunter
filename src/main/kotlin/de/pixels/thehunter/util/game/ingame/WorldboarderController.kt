@@ -21,8 +21,12 @@ class WorldboarderController(private val game: Game) {
 
         resetWorldBoarder()
         task = Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Runnable {
-            if (game.arenaCenter!!.world.worldBorder.size - 1 >= minBorderSize) {
-                game.arenaCenter!!.world.worldBorder.size -= 1
+            if ((game.arenaCenter?.world?.worldBorder?.size?.minus(1) ?: return@Runnable) >= minBorderSize) {
+                game.arenaCenter?.world?.worldBorder?.size?.minus(1).also {
+                    if (it != null) {
+                        game.arenaCenter?.world?.worldBorder?.size = it
+                    }
+                }
             } else {
                 task.cancel()
             }
@@ -30,14 +34,14 @@ class WorldboarderController(private val game: Game) {
     }
 
     fun resetWorldBoarder() {
-        game.arenaCenter!!.world.worldBorder.center = game.arenaCenter!!
-        game.arenaCenter!!.world.worldBorder.damageAmount = 100.0
-        game.arenaCenter!!.world.worldBorder.size = worldBoarderSize.toDouble()
+        game.arenaCenter?.world?.worldBorder?.center = game.arenaCenter ?: return
+        game.arenaCenter?.world?.worldBorder?.damageAmount = 100.0
+        game.arenaCenter?.world?.worldBorder?.size = worldBoarderSize.toDouble()
     }
 
     companion object {
-        const val toHigh: Int = 1000
-        const val toLow: Int = 25
+        const val TO_HIGH: Int = 1000
+        const val TO_LOW: Int = 25
     }
 
 

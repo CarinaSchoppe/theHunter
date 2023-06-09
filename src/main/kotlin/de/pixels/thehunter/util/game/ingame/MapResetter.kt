@@ -20,14 +20,14 @@ class MapResetter(val game: Game) {
     companion object {
         fun setBlock(blockString: String) {
             val data = blockString.split(":")
-            val type = Material.getMaterial(data[0])!!
+            val type = Material.getMaterial(data[0])
             //val blockData = Bukkit.getServer().createBlockData(data[1])
-            val world = Bukkit.getWorld(data[1])!!
+            val world = Bukkit.getWorld(data[1])
             val x = data[2].toInt()
             val y = data[3].toInt()
             val z = data[4].toInt()
 
-            world.getBlockAt(x, y, z).type = type
+            world?.getBlockAt(x, y, z)?.type = type ?: Material.AIR
             //   world.getBlockAt(x, y, z).blockData = blockData
         }
     }

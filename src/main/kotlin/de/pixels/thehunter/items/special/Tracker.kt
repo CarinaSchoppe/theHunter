@@ -31,22 +31,24 @@ class Tracker : Listener {
         event.isCancelled = true
         //get the closest Player to the event.player based on the distance of their location
         val closestPlayers =
-            GamesHandler.playerInGames[event.player]!!.players.filter { it.uniqueId != event.player.uniqueId }
-        if (closestPlayers.isEmpty())
+            GamesHandler.playerInGames[event.player]?.players?.filter { it.uniqueId != event.player.uniqueId }
+        if (closestPlayers?.isEmpty() == true)
             return
-        var closest = closestPlayers.first()
+        var closest = closestPlayers?.first() ?: return
         for (players in closestPlayers) {
             if (event.player.location.distance(players.location) < event.player.location.distance(closest.location))
                 closest = players
         }
 
         event.player.compassTarget = closest.location
-        event.player.sendMessage(
-            TheHunter.instance.messages.messagesMap["tracker-distance"]!!.replace(
-                ConstantStrings.PLAYER_PERCENT,
-                closest.name
-            ).replace("%distance%", event.player.location.distance(closest.location).toInt().toString())
-        )
+        TheHunter.instance.messages.messagesMap["tracker-distance"]?.replace(
+            ConstantStrings.PLAYER_PERCENT,
+            closest.name
+        )?.let {
+            event.player.sendMessage(
+                it.replace("%distance%", event.player.location.distance(closest.location).toInt().toString())
+            )
+        }
 
 
     }

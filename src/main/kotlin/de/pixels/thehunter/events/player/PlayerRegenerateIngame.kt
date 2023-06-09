@@ -14,11 +14,10 @@ class PlayerRegenerateIngame : Listener {
 
     @EventHandler
     fun playerRegenerateIngame(event: EntityRegainHealthEvent) {
-        if (event.entity !is Player)
+        if (event.entity !is Player || !GamesHandler.playerInGames.containsKey(event.entity))
             return
-        if (!GamesHandler.playerInGames.containsKey(event.entity))
-            return
-        if (!GamesHandler.playerInGames[event.entity]!!.regenerate)
+
+        if (GamesHandler.playerInGames[event.entity]?.regenerate == false)
             event.isCancelled = true
     }
 }

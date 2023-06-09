@@ -12,7 +12,7 @@ class ItemSettings(val game: Game) : BaseFile("/arenas/${game.name}/item-setting
 
     private fun fillSettingsMap() {
         for (key in yml.getKeys(false)) {
-            settingsMap[key] = yml.get(key) as Any
+            settingsMap[key] = yml[key] as Any
         }
     }
 

@@ -26,7 +26,7 @@ class FallingBlocks : Listener {
         if (!EggBomb.bombs.contains(tnt)) return
         EggBomb.bombs.remove(tnt)
 
-        val game = GamesHandler.entitiesInGames[tnt]!!
+        val game = GamesHandler.entitiesInGames[tnt] ?: return
         GamesHandler.entitiesInGames.remove(tnt)
 
 

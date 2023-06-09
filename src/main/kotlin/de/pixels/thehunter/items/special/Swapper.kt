@@ -31,27 +31,31 @@ class Swapper : Listener {
             return
         event.isCancelled = true
 
-        val targets = GamesHandler.playerInGames[event.player]!!.players.filter { it != event.player }
-        if (targets.isEmpty())
+        val targets = GamesHandler.playerInGames[event.player]?.players?.filter { it != event.player }
+        if (targets?.isEmpty() == true)
             return
-        val target = targets.random()
+        val target = targets?.random()
         ItemHandler.removeOneItemOfPlayer(event.player)
-        val targetLocation = target.location
-        target.teleport(event.player.location)
-        event.player.teleport(targetLocation)
+        val targetLocation = target?.location
+        target?.teleport(event.player.location)
+        event.player.teleport(targetLocation ?: return)
         event.player.playSound(event.player, Sound.BLOCK_BIG_DRIPLEAF_BREAK, 1f, 1f)
         target.playSound(target, Sound.BLOCK_BIG_DRIPLEAF_BREAK, 1f, 1f)
-        target.sendMessage(
-            TheHunter.instance.messages.messagesMap["player-swapped"]!!.replace(
-                ConstantStrings.PLAYER_PERCENT,
-                event.player.name
+        TheHunter.instance.messages.messagesMap["player-swapped"]?.let {
+            target.sendMessage(
+                it.replace(
+                    ConstantStrings.PLAYER_PERCENT,
+                    event.player.name
+                )
             )
-        )
-        event.player.sendMessage(
-            TheHunter.instance.messages.messagesMap["player-swapped"]!!.replace(
-                ConstantStrings.PLAYER_PERCENT,
-                target.name
+        }
+        TheHunter.instance.messages.messagesMap["player-swapped"]?.let {
+            event.player.sendMessage(
+                it.replace(
+                    ConstantStrings.PLAYER_PERCENT,
+                    target.name
+                )
             )
-        )
+        }
     }
 }

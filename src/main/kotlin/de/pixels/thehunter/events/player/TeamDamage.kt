@@ -16,26 +16,20 @@ class TeamDamage : Listener {
     fun onTeamDamage(event: EntityDamageByEntityEvent) {
 
 
-        if (event.damager !is Player)
+        if (event.damager !is Player || event.entity !is Player)
             return
-        if (event.entity !is Player)
-            return
+
         val damager = event.damager as Player
         val entity = event.entity as Player
-        if (!GamesHandler.playerInGames.containsKey(damager))
+        if (!GamesHandler.playerInGames.containsKey(damager) || !GamesHandler.playerInGames.containsKey(entity) || GamesHandler.playerInGames[damager] != GamesHandler.playerInGames[entity])
             return
-        if (!GamesHandler.playerInGames.containsKey(entity))
+        val team = GamesHandler.playerInGames[damager]?.teams?.find { it.teamMembers.contains(damager) } ?: return
+        if (!team.teamMembers.contains(entity) || GamesHandler.playerInGames[damager]?.teamDamage == true)
             return
-        if (GamesHandler.playerInGames[damager] != GamesHandler.playerInGames[entity])
-            return
-        val team = GamesHandler.playerInGames[damager]!!.teams.find { it.teamMembers.contains(damager) } ?: return
-        if (!team.teamMembers.contains(entity))
-            return
-        if (GamesHandler.playerInGames[damager]!!.teamDamage)
-            return
+
         event.isCancelled = true
         event.damage = 0.0
 
-        damager.sendMessage(TheHunter.instance.messages.messagesMap["cant-team-damage"]!!)
+        TheHunter.instance.messages.messagesMap["cant-team-damage"]?.let { damager.sendMessage(it) }
     }
 }

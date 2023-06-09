@@ -11,16 +11,16 @@ import java.io.File
 
 class GameItems(game: Game) {
 
-    private val fileItems = File("${BaseFile.gameFolder}/arenas/${game.name}/items.yml")
+    private val fileItems = File("${BaseFile.GAME_FOLDER}/arenas/${game.name}/items.yml")
     private val ymlItems = YamlConfiguration.loadConfiguration(fileItems)
-    private val fileGuns = File("${BaseFile.gameFolder}/arenas/${game.name}/guns.yml")
+    private val fileGuns = File("${BaseFile.GAME_FOLDER}/arenas/${game.name}/guns.yml")
     private val ymlGuns = YamlConfiguration.loadConfiguration(fileGuns)
     val items = mutableMapOf<String, Any>()
     val guns = mutableMapOf<String, Int>()
 
     fun loadAllItems() {
         for (item in ymlItems.getKeys(false)) {
-            items[item] = ymlItems.get(item) as Any
+            items[item] = ymlItems[item] as Any
         }
     }
 

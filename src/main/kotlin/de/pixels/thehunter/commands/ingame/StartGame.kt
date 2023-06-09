@@ -23,14 +23,12 @@ class StartGame {
                 ConstantStrings.START_COMMAND,
                 0,
                 Permissions.START_COMMAND
-            )
-        )
-            return
-        if (!GamesHandler.playerInGames.containsKey(sender as Player) && !GamesHandler.spectatorInGames.containsKey(
+            ) || !GamesHandler.playerInGames.containsKey(sender as Player) && !GamesHandler.spectatorInGames.containsKey(
                 sender
             )
         )
             return
+
         val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender]!!
         if (game.currentGameState !is LobbyState)
             return

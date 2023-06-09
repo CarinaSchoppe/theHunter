@@ -25,28 +25,28 @@ class PlayerHotbarHover : Listener {
         fun updateHotbar(item: ItemStack?, player: Player) {
             when (item?.itemMeta) {
                 Rifle.gun.itemMeta -> {
-                    val maxAmmoAmount = GamesHandler.playerInGames[player]!!.gameItems.guns["rifle-ammo"]!!
+                    val maxAmmoAmount = GamesHandler.playerInGames[player]?.gameItems?.guns?.get("rifle-ammo") ?: return
                     val currentAmmo = Rifle.magazine.getOrDefault(player, 0)
                     player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
                 }
 
                 Pistol.gun.itemMeta -> {
                     val maxAmmoAmount =
-                        GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.PISTOL_AMMO]!!
+                        GamesHandler.playerInGames[player]?.gameItems?.guns?.get(ConstantStrings.PISTOL_AMMO) ?: return
                     val currentAmmo = Pistol.magazine.getOrDefault(player, 0)
                     player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
                 }
 
                 Sniper.gun.itemMeta -> {
                     val maxAmmoAmount =
-                        GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.SNIPER_AMMO]!!
+                        GamesHandler.playerInGames[player]?.gameItems?.guns?.get(ConstantStrings.SNIPER_AMMO) ?: return
                     val currentAmmo = Sniper.magazine.getOrDefault(player, 0)
                     player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
                 }
 
                 Minigun.gun.itemMeta -> {
                     val maxAmmoAmount =
-                        GamesHandler.playerInGames[player]!!.gameItems.guns[ConstantStrings.MINIGUN_AMMO]!!
+                        GamesHandler.playerInGames[player]?.gameItems?.guns?.get(ConstantStrings.MINIGUN_AMMO) ?: return
                     val currentAmmo = Minigun.magazine.getOrDefault(player, 0)
                     player.sendActionBar(Component.text("[$currentAmmo/$maxAmmoAmount]"))
                 }

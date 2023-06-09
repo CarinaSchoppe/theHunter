@@ -11,7 +11,7 @@ object ConstantStrings {
     const val SNIPER_AMMO: String = "sniper-ammo"
     const val PISTOL_AMMO: String = "pistol-ammo"
     const val RIFLE_AMMO: String = "rifle-ammo"
-    val MINIGUN_AMMO: String = "minigun-ammo"
+    const val MINIGUN_AMMO: String = "minigun-ammo"
     const val SPAWN_LOCATIONS = "spawn-locations"
     const val COMMAND_PERCENT = "%command%"
     const val GUI_COMMAND = "gui"
