@@ -65,7 +65,7 @@ class DatabaseHandler {
                 if (!file.exists()) {
                     file.createNewFile()
                     TheHunter.instance.settings.settingsMap[ConstantStrings.SQLITE_PATH] = file.absolutePath
-                    TheHunter.instance.settings.yml.set(ConstantStrings.SQLITE_PATH, file.absolutePath)
+                    TheHunter.instance.settings.yml[ConstantStrings.SQLITE_PATH, file.absolutePath]
                     TheHunter.instance.settings.yml.save(TheHunter.instance.settings.file)
                     Bukkit.getConsoleSender().sendMessage(
                         ChatColor.translateAlternateColorCodes(
