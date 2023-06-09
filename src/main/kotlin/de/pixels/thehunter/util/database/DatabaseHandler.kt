@@ -104,14 +104,12 @@ class DatabaseHandler {
         )
 
         createTableStatsPlayer()
-
         addAllPlayersFromDataBaseToPLayerList()
-
 
         return true
     }
 
-    private fun createTableStatsPlayer(): Boolean {
+    private fun createTableStatsPlayer() {
         val sqlCommand = "CREATE TABLE IF NOT EXISTS statsPlayer (" +
                 "uuid VARCHAR(36) NOT NULL," +
                 "kills INT NOT NULL," +
@@ -133,7 +131,6 @@ class DatabaseHandler {
             ) + "§aCreating table statsPlayer..."
         )
 
-        return true
     }
 
     private fun addAllPlayersFromDataBaseToPLayerList(): Boolean {
