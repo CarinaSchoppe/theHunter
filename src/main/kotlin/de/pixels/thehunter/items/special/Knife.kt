@@ -33,7 +33,7 @@ class Knife : Listener {
         if (GamesHandler.playerInGames[event.entity as Player]?.players?.contains(event.damager as Player) == false || GamesHandler.playerInGames[event.entity as Player]?.currentGameState !is IngameState || GamesHandler.playerInGames[event.damager as Player]?.gameItems?.items?.get("Knife") == false)
             return
 
-        event.damage = game!!.itemSettings.settingsMap["knife-damage"] as Double
+        event.damage = game?.itemSettings?.settingsMap?.get("knife-damage") as Double
     }
 
 

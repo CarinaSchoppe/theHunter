@@ -90,7 +90,7 @@ class JoinGame {
             game.players.add(player)
             player.allowFlight = false
             GamesHandler.playerInGames[player] = game
-            player.teleport(game.lobbyLocation!!)
+            game.lobbyLocation?.let { player.teleport(it) }
             game.spectators.forEach {
                 TheHunter.instance.messages.messagesMap["player-joined-game"]?.let { message ->
                     it.sendMessage(
@@ -106,7 +106,7 @@ class JoinGame {
             game.spectators.add(player)
             player.allowFlight = false
             TheHunter.instance.messages.messagesMap["game-full-spectator"]?.let { player.sendMessage(it) }
-            player.teleport(game.lobbyLocation!!)
+            game.lobbyLocation?.let { player.teleport(it) }
         }
         return true
     }

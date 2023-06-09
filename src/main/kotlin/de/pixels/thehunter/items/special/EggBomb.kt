@@ -50,7 +50,7 @@ class EggBomb : Listener {
 
         val game = GamesHandler.playerInGames[player] ?: return
 
-        if (game.currentGameState !is IngameState || !egg.item.hasItemMeta() || egg.item.itemMeta != eggBomb(game).itemMeta || GamesHandler.playerInGames[player]!!.gameItems.items["EggBomb"] == false || GamesHandler.playerInGames[player]!!.currentGameState !is IngameState)
+        if (game.currentGameState !is IngameState || !egg.item.hasItemMeta() || egg.item.itemMeta != eggBomb(game).itemMeta || GamesHandler.playerInGames[player]?.gameItems?.items?.get("EggBomb") == false || GamesHandler.playerInGames[player]?.currentGameState !is IngameState)
             return
 
         eggBombBoom(game, event, egg)

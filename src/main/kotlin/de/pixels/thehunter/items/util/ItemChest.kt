@@ -148,7 +148,7 @@ class ItemChest(private val game: Game) {
     fun makeChestsFall() {
         if (!game.chestFall)
             return
-        val locationCenter: Location = game.arenaCenter!!.clone().subtract(
+        val locationCenter: Location = (game.arenaCenter?.clone() ?: return).subtract(
             (game.worldBoarderController.worldBoarderSize / 2).toDouble(),
             0.0,
             (game.worldBoarderController.worldBoarderSize / 2).toDouble()

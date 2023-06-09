@@ -64,7 +64,8 @@ abstract class Gun {
             magazine[player] = 0
             return false
         }
-        if (magazine[player]!! <= 0) {
+        val mag = magazine[player] ?: return false
+        if (mag <= 0) {
             reload(player)
             return false
         }
@@ -103,11 +104,12 @@ abstract class Gun {
             reloading[player] = false
             val amount = getAmmoAmount(player, ammo)
             val old = magazine.getOrDefault(player, 0)
-            if (amount + old >= GamesHandler.playerInGames[player]!!.gameItems.guns[ammoString]!!) {
+            if (amount + old >= (GamesHandler.playerInGames[player]?.gameItems?.guns?.get(ammoString) ?: return@scheduleSyncDelayedTask)) {
                 magazine[player] = GamesHandler.playerInGames[player]?.gameItems?.guns?.get(ammoString) ?: return@scheduleSyncDelayedTask
             } else
                 magazine[player] = amount + old
-            repeat(magazine[player]!! - old) {
+            val mag = magazine[player] ?: return@scheduleSyncDelayedTask
+            repeat(mag - old) {
                 GunHandler.removeAmmo(player, this)
             }
             PlayerHotbarHover.updateHotbar(gun, player)

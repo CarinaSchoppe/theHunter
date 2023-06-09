@@ -25,7 +25,7 @@ class GunHandler : Listener {
      */
     @EventHandler
     fun onPlayerShoot(event: PlayerInteractEvent) {
-        if (event.item == null || !event.player.inventory.itemInMainHand.hasItemMeta() || !event.item!!.hasItemMeta() || !GamesHandler.playerInGames.containsKey(event.player)) return
+        if (event.item == null || !event.player.inventory.itemInMainHand.hasItemMeta() || event.item?.hasItemMeta() == false || !GamesHandler.playerInGames.containsKey(event.player)) return
 
         if (event.action.isLeftClick) {
             whenLeftClick(event)
@@ -36,7 +36,7 @@ class GunHandler : Listener {
 
 
     private fun whenLeftClick(event: PlayerInteractEvent) {
-        when (event.item!!.itemMeta) {
+        when (event.item?.itemMeta) {
             Rifle.gun.itemMeta -> {
                 if (!event.player.hasPermission("thehunter.rifle")) return 
                 Rifle.reload(event.player)

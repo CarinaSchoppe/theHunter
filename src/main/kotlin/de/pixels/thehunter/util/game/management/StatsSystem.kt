@@ -182,7 +182,7 @@ class StatsSystem : BaseFile("stats.yml") {
     }
 
     private fun removePointsIfPossible(player: Player) {
-        if (5 <= playerStats[player.uniqueId]?.points!!) {
+        if (5 <= playerStats[player.uniqueId]?.points ?: return) {
             playerStats[player.uniqueId]?.points = playerStats[player.uniqueId]?.points?.minus(5) ?: return
         }
     }

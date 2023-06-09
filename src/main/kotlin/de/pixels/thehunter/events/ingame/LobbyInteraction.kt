@@ -35,7 +35,7 @@ class LobbyInteraction : Listener {
         if (event.entity !is Player) return
         if (GamesHandler.playerInGames.containsKey(event.damager) || GamesHandler.spectatorInGames.containsKey(event.damager)) {
             val game = GamesHandler.spectatorInGames[event.damager] ?: GamesHandler.playerInGames[event.damager]
-            if (game!!.currentGameState !is IngameState) {
+            if (game?.currentGameState !is IngameState) {
                 event.isCancelled = true
                 event.damage = 0.0
 
@@ -48,13 +48,8 @@ class LobbyInteraction : Listener {
 
     @EventHandler
     fun onPlayerLeavesGame(event: PlayerInteractEvent) {
-        if (event.item == null) return
-        if (!event.item!!.hasItemMeta())
-            return
-        if (event.item!!.itemMeta != Items.leaveItem.itemMeta)
-            return
-        if (event.action.isLeftClick)
-            return
+        if (event.item == null || event.item?.hasItemMeta() == false || event.item?.itemMeta != Items.leaveItem.itemMeta || event.action.isLeftClick) return
+  
         event.player.performCommand("thehunter leave")
     }
 
@@ -98,7 +93,7 @@ class LobbyInteraction : Listener {
         if (GamesHandler.playerInGames.containsKey(event.whoClicked) || GamesHandler.spectatorInGames.containsKey(event.whoClicked)) {
             val game =
                 if (GamesHandler.playerInGames.containsKey(event.whoClicked)) GamesHandler.playerInGames[event.whoClicked] else GamesHandler.spectatorInGames[event.whoClicked]
-            if (game!!.currentGameState !is IngameState) {
+            if (game?.currentGameState !is IngameState) {
                 event.isCancelled = true
                 return
             } else {

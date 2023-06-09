@@ -14,14 +14,14 @@ import org.bukkit.event.player.PlayerInteractEvent
 class LootChestHandler : Listener {
     @EventHandler
     fun onChestOpen(event: PlayerInteractEvent) {
-        if (!GamesHandler.playerInGames.containsKey(event.player) || GamesHandler.playerInGames[event.player]?.currentGameState !is IngameState || event.clickedBlock == null || event.clickedBlock!!.type != org.bukkit.Material.BEACON)
+        if (!GamesHandler.playerInGames.containsKey(event.player) || GamesHandler.playerInGames[event.player]?.currentGameState !is IngameState || event.clickedBlock == null || event.clickedBlock?.type != org.bukkit.Material.BEACON)
             return
         val game = GamesHandler.playerInGames[event.player] ?: return
-        if (game.gameChest.chests.containsKey(event.clickedBlock!!.location)) {
-            game.gameChest.chests[event.clickedBlock!!.location]?.let { event.player.openInventory(it) }
+        if (game.gameChest.chests.containsKey(event.clickedBlock?.location)) {
+            game.gameChest.chests[event.clickedBlock?.location]?.let { event.player.openInventory(it) }
         } else {
             val inventory = game.gameChest.createItemInventory()
-            game.gameChest.chests[event.clickedBlock!!.location] = inventory
+            game.gameChest.chests[event.clickedBlock?.location ?: return] = inventory
             event.player.openInventory(inventory)
             event.player.playSound(event.player, Sound.BLOCK_CHEST_OPEN, 1f, 1f)
         }

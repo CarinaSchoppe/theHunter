@@ -23,7 +23,7 @@ class WeaponInteraction : Listener {
         if (!GamesHandler.playerInGames.containsKey(event.player) || event.item == null)
             return
 
-        when (event.item!!.itemMeta) {
+        when (event.item?.itemMeta) {
             Sniper.gun.itemMeta -> event.isCancelled = true
             Rifle.gun.itemMeta -> event.isCancelled = true
             Pistol.gun.itemMeta -> event.isCancelled = true

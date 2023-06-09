@@ -18,16 +18,16 @@ class GameConfigurator : Listener {
 
     @EventHandler
     fun onGameConfigEdit(event: InventoryClickEvent) {
-        if (!Util.currentGameSelected.containsKey(event.whoClicked as Player) || !(event.whoClicked as Player).hasPermission(Permissions.SETUP_GUI)) return
-        if (PlainTextComponentSerializer.plainText()
+        if (!Util.currentGameSelected.containsKey(event.whoClicked as Player) || !(event.whoClicked as Player).hasPermission(Permissions.SETUP_GUI) || PlainTextComponentSerializer.plainText()
                 .serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(
                 LegacyComponentSerializer.legacySection()
                     .deserialize("§d${Util.currentGameSelected[event.whoClicked as Player]?.name}§6: Game Setup")
             )
         ) return
+     
         event.isCancelled = true
-        if (event.currentItem == null || event.currentItem!!.itemMeta == null) return
-        when (event.currentItem!!.itemMeta!!) {
+        if (event.currentItem == null || event.currentItem?.itemMeta == null) return
+        when (event.currentItem?.itemMeta) {
             Items.addLobbyButton.itemMeta -> {
                 if (event.isLeftClick) (event.whoClicked as Player).performCommand("thehunter setup config lobbyspawn ${Util.currentGameSelected[event.whoClicked as Player]?.name}")
                 else (event.whoClicked as Player).performCommand("thehunter setup remove lobbyspawn ${Util.currentGameSelected[event.whoClicked as Player]?.name}")
@@ -67,7 +67,7 @@ class GameConfigurator : Listener {
             Items.settingsHead.itemMeta -> {
                 if (Util.currentGameSelected[event.whoClicked as Player] == null)
                     return
-                (event.whoClicked as Player).openInventory(Inventories.createSettingsInventory(Util.currentGameSelected[event.whoClicked as Player]!!))
+                (event.whoClicked as Player).openInventory(Inventories.createSettingsInventory(Util.currentGameSelected[event.whoClicked as Player] ?: return))
             }
         }
     }

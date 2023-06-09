@@ -100,7 +100,7 @@ class TeamCommands {
 
     private fun remove(sender: Player, args: Array<out String>) {
         if (argumentChecker(sender, args)) return
-        Team.removePlayerFromTeam(Bukkit.getPlayer(args[1])!!, sender)
+        Bukkit.getPlayer(args[1])?.let { Team.removePlayerFromTeam(it, sender) }
     }
 
 
@@ -138,7 +138,7 @@ class TeamCommands {
         }
 
         val team = (GamesHandler.playerInGames[sender]
-            ?: GamesHandler.spectatorInGames[sender])!!.teams.find { it.teamLeader.name == player.name }
+            ?: GamesHandler.spectatorInGames[sender])?.teams?.find { it.teamLeader.name == player.name }
         if (team == null) {
             TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let { sender.sendMessage(it) }
             return
@@ -167,7 +167,7 @@ class TeamCommands {
 
     private fun invite(sender: Player, args: Array<out String>) {
         if (argumentChecker(sender, args)) return
-        Team.invitePlayerToTeam(Bukkit.getPlayer(args[1])!!, sender)
+        Bukkit.getPlayer(args[1])?.let { Team.invitePlayerToTeam(it, sender) }
     }
 
 }

@@ -36,7 +36,7 @@ class SettingsConfigurator : Listener {
     @EventHandler
     fun onInteractWithSettings(event: InventoryClickEvent) {
         if (!Util.currentGameSelected.containsKey(event.whoClicked as Player) || !(event.whoClicked as Player).hasPermission(Permissions.SETTINGS_GUI)) return
-  
+
         if (PlainTextComponentSerializer.plainText()
                 .serialize(event.view.title()) != PlainTextComponentSerializer.plainText().serialize(
                 LegacyComponentSerializer.legacySection()
@@ -45,7 +45,7 @@ class SettingsConfigurator : Listener {
         )
             return
         event.isCancelled = true
-        if (event.currentItem == null || event.currentItem!!.itemMeta == null)
+        if (event.currentItem == null || event.currentItem?.itemMeta == null)
             return
 
         val item = getItemObject(event) ?: return
@@ -56,7 +56,7 @@ class SettingsConfigurator : Listener {
             Items.borderSize.itemMeta -> borderSize(type, event.whoClicked as Player)
             Items.saveButton.itemMeta -> {
                 (event.whoClicked as Player).closeInventory()
-                (event.whoClicked as Player).openInventory(Inventories.setupGameInventory(Util.currentGameSelected[event.whoClicked as Player]!!))
+                (event.whoClicked as Player).openInventory(Inventories.setupGameInventory(Util.currentGameSelected[event.whoClicked as Player] ?: return))
 
             }
 
@@ -138,164 +138,196 @@ class SettingsConfigurator : Listener {
 
     private fun teamSize(type: Boolean, player: Player) {
         if (type) {
-            if (Util.currentGameSelected[player]!!.teamMaxSize + 1 > TEAM_SIZE) {
-                player.sendMessage(
-                    TheHunter.instance.messages.messagesMap["teams-size-to-high"]!!.replace(
-                        ConstantStrings.SIZE_PERCENT,
-                        TEAM_SIZE.toString()
-                    ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-                )
+            if ((Util.currentGameSelected[player]?.teamMaxSize ?: return) + 1 > TEAM_SIZE) {
+                TheHunter.instance.messages.messagesMap["teams-size-to-high"]?.replace(
+                    ConstantStrings.SIZE_PERCENT,
+                    TEAM_SIZE.toString()
+                )?.let {
+                    player.sendMessage(
+                        it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                    )
+                }
                 return
             }
-            Util.currentGameSelected[player]!!.teamMaxSize++
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["teams-size-increased"]!!.replace(
-                    ConstantStrings.SIZE_PERCENT,
-                    Util.currentGameSelected[player]!!.teamMaxSize.toString()
-                ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-            )
+            Util.currentGameSelected[player]?.teamMaxSize = Util.currentGameSelected[player]?.teamMaxSize?.plus(1) ?: return
+            TheHunter.instance.messages.messagesMap["teams-size-increased"]?.replace(
+                ConstantStrings.SIZE_PERCENT,
+                Util.currentGameSelected[player]?.teamMaxSize?.toString() ?: ""
+            )?.let {
+                player.sendMessage(
+                    it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                )
+            }
 
         } else {
-            if (Util.currentGameSelected[player]!!.teamMaxSize - 1 < TEAM_SIZE_LOW) {
-                player.sendMessage(
-                    TheHunter.instance.messages.messagesMap["teams-size-to-low"]!!.replace(
-                        ConstantStrings.SIZE_PERCENT,
-                        TEAM_SIZE_LOW.toString()
-                    ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-                )
+            if ((Util.currentGameSelected[player]?.teamMaxSize ?: return) - 1 < TEAM_SIZE_LOW) {
+                TheHunter.instance.messages.messagesMap["teams-size-to-low"]?.replace(
+                    ConstantStrings.SIZE_PERCENT,
+                    TEAM_SIZE_LOW.toString()
+                )?.let {
+                    player.sendMessage(
+                        it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                    )
+                }
                 return
             }
-            Util.currentGameSelected[player]!!.teamMaxSize--
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["teams-size-reduced"]!!.replace(
-                    ConstantStrings.SIZE_PERCENT,
-                    Util.currentGameSelected[player]!!.teamMaxSize.toString()
-                ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-            )
+            Util.currentGameSelected[player]?.teamMaxSize = Util.currentGameSelected[player]?.teamMaxSize?.minus(1) ?: return
+            TheHunter.instance.messages.messagesMap["teams-size-reduced"]?.replace(
+                ConstantStrings.SIZE_PERCENT,
+                Util.currentGameSelected[player]?.teamMaxSize.toString()
+            )?.let {
+                player.sendMessage(
+                    it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                )
+            }
 
         }
     }
 
     private fun minPlayers(type: Boolean, player: Player) {
         if (type) {
-            if (Util.currentGameSelected[player]!!.minPlayers + 1 > MIN_PLAYER_HEIGHT) {
-                player.sendMessage(
-                    TheHunter.instance.messages.messagesMap["min-players-to-high"]!!.replace(
-                        ConstantStrings.PLAYERS_PERCENT,
-                        MIN_PLAYER_HEIGHT.toString()
-                    ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-                )
+            if (MIN_PLAYER_HEIGHT < (Util.currentGameSelected[player]?.minPlayers?.plus(1) ?: return)) {
+                TheHunter.instance.messages.messagesMap["min-players-to-high"]?.replace(
+                    ConstantStrings.PLAYERS_PERCENT,
+                    MIN_PLAYER_HEIGHT.toString()
+                )?.let {
+                    player.sendMessage(
+                        it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                    )
+                }
                 return
             }
-            Util.currentGameSelected[player]!!.minPlayers++
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["min-players-increased"]!!.replace(
-                    ConstantStrings.PLAYERS_PERCENT,
-                    Util.currentGameSelected[player]!!.minPlayers.toString()
-                ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-            )
+            Util.currentGameSelected[player]?.minPlayers = Util.currentGameSelected[player]?.minPlayers?.plus(1) ?: return
+            TheHunter.instance.messages.messagesMap["min-players-increased"]?.replace(
+                ConstantStrings.PLAYERS_PERCENT,
+                Util.currentGameSelected[player]?.minPlayers.toString()
+            )?.let {
+                player.sendMessage(
+                    it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                )
+            }
 
         } else {
-            if (Util.currentGameSelected[player]!!.minPlayers - 1 < MIN_PLAYERS_LOW) {
-                player.sendMessage(
-                    TheHunter.instance.messages.messagesMap["min-players-to-low"]!!.replace(
-                        ConstantStrings.PLAYERS_PERCENT,
-                        MIN_PLAYERS_LOW.toString()
-                    ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-                )
+            if (MIN_PLAYERS_LOW > (Util.currentGameSelected[player]?.minPlayers?.minus(1) ?: return)) {
+                TheHunter.instance.messages.messagesMap["min-players-to-low"]?.replace(
+                    ConstantStrings.PLAYERS_PERCENT,
+                    MIN_PLAYERS_LOW.toString()
+                )?.let {
+                    player.sendMessage(
+                        it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                    )
+                }
                 return
             }
-            Util.currentGameSelected[player]!!.minPlayers--
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["min-players-reduced"]!!.replace(
-                    ConstantStrings.PLAYER_PERCENT,
-                    Util.currentGameSelected[player]!!.minPlayers.toString()
-                ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-            )
+            Util.currentGameSelected[player]?.minPlayers = Util.currentGameSelected[player]?.minPlayers?.minus(1) ?: return
+            TheHunter.instance.messages.messagesMap["min-players-reduced"]?.replace(
+                ConstantStrings.PLAYER_PERCENT,
+                Util.currentGameSelected[player]?.minPlayers.toString()
+            )?.let {
+                player.sendMessage(
+                    it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                )
+            }
 
         }
     }
 
     private fun maxPlayers(type: Boolean, player: Player) {
         if (type) {
-            if (Util.currentGameSelected[player]!!.maxPlayers + 1 > MAX_PLAYERS_HEIGHT) {
-                player.sendMessage(
-                    TheHunter.instance.messages.messagesMap["max-players-to-high"]!!.replace(
-                        ConstantStrings.PLAYERS_PERCENT,
-                        MAX_PLAYERS_HEIGHT.toString()
-                    ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-                )
+            if (MAX_PLAYERS_HEIGHT < (Util.currentGameSelected[player]?.maxPlayers?.plus(1) ?: return)) {
+                TheHunter.instance.messages.messagesMap["max-players-to-high"]?.replace(
+                    ConstantStrings.PLAYERS_PERCENT,
+                    MAX_PLAYERS_HEIGHT.toString()
+                )?.let {
+                    player.sendMessage(
+                        it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                    )
+                }
                 return
             }
-            Util.currentGameSelected[player]!!.maxPlayers++
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["max-players-increased"]!!.replace(
-                    ConstantStrings.PLAYERS_PERCENT,
-                    Util.currentGameSelected[player]!!.maxPlayers.toString()
-                ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-            )
+            Util.currentGameSelected[player]?.maxPlayers = Util.currentGameSelected[player]?.maxPlayers?.plus(1) ?: return
+            TheHunter.instance.messages.messagesMap["max-players-increased"]?.replace(
+                ConstantStrings.PLAYERS_PERCENT,
+                Util.currentGameSelected[player]?.maxPlayers.toString()
+            )?.let {
+                player.sendMessage(
+                    it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                )
+            }
 
         } else {
-            if (Util.currentGameSelected[player]!!.maxPlayers - 1 < MAX_PLAYERS_LOW) {
-                player.sendMessage(
-                    TheHunter.instance.messages.messagesMap["max-players-to-low"]!!.replace(
-                        ConstantStrings.PLAYERS_PERCENT,
-                        MAX_PLAYERS_LOW.toString()
-                    ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-                )
+            if ((Util.currentGameSelected[player]?.maxPlayers ?: return) - 1 < MAX_PLAYERS_LOW) {
+                TheHunter.instance.messages.messagesMap["max-players-to-low"]?.replace(
+                    ConstantStrings.PLAYERS_PERCENT,
+                    MAX_PLAYERS_LOW.toString()
+                )?.let {
+                    player.sendMessage(
+                        it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                    )
+                }
                 return
             }
-            Util.currentGameSelected[player]!!.maxPlayers--
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["max-players-reduced"]!!.replace(
-                    ConstantStrings.PLAYERS_PERCENT,
-                    Util.currentGameSelected[player]!!.maxPlayers.toString()
-                ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-            )
+            Util.currentGameSelected[player]?.maxPlayers = Util.currentGameSelected[player]?.maxPlayers?.minus(1) ?: return
+            TheHunter.instance.messages.messagesMap["max-players-reduced"]?.replace(
+                ConstantStrings.PLAYERS_PERCENT,
+                Util.currentGameSelected[player]?.maxPlayers.toString()
+            )?.let {
+                player.sendMessage(
+                    it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                )
+            }
 
         }
     }
 
     private fun borderSize(type: Boolean, player: Player) {
         if (type) {
-            if (Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize + 10 > WorldboarderController.TO_HIGH) {
-                player.sendMessage(
-                    TheHunter.instance.messages.messagesMap["border-size-to-high"]!!.replace(
-                        ConstantStrings.SIZE_PERCENT,
-                        WorldboarderController.TO_HIGH.toString()
-                    ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-                )
+            if ((Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize ?: return) + 10 > WorldboarderController.TO_HIGH) {
+                TheHunter.instance.messages.messagesMap["border-size-to-high"]?.replace(
+                    ConstantStrings.SIZE_PERCENT,
+                    WorldboarderController.TO_HIGH.toString()
+                )?.let {
+                    player.sendMessage(
+                        it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                    )
+                }
                 return
             }
-            Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize += 10
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["border-size-plus"]!!.replace(
-                    ConstantStrings.SIZE_PERCENT,
-                    Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize.toString()
-                ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-            )
+            Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize = Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize?.plus(10) ?: return
+            TheHunter.instance.messages.messagesMap["border-size-plus"]?.replace(
+                ConstantStrings.SIZE_PERCENT,
+                Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize.toString()
+            )?.let {
+                player.sendMessage(
+                    it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                )
+            }
         } else {
-            if (Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize - 10 < WorldboarderController.TO_LOW) {
-                player.sendMessage(
-                    TheHunter.instance.messages.messagesMap["border-size-to-low"]!!.replace(
-                        ConstantStrings.SIZE_PERCENT,
-                        WorldboarderController.TO_LOW.toString()
-                    ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-                )
+            if (WorldboarderController.TO_LOW > (Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize?.minus(10) ?: return)) {
+                TheHunter.instance.messages.messagesMap["border-size-to-low"]?.replace(
+                    ConstantStrings.SIZE_PERCENT,
+                    WorldboarderController.TO_LOW.toString()
+                )?.let {
+                    player.sendMessage(
+                        it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                    )
+                }
                 return
             }
-            Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize -= 10
-            player.sendMessage(
-                TheHunter.instance.messages.messagesMap["border-size-minus"]!!.replace(
-                    ConstantStrings.SIZE_PERCENT,
-                    Util.currentGameSelected[player]!!.worldBoarderController.worldBoarderSize.toString()
-                ).replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]!!.name)
-            )
+            Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize = Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize?.minus(10) ?: return
+            TheHunter.instance.messages.messagesMap["border-size-minus"]?.replace(
+                ConstantStrings.SIZE_PERCENT,
+                Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize.toString()
+            )?.let {
+                player.sendMessage(
+                    it.replace(ConstantStrings.GAME_PERCENT, Util.currentGameSelected[player]?.name ?: "")
+                )
+            }
         }
     }
 
     private fun getItemObject(event: InventoryClickEvent): ItemStack? {
-        return when (event.currentItem!!.type) {
+        return when (event.currentItem?.type) {
             Material.RED_WOOL -> {
                 event.inventory.getItem(event.slot - 4)
             }
@@ -304,7 +336,7 @@ class SettingsConfigurator : Listener {
                 event.inventory.getItem(event.slot - 3)
             }
 
-            Material.RED_BED -> event.currentItem!!
+            Material.RED_BED -> event.currentItem
             else -> null
         }
     }

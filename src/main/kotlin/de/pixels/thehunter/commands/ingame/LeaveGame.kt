@@ -35,12 +35,14 @@ class LeaveGame {
                 sender
             )
         ) {
-            sender.sendMessage(
-                TheHunter.instance.messages.messagesMap["player-not-in-game"]!!.replace(
-                    ConstantStrings.PLAYER_PERCENT,
-                    sender.name
+            TheHunter.instance.messages.messagesMap["player-not-in-game"]?.let {
+                sender.sendMessage(
+                    it.replace(
+                        ConstantStrings.PLAYER_PERCENT,
+                        sender.name
+                    )
                 )
-            )
+            }
             return
         }
         val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender] ?: return
@@ -68,7 +70,7 @@ class LeaveGame {
         game.players.remove(player)
         GamesHandler.playerInGames.remove(player)
         GamesHandler.spectatorInGames.remove(player)
-        player.teleport(game.backLocation!!)
+        game.backLocation?.let { player.teleport(it) }
         GameSigns.updateGameSigns(game)
         player.inventory.clear()
         player.level = 0

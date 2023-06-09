@@ -24,7 +24,7 @@ class DeathChestHandler : Listener {
         if (!GamesHandler.playerInGames.containsKey(event.player) || event.clickedBlock?.type != Material.REDSTONE_LAMP) return
         val inventory: Inventory =
             GamesHandler.playerInGames[event.player]?.deathChest?.deathChests?.get(GamesHandler.playerInGames[event.player]?.deathChest?.deathChests?.keys?.first {
-                worldEquals(event.clickedBlock!!.location, it)
+                worldEquals(event.clickedBlock?.location ?: return, it)
             }) ?: return
         event.isCancelled = true
 

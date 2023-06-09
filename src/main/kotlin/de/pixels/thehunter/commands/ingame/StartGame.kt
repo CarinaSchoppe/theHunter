@@ -29,12 +29,12 @@ class StartGame {
         )
             return
 
-        val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender]!!
+        val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender] ?: return
         if (game.currentGameState !is LobbyState)
             return
         if (game.currentCountdown.duration > 5) {
             game.currentCountdown.duration = 5
-            sender.sendMessage(TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_SPEEDUP]!!)
+            TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_SPEEDUP]?.let { sender.sendMessage(it) }
         }
 
     }

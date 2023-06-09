@@ -51,7 +51,7 @@ class CreateGame {
                     return
                 }
                 if (GamesHandler.setupGames.find { it.name == args[1] } != null) {
-                    Util.currentGameSelected[sender as Player] = GamesHandler.setupGames.find { it.name == args[1] }!!
+                    Util.currentGameSelected[sender as Player] = GamesHandler.setupGames.find { it.name == args[1] } ?: return
 
                     Util.currentGameSelected[sender].let {
                         it?.let { inv -> sender.openInventory(setupGameInventory(inv)) }

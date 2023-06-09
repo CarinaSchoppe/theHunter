@@ -32,7 +32,7 @@ class JumpStick : Listener {
         val player = event.player
         event.isCancelled = true
         player.playSound(player, Sound.BLOCK_POINTED_DRIPSTONE_DRIP_WATER_INTO_CAULDRON, 1f, 1f)
-        if (uses.containsKey(player) && uses[player]!! >= GamesHandler.playerInGames[player]?.gameItems?.items?.get("jump-stick-uses") as Int) {
+        if (uses.containsKey(player) && GamesHandler.playerInGames[player]?.gameItems?.items?.get("jump-stick-uses") as Int <= (uses[player] ?: return)) {
             TheHunter.instance.messages.messagesMap["jump-stick-broke"]?.let { player.sendMessage(it) }
             ItemHandler.removeOneItemOfPlayer(event.player)
             player.playSound(player, Sound.BLOCK_ANVIL_BREAK, 1f, 1f)
@@ -45,7 +45,7 @@ class JumpStick : Listener {
         if (!uses.containsKey(player))
             uses[player] = 1
         else
-            uses[player] = uses[player]!! + 1
+            uses[player] = uses[player]?.plus(1) ?: return
     }
 
 }

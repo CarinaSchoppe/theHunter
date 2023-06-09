@@ -11,15 +11,16 @@ import java.util.*
 object PlayerDropping {
 
     fun dropPlayers(game: Game) {
-        val locationCenter: Location = game.arenaCenter!!.clone().subtract(
+        val locationCenter: Location = (game.arenaCenter?.clone() ?: return).subtract(
             (game.worldBoarderController.worldBoarderSize / 2).toDouble(),
             0.0,
             (game.worldBoarderController.worldBoarderSize / 2).toDouble()
-        )
+        ) 
+        
         for (player in game.players) {
             val x = Random().nextInt(game.worldBoarderController.worldBoarderSize).toDouble()
             val z = Random().nextInt(game.worldBoarderController.worldBoarderSize).toDouble()
             player.teleport(locationCenter.clone().add(x, 200.0, z))
-        }
+        } 
     }
 }

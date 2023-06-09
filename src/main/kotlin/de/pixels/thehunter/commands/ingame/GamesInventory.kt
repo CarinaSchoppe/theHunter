@@ -40,6 +40,6 @@ class GamesInventory {
             return
 
 
-        (sender as Player).openInventory(Inventories.createSettingsInventory(Util.currentGameSelected[sender]!!))
+        (sender as Player).openInventory(Inventories.createSettingsInventory(Util.currentGameSelected[sender] ?: return))
     }
 }

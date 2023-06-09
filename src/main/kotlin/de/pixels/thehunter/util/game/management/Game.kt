@@ -104,10 +104,7 @@ class Game(var name: String) {
     }
 
     private fun saveGameToConfig(): Boolean {
-        if (arenaCenter == null) return false
-        if (backLocation == null) return false
-        if (lobbyLocation == null) return false
-        if (endLocation == null) return false
+        if (arenaCenter == null || backLocation == null || lobbyLocation == null || endLocation == null) return false
         val fileSettings = File("${BaseFile.GAME_FOLDER}/arenas/$name/settings.yml")
         val ymlSettings = YamlConfiguration.loadConfiguration(fileSettings)
 
@@ -196,13 +193,13 @@ class Game(var name: String) {
 
 
     fun checkWinning(): Boolean {
-        when (players.size) {
+        return when (players.size) {
 
             0 -> {
                 val message = TheHunter.instance.messages.messagesMap["game-over"]
                 for (spectator in spectators)
                     message?.let { spectator.sendMessage(it) }
-                return true
+                true
             }
 
             else -> {
@@ -226,7 +223,7 @@ class Game(var name: String) {
                     message?.let { message -> it.sendMessage(message) }
                     TheHunter.instance.statsSystem.playerWon(it)
                 }
-                return true
+                true
             }
         }
     }

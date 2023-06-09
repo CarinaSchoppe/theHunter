@@ -29,7 +29,7 @@ class StatsPlayer {
         val player: Player = if (args.isEmpty())
             sender as Player
         else
-            Bukkit.getPlayer(args[0])!!
+            Bukkit.getPlayer(args[0]) ?: return
 
         TheHunter.instance.statsSystem.generateStatsMessageForPlayer(sender as Player, player)
 
