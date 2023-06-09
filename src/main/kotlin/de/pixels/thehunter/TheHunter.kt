@@ -39,6 +39,7 @@ class TheHunter : JavaPlugin() {
     TODO: Premium join
     TODO: grenade makes no damage
     TODO: Legacy code umändern 
+    TODO: Testing!!! 
      */
 
 
