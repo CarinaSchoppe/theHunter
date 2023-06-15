@@ -4,11 +4,16 @@
 
 package de.pixels.thehunter.commands.management
 
+import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.commands.CommandUtil
+import de.pixels.thehunter.util.builder.Items
 import de.pixels.thehunter.util.misc.ConstantStrings
 import de.pixels.thehunter.util.misc.Permissions
+import net.wesjd.anvilgui.AnvilGUI
+import net.wesjd.anvilgui.AnvilGUI.Slot
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import java.util.*
 
 class AnvilGUI {
     fun create(sender: CommandSender, command: String, args: Array<out String>) {
@@ -25,12 +30,14 @@ class AnvilGUI {
 
         (sender as Player).closeInventory()
 
-        /*TODO: ERROR HERE
-           
-           AnvilGUI.Builder().itemLeft(Items.nameTag).title("Game Name").plugin(TheHunter.instance).onComplete { completion ->
-                completion.player.performCommand("theHunter setup create ${completion.text}")
-                return@onComplete Arrays.asList(AnvilGUI.ResponseAction.close())
-            }.open(sender)*/
+
+        AnvilGUI.Builder().itemLeft(Items.nameTag).title("Game Name").plugin(TheHunter.instance).interactableSlots(Slot.OUTPUT).onClick { slot, state ->
+            if (slot != Slot.OUTPUT) {
+                return@onClick Collections.emptyList()
+            }
+            state.player.performCommand("theHunter setup create ${state.text}")
+            return@onClick listOf(AnvilGUI.ResponseAction.close())
+        }.open(sender)
 
     }
 

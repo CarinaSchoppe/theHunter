@@ -194,7 +194,6 @@ class Game(var name: String) {
 
     fun checkWinning(): Boolean {
         return when (players.size) {
-
             0 -> {
                 val message = TheHunter.instance.messages.messagesMap["game-over"]
                 for (spectator in spectators)

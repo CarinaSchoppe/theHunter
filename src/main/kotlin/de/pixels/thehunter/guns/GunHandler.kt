@@ -163,7 +163,6 @@ class GunHandler : Listener {
             return
         player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
         (event.entity as Player).playSound(event.entity.location, Sound.ENTITY_PLAYER_HURT, 1f, 1f)
-        println("shot was hit")
         when {
             Rifle.shotBullets[player]?.contains(arrow) == true -> {
                 event.damage = GamesHandler.playerInGames[player]?.gameItems?.guns?.get("rifle-damage")?.plus(0.0) ?: 3.0

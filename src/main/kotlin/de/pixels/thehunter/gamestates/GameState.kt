@@ -12,6 +12,6 @@ abstract class GameState(val game: Game) {
     abstract val gameStateID: Int
 
     override fun toString(): String {
-        return this.javaClass.name
+        return this.javaClass.simpleName
     }
 }
