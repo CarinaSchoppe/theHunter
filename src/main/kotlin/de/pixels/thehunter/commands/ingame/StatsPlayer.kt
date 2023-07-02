@@ -14,6 +14,13 @@ import org.bukkit.entity.Player
 
 class StatsPlayer {
 
+    /**
+     * Generates and sends statistics message for a player to the sender.
+     *
+     * @param sender The command sender who initiated the stats command.
+     * @param command The command string used to invoke the stats command.
+     * @param args The array of strings containing command arguments.
+     */
     fun stats(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(
                 sender,

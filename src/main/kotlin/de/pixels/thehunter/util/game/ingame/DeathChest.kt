@@ -15,8 +15,18 @@ import org.bukkit.inventory.Inventory
 class DeathChest(private val game: Game) {
 
 
+    /**
+     * Represents a mutable map of death chests in the game.
+     *
+     * @property deathChests A mutable map where the keys are locations and the values are inventories.
+     */
     val deathChests = mutableMapOf<Location, Inventory>()
 
+    /**
+     * Creates a death chest for the given player.
+     *
+     * @param player the player for whom the death chest is being created
+     */
     fun createDeathChest(player: Player) {
         if (!game.players.contains(player))
             return

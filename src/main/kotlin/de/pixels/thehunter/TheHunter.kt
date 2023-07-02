@@ -30,6 +30,14 @@ import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
+/**
+ * This class represents the main plugin class for The Hunter game.
+ *
+ * @property settings The settings object used for configuration.
+ * @property messages The messages object used for storing messages.
+ * @property statsSystem The stats system object for managing player statistics.
+ * @property version The version of the plugin.
+ */
 class TheHunter : JavaPlugin() {
 
     /*
@@ -46,16 +54,55 @@ class TheHunter : JavaPlugin() {
      */
 
 
+    /**
+     * The companion object for the [TheHunter] class.
+     *
+     * This object provides access to shared properties that are specific to the [TheHunter] class.
+     */
     companion object {
         var prefix = "§8[§6TheHunter§8] §f"
         lateinit var instance: TheHunter
     }
 
+    /**
+     * Represents the settings for the application.
+     *
+     * This class provides access to various configuration settings that control the behavior of the application.
+     * The settings can be customized by the user through the application's user interface or programmatically.
+     * The values of the settings are initialized lazily using the "lateinit" modifier, meaning they will be
+     * initialized when first accessed.
+     *
+     * @property settings An instance of the Settings class that contains the configuration settings for the application.
+     */
     lateinit var settings: Settings
+
+    /**
+     * Contains a collection of messages.
+     *
+     * @property messages The collection of messages.
+     */
     lateinit var messages: Messages
+
+    /**
+     * Represents a system for managing and tracking statistics.
+     *
+     * This class provides functionality for initializing and managing a statistics system
+     * to track various metrics and data.
+     *
+     * @property statsSystem Represents the object of the StatsSystem class.
+     */
     lateinit var statsSystem: StatsSystem
+
+    /**
+     * Represents the version of the software.
+     *
+     * @property version The version string in the format "x.x.x.x".
+     */
     val version = "1.2.6.1"
 
+    /**
+     * Called when the plugin is enabled.
+     */
     override fun onEnable() {
         instance = this
         settings = Settings("config.yml").addData()
@@ -67,18 +114,32 @@ class TheHunter : JavaPlugin() {
         messages.sendMessageToConsole("start-up-message-successfully")
     }
 
+    /**
+     * Saves all player stats to files, resets all games,
+     * and sends a shutdown success message to the console.
+     */
     override fun onDisable() {
         StatsSystem.saveAllStatsPlayerToFiles()
         resetAllGames()
         messages.sendMessageToConsole("shutdown-message-successfully")
     }
 
+    /**
+     * Resets all the games managed by the GamesHandler.
+     * This method iterates over all the games and calls the `resetMap()` method
+     * of each game's `mapResetter` object to reset the game map.
+     */
     private fun resetAllGames() {
         for (game in GamesHandler.games) {
             game.mapResetter.resetMap()
         }
     }
 
+    /**
+     * Initializes the plugin by registering commands, events, and loading games from folders.
+     *
+     * @param pluginManager The plugin manager used to register events.
+     */
     private fun initialize(pluginManager: PluginManager) {
 
         //Commands:
@@ -122,6 +183,9 @@ class TheHunter : JavaPlugin() {
     }
 
 
+    /**
+     * Loads games from the "arenas" folder.
+     */
     private fun loadGamesFromFolders() {
         val folder = File(BaseFile.GAME_FOLDER + "/arenas/")
         if (!folder.exists()) {

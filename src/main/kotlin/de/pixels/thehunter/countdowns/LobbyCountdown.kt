@@ -17,9 +17,21 @@ import java.util.function.Consumer
 
 class LobbyCountdown(game: Game) : Countdown(game) {
 
+    /**
+     * The duration of an event or process, in seconds.
+     *
+     * @property duration The duration of the event or process, measured in seconds.
+     */
     override var duration: Int = 60
 
 
+    /**
+     * Sets the game to idle state.
+     * During idle state, the game is waiting for players to join and reach the minimum required number of players to start.
+     * If the game has no players and spectators, it cancels the idle state.
+     * If the game has enough players, it starts the game.
+     * If the idle duration reaches zero, it sends a waiting message to the players and resets the duration.
+     */
     override fun idle() {
         isIdle = true
         isRunning = false
@@ -52,6 +64,9 @@ class LobbyCountdown(game: Game) : Countdown(game) {
         }, 20L, 20L)
     }
 
+    /**
+     * Starts the lobby countdown for the game.
+     */
     override fun start() {
         isRunning = true
         isIdle = false
@@ -98,11 +113,20 @@ class LobbyCountdown(game: Game) : Countdown(game) {
         }, 20, 20)
     }
 
+    /**
+     * Sends a message to all players and spectators in the game,
+     * using the playerHandler method.
+     */
     private fun sendMessageTime() {
         playerHandler(game.players)
         playerHandler(game.spectators)
     }
 
+    /**
+     * Handles the players in the game.
+     *
+     * @param user The set of players to handle.
+     */
     private fun playerHandler(user: MutableSet<Player>) {
         user.forEach(Consumer { player ->
             TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_STARTING_IN]?.let {
@@ -119,6 +143,9 @@ class LobbyCountdown(game: Game) : Countdown(game) {
     }
 
 
+    /**
+     * Handles the countdown logic for the lobby before the game starts.
+     */
     private fun lobbyCountdown() {
         when (duration) {
             in 1..TheHunter.instance.settings.settingsMap[ConstantStrings.DURATION_SPEEDUP] as Int -> {
@@ -178,13 +205,38 @@ class LobbyCountdown(game: Game) : Countdown(game) {
         }
     }
 
+    /**
+     * Stops the execution of the program.
+     */
     override fun stop() {
         return
     }
 
+    /**
+     * Indicates whether the object is currently idle or not.
+     *
+     * The `isIdle` property is a boolean variable that represents the idle state of an object.
+     * When `isIdle` is set to `true`, it means the object is in an idle state or not currently active.
+     * When `isIdle` is set to `false`, it means the object is not idle and currently active or performing some task.
+     *
+     * By default, the `isIdle` property is set to `false`.
+     *
+     * @see [Object]
+     */
     override var isIdle: Boolean = false
+
+    /**
+     * Variable indicating whether the program is currently running.
+     *
+     * @type {boolean}
+     */
     var isRunning = false
 
+    /**
+     * Represents the identifier for a countdown.
+     *
+     * @property id The identifier value.
+     */
     override val id: Int = Countdowns.LOBBY_COUNTDOWN.id
 
 }

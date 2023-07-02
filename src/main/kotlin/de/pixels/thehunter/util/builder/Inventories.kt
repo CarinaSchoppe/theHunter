@@ -12,6 +12,12 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
 object Inventories {
+    /**
+     * Sets up the game inventory for the given game.
+     *
+     * @param game The game for which the inventory is being set up.
+     * @return The created game inventory.
+     */
     fun setupGameInventory(game: Game): Inventory =
         InventoryBuilder("§d${game.name}§6: Game Setup", 9).setItem(0, Items.addLobbyButton)
             .setItem(1, Items.addSpectatorButton).setItem(2, Items.addArenaCenterButton)
@@ -22,11 +28,25 @@ object Inventories {
                     .build()
             ).create()
 
+    /**
+     * Represents a game inventory for the player.
+     * The inventory is constructed using the InventoryBuilder class and filled with game items.
+     *
+     * @property gamesInventory The constructed game inventory.
+     *
+     * @constructor Creates a game inventory using the InventoryBuilder class and fills it with game items.
+     */
     val gamesInventory = InventoryBuilder(TheHunter.prefix + "§6Games", 54).addGamesToInventory().fillInventory(
         ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1)
             .build()
     ).create()
 
+    /**
+     * Creates an inventory for game settings.
+     *
+     * @param game the game for which the settings inventory is created
+     * @return the inventory containing game settings
+     */
     fun createSettingsInventory(game: Game): Inventory {
         val builder = InventoryBuilder("§d${game.name}§6: Game Settings", 54)
         builder.setItem(3 + 9 * 0, Items.teamsAllowedHead)
@@ -50,6 +70,11 @@ object Inventories {
     }
 
 
+    /**
+     * Switches the enchantment of the clicked item with the adjacent item in the inventory.
+     *
+     * @param event The InventoryClickEvent triggered when the item is clicked.
+     */
     fun itemEnchantmentSwitcher(event: InventoryClickEvent) {
         val item = event.currentItem ?: return
         val meta = item.itemMeta ?: return
@@ -81,6 +106,12 @@ object Inventories {
         event.inventory.setItem(otherSlot, other)
     }
 
+    /**
+     * Adds colored wool items to the given inventory builder at the specified row.
+     *
+     * @param builder the inventory builder to add the colored wool items to
+     * @param row the row index where the colored wool items should be added
+     */
     private fun addColoredWool(builder: InventoryBuilder, row: Int) {
         val green = Items.settingsWoolGreen.clone().addDisplayName("§aPlus").build()
         green.removeEnchantment(Enchantment.DURABILITY)
@@ -91,6 +122,13 @@ object Inventories {
     }
 
 
+    /**
+     * Adds setting buttons in color to the inventory.
+     *
+     * @param builder The inventory builder to add the buttons to.
+     * @param row The row in the inventory to add the buttons.
+     * @param value The value indicating whether to add the buttons in activated or deactivated state.
+     */
     private fun addSettingButtonsInColorToInventory(builder: InventoryBuilder, row: Int, value: Boolean) {
         val itemGreen: ItemStack = if (value)
             Items.settingsWoolGreen.clone().addEnchantment(Enchantment.DURABILITY, 1).addDisplayName("§aActivate")

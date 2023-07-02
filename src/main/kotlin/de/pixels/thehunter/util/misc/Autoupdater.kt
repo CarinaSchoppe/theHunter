@@ -11,6 +11,11 @@ import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
 
 class Autoupdater {
+    /**
+     * Checks for updates for a given resource.
+     *
+     * @param resourceId the ID of the resource to check for updates
+     */
     fun checkUpdate(resourceId: String) {
         if (TheHunter.instance.settings.settingsMap["updater"] as Boolean) {
             try {

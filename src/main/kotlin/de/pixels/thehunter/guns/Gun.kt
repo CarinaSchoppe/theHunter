@@ -15,17 +15,94 @@ import org.bukkit.inventory.ItemStack
 
 abstract class Gun {
 
+    /**
+     * This variable represents the name of the gun.
+     *
+     * It is a protected abstract variable of type String.
+     *
+     * Subclasses must provide an implementation for this variable.
+     *
+     * @see SubclassName
+     */
     protected abstract var gunName: String
+
+    /**
+     * The ammoString represents the string format of the ammunition.
+     *
+     * This variable is declared as abstract and protected, which means it should be implemented
+     * by subclasses and cannot be accessed directly from outside the class or its subclasses.
+     *
+     * @see Subclass1
+     * @see Subclass2
+     * @see Subclass3
+     */
     protected abstract var ammoString: String
+
+    /**
+     * Represents the ammunition for a weapon.
+     *
+     * This variable is declared as `protected abstract` meaning that it needs to be implemented by subclasses.
+     * The `ammo` variable holds an instance of the `ItemStack` class, representing the ammunition item.
+     *
+     * @see ItemStack
+     */
     protected abstract var ammo: ItemStack
 
+    /**
+     * Represents a gun item in the game.
+     *
+     * Guns are ItemStacks that can be equipped by players and used to shoot projectiles.
+     * This variable is declared as abstract to indicate that its exact implementation
+     * depends on the specific gun type being used.
+     *
+     * @property gun The ItemStack representing the gun item.
+     */
     abstract var gun: ItemStack
+
+    /**
+     * Keeps track of the bullet delay for each player.
+     * The delay indicates whether a player can currently shoot a bullet or not.
+     *
+     * @property bulletDelay The map that holds the bullet delay status for each player.
+     *                      The key represents the player, and the value indicates whether the player can shoot a bullet.
+     *                      The boolean value `true` indicates that the player can shoot a bullet,
+     *                      while `false` indicates that the player has to wait for the delay to end.
+     */
     private val bulletDelay = mutableMapOf<Player, Boolean>()
+
+    /**
+     * Represents the collection of shot bullets for each player.
+     *
+     * This variable is a mutable map that associates players with the set of arrows they have shot.
+     *
+     * @property shotBullets The map that holds players as keys and their corresponding set of arrows as values.
+     */
     val shotBullets = mutableMapOf<Player, MutableSet<Arrow>>()
+
+    /**
+     * Represents the reloading status of players.
+     *
+     * This mutable map stores the reloading status of players, where the player is the key and
+     * a boolean value indicating if the player is reloading or not.
+     */
     private val reloading = mutableMapOf<Player, Boolean>()
+
+    /**
+     * Represents a magazine that contains the number of bullets for each player.
+     *
+     * A magazine is implemented as a mutable map with [Player] as the key and [Int] as the value.
+     * The key represents the player, and the value represents the number of bullets they have in their magazine.
+     *
+     * @property magazine The mutable map representing the magazine, where the key is the player and the value is the number of bullets.
+     */
     val magazine = mutableMapOf<Player, Int>()
 
 
+    /**
+     * Sets a delay for shooting bullets for the given player.
+     *
+     * @param player The player for whom the bullet delay will be set.
+     */
     private fun bulletDelayMaker(player: Player) {
         bulletDelay[player] = true
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Runnable {
@@ -33,6 +110,11 @@ abstract class Gun {
         }, 5L * GamesHandler.playerInGames[player]?.gameItems?.guns?.get("$gunName-speed") as Int)
     }
 
+    /**
+     * Shoots a projectile from the specified player.
+     *
+     * @param player The player shooting the projectile.
+     */
     private fun shootProjectile(player: Player) {
         bulletDelayMaker(player)
         val arrow = player.launchProjectile(
@@ -54,6 +136,13 @@ abstract class Gun {
         }
     }
 
+    /**
+     * Shoots a projectile for the given player.
+     *
+     * @param player the player to shoot the projectile for
+     *
+     * @return true if the projectile was successfully shot, false otherwise
+     */
     fun shoot(player: Player): Boolean {
         if (!reloading.containsKey(player)) {
             reloading[player] = false
@@ -74,6 +163,12 @@ abstract class Gun {
         return true
     }
 
+    /**
+     * Checks if the player has enough ammo in their inventory.
+     *
+     * @param player the player to check
+     * @return true if the player has enough ammo, false otherwise
+     */
     private fun checkAmmoPossible(player: Player): Boolean {
         if (!player.inventory.containsAtLeast(ammo, 1)) {
             TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]?.let { player.sendMessage(it) }
@@ -83,6 +178,11 @@ abstract class Gun {
     }
 
 
+    /**
+     * Reloads the gun for the specified player.
+     *
+     * @param player The player who will reload the gun.
+     */
     fun reload(player: Player) {
         if (magazine.getOrDefault(
                 player,
@@ -121,6 +221,13 @@ abstract class Gun {
     }
 
 
+    /**
+     * Returns the amount of ammo items that a player has in their inventory.
+     *
+     * @param player The player whose inventory will be checked.
+     * @param ammo The ammo item to count.
+     * @return The total amount of ammo items that the player has in their inventory.
+     */
     private fun getAmmoAmount(player: Player, ammo: ItemStack): Int {
         var amount = 0
         for (item in player.inventory.contents) {

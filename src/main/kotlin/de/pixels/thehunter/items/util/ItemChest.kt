@@ -19,7 +19,21 @@ import java.util.*
 
 class ItemChest(private val game: Game) {
 
+    /**
+     * Mutable map representing chests.
+     *
+     * This map stores [Inventory] objects associated with [Location] keys.
+     * It allows for adding, removing, and accessing inventories using their corresponding locations.
+     *
+     * @property chests The underlying mutable map storing the inventory-location pairs.
+     */
     val chests = mutableMapOf<Location, Inventory>()
+
+    /**
+     * Creates a new inventory for item storage.
+     *
+     * @return the created Inventory object.
+     */
     fun createItemInventory(): Inventory {
         val inventory = Bukkit.createInventory(
             null,
@@ -32,6 +46,12 @@ class ItemChest(private val game: Game) {
     }
 
 
+    /**
+     * Repeats a random number of times and places random items from a given map into the inventory.
+     *
+     * @param inventory the inventory to place items into
+     * @param map the map containing the items to place
+     */
     private fun repeater(inventory: Inventory, map: MutableList<ItemStack>) {
         repeat(Random().nextInt(game.gameItems.items["item-amounts"] as Int) + 1) {
             val index = Random().nextInt(map.size)
@@ -47,6 +67,11 @@ class ItemChest(private val game: Game) {
     }
 
 
+    /**
+     * Adds items to the game based on the available items in the game configuration.
+     *
+     * @return a list of ItemStack objects representing the added items.
+     */
     private fun addItems(): MutableList<ItemStack> {
         val items = mutableListOf<ItemStack>()
         when {
@@ -110,6 +135,11 @@ class ItemChest(private val game: Game) {
         return items
     }
 
+    /**
+     * Adds the necessary ammo items to a list based on the game items configuration.
+     *
+     * @return The list of ammo items.
+     */
     private fun ammoAdding(): MutableList<ItemStack> {
         val ammo = mutableListOf<ItemStack>()
         when {
@@ -145,6 +175,11 @@ class ItemChest(private val game: Game) {
         return ammo
     }
 
+    /**
+     * Makes chests fall in the game.
+     * The method generates a specified number of chests and makes them fall from the sky.
+     * Chests are spawned at random locations within the game's world border.
+     */
     fun makeChestsFall() {
         if (!game.chestFall)
             return

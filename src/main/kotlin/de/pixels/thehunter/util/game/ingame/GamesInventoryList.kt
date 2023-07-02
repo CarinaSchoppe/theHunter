@@ -15,6 +15,11 @@ import org.bukkit.event.inventory.InventoryClickEvent
 class GamesInventoryList : Listener {
 
 
+    /**
+     * Handles the event when a player joins an inventory.
+     *
+     * @param event The InventoryClickEvent that triggered the method.
+     */
     @EventHandler
     fun onInventoryJoin(event: InventoryClickEvent) {
         if (PlainTextComponentSerializer.plainText()

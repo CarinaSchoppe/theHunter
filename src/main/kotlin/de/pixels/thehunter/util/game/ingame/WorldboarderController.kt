@@ -10,11 +10,51 @@ import org.bukkit.scheduler.BukkitTask
 
 class WorldboarderController(private val game: Game) {
 
+    /**
+     * The speed at which an object shrinks.
+     *
+     * @type {number}
+     * @name shrinkSpeed
+     * @default 10
+     */
     var shrinkSpeed = 10
+
+    /**
+     * Holds the minimum border size value.
+     */
     var minBorderSize = 100
+
+    /**
+     * The size of the world border.
+     *
+     * @property worldBoarderSize The size of the world border as an integer.
+     */
     var worldBoarderSize = 500
+
+    /**
+     * Determines whether the boarder should be shrinked or not.
+     *
+     * @property shrinkBoarder Specifies if the boarder should be shrinked or not.
+     */
     var shrinkBoarder = true
+
+    /**
+     * Represents a Bukkit task that has been scheduled but has not yet been run.
+     *
+     * This variable is declared as `private` and `lateinit`, indicating that it
+     * is a private member that will be assigned a value at a later time.
+     *
+     * @see BukkitTask
+     */
     private lateinit var task: BukkitTask
+
+    /**
+     * Shrinks the world border if the shrinkBoarder flag is set.
+     *
+     * @see [resetWorldBoarder]
+     * @see [Bukkit.getScheduler]
+     * @see [Bukkit.getScheduler.runTaskTimer]
+     */
     fun shrinkWorld() {
         if (!shrinkBoarder)
             return
@@ -33,6 +73,9 @@ class WorldboarderController(private val game: Game) {
         }, (shrinkSpeed * 20).toLong(), (shrinkSpeed * 20).toLong())
     }
 
+    /**
+     * Resets the world border for the game arena.
+     */
     fun resetWorldBoarder() {
         game.arenaCenter?.world?.worldBorder?.center = game.arenaCenter ?: return
         game.arenaCenter?.world?.worldBorder?.damageAmount = 100.0
@@ -40,7 +83,23 @@ class WorldboarderController(private val game: Game) {
     }
 
     companion object {
+        /**
+         * Represents the upper limit value.
+         *
+         * The `TO_HIGH` variable is a constant that holds the value 1000. It is used as an upper limit in various operations
+         * where a maximum value needs to be defined.
+         *
+         * @since 1.0.0
+         */
         const val TO_HIGH: Int = 1000
+
+        /**
+         * Represents the lower limit value.
+         *
+         * The TO_LOW constant is an integer value that defines the lower limit threshold.
+         *
+         * @since 1.0
+         */
         const val TO_LOW: Int = 25
     }
 

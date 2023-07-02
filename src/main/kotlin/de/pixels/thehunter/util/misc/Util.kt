@@ -8,6 +8,29 @@ import org.bukkit.entity.Player
 
 object Util {
 
+    /**
+     * Represents the currently selected game for each player.
+     *
+     * The `currentGameSelected` variable is a mutable map that associates each player with their selected game. It allows
+     * for dynamically updating the game selection for each player.
+     *
+     * The keys of the map represent the players, and the values represent the games selected by each player.
+     *
+     * Example usage:
+     *
+     * ```
+     * val player1 = Player("Alice")
+     * val player2 = Player("Bob")
+     *
+     * val currentGameSelected = mutableMapOf<Player, Game>()
+     *
+     * currentGameSelected[player1] = Game("Chess")
+     * currentGameSelected[player2] = Game("Monopoly")
+     *
+     * println(currentGameSelected[player1]) // Output: Game(name="Chess")
+     * println(currentGameSelected[player2]) // Output: Game(name="Monopoly")
+     * ```
+     */
     var currentGameSelected = mutableMapOf<Player, Game>()
 
 }

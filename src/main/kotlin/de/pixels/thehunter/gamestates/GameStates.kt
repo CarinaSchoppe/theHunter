@@ -5,8 +5,27 @@ package de.pixels.thehunter.gamestates
 
 enum class GameStates(val id: Int) {
 
+    /**
+     * Represents the lobby state of a game.
+     *
+     * @param state The state of the lobby.
+     */
     LOBBY_STATE(0),
+
+    /**
+     * Represents the in-game state of the application.
+     *
+     * This class provides methods to interact with the current state of the game being played.
+     *
+     * @param level The level of the game being played.
+     */
     INGAME_STATE(1),
+
+    /**
+     * The END_STATE class represents the end state of a process.
+     *
+     * This class has a single field to store the state value. The state value represents the reason for the process to end.
+     */
     END_STATE(2),
 
 }

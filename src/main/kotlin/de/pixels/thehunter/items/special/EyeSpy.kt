@@ -24,9 +24,70 @@ import org.bukkit.event.player.PlayerInteractEvent
 class EyeSpy : Listener {
 
     companion object {
+        /**
+         * Represents a variable named 'inEyeSpy' which is a mutable set of players.
+         *
+         * @property inEyeSpy The mutable set of players in the Eye Spy game.
+         */
         val inEyeSpy = mutableSetOf<Player>()
+
+        /**
+         * Represents the mapping of the last known location of each player.
+         *
+         * The `lastPlayerLocation` variable is a mutable map that stores the last known location of each player
+         * in the form of a key-value pair. The key represents a `Player` object, and the value represents
+         * the corresponding `Location` object.
+         *
+         * To update the last known location of a player, simply assign a new `Location` object to the corresponding
+         * player key. The existing key-value pair will be automatically updated or added if it doesn't exist.
+         *
+         * Example usage:
+         * ```
+         * val player1 = Player("John")
+         * val player2 = Player("Jane")
+         *
+         * // Assign the last known location of each player
+         * lastPlayerLocation[player1] = Location(10, 10)
+         * lastPlayerLocation[player2] = Location(-5, 3)
+         *
+         * // Update the location of player1
+         * lastPlayerLocation[player1] = Location(0, 0)
+         *
+         * // Retrieve the location of player2
+         * val location2 = lastPlayerLocation[player2]
+         * ```
+         *
+         * @since 1.0.0
+         */
         val lastPlayerLocation = mutableMapOf<Player, Location>()
+
+        /**
+         * Represents a mutable map that holds the time duration played by each player.
+         *
+         * The keys of this map are Player objects, and the values represent the duration of playtime for each player.
+         */
         private val mapPlayerTime = mutableMapOf<Player, Int>()
+
+        /**
+         * Represents the "Eye Spy" item.
+         *
+         * This item allows the player to see the other player for 10 seconds when activated.
+         * It is created using the ItemBuilder and has a display name and lore associated with it.
+         * The Eye Spy item is represented by an Ender Eye material.
+         *
+         * Usage:
+         * - Right-click to activate the Eye Spy effect.
+         *
+         * Example:
+         * ```
+         * val eyeSpy = ItemBuilder(Material.ENDER_EYE).addDisplayName(TheHunter.prefix + "§aEye Spy")
+         *               .addLore("§7This Article will let you see the other player for 10 sec")
+         *               .addLore("§7Right-click to activate").build()
+         * ```
+         *
+         * @see ItemBuilder
+         * @see Material
+         */
         val eyeSpy =
             ItemBuilder(Material.ENDER_EYE).addDisplayName(TheHunter.prefix + "§aEye Spy")
                 .addLore("§7This Article will let you see the other player for 10 sec")
@@ -34,6 +95,11 @@ class EyeSpy : Listener {
     }
 
 
+    /**
+     * Handles the event when a player uses the EyeSpy item.
+     *
+     * @param event The PlayerInteractEvent representing the interaction event.
+     */
     @EventHandler
     fun onEyeSpyUse(event: PlayerInteractEvent) {
         if (ItemHandler.shouldNotInteractWithItem(event, eyeSpy, "EyeSpy") || inEyeSpy.contains(event.player) || !GamesHandler.playerInGames.containsKey(event.player))
@@ -52,6 +118,13 @@ class EyeSpy : Listener {
     }
 
 
+    /**
+     * Sets the camera for a player in the Eye Spy game.
+     *
+     * @param game The Eye Spy game instance.
+     * @param player The player to set the camera for.
+     * @param target The player to set as the camera target.
+     */
     private fun setCamera(game: Game, player: Player, target: Player) {
         lastPlayerLocation[player] = player.location
         player.teleport(target.location)
@@ -70,6 +143,13 @@ class EyeSpy : Listener {
         }, 20L * game.itemSettings.settingsMap["eye-spy-duration"] as Int)
     }
 
+    /**
+     * Shows a title to the given player based on the remaining time in the map.
+     *
+     * @param player the player to show the title to
+     *
+     * @since 1.0.0
+     */
     private fun showingTitle(player: Player) {
         TheHunter.instance.server.scheduler.scheduleSyncRepeatingTask(TheHunter.instance, {
             mapPlayerTime[player] = mapPlayerTime[player]?.minus(1) ?: return@scheduleSyncRepeatingTask

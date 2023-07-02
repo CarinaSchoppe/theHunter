@@ -15,6 +15,13 @@ import org.bukkit.entity.Player
 
 class TeamCommands {
 
+    /**
+     * Handles the team command.
+     *
+     * @param sender The command sender.
+     * @param command The command name.
+     * @param args The command arguments.
+     */
     fun team(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(
                 sender,
@@ -54,6 +61,12 @@ class TeamCommands {
         }
     }
 
+    /**
+     * Promotes a player to be the new team leader.
+     *
+     * @param sender the player who is executing the command
+     * @param args the command arguments
+     */
     private fun promote(sender: Player, args: Array<out String>) {
         val player = Bukkit.getPlayer(args[1])
         if (player == null) {
@@ -70,6 +83,13 @@ class TeamCommands {
         Team.promoteNewTeamLeader(player, sender)
     }
 
+    /**
+     * Checks the arguments passed to the method to ensure they are valid.
+     *
+     * @param sender The player who executed the command.
+     * @param args The arguments passed to the method.
+     * @return true if the arguments are invalid, false otherwise.
+     */
     private fun argumentChecker(sender: Player, args: Array<out String>): Boolean {
         if (args.size <= 1) {
             TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
@@ -98,12 +118,24 @@ class TeamCommands {
         return false
     }
 
+    /**
+     * Removes a player from a team.
+     *
+     * @param sender the player who executed the command
+     * @param args the command arguments. The second argument is expected to be the target player name
+     */
     private fun remove(sender: Player, args: Array<out String>) {
         if (argumentChecker(sender, args)) return
         Bukkit.getPlayer(args[1])?.let { Team.removePlayerFromTeam(it, sender) }
     }
 
 
+    /**
+     * Accepts an invitation to join a team in a game.
+     *
+     * @param sender the player who wants to accept the invitation
+     * @param args the command arguments passed by the player
+     */
     private fun accept(sender: Player, args: Array<out String>) {
         val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender] ?: return
         if (game.teams.find { it.teamMembers.contains(sender) } != null) {
@@ -165,6 +197,12 @@ class TeamCommands {
     }
 
 
+    /**
+     * Invites a player to a team.
+     *
+     * @param sender the player sending the invite
+     * @param args   the command arguments; the first argument is the command name, the second argument is the player to invite
+     */
     private fun invite(sender: Player, args: Array<out String>) {
         if (argumentChecker(sender, args)) return
         Bukkit.getPlayer(args[1])?.let { Team.invitePlayerToTeam(it, sender) }

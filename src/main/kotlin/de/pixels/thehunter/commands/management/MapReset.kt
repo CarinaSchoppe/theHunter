@@ -10,6 +10,13 @@ import de.pixels.thehunter.util.misc.Permissions
 import org.bukkit.command.CommandSender
 
 class MapReset {
+    /**
+     * Reset the map for a game.
+     *
+     * @param sender the command sender who triggered the reset command
+     * @param command the command string used for the reset command
+     * @param args the arguments passed with the reset command
+     */
     fun reset(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(
                 sender,

@@ -5,6 +5,13 @@
 package de.pixels.thehunter.countdowns
 
 enum class Countdowns(val id: Int) {
+    /**
+     * Represents a countdown for a lobby.
+     */
     LOBBY_COUNTDOWN(0),
+
+    /**
+     * The `END_COUNTDOWN` class represents a countdown that starts at a given number and counts down until zero.
+     */
     END_COUNTDOWN(1),
 }

@@ -15,11 +15,32 @@ import org.bukkit.scoreboard.Objective
 import org.bukkit.scoreboard.Score
 
 class Scoreboard(val game: Game) {
+    /**
+     * Represents the translated server name.
+     *
+     * This variable holds the translated server name retrieved from
+     * the settings map of TheHunter.instance. The server name is
+     * obtained as a string from the settings map and then translated
+     * using ChatColor.translateAlternateColorCodes('&') function.
+     * The translated server name is stored in this variable for further use.
+     *
+     * @property serverName The translated server name.
+     */
     private val serverName =
         ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["server-name"] as String)
+
+    /**
+     * Private variable representing the tsIP.
+     * The tsIP is a translated string obtained from the "ts-ip" value in the settings map.
+     */
     private val tsIP =
         ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["ts-ip"] as String)
 
+    /**
+     * Creates a new scoreboard for the specified player.
+     *
+     * @param player The player for whom the scoreboard is created.
+     */
     fun createNewScoreboard(player: Player) {
         player.scoreboard.clearSlot(DisplaySlot.SIDEBAR)
         val scoreboard = Bukkit.getScoreboardManager().newScoreboard

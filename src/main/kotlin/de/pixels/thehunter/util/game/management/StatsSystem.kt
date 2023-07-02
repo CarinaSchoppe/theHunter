@@ -13,6 +13,17 @@ import org.bukkit.entity.Player
 import java.util.*
 
 
+/**
+ * Represents the statistical data of a player.
+ *
+ * @property kills The number of kills by the player.
+ * @property deaths The number of deaths by the player.
+ * @property points The number of points earned by the player.
+ * @property kdr The kill-death ratio of the player.
+ * @property wins The number of wins by the player.
+ * @property loses The number of loses by the player.
+ * @property games The total number of games played by the player.
+ */
 data class StatsPlayer(
     var kills: Int,
     var deaths: Int,
@@ -32,7 +43,26 @@ class StatsSystem : BaseFile("stats.yml") {
     }
 
     companion object {
+        /**
+         * Holds the statistics of players in a mutable map where the keys are UUIDs and the values are instances of StatsPlayer.
+         *
+         * @property playerStats The mutable map that stores the player statistics.
+         */
         val playerStats = mutableMapOf<UUID, StatsPlayer>()
+
+        /**
+         * Saves all player stats to files.
+         *
+         * This method iterates over each player and saves their stats to either a MySQL database table
+         * or a YAML file based on the configuration. If the configuration specifies using MySQL,
+         * the stats are replaced in the database table using a prepared statement. Otherwise,
+         * the stats are saved to the YAML file by setting the values in the appropriate sections.
+         *
+         * @see DatabaseHandler
+         * @see TheHunter
+         * @see StatsSystem
+         * @see ConstantStrings
+         */
         fun saveAllStatsPlayerToFiles() {
             for (player in playerStats.keys) {
                 if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
@@ -59,6 +89,9 @@ class StatsSystem : BaseFile("stats.yml") {
             }
         }
 
+        /**
+         * Loads players' statistics from a file or database.
+         */
         fun loadStatsPlayersFromFile() {
             if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
                 val resultSet = DatabaseHandler.connection.prepareStatement("SELECT * FROM statsPlayer")?.executeQuery()
@@ -95,6 +128,11 @@ class StatsSystem : BaseFile("stats.yml") {
         }
     }
 
+    /**
+     * Generates new player statistics.
+     *
+     * @param player The player for whom the statistics are to be generated.
+     */
     fun generateNewStatsPlayer(player: Player) {
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
             //check if player is not allready in database
@@ -119,6 +157,12 @@ class StatsSystem : BaseFile("stats.yml") {
     }
 
 
+    /**
+     * Updates the player stats when one player kills another player.
+     *
+     * @param killer The player who killed the other player.
+     * @param dead The player who was killed.
+     */
     fun playerKilledOtherPlayer(killer: Player, dead: Player) {
         removePointsIfPossible(dead)
         playerStats[killer.uniqueId]?.kills = playerStats[killer.uniqueId]?.kills?.plus(1) ?: return
@@ -149,6 +193,13 @@ class StatsSystem : BaseFile("stats.yml") {
 
     }
 
+    /**
+     * Updates the player's statistics when they win a game.
+     * Increases the number of wins and points for the player.
+     * If the MySQL database is enabled, the changes are also persisted to the database.
+     *
+     * @param player The player who won the game.
+     */
     fun playerWon(player: Player) {
         playerStats[player.uniqueId]?.wins = playerStats[player.uniqueId]?.wins?.plus(1) ?: return
         playerStats[player.uniqueId]?.points = playerStats[player.uniqueId]?.points?.plus(15) ?: return
@@ -163,6 +214,11 @@ class StatsSystem : BaseFile("stats.yml") {
         }
     }
 
+    /**
+     * Updates the player's statistics and database records when the player dies.
+     *
+     * @param player The player who died.
+     */
     fun playerDied(player: Player) {
         removePointsIfPossible(player)
         playerStats[player.uniqueId]?.deaths = playerStats[player.uniqueId]?.deaths?.plus(1) ?: return
@@ -181,12 +237,22 @@ class StatsSystem : BaseFile("stats.yml") {
 
     }
 
+    /**
+     * Removes 5 points from the given player's stats if the player has at least 5 points.
+     *
+     * @param player the player whose points need to be modified.
+     */
     private fun removePointsIfPossible(player: Player) {
         if (5 <= playerStats[player.uniqueId]?.points ?: return) {
             playerStats[player.uniqueId]?.points = playerStats[player.uniqueId]?.points?.minus(5) ?: return
         }
     }
 
+    /**
+     * Updates the game statistics for the specified player.
+     *
+     * @param player The player object representing the player playing the game.
+     */
     fun playerPlaysGame(player: Player) {
         playerStats[player.uniqueId]?.games = playerStats[player.uniqueId]?.games?.plus(1) ?: return
         if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
@@ -198,6 +264,13 @@ class StatsSystem : BaseFile("stats.yml") {
         }
     }
 
+    /**
+     * Generates a stats message for a player and sends it to the specified sender.
+     *
+     * @param sender the sender of the stats message
+     * @param player the player for whom the stats message is generated
+     * @return true if the stats message was successfully generated and sent, false otherwise
+     */
     fun generateStatsMessageForPlayer(sender: Player, player: Player): Boolean {
         if (playerStats[player.uniqueId] == null) {
             TheHunter.instance.messages.messagesMap["stats-not-found"]?.replace(

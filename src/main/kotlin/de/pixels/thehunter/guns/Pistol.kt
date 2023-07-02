@@ -12,10 +12,30 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemStack
 
 object Pistol : Gun() {
+    /**
+     * Represents the current ammunition item stack.
+     */
     override var ammo: ItemStack = AmmoItems.pistolAmmo
+
+    /**
+     * Represents the string value of the ammunition type for a weapon.
+     *
+     * @property ammoString The string value of the ammunition type.
+     */
     override var ammoString: String = ConstantStrings.PISTOL_AMMO
+
+    /**
+     * The name of the gun.
+     *
+     * @property gunName the name of the gun
+     */
     override var gunName: String = "pistol"
 
+    /**
+     * The gun variable represents a pistol ItemStack with specific properties.
+     *
+     * @property gun The pistol ItemStack with custom display name, enchantment, and lore.
+     */
     override var gun: ItemStack = ItemBuilder(Material.WOODEN_HOE).addDisplayName(TheHunter.prefix + "§7Pistol")
         .addEnchantment(Enchantment.DURABILITY, 1).addLore("§7Right-click to shoot").build()
 

@@ -19,6 +19,11 @@ import org.bukkit.util.Vector
 class FallingBlocks : Listener {
 
 
+    /**
+     * Handles the explosion event triggered by TNTPrimed entities.
+     *
+     * @param event The EntityExplodeEvent representing the explosion.
+     */
     @EventHandler
     fun onExplosion(event: EntityExplodeEvent) {
         if (event.entity !is TNTPrimed) return
@@ -49,6 +54,12 @@ class FallingBlocks : Listener {
         event.yield = 0f
     }
 
+    /**
+     * Handles the event of a block changing to a solid block when an entity falls.
+     *
+     * @param event The EntityChangeBlockEvent triggered when a block changes due to an entity.
+     *              Must not be null.
+     */
     @EventHandler
     fun onBlockToSolid(event: EntityChangeBlockEvent) {
         if (event.entity !is FallingBlock)

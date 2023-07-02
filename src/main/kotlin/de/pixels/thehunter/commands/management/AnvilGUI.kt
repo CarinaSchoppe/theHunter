@@ -16,6 +16,13 @@ import org.bukkit.entity.Player
 import java.util.*
 
 class AnvilGUI {
+    /**
+     * Creates a game with the specified name using an AnvilGUI.
+     *
+     * @param sender The CommandSender who executed the command.
+     * @param command The command that was executed.
+     * @param args The arguments passed with the command.
+     */
     fun create(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(
                 sender,

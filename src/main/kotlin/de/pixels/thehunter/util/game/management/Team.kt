@@ -9,9 +9,54 @@ import de.pixels.thehunter.util.misc.Permissions
 import org.bukkit.entity.Player
 
 class Team(var teamLeader: Player) {
+    /**
+     * Represents a mutable set of players who have been invited.
+     *
+     * The `invites` variable stores a mutable set of `Player` objects. Each `Player` represents a player who has been invited.
+     * The set allows storing unique players, ensuring that each player is invited only once.
+     *
+     * Example usage:
+     *
+     * ```
+     * val player1 = Player("John Doe")
+     * val player2 = Player("Jane Smith")
+     *
+     * val invites = mutableSetOf<Player>()
+     * invites.add(player1)
+     * invites.add(player2)
+     *
+     * println(invites) // Output: [Player(name=John Doe), Player(name=Jane Smith)]
+     * ```
+     */
     val invites = mutableSetOf<Player>()
+
+    /**
+     * Represents a set of team members.
+     *
+     * @property teamMembers A mutable set of Player objects representing the team members.
+     */
     val teamMembers = mutableSetOf<Player>()
+
+    /**
+     * The `game` variable represents the game object.
+     *
+     * It is declared using the `lateinit` modifier, which means that it will be initialized
+     * before it is used in the code. This allows for its initialization to be deferred to a later point.
+     * The type of the `game` variable is `Game`, which is likely a custom class representing the game logic.
+     * The `Game` class might contain methods and properties to handle various aspects of the game.
+     *
+     * @see Game
+     */
     lateinit var game: Game
+
+    /**
+     * Invites a team member to join a game.
+     *
+     * @param playerToAdd The player to be invited to the team.
+     * @param leader The leader of the team.
+     * @param game The game in which the team exists.
+     * @return `true` if the invitation is successful, `false` otherwise.
+     */
     private fun inviteTeamMember(playerToAdd: Player, leader: Player, game: Game): Boolean {
         if (!game.teamsAllowed) {
             TheHunter.instance.messages.sendMessageToPlayer(leader, "teams-not-allowed")
@@ -102,6 +147,12 @@ class Team(var teamLeader: Player) {
         return true
     }
 
+    /**
+     * Promotes a team member to become the new team leader.
+     *
+     * @param player The player to be promoted as the new leader.
+     * @param leader The current leader of the team.
+     */
     private fun promoteTeamLeader(player: Player, leader: Player) {
         if (!teamMembers.contains(player)) {
             TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_TEAM]?.let {
@@ -141,6 +192,12 @@ class Team(var teamLeader: Player) {
         }
     }
 
+    /**
+     * Removes a player from the team.
+     *
+     * @param player The player to be removed from the team.
+     * @param leader The leader of the team.
+     */
 
     companion object {
         fun teamsCleanUp(game: Game) {
@@ -203,6 +260,12 @@ class Team(var teamLeader: Player) {
 
         }
 
+        /**
+         * Invites a player to a team.
+         *
+         * @param playerToInvite The player to invite.
+         * @param leader The leader of the team.
+         */
         fun invitePlayerToTeam(playerToInvite: Player, leader: Player) {
             val game = GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[leader] ?: return
             val team = game.teams.find { it.teamMembers.contains(leader) }
@@ -229,6 +292,12 @@ class Team(var teamLeader: Player) {
             }
         }
 
+        /**
+         * Promotes a player to be the new team leader in a game.
+         *
+         * @param player The player who is to be promoted as the new team leader.
+         * @param leader The current team leader.
+         */
         fun promoteNewTeamLeader(player: Player, leader: Player) {
             val game = GamesHandler.playerInGames[leader] ?: GamesHandler.spectatorInGames[player] ?: return
             val team = game.teams.find { it.teamMembers.contains(leader) }

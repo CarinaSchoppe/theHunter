@@ -19,6 +19,13 @@ import org.bukkit.entity.Player
 import org.bukkit.scoreboard.DisplaySlot
 
 class LeaveGame {
+    /**
+     * Allows a player or spectator to leave the current game or spectating session.
+     *
+     * @param sender The command sender.
+     * @param command The command being executed.
+     * @param args The command arguments.
+     */
     fun leave(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(
                 sender,
@@ -61,6 +68,12 @@ class LeaveGame {
         }
     }
 
+    /**
+     * Removes a player from the specified game.
+     *
+     * @param game The game from which the player should be removed.
+     * @param player The player to remove from the game.
+     */
     private fun removePlayer(game: Game, player: Player) {
         val team = game.teams.find { it.teamMembers.contains(player) }
         if (team != null) 
@@ -79,6 +92,12 @@ class LeaveGame {
         playerMessagesAndHiding(game, player)
     }
 
+    /**
+     * Updates player messages and hiding for a specified player in the game.
+     *
+     * @param game The current game instance.
+     * @param player The player whose messages and hiding need to be updated.
+     */
     private fun playerMessagesAndHiding(game: Game, player: Player) {
         val team = game.teams.find { it.teamMembers.contains(player) }
         if (team != null)

@@ -23,7 +23,21 @@ import org.bukkit.event.entity.ProjectileHitEvent
 class EggBomb : Listener {
 
     companion object {
+        /**
+         * Represents a collection of TNT primed bombs.
+         *
+         * This mutable set holds instances of the `TNTPrimed` class, which represents a lit TNT block in Minecraft.
+         *
+         * @property bombs The mutable set of `TNTPrimed` instances.
+         */
         val bombs = mutableSetOf<TNTPrimed>()
+
+        /**
+         * Creates an Egg Bomb item for the given game.
+         *
+         * @param game The game to create the Egg Bomb item for.
+         * @return The Egg Bomb item.
+         */
         fun eggBomb(game: Game) = ItemBuilder(Material.EGG).addDisplayName(TheHunter.prefix + "§eEggBomb")
             .addEnchantment(Enchantment.DURABILITY, 1).addLore(
                 listOf(
@@ -36,6 +50,11 @@ class EggBomb : Listener {
     }
 
 
+    /**
+     * Handles the logic when an egg bomb is hit by a projectile.
+     *
+     * @param event The ProjectileHitEvent triggered when the egg bomb hits something.
+     */
     @EventHandler
     fun onEggBomb(event: ProjectileHitEvent) {
         if (event.entity !is Egg)
@@ -57,6 +76,13 @@ class EggBomb : Listener {
     }
 
 
+    /**
+     * Spawns a TNT entity at the location of the projectile hit event after a delay specified in the game settings.
+     *
+     * @param game The current game instance.
+     * @param event The ProjectileHitEvent that triggered the method.
+     * @param egg The Egg projectile that hit the target.
+     */
     private fun eggBombBoom(game: Game, event: ProjectileHitEvent, egg: Egg) {
         Bukkit.getScheduler().runTaskLater(TheHunter.instance, Runnable {
             val tnt = event.entity.location.world.spawn(event.entity.location, org.bukkit.entity.TNTPrimed::class.java)

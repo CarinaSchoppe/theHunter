@@ -12,6 +12,11 @@ import org.bukkit.event.entity.EntityRegainHealthEvent
 
 class PlayerRegenerateIngame : Listener {
 
+    /**
+     * Event handler method to handle player regeneration in the game.
+     *
+     * @param event The EntityRegainHealthEvent that triggered the regeneration.
+     */
     @EventHandler
     fun playerRegenerateIngame(event: EntityRegainHealthEvent) {
         if (event.entity !is Player || !GamesHandler.playerInGames.containsKey(event.entity))

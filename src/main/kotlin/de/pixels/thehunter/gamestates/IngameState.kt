@@ -21,6 +21,13 @@ import org.bukkit.Sound
 import org.bukkit.entity.Player
 
 class IngameState(game: Game) : GameState(game) {
+    /**
+     * Starts the game.
+     * If randomPlayerDrop is true, drops players randomly on the game board.
+     * Executes forEachPlayer() method.
+     * If the game has a winning condition, advances to the next game state and returns.
+     * Otherwise, gives players starting items, starts the immunity counter, shrinks the world border, and makes chests fall.
+     */
     override fun start() {
         if (game.randomPlayerDrop) PlayerDropping.dropPlayers(game)
         forEachPlayer()
@@ -35,6 +42,14 @@ class IngameState(game: Game) : GameState(game) {
         }
     }
 
+    /**
+     * Iterates over each player in the game and performs necessary actions.
+     * This method sets the player's level to 0, teleports them to the appropriate spawn point (unless randomPlayerDrop is disabled),
+     * makes them invulnerable, updates player statistics, creates a new scoreboard for the player, shows a title to the player,
+     * reveals the player to only other players actively participating in the game, and shows only active playing players to the player.
+     * Additionally, it handles spectators by teleporting them to the spectator location (if available), showing them a title,
+     * hiding them from all players, and showing only active playing players to the spectator.
+     */
     private fun forEachPlayer() {
         for ((index, player) in game.players.withIndex()) {
             player.level = 0
@@ -69,6 +84,14 @@ class IngameState(game: Game) : GameState(game) {
     }
 
 
+    /**
+     * Starts the immunity counter for the game.
+     * During the immunity period, players are invulnerable to attacks.
+     * The immunity counter decreases over time until it reaches 0.
+     * Once the counter reaches 0, all players are no longer invulnerable.
+     *
+     * @param game The game object representing the current game state.
+     */
     private fun startImmunityCounter() {
         Bukkit.getScheduler().runTaskTimer(TheHunter.instance, { task ->
             if (game.currentGameState !is IngameState)
@@ -105,6 +128,10 @@ class IngameState(game: Game) : GameState(game) {
     }
 
 
+    /**
+     * Stops the game and performs necessary actions for each player and spectator involved
+     * Also resets the world boarder controller.
+     */
     override fun stop() {
         for (player in game.players) {
             playerHandlingAfterGame(player)
@@ -115,6 +142,11 @@ class IngameState(game: Game) : GameState(game) {
         game.worldBoarderController.resetWorldBoarder()
     }
 
+    /**
+     * Handles the player after the game has ended.
+     *
+     * @param player the player to handle
+     */
     private fun playerHandlingAfterGame(player: Player) {
         player.activePotionEffects.clear()
         player.inventory.clear()
@@ -126,6 +158,19 @@ class IngameState(game: Game) : GameState(game) {
         PlayerHiding.showGamePlayingPlayersToPlayer(player)
     }
 
+    /**
+     * Clears the inventory of each player in the [game].
+     * Adds the start items to each player's inventory.
+     *
+     * The start items include:
+     *  - Rifle.gun
+     *  - Minigun.gun
+     *  - Pistol.gun
+     *  - Sniper.gun
+     *  - Knife.knife (placed in slot 8)
+     *
+     * @param game the game object containing the players
+     */
     private fun givePlayerStartItems() {
         game.players.forEach {
             it.inventory.clear()
@@ -137,5 +182,12 @@ class IngameState(game: Game) : GameState(game) {
         }
     }
 
+    /**
+     * The unique identifier for the current game state.
+     *
+     * This variable represents the identifier of the current game state, which is used
+     * to differentiate between different states of the game. The value is an integer
+     * corresponding to the identifier of the in-game state.
+     */
     override val gameStateID: Int = GameStates.INGAME_STATE.id
 }

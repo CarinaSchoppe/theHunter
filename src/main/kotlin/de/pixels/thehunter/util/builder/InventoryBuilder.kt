@@ -10,14 +10,32 @@ import org.bukkit.Material
 import org.bukkit.inventory.Inventory
 
 class InventoryBuilder(name: String, size: Int) {
+    /**
+     * The private variable `inventory` represents a Bukkit inventory.
+     *
+     * @see Bukkit.createInventory
+     * @see net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().deserialize
+     *
+     * @property inventory The Bukkit inventory object.
+     */
     private val inventory =
         Bukkit.createInventory(null, size, LegacyComponentSerializer.legacySection().deserialize(name))
 
+    /**
+     * Creates an instance of the Inventory class.
+     *
+     * @return the created Inventory instance
+     */
     fun create(): Inventory {
         return inventory
     }
 
 
+    /**
+     * Adds games to the inventory.
+     *
+     * @return The InventoryBuilder instance.
+     */
     fun addGamesToInventory(): InventoryBuilder {
         for (game in GamesHandler.games) {
             inventory.addItem(
@@ -29,11 +47,24 @@ class InventoryBuilder(name: String, size: Int) {
         return this
     }
 
+    /**
+     * Sets the item in the specified slot of the inventory.
+     *
+     * @param slot The slot index to set the item in.
+     * @param item The item to set in the slot.
+     * @return The updated InventoryBuilder instance.
+     */
     fun setItem(slot: Int, item: org.bukkit.inventory.ItemStack): InventoryBuilder {
         inventory.setItem(slot, item)
         return this
     }
 
+    /**
+     * Fills the inventory with the given item.
+     *
+     * @param item the item to fill the inventory with.
+     * @return the InventoryBuilder instance after filling the inventory.
+     */
     fun fillInventory(item: org.bukkit.inventory.ItemStack): InventoryBuilder {
         for (i in 0 until inventory.size) {
             if (inventory.getItem(i) == null)

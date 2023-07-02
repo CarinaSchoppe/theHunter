@@ -18,6 +18,13 @@ import org.bukkit.event.player.PlayerInteractEvent
 
 class WeaponInteraction : Listener {
 
+    /**
+     * This method is an event handler for when a player uses ammo items.
+     * It checks if the player is in a game and if the item used is not null.
+     * If the item used is one of the predefined ammo items, the event is cancelled.
+     *
+     * @param event The PlayerInteractEvent that triggered this method.
+     */
     @EventHandler
     fun playerUsesAmmoItems(event: PlayerInteractEvent) {
         if (!GamesHandler.playerInGames.containsKey(event.player) || event.item == null)
@@ -36,6 +43,11 @@ class WeaponInteraction : Listener {
 
     }
 
+    /**
+     * Event handler for when a player drops a knife.
+     *
+     * @param event The PlayerDropItemEvent that triggered the handler.
+     */
     @EventHandler
     fun onDropKnife(event: PlayerDropItemEvent) {
         if (!GamesHandler.playerInGames.containsKey(event.player) || event.itemDrop.itemStack.itemMeta != Knife.knife.itemMeta) return

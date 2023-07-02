@@ -15,6 +15,11 @@ import org.bukkit.event.entity.PlayerDeathEvent
 
 class PlayerDeath : Listener {
 
+    /**
+     * Handles the event when a player kills another player.
+     *
+     * @param event The PlayerDeathEvent associated with the player kill.
+     */
     @EventHandler
     fun onPlayerKillsOther(event: PlayerDeathEvent) {
         if (event.entity.killer != null && event.entity.killer is Player)
@@ -26,6 +31,13 @@ class PlayerDeath : Listener {
                 ?.afterDeathChecks()
     }
 
+    /**
+     * Handles the logic when a player is killed by another player.
+     *
+     * @param event The PlayerDeathEvent triggered when the player is killed.
+     * @param player The Player who was killed.
+     * @param killer The Player who killed the other player.
+     */
     private fun playerKilledOther(event: PlayerDeathEvent, player: Player, killer: Player) {
         if (!GamesHandler.playerInGames.containsKey(killer) || GamesHandler.playerInGames[player] != GamesHandler.playerInGames[killer])
             return

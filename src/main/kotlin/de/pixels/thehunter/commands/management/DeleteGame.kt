@@ -17,17 +17,24 @@ import org.bukkit.entity.Player
 import java.io.File
 
 class DeleteGame {
+    /**
+     * Removes a game and its associated files from the system.
+     *
+     * @param sender the command sender
+     * @param command the command being executed
+     * @param args the command arguments
+     */
     fun remove(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(
-                        sender,
-                        command,
-                        args,
-                        ConstantStrings.DELETE_COMMAND,
-                        1,
-                        Permissions.REMOVE_GAME_COMMAND
-                )
+                sender,
+                command,
+                args,
+                ConstantStrings.DELETE_COMMAND,
+                1,
+                Permissions.REMOVE_GAME_COMMAND
+            )
         )
-                return
+            return
 
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {

@@ -35,6 +35,11 @@ class GunHandler : Listener {
     }
 
 
+    /**
+     * Handles the left click event of a player.
+     *
+     * @param event The PlayerInteractEvent triggered by the left click.
+     */
     private fun whenLeftClick(event: PlayerInteractEvent) {
         when (event.item?.itemMeta) {
             Rifle.gun.itemMeta -> {
@@ -60,6 +65,11 @@ class GunHandler : Listener {
         }
     }
 
+    /**
+     * Handles the action when the player right clicks with a specific item.
+     *
+     * @param event The PlayerInteractEvent representing the right click event.
+     */
     private fun whenRightClick(event: PlayerInteractEvent) {
         when (event.item?.itemMeta) {
             Rifle.gun.itemMeta -> {
@@ -101,6 +111,13 @@ class GunHandler : Listener {
         return 
     }
 
+    /**
+     * Handles the event when a player drops a gun item.
+     * Cancels the event if the dropped item is one of the defined gun items.
+     * Sends a message to the player indicating that they can't drop the item.
+     *
+     * @param event The PlayerDropItemEvent triggered when a player drops an item.
+     */
     @EventHandler
     fun onGunDrop(event: PlayerDropItemEvent) {
         if (!event.itemDrop.itemStack.hasItemMeta()) return
@@ -118,6 +135,12 @@ class GunHandler : Listener {
     }
 
     companion object {
+        /**
+         * Removes a single ammo from a player's inventory based on the type of gun specified.
+         *
+         * @param player The player whose ammo will be removed.
+         * @param gun The gun type for which the ammo will be removed.
+         */
         fun removeAmmo(player: Player, gun: Gun) {
             for (itemStack in player.inventory.contents) {
                 if (itemStack == null) continue
@@ -151,6 +174,11 @@ class GunHandler : Listener {
     }
 
 
+    /**
+     * Event handler method for the PlayerHitEvent.
+     *
+     * @param event the entity damage by entity event
+     */
     @EventHandler
     fun onPlayerHitEvent(event: EntityDamageByEntityEvent) {
         if (event.damager !is Arrow)

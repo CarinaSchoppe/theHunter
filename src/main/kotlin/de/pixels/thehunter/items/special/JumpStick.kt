@@ -18,13 +18,55 @@ import org.bukkit.event.player.PlayerInteractEvent
 class JumpStick : Listener {
 
     companion object {
+        /**
+         * This variable represents a mutable map that associates a player with an integer value.
+         * It is used to keep track of the number of times each player is used in a game.
+         *
+         * The keys of the map are instances of the `Player` class, and the values are integers that represent the number of times a player is used.
+         *
+         * This map can be modified by adding new entries, updating existing entries, or removing entries.
+         * The map allows duplicate keys and null values.
+         *
+         * Example usage:
+         * ```
+         * val player1 = Player("Alice")
+         * val player2 = Player("Bob")
+         *
+         * uses[player1] = 2       // Adds an entry: player1 is used 2 times
+         * uses[player2] = 3       // Adds an entry: player2 is used 3 times
+         * uses[player1] = 4       // Updates an entry: player1 is now used 4 times
+         * uses.remove(player2)    // Removes an entry: player2 is no longer used
+         *
+         * println(uses[player1])  // Prints: 4
+         * ```
+         *
+         * @see Player
+         */
         val uses = mutableMapOf<Player, Int>()
+
+        /**
+         * The JumpStick variable is an instance of the ItemBuilder class that represents a jump stick item.
+         * It is used in the game The Hunter.
+         *
+         * The jump stick allows players to jump into a specific direction with a certain power when clicked.
+         * It can be activated by right-clicking.
+         *
+         * The jump stick is created using the Material.STICK as the base material.
+         * It also has a display name that consists of The Hunter prefix followed by the string "JumpStick" in a gold color.
+         * The lore of the jump stick includes a description of its functionality and instructions for activation.
+         * Additionally, the jump stick is enchanted with the Durability enchantment at level 1.
+         */
         val jumpStick = ItemBuilder(Material.STICK).addDisplayName(TheHunter.prefix + "§6JumpStick")
             .addLore("§aClick to jump into an direction with power").addLore("§7Right-click to activate")
             .addEnchantment(Enchantment.DURABILITY, 1).build()
     }
 
 
+    /**
+     * Handles the event when a player uses a jump stick item.
+     *
+     * @param event The PlayerInteractEvent being triggered.
+     */
     @EventHandler
     fun onJumpStickUse(event: PlayerInteractEvent) {
         if (ItemHandler.shouldNotInteractWithItem(event, jumpStick, "JumpStrick"))

@@ -22,6 +22,13 @@ import org.bukkit.entity.Player
 
 class JoinGame {
 
+    /**
+     * Joins a game for the specified sender.
+     *
+     * @param sender The CommandSender who wants to join the game.
+     * @param command The name of the command used to join the game.
+     * @param args The arguments passed with the command.
+     */
     fun join(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(
                 sender,
@@ -63,6 +70,14 @@ class JoinGame {
         PlayerHiding.showOnlyActiveGamePlayingPlayersToPlayer(sender)
     }
 
+    /**
+     * Adds a player to a game and sends appropriate messages.
+     *
+     * @param player The player to add to the game.
+     * @param game The game to add the player to.
+     *
+     * @return Returns true if the player was successfully added to the game, false otherwise.
+     */
     private fun playerAddingAndMessaging(player: Player, game: Game): Boolean {
         if (GamesHandler.playerInGames.containsKey(player) || GamesHandler.spectatorInGames.containsKey(player)) {
             TheHunter.instance.messages.messagesMap["player-already-in-game"]?.let { player.sendMessage(it) }

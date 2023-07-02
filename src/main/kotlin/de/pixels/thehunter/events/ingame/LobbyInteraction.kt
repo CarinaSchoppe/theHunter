@@ -19,6 +19,11 @@ import org.bukkit.event.player.PlayerInteractEvent
 
 class LobbyInteraction : Listener {
 
+    /**
+     * Event handler for when a player drops an item in the lobby.
+     *
+     * @param event The PlayerDropItemEvent object.
+     */
     @EventHandler
     fun onDropInLobby(event: PlayerDropItemEvent) {
         if (!GamesHandler.playerInGames.containsKey(event.player) && !GamesHandler.spectatorInGames.containsKey(event.player))
@@ -31,6 +36,11 @@ class LobbyInteraction : Listener {
     }
 
 
+    /**
+     * Applies lobby damage to the damager.
+     *
+     * @param event The EntityDamageByEntityEvent representing the damage event.
+     */
     private fun lobbyDamagePlayerDamager(event: EntityDamageByEntityEvent) {
         if (event.entity !is Player) return
         if (GamesHandler.playerInGames.containsKey(event.damager) || GamesHandler.spectatorInGames.containsKey(event.damager)) {
@@ -46,6 +56,11 @@ class LobbyInteraction : Listener {
         }
     }
 
+    /**
+     * This method handles the event when a player leaves the game.
+     *
+     * @param event The PlayerInteractEvent representing the player leaving the game.
+     */
     @EventHandler
     fun onPlayerLeavesGame(event: PlayerInteractEvent) {
         if (event.item == null || event.item?.hasItemMeta() == false || event.item?.itemMeta != Items.leaveItem.itemMeta || event.action.isLeftClick) return
@@ -53,6 +68,11 @@ class LobbyInteraction : Listener {
         event.player.performCommand("thehunter leave")
     }
 
+    /**
+     * Cancels damage to players in the lobby.
+     *
+     * @param event The EntityDamageByEntityEvent object representing the damage event.
+     */
     private fun lobbyDamagePLayer(event: EntityDamageByEntityEvent) {
         if (event.entity is Player && (GamesHandler.playerInGames.containsKey(event.entity) || GamesHandler.spectatorInGames.containsKey(
                 event.entity
@@ -64,6 +84,11 @@ class LobbyInteraction : Listener {
         }
     }
 
+    /**
+     * Handles lobby damage events.
+     *
+     * @param event The EntityDamageByEntityEvent representing the lobby damage event.
+     */
     @EventHandler
     fun onLobbyDamage(event: EntityDamageByEntityEvent) {
         if (event.damager is Player) {
@@ -73,6 +98,14 @@ class LobbyInteraction : Listener {
         }
     }
 
+    /**
+     * EventHandler for handling EntityDamageEvent in the lobby.
+     *
+     * If the event entity is not a Player, the method returns without any action.
+     * If the player is not currently in an ongoing game or a spectator, the event is cancelled and the damage is set to 0.0.
+     *
+     * @param event The EntityDamageEvent that is being handled.
+     */
     @EventHandler
     fun onLobbyDamageRandom(event: EntityDamageEvent) {
         if (event.entity !is Player)
@@ -86,6 +119,16 @@ class LobbyInteraction : Listener {
     }
 
 
+    /**
+     * Handler method for lobby inventory click events.
+     *
+     * This method is responsible for handling inventory click events in the lobby.
+     * It checks if the click event was triggered by a player, and if the player is currently in a game or a spectator.
+     * If the player is in a game, the method checks if the current game state is IngameState. If not, the event is cancelled.
+     * Additionally, if the player is a spectator, the event is cancelled.
+     *
+     * @param event The InventoryClickEvent triggered by the player.
+     */
     @EventHandler
     fun onLobbyInventoryClick(event: InventoryClickEvent) {
         if (event.whoClicked !is Player)

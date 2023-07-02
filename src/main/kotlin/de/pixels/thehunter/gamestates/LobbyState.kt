@@ -7,15 +7,26 @@ import de.pixels.thehunter.countdowns.Countdowns
 import de.pixels.thehunter.util.game.management.Game
 
 class LobbyState(game: Game) : GameState(game) {
+    /**
+     * Starts the game countdown.
+     *
+     * This method assigns the desired countdown to the current countdown in the game object and starts it.
+     */
     override fun start() {
         game.currentCountdown = game.countdowns[Countdowns.LOBBY_COUNTDOWN.id]
         game.currentCountdown.start()
 
     }
 
+    /**
+     * Stops the execution of a process.
+     */
     override fun stop() {
         return
     }
 
+    /**
+     * Represents the ID of the current game state.
+     */
     override val gameStateID: Int = GameStates.LOBBY_STATE.id
 }

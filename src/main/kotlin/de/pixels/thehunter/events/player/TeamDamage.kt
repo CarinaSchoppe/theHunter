@@ -12,6 +12,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 
 class TeamDamage : Listener {
 
+    /**
+     * Handles team damage event.
+     *
+     * @param event The EntityDamageByEntityEvent instance.
+     */
     @EventHandler
     fun onTeamDamage(event: EntityDamageByEntityEvent) {
 

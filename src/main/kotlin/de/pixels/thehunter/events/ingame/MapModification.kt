@@ -15,6 +15,14 @@ import org.bukkit.event.block.BlockPlaceEvent
 
 class MapModification : Listener {
 
+    /**
+     * EventHandler for the BlockBreakEvent.
+     * Cancels the event and sends a message to the player if they are not in a game or if the game is not in the IngameState.
+     * Cancels the event if mapModify is set to false for the player's current game.
+     * Adds the broken block to the mapResetter's block list for the player's current game.
+     *
+     * @param event The BlockBreakEvent to handle.
+     */
     @EventHandler
     fun onBreak(event: BlockBreakEvent) {
         val player = event.player
@@ -49,6 +57,15 @@ class MapModification : Listener {
         GamesHandler.playerInGames[event.player]?.mapResetter?.addBlockToList(event.block)
     }
 
+    /**
+     * Event handler method called when a block is placed.
+     * This method checks if the player is in a game and if the game state is currently in progress.
+     * If the player is not in a game or the game state is not in progress, the block place event is cancelled
+     * and an appropriate message is sent to the player.
+     * If the player is allowed to modify the map, the placed block is added to the map resetter block list.
+     *
+     * @param event The BlockPlaceEvent object representing the block place event.
+     */
     @EventHandler
     fun onBlockPlace(event: BlockPlaceEvent) {
         val player = event.player

@@ -16,6 +16,11 @@ import org.bukkit.event.inventory.InventoryClickEvent
 
 class GameConfigurator : Listener {
 
+    /**
+     * Handles the event when the game configuration is edited.
+     *
+     * @param event The InventoryClickEvent representing the click event.
+     */
     @EventHandler
     fun onGameConfigEdit(event: InventoryClickEvent) {
         if (!Util.currentGameSelected.containsKey(event.whoClicked as Player) || !(event.whoClicked as Player).hasPermission(Permissions.SETUP_GUI) || PlainTextComponentSerializer.plainText()

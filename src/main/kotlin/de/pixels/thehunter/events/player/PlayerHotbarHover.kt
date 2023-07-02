@@ -22,6 +22,12 @@ class PlayerHotbarHover : Listener {
 
     companion object {
 
+        /**
+         * Updates the hotbar display for the given player based on the item they are holding.
+         *
+         * @param item The item the player is holding.
+         * @param player The player whose hotbar display will be updated.
+         */
         fun updateHotbar(item: ItemStack?, player: Player) {
             when (item?.itemMeta) {
                 Rifle.gun.itemMeta -> {
@@ -58,6 +64,11 @@ class PlayerHotbarHover : Listener {
         }
     }
 
+    /**
+     * Handles when a player hovers over an item in their inventory.
+     *
+     * @param event The PlayerItemHeldEvent representing the event.
+     */
     @EventHandler
     fun onPlayerInventoryHover(event: PlayerItemHeldEvent) {
         if (!GamesHandler.playerInGames.containsKey(event.player))

@@ -10,7 +10,22 @@ import org.bukkit.entity.Player
 
 class Messages(filePath: String) : BaseFile(filePath) {
 
+    /**
+     * A mutable map of messages where each message is associated with a unique key.
+     * The messages in the map are represented as key-value pairs, where the key is a string representing the unique identifier
+     * and the value is a string representing the message content.
+     *
+     * This map can be used to store and retrieve messages based on their keys.
+     *
+     * @property messagesMap the mutable map of messages, where each key-value pair represents a message and its key
+     */
     val messagesMap = mutableMapOf<String, String>()
+
+    /**
+     * Adds default data for messages to the YAML file.
+     *
+     * @return The Messages object
+     */
     override fun addData(): Messages {
         yml.addDefault("start-up-message-successfully", "&aThe Plugin was successfully loaded!")
         yml.addDefault("shutdown-message-successfully", "&cThe Plugin was successfully unloaded!")
@@ -186,6 +201,14 @@ class Messages(filePath: String) : BaseFile(filePath) {
         return this
     }
 
+    /**
+     * Loads the messages from the YAML file into the messages map.
+     *
+     * This method iterates through the keys in the YAML file and retrieves
+     * the message with the corresponding key using the getMessageWithPrefix method.
+     * The retrieved message is then stored in the messagesMap.
+     * After loading all messages, a success message is sent to the console.
+     */
     private fun loadMessagesToMap() {
         for (key in yml.getKeys(false)) {
             messagesMap[key] = getMessageWithPrefix(key)
@@ -194,15 +217,32 @@ class Messages(filePath: String) : BaseFile(filePath) {
             .sendMessage(LegacyComponentSerializer.legacySection().deserialize(TheHunter.prefix + "§aMessages loaded"))
     }
 
+    /**
+     * Sends a message to the specified player.
+     *
+     * @param player the player to send the message to
+     * @param messagePath the message path to retrieve the message from
+     */
     fun sendMessageToPlayer(player: Player, messagePath: String) {
         messagesMap[messagePath]?.let { player.sendMessage(it) }
     }
 
+    /**
+     * Sends a message to the console.
+     *
+     * @param messagePath The path of the message in the messages map.
+     */
     fun sendMessageToConsole(messagePath: String) {
         messagesMap[messagePath]?.let { Bukkit.getConsoleSender().sendMessage(it) }
     }
 
 
+    /**
+     * Returns a message with a prefix based on the given path.
+     *
+     * @param path the path used to generate the message
+     * @return the message with prefix
+     */
     private fun getMessageWithPrefix(path: String): String {
         return TheHunter.prefix + getColorCodedString(path)
 

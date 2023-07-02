@@ -19,6 +19,11 @@ import org.bukkit.inventory.ItemStack
 class PlayerTeamHead : Listener {
 
     companion object {
+        /**
+         * Represents an ItemStack for creating a player head.
+         *
+         * @return The player head ItemStack.
+         */
         val createPlayerHead: ItemStack =
             ItemBuilder(Material.PLAYER_HEAD).addDisplayName(TheHunter.prefix + "§7Team-Inviter")
                 .addEnchantment(org.bukkit.enchantments.Enchantment.DURABILITY, 1).addLore("§aLeftclick to accept")
@@ -26,6 +31,12 @@ class PlayerTeamHead : Listener {
 
     }
 
+    /**
+     * Handles the event when a player interacts with an entity to accept an item.
+     * This method is annotated with @EventHandler to indicate that it is an event handler method.
+     *
+     * @param event The PlayerInteractAtEntityEvent object representing the event.
+     */
     @EventHandler
     fun onItemAccept(event: PlayerInteractAtEntityEvent) {
 
@@ -43,6 +54,11 @@ class PlayerTeamHead : Listener {
         event.player.performCommand("thehunter team accept " + player.name)
     }
 
+    /**
+     * Handles the player invite event when one player invites another player
+     *
+     * @param event The EntityDamageByEntityEvent for the player invite event
+     */
     @EventHandler
     fun onPlayerInvite(event: EntityDamageByEntityEvent) {
         if (event.entity !is Player || event.damager !is Player || !event.damager.hasPermission(Permissions.PLAYER_INVITER) || !GamesHandler.playerInGames.containsKey(event.damager))

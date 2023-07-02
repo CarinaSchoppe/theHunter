@@ -13,6 +13,13 @@ import org.bukkit.event.Listener
 
 class PlayerChat : Listener {
 
+    /**
+     * Handles the event when a player chats.
+     *
+     * @param event The AsyncChatEvent triggered when a player chats.
+     *              Only players who are in a game or spectating a game will have their chat messages processed.
+     *              Players who are not part of a game or spectating will have their chat messages ignored.
+     */
     @EventHandler
     fun onPlayerChat(event: AsyncChatEvent) {
         if (!(GamesHandler.playerInGames.containsKey(event.player) || GamesHandler.spectatorInGames.containsKey(event.player))) {

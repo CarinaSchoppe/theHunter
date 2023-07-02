@@ -24,10 +24,24 @@ class DatabaseHandler {
         }
     }
 
+    /**
+     * The `Companion` class represents a singleton object that provides access to a `Connection` instance.
+     */
     companion object {
+        /**
+         * The `connection` variable represents a connection object to a database.
+         * It is declared using the `lateinit` keyword which means it will be initialized at a later point in the program.
+         *
+         * @property connection The connection object that provides access to a database.
+         */
         lateinit var connection: Connection
     }
 
+    /**
+     * Creates the database if it doesn't already exist.
+     *
+     * @return True if the database was created or already exists, false if not.
+     */
     private fun createDatabaseIfNotExists(): Boolean {
         if (!(TheHunter.instance.settings.settingsMap["mysql"] as Boolean)) {
             Bukkit.getConsoleSender().sendMessage(
@@ -109,6 +123,12 @@ class DatabaseHandler {
         return true
     }
 
+    /**
+     * Creates the statsPlayer table in the database if it does not already exist.
+     * This table is used to store player statistics such as kills, deaths, points, kdr, wins, loses, and games.
+     *
+     * @see TheHunter.instance.settings.settingsMap
+     */
     private fun createTableStatsPlayer() {
         val sqlCommand = "CREATE TABLE IF NOT EXISTS statsPlayer (" +
                 "uuid VARCHAR(36) NOT NULL," +
@@ -133,6 +153,11 @@ class DatabaseHandler {
 
     }
 
+    /**
+     * Adds all players from the database to the player list.
+     *
+     * @return true if the players were successfully added, false otherwise.
+     */
     private fun addAllPlayersFromDataBaseToPLayerList(): Boolean {
         if (!(TheHunter.instance.settings.settingsMap["mysql"] as Boolean))
             return false

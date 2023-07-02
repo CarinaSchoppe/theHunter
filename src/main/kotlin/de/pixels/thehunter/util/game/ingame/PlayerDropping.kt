@@ -10,6 +10,11 @@ import java.util.*
 
 object PlayerDropping {
 
+    /**
+     * Drops players randomly within the game's world border.
+     *
+     * @param game The game object containing information about the players and game settings.
+     */
     fun dropPlayers(game: Game) {
         val locationCenter: Location = (game.arenaCenter?.clone() ?: return).subtract(
             (game.worldBoarderController.worldBoarderSize / 2).toDouble(),

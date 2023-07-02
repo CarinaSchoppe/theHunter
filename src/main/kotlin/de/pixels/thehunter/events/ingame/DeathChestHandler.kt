@@ -14,11 +14,24 @@ import org.bukkit.inventory.Inventory
 
 class DeathChestHandler : Listener {
 
+    /**
+     * Checks if two locations in the same world have the same coordinates.
+     *
+     * @param location the first location
+     * @param other the second location
+     * @return true if the locations have the same world and coordinates, false otherwise
+     */
     private fun worldEquals(location: Location, other: Location): Boolean {
         if (location.world.name != other.world.name || location.x.toInt() != other.x.toInt() || location.y.toInt() != other.y.toInt()) return false
         return location.z.toInt() == other.z.toInt()
     }
 
+    /**
+     * Event handler for opening a death chest when a player interacts with a redstone lamp.
+     *
+     * @param event The PlayerInteractEvent triggered when a player interacts with an entity or block.
+     * @throws IllegalStateException If the player is not in a game or the clicked block is not a redstone lamp.
+     */
     @EventHandler
     fun onOpenDeathChest(event: PlayerInteractEvent) {
         if (!GamesHandler.playerInGames.containsKey(event.player) || event.clickedBlock?.type != Material.REDSTONE_LAMP) return

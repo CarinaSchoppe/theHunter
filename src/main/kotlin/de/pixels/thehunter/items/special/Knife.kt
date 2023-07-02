@@ -16,6 +16,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 
 class Knife : Listener {
     companion object {
+        /**
+         * Represents a knife item.
+         *
+         * @property knife The instance of the knife item.
+         *
+         * @constructor Creates a knife item using the ItemBuilder class.
+         */
         val knife = ItemBuilder(Material.IRON_SWORD)
             .addDisplayName(TheHunter.prefix + "§eKnife")
             .addLore(listOf("§6Knife to kill", "§eLeft-Click to use")).addEnchantment(Enchantment.DURABILITY, 1)
@@ -23,6 +30,11 @@ class Knife : Listener {
     }
 
 
+    /**
+     * Handle the event of a player using a knife to damage another entity.
+     *
+     * @param event The EntityDamageByEntityEvent representing the knife usage event.
+     */
     @EventHandler
     fun onKnifeUse(event: EntityDamageByEntityEvent) {
 

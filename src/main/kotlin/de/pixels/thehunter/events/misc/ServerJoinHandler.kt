@@ -12,6 +12,13 @@ import org.bukkit.event.player.PlayerJoinEvent
 
 class ServerJoinHandler : Listener {
 
+    /**
+     * Handles the event when a player joins the server.
+     * This method is annotated with `@EventHandler` to mark it as an event listener.
+     * The priority is set to `EventPriority.LOWEST` to ensure that it is executed first.
+     *
+     * @param event The `PlayerJoinEvent` object representing the event.
+     */
     @EventHandler(priority = EventPriority.LOWEST)
     fun onPlayerJoinServer(event: PlayerJoinEvent) {
         event.player.inventory.clear()

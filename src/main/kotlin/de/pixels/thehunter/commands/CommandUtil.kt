@@ -10,6 +10,17 @@ import org.bukkit.command.CommandSender
 
 object CommandUtil {
 
+    /**
+     * Checks if the given command meets the basic requirements.
+     *
+     * @param sender The command sender.
+     * @param command The command that was executed.
+     * @param args The arguments passed with the command.
+     * @param cmd The expected command.
+     * @param minArgs The minimum number of arguments required.
+     * @param permissions The required permissions.
+     * @return True if the command meets the basic requirements, false otherwise.
+     */
     fun checkCommandBasics(
         sender: CommandSender,
         command: String,

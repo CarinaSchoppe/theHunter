@@ -19,12 +19,35 @@ import org.bukkit.event.player.PlayerInteractEvent
 class Swapper : Listener {
     companion object {
 
+        /**
+         * This variable represents a swapper item that can be used in a game.
+         *
+         * It is built by using the ItemBuilder class to customize the item's properties such as material, display name,
+         * lore, enchantments, etc.
+         *
+         * Usage:
+         *     To use the swapper, simply right-click on it to activate the swapping effect.
+         *     When activated, the swapper will swap positions with the player it is used on.
+         *
+         * Example:
+         *     val swapper = ItemBuilder(Material.TNT)
+         *                     .addDisplayName(TheHunter.prefix + "§6Swapper")
+         *                     .addLore("§7Click to swap with a player!")
+         *                     .addLore("§7Right-click to activate")
+         *                     .addEnchantment(Enchantment.DURABILITY, 1)
+         *                     .build()
+         */
         val swapper = ItemBuilder(Material.TNT).addDisplayName(TheHunter.prefix + "§6Swapper")
             .addLore("§7Click to swap with a player!").addLore("§7Right-click to activate")
             .addEnchantment(Enchantment.DURABILITY, 1).build()
 
     }
 
+    /**
+     * Handles the player swap event triggered by a player interacting with an item.
+     *
+     * @param event The PlayerInteractEvent instance.
+     */
     @EventHandler
     fun onPlayerSwap(event: PlayerInteractEvent) {
         if (ItemHandler.shouldNotInteractWithItem(event, swapper, "Swapper"))

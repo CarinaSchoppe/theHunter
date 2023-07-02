@@ -17,12 +17,22 @@ import org.bukkit.event.player.PlayerInteractEvent
 
 class Healer : Listener {
     companion object {
+        /**
+         * Represents a healer item used in the game.
+         *
+         * @property healer The healer item.
+         */
         val healer =
             ItemBuilder(Material.RED_DYE).addDisplayName(TheHunter.prefix + "§7Healer").addLore("§7Heals you!")
                 .addLore("§7Right-click to activate").build()
     }
 
 
+    /**
+     * Handles the event when a player interacts with a healer item.
+     *
+     * @param event The PlayerInteractEvent representing the interaction event.
+     */
     @EventHandler
     fun onHealerItemClick(event: PlayerInteractEvent) {
         if (ItemHandler.shouldNotInteractWithItem(event, healer, "Healer"))

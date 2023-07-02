@@ -12,9 +12,16 @@ import org.bukkit.entity.Player
 
 class StartCommand : CommandExecutor {
 
+    /**
+     * Executes the specified command.
+     *
+     * @param sender the CommandSender who executed the command
+     * @param command the Command that was executed
+     * @param label the alias or label used for the command
+     * @param args an array of arguments passed to the command, or null if no arguments were provided
+     * @return true if the command was successfully executed, false otherwise
+     */
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
-
-
         if (sender !is Player || !GamesHandler.playerInGames.containsKey(sender) && !GamesHandler.spectatorInGames.containsKey(sender))
             return false
         sender.performCommand("thehunter start")

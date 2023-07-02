@@ -10,9 +10,26 @@ import java.io.File
 
 open class BaseFile(filePath: String) {
 
+    /**
+     * Represents a YAML configuration file.
+     *
+     * @property yml The YAML configuration object.
+     */
     val yml: YamlConfiguration
+
+    /**
+     * Represents a file on the system.
+     *
+     * @property file The underlying File object.
+     * @constructor Creates a new instance of the File class with the specified File object.
+     */
     val file: File
 
+    /**
+     * The Companion class contains a single companion object that holds constants related to the game configuration.
+     *
+     * @property GAME_FOLDER The folder path where the game is installed. This is a constant value that should not be modified.
+     */
     companion object {
         const val GAME_FOLDER = "plugins/theHunterRemastered"
     }
@@ -22,6 +39,13 @@ open class BaseFile(filePath: String) {
         yml = YamlConfiguration.loadConfiguration(file)
     }
 
+    /**
+     * Saves the YAML configuration file.
+     * If the file does not exist, it will be created with default options.
+     * If the file already exists, it will be overwritten with the current options.
+     *
+     * @throws Exception if an error occurs while saving the file.
+     */
     private fun saveFile() {
         try {
             yml.options().copyDefaults(true)
@@ -31,11 +55,20 @@ open class BaseFile(filePath: String) {
         }
     }
 
+    /**
+     * Adds data to the BaseFile object.
+     */
     open fun addData(): BaseFile {
         saveFile()
         return this
     }
 
+    /**
+     * Returns the color-coded string corresponding to the given path.
+     *
+     * @param path the path of the string in the YAML configuration
+     * @return the color-coded string, or an empty string if not found
+     */
     fun getColorCodedString(path: String): String {
         return ChatColor.translateAlternateColorCodes('&', yml.getString(path) ?: "")
     }

@@ -1,5 +1,19 @@
 /*
- * Copyright Notice for theHunterRemaster
+ * Copy * This code is a configuration block for a Gradle build script.
+ * It sets various options and configurations for different tasks in the build process.
+ * 
+ * The `runServer` block specifies the Minecraft version to use for running the server.
+ * 
+ * The `compileJava` block sets the encoding to UTF-8 for all Java source files and sets the Java release version to 17.
+ * 
+ * The `javadoc` block sets the encoding to UTF-8 for generating Javadoc documentation.
+ * 
+ * The `processResources` block sets the filtering charset to UTF-8 for processing resources.
+ * 
+ * The `withType<KotlinCompile>` block sets the JVM target to 17 and language and API versions to 2.0 for Kotlin source files.
+ * 
+ * The `test` block configures the use of JUnit Platform for running tests.
+ right Notice for theHunterRemaster
  * Copyright (c) at Carina Sophie Schoppe 2022
  * File created on 6/14/22, 12:49 PM by Carina The Latest changes made by Carina on 6/13/22, 12:42 PM All contents of "build.gradle.kts" are protected by copyright.
  * The copyright law, unless expressly indicated otherwise, is
@@ -10,6 +24,7 @@
  */
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 
 plugins {
     id("idea")
@@ -45,10 +60,13 @@ java {
     // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
-tasks {
+tasks
+/**
+ */
+{
 
-runServer {
-    minecraftVersion("1.20.1")
+    runServer {
+        minecraftVersion("1.20.1")
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything

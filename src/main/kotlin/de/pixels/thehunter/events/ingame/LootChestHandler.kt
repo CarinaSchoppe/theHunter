@@ -12,6 +12,19 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractEvent
 
 class LootChestHandler : Listener {
+    /**
+     * Handles the event when a player interacts with a chest.
+     * If the player is not in a game or the game is not in the 'IngameState' or the clicked block is not a beacon,
+     * the method returns without doing anything.
+     *
+     * If the clicked block is a chest that belongs to the game, opens the inventory for the player.
+     * Otherwise, creates an item inventory for the game and opens it for the player.
+     * Plays the chest open sound for the player.
+     *
+     * Finally, cancels the event.
+     *
+     * @param event The 'PlayerInteractEvent' event object.
+     */
     @EventHandler
     fun onChestOpen(event: PlayerInteractEvent) {
         if (!GamesHandler.playerInGames.containsKey(event.player) || GamesHandler.playerInGames[event.player]?.currentGameState !is IngameState || event.clickedBlock == null || event.clickedBlock?.type != org.bukkit.Material.BEACON)

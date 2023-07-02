@@ -12,8 +12,29 @@ import org.bukkit.ChatColor
 class Settings(filePath: String) : BaseFile(filePath) {
 
 
+    /**
+     * Represents a settings map containing key-value pairs.
+     *
+     * This mutable map is used to store various settings and their corresponding values. The keys are
+     * of type [String], and the values can be of any type.
+     *
+     * Use the [settingsMap] variable to access and modify the settings.
+     *
+     * @since 1.0.0
+     */
     val settingsMap = mutableMapOf<String, Any>()
 
+    /**
+     * Fill the settings map with the values from the yml file.
+     *
+     * The settings map is filled by iterating through the keys in the yml file and adding them as key-value pairs
+     * in the settings map. The key is the key from the yml file, and the value is the corresponding value stored in
+     * the yml file.
+     *
+     * After filling the settings map, a message is sent to the console indicating that the settings have been loaded.
+     *
+     * Note: The yml file must be loaded before calling this method.
+     */
     private fun fillSettingsMap() {
         for (key in yml.getKeys(false)) {
             settingsMap[key] = yml[key] as Any
@@ -28,6 +49,11 @@ class Settings(filePath: String) : BaseFile(filePath) {
         )
     }
 
+    /**
+     * Adds default data to the settings YAML file.
+     *
+     * @return The updated Settings object.
+     */
     override fun addData(): Settings {
         yml.addDefault("prefix", "&7[&bTheHunter&7] &f")
         yml.addDefault("debug", false)

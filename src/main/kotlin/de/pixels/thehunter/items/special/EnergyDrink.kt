@@ -18,6 +18,15 @@ import org.bukkit.potion.PotionEffectType
 class EnergyDrink : Listener {
 
     companion object {
+        /**
+         * Represents an energy drink item.
+         *
+         * This item provides certain effects when right-clicked with.
+         * It is created using the ItemBuilder class and has a display name of "Energy-Drink" with a prefix of "TheHunter",
+         * a lore describing its effect, and an enchantment of durability level 1.
+         *
+         * @param energyDrink  The energy drink item.
+         */
         val energyDrink =
             ItemBuilder(Material.POTION).addDisplayName(TheHunter.prefix + "§6Energy-Drink")
                 .addLore("§7Energie- gives you some effects on right-clicking")
@@ -26,6 +35,17 @@ class EnergyDrink : Listener {
 
     }
 
+    /**
+     * Event handler method for when a player interacts with an Energy Drink item.
+     *
+     * This method is responsible for handling the event of a player interacting with an Energy Drink item.
+     * It checks if the interaction with the item should be allowed or not, based on the provided event.
+     * If the interaction is not allowed, the method returns immediately.
+     * Otherwise, it cancels the event, removes one Energy Drink item from the player's inventory,
+     * applies the appropriate potion effects, and sends a consumed message to the player.
+     *
+     * @param event The PlayerInteractEvent object representing the interaction event.
+     */
     @EventHandler
     fun onEnergyDinkDrink(event: PlayerInteractEvent) {
         if (ItemHandler.shouldNotInteractWithItem(event, energyDrink, "EnergyDrink"))
@@ -38,6 +58,11 @@ class EnergyDrink : Listener {
 
     }
 
+    /**
+     * Creates and adds various PotionEffects to a mutable set.
+     *
+     * @return The mutable set containing the created PotionEffects.
+     */
     private fun createAndAddPotionEffects(): MutableSet<PotionEffect> {
         val potionsEffects = mutableSetOf<PotionEffect>()
         val saturation = PotionEffect(PotionEffectType.SATURATION, 2 * 20, 2)

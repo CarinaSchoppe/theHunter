@@ -11,6 +11,11 @@ import org.bukkit.event.player.PlayerQuitEvent
 
 class PlayerDisconnectHandler : Listener {
 
+    /**
+     * Handles the event when a player disconnects from the server.
+     *
+     * @param event The PlayerQuitEvent representing the player disconnect event.
+     */
     @EventHandler
     fun onPlayerDisconnect(event: PlayerQuitEvent) {
 

@@ -20,6 +20,19 @@ import org.bukkit.event.player.PlayerInteractEvent
 
 class Food : Listener {
     companion object {
+        /**
+         * A variable representing a food item used for regeneration.
+         *
+         * The {@code food} variable is an instance of the {@link org.bukkit.inventory.ItemStack} class,
+         * specifically an item of type {@link org.bukkit.Material#BEETROOT_SOUP}.
+         *
+         * This food item is created using the {@link ItemBuilder} class, with additional properties set:
+         * - A display name with the value of {@link TheHunter#prefix} concatenated with "§6Food".
+         * - Lore lines: "§7Click to regenerate food!" and "§7Right-click to activate".
+         * - An enchantment of {@link Enchantment#DURABILITY} with level 1.
+         *
+         * To obtain this food item, call the {@link ItemBuilder#build()} method on the {@code food} variable.
+         */
         val food =
             ItemBuilder(Material.BEETROOT_SOUP).addDisplayName(TheHunter.prefix + "§6Food")
                 .addLore("§7Click to regenerate food!").addLore("§7Right-click to activate")
@@ -27,6 +40,11 @@ class Food : Listener {
     }
 
 
+    /**
+     * Event handler for replenishing player's food level.
+     *
+     * @param event The PlayerInteractEvent triggering the replenishment.
+     */
     @EventHandler
     fun onPlayerFood(event: PlayerInteractEvent) {
         if (ItemHandler.shouldNotInteractWithItem(event, food, "Food"))
@@ -49,6 +67,13 @@ class Food : Listener {
         }
     }
 
+    /**
+     * An event handler method to handle player food level decreasing event.
+     *
+     * @param event The FoodLevelChangeEvent object representing the event.
+     *              event.entity must be an instance of Player.
+     * @throws IllegalArgumentException if event.entity is not an instance of Player.
+     */
     @EventHandler
     fun onPlayerFoodLoose(event: FoodLevelChangeEvent) {
         if (event.entity !is Player)

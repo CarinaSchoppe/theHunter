@@ -12,9 +12,36 @@ import java.util.function.Consumer
 
 class EndCountdown(game: Game) : Countdown(game) {
 
+    /**
+     * Represents the duration of a certain event or process, measured in seconds.
+     *
+     * The duration is specified by an integer value in seconds.
+     * This variable can be overridden and used in classes or objects that need to track or set the duration of something.
+     *
+     * @property duration The duration value in seconds.
+     */
     override var duration: Int = 10
 
 
+    /**
+     * Starts the end countdown.
+     * The duration of the countdown is set in the settings under the key "ENDCOUNTDOWN_DURATION".
+     * The countdown updates every second and sends messages and plays sounds to all players and spectators.
+     * The countdown stops if there are no players or spectators left, or if the duration reaches 0.
+     * Once the countdown stops, it cannot be restarted.
+     *
+     * @see TheHunter
+     * @see TheHunter.instance.settings.settingsMap
+     * @see ConstantStrings.ENDCOUNTDOWN_DURATION
+     * @see Bukkit.getScheduler().runTaskTimer
+     * @see Consumer
+     * @see game
+     * @see game.players
+     * @see game.spectators
+     * @see TheHunter.instance.messages.messagesMap
+     * @see ConstantStrings.ENDCOUNTDOWN_MESSAGE
+     * @see duration
+     */
     override fun start() {
         duration = TheHunter.instance.settings.settingsMap[ConstantStrings.ENDCOUNTDOWN_DURATION] as Int
         Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Consumer {
@@ -61,15 +88,33 @@ class EndCountdown(game: Game) : Countdown(game) {
         }, 20L, 20L)
     }
 
+    /**
+     * Performs an idle operation.
+     *
+     * This method does not perform any specific action and is intended to be overridden in sub-classes
+     * to provide a custom implementation.
+     */
     override fun idle() {
         return
     }
 
+    /**
+     * Stops the game by transitioning to the next game state.
+     */
     override fun stop() {
         game.nextGameState()
     }
 
+    /**
+     * Indicates whether the object is idle or not.
+     *
+     * @property isIdle The state of the object. True if idle, false otherwise.
+     */
     override var isIdle: Boolean = false
+
+    /**
+     * Represents the unique identifier of an end countdown.
+     */
     override val id: Int = Countdowns.END_COUNTDOWN.id
 
 }

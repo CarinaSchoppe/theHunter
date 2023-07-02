@@ -11,25 +11,115 @@ import java.io.File
 
 class GameItems(game: Game) {
 
+    /**
+
+     * This variable represents a file object that points to the "items.yml" file
+     * specific to a game stored in the "arenas" folder under the game's name.
+     *
+     * The file path is constructed using the BaseFile.GAME_FOLDER constant to identify
+     * the base game folder, the `game.name` to identify the specific game name, and the
+     * "/arenas" sub-folder to identify the "arenas" folder.
+     *
+     * Example usage:
+     * val itemsFile = FileItems   // Access the file object representing items.yml for the game
+     *
+     * Please note that the example code is not provided in this documentation.
+     */
     private val fileItems = File("${BaseFile.GAME_FOLDER}/arenas/${game.name}/items.yml")
+
+    /**
+     * Represents the YAML configuration file for items.
+     *
+     * This class provides methods to load, save, and manipulate the YAML configuration.
+     * The configuration file is loaded from the specified file.
+     *
+     * @property ymlItems The instance of `YamlConfiguration` representing the loaded configuration.
+     * @property fileItems The `File` object representing the YAML configuration file.
+     *
+     * @constructor Creates a new instance of YamlItems by loading the configuration file.
+     * @param fileItems The `File` object representing the YAML configuration file.
+     */
     private val ymlItems = YamlConfiguration.loadConfiguration(fileItems)
+
+    /**
+     * Holds the file path for the guns YAML file.
+     *
+     * The guns YAML file is used to store the configurations for the guns in the game.
+     * The file path is calculated based on the game's name and the game folder.
+     * It is a private variable and should not be accessed directly, but through its corresponding getter method.
+     */
     private val fileGuns = File("${BaseFile.GAME_FOLDER}/arenas/${game.name}/guns.yml")
+
+    /**
+     * Represents a YamlConfiguration object for storing gun data.
+     *
+     * This private variable is used to load the gun data from a Yaml file.
+     * It is recommended to use [YamlConfiguration.save] method after making modifications to this YamlConfiguration object.
+     *
+     * The gun data is loaded from the file specified by the `fileGuns` variable.
+     *
+     * @property ymlGuns The YamlConfiguration object that stores the gun data.
+     * @see YamlConfiguration
+     */
     private val ymlGuns = YamlConfiguration.loadConfiguration(fileGuns)
+
+    /**
+
+     * Mutable map that stores items.
+     * The keys are of type [String] and values can be of any type [Any].
+     *
+     * Note: This variable is mutable and can be modified.
+     */
     val items = mutableMapOf<String, Any>()
+
+    /**
+     * Mutable map representing the collection of guns.
+     *
+     * Key value pairs in the map represent the name of the gun and the quantity available respectively.
+     *
+     * Usage:
+     *  - Add a gun:
+     *      guns["gunName"] = quantity
+     *
+     *  - Remove a gun:
+     *      guns.remove("gunName")
+     *
+     *  - Check the quantity of a gun:
+     *      guns["gunName"]
+     *
+     *  - Update the quantity of a gun:
+     *      guns["gunName"] = updatedQuantity
+     *
+     * Note: The name of the gun should be unique.
+     *       The quantity should be a non-negative integer value.
+     */
     val guns = mutableMapOf<String, Int>()
 
+    /**
+     * Loads all items from the YAML file into the 'items' map.
+     */
     fun loadAllItems() {
         for (item in ymlItems.getKeys(false)) {
             items[item] = ymlItems[item] as Any
         }
     }
 
+    /**
+     * Load all gun settings from the YAML configuration file.
+     *
+     * This method iterates over the keys of the 'ymlGuns' object
+     * and stores each gun setting with its corresponding value
+     * in the 'guns' map.
+     */
     fun loadAllGunSettings() {
         for (gun in ymlGuns.getKeys(false)) {
             guns[gun] = ymlGuns.getInt(gun)
         }
     }
 
+    /**
+     * Saves all items and gun settings to the YAML configuration files.
+     */
     fun saveAllItems() {
         ymlItems.addDefault("item-amounts", 10)
         ymlItems.addDefault("EyeSpy", true)

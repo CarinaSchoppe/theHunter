@@ -10,6 +10,11 @@ import org.bukkit.Sound
 import org.bukkit.entity.Player
 
 class EndState(game: Game) : GameState(game) {
+    /**
+     * Method to start the game.
+     * This method performs the necessary actions to start the game including handling players and spectators,
+     * starting the countdown, and resetting the world border.
+     */
     override fun start() {
 
 
@@ -34,6 +39,11 @@ class EndState(game: Game) : GameState(game) {
     }
 
 
+    /**
+     * Perform actions on each player in the playerList after showing the user handler.
+     *
+     * @param playerList The list of players to perform actions on.
+     */
     private fun userHandlerShowingAfter(playerList: MutableList<Player>) {
         playerList.forEach {
             it.playSound(it.location, Sound.ENTITY_ENDER_DRAGON_DEATH, 1f, 1f)
@@ -43,6 +53,17 @@ class EndState(game: Game) : GameState(game) {
     }
 
 
+    /**
+     * Stops the game by resetting the map, removing all players and spectators.
+     *
+     * This method performs the following actions:
+     * 1. Resets the game map using `game.mapResetter.resetMap()`.
+     * 2. Removes all players from the game by executing the command "thehunter leave" on each player.
+     * 3. Removes all spectators from the game by executing the command "thehunter leave" on each spectator.
+     *
+     * @see game.mapResetter.resetMap
+     * @see Player.performCommand
+     */
     override fun stop() {
         game.mapResetter.resetMap()
         game.players.toMutableList().forEach {
@@ -54,5 +75,15 @@ class EndState(game: Game) : GameState(game) {
     }
 
 
+    /**
+     * The unique identifier for the current game state.
+     *
+     * This value represents the state of the game and is used to identify different stages or phases in the game.
+     * The value is an integer that corresponds to the ID of the current game state.
+     *
+     * @see GameStates
+     *
+     * @property gameStateID The unique identifier for the current game state.
+     */
     override val gameStateID: Int = GameStates.END_STATE.id
 }

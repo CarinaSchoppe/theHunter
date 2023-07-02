@@ -113,6 +113,13 @@ class CreateGame {
         }
     }
 
+    /**
+     * Removes a specific location from a game.
+     *
+     * @param args An array of strings representing the command arguments.
+     *             It should include the game name and the type of location to remove.
+     * @param sender The command sender who executed the command.
+     */
     private fun removeLocation(args: Array<out String>, sender: CommandSender) {
         if (args.size != 3) {
             TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
@@ -214,6 +221,12 @@ class CreateGame {
         }
     }
 
+    /**
+     * Configures the game based on the given arguments.
+     *
+     * @param args The array of arguments for configuring the game.
+     * @param sender The CommandSender who executed the configuration command.
+     */
     private fun configGame(args: Array<out String>, sender: CommandSender) {
         if (args.size != 3) {
             TheHunter.instance.messages.messagesMap["not-enough-arguments"]?.let {

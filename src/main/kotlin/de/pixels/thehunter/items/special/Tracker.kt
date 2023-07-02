@@ -17,6 +17,11 @@ import org.bukkit.event.player.PlayerInteractEvent
 class Tracker : Listener {
     companion object {
 
+        /**
+         * Represents a tracker item.
+         *
+         * @property tracker The tracker item.
+         */
         val tracker = ItemBuilder(Material.COMPASS).addDisplayName(TheHunter.prefix + "§6Tracker")
             .addLore("§7Click to track a player!").addLore("§7Right-click to activate")
             .addEnchantment(Enchantment.DURABILITY, 1).build()
@@ -24,6 +29,11 @@ class Tracker : Listener {
 
     }
 
+    /**
+     * Event handler for player tracking.
+     *
+     * @param event The PlayerInteractEvent triggered when a player interacts with an item.
+     */
     @EventHandler
     fun onPlayerTrack(event: PlayerInteractEvent) {
         if (ItemHandler.shouldNotInteractWithItem(event, tracker, "Tracker"))

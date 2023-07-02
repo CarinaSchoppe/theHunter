@@ -21,6 +21,11 @@ import org.bukkit.event.player.PlayerInteractEvent
 
 class GameSigns : Listener {
     companion object {
+        /**
+         * Updates the signs for the given game.
+         *
+         * @param game The game object to update the signs for.
+         */
         fun updateGameSigns(game: Game) {
 
             for (sign in game.signs) {
@@ -55,6 +60,11 @@ class GameSigns : Listener {
         }
     }
 
+    /**
+     * EventHandler for handling player sign clicks.
+     *
+     * @param event The PlayerInteractEvent.
+     */
     @EventHandler
     fun onSignClick(event: PlayerInteractEvent) {
 
@@ -78,6 +88,11 @@ class GameSigns : Listener {
         }
     }
 
+    /**
+     * Handles the creation of signs for The Hunter plugin.
+     *
+     * @param event The SignChangeEvent representing the sign creation event.
+     */
     @EventHandler
     fun onSignCreate(event: SignChangeEvent) {
 

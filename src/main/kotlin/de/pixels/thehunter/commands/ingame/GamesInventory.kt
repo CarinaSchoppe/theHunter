@@ -12,6 +12,13 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 class GamesInventory {
+    /**
+     * Opens the games inventory for the specified command sender.
+     *
+     * @param sender the command sender
+     * @param command the command name
+     * @param args the command arguments
+     */
     fun openInventory(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(
                 sender,
@@ -27,6 +34,13 @@ class GamesInventory {
         (sender as Player).openInventory(Inventories.gamesInventory)
     }
 
+    /**
+     * Opens the settings inventory for a given player.
+     *
+     * @param sender The command sender.
+     * @param command The command string.
+     * @param args The arguments passed to the command.
+     */
     fun openSettings(sender: CommandSender, command: String, args: Array<out String>) {
         if (!CommandUtil.checkCommandBasics(
                 sender,

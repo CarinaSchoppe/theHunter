@@ -10,14 +10,32 @@ import org.bukkit.block.Block
 
 class MapResetter(val game: Game) {
 
+    /**
+     * This variable represents a mutable list of string blocks.
+     *
+     * Note that the access modifier is set to private.
+     *
+     * @see mutableListOf
+     */
     private val blocks = mutableListOf<String>()
 
+    /**
+     * Adds a Block to the list of blocks.
+     *
+     * @param block the Block to be added.
+     */
     fun addBlockToList(block: Block) {
         val blockString = block.type.name + ":" + block.world.name + ":" + block.x + ":" + block.y + ":" + block.z
         blocks.add(blockString)
     }
 
     companion object {
+        /**
+         * Sets a block at the specified coordinates in the given world.
+         *
+         * @param blockString the string representing the block to be set, using the format "material:world:x:y:z"
+         * @throws IllegalArgumentException if the blockString does not match the expected format or if the material is invalid
+         */
         fun setBlock(blockString: String) {
             val data = blockString.split(":")
             val type = Material.getMaterial(data[0])
@@ -33,6 +51,12 @@ class MapResetter(val game: Game) {
     }
 
 
+    /**
+     * Resets the map by reversing the blocks list, removing all game entities from the game, clearing the game entities list,
+     * setting each block in the blocks list, and finally clearing the blocks list.
+     *
+     * This method is typically called when the game map needs to be reset, such as when a new level is started.
+     */
     fun resetMap() {
         blocks.reverse()
         game.gameEntities.forEach {
