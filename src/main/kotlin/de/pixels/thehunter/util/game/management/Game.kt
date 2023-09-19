@@ -506,9 +506,11 @@ class Game(var name: String) {
             game?.spectatorLocation = ymlLocations.getLocation("spectator-location")
             game?.finish()
             game?.currentGameState = game?.gameStates!!.get(GameStates.LOBBY_STATE.id)
-            game.worldBoarderController?.resetWorldBoarder()
-            game.currentGameState?.start()
-     
+            if (game != null) {
+                game.worldBoarderController.resetWorldBoarder()
+                game.currentGameState.start()
+
+            }
         }
 
 
