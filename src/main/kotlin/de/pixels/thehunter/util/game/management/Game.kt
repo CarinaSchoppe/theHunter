@@ -476,7 +476,7 @@ class Game(var name: String) {
         fun loadGameFromConfig(fileName: String) {
             val fileSettings = File("${BaseFile.GAME_FOLDER}/arenas/$fileName/settings.yml")
             val ymlSettings = YamlConfiguration.loadConfiguration(fileSettings)
-            val game = ymlSettings.getString("game-name")?.let { Game(it) }
+            val game: Game? = ymlSettings.getString("game-name")?.let { Game(it) }
             game?.create()
             game?.chestFall = ymlSettings.getBoolean("chest-fall")
             game?.chestAmount = ymlSettings.getInt("chest-amount")
@@ -505,9 +505,10 @@ class Game(var name: String) {
             game?.arenaCenter = ymlLocations.getLocation("arena-center")
             game?.spectatorLocation = ymlLocations.getLocation("spectator-location")
             game?.finish()
-            game?.currentGameState = game?.gameStates?.get(GameStates.LOBBY_STATE.id) ?: return
-            game.currentGameState.start()
-            game.worldBoarderController.resetWorldBoarder()
+            game?.currentGameState = game?.gameStates!!.get(GameStates.LOBBY_STATE.id)
+            game.worldBoarderController?.resetWorldBoarder()
+            game.currentGameState?.start()
+     
         }
 
 
