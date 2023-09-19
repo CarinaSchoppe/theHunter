@@ -42,6 +42,7 @@ import java.io.File
 class TheHunter : JavaPlugin() {
 
     /*
+    TODO: PlainTextComponentSerializer -> Legacy muss alles geändert werden wo das auftritt & ChatColor.translateAlternateColorCodes auch veraltet
     TODO: Villager Clickable somehow
     TODO: Perks
     TODO: Achievements
