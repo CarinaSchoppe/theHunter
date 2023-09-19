@@ -47,10 +47,8 @@ class TheHunter : JavaPlugin() {
     TODO: Premium join
     TODO: grenade makes no damage
     TODO: Legacy code umändern 
-    TODO: Testing!!!
-    TODO: Empty gamestate array 
+    TODO: Empty gamestate array
     TODO: Inventory Clicks.
-    TOOD: LegacyBugs    
      */
 
 
