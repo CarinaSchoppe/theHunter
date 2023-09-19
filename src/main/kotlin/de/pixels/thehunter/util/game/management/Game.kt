@@ -509,8 +509,10 @@ class Game(var name: String) {
             if (game != null) {
                 game.worldBoarderController.resetWorldBoarder()
                 game.currentGameState.start()
-
+            } else {
+                Bukkit.getConsoleSender().sendMessage("§cGame is null")
             }
+            
         }
 
 
