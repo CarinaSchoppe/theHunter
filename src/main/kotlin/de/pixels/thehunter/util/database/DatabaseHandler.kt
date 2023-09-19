@@ -10,7 +10,8 @@ import de.pixels.thehunter.util.game.management.StatsPlayer
 import de.pixels.thehunter.util.game.management.StatsSystem
 import de.pixels.thehunter.util.misc.ConstantStrings
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import java.io.File
 import java.sql.Connection
 import java.sql.DriverManager
@@ -45,10 +46,9 @@ class DatabaseHandler {
     private fun createDatabaseIfNotExists(): Boolean {
         if (!(TheHunter.instance.settingsFile.settingsMap["mysql"] as Boolean)) {
             Bukkit.getConsoleSender().sendMessage(
-                ChatColor.translateAlternateColorCodes(
-                    '&',
-                    TheHunter.instance.settingsFile.settingsMap["prefix"] as String
-                ) + "§7Using YML-Settings file"
+                Component.text(TheHunter.instance.settingsFile.settingsMap["prefix"] as String).append(
+                    Component.text("Using YML-Settings file", NamedTextColor.GRAY)
+                )
             )
 
             return false
@@ -61,10 +61,9 @@ class DatabaseHandler {
         lateinit var databaseFile: File
         if (TheHunter.instance.settingsFile.settingsMap["sqlite-enable"] as Boolean) {
             Bukkit.getConsoleSender().sendMessage(
-                ChatColor.translateAlternateColorCodes(
-                    '&',
-                    TheHunter.instance.settingsFile.settingsMap["prefix"] as String
-                ) + "§aUsing SQLite-Settings file"
+                Component.text(TheHunter.instance.settingsFile.settingsMap["prefix"] as String).append(
+                    Component.text("Using SQLite-Settings file", NamedTextColor.GREEN)
+                )
             )
 
             databaseFile = try {
@@ -82,10 +81,9 @@ class DatabaseHandler {
                     TheHunter.instance.settingsFile.yml[ConstantStrings.SQLITE_PATH, file.absolutePath]
                     TheHunter.instance.settingsFile.yml.save(TheHunter.instance.settingsFile.file)
                     Bukkit.getConsoleSender().sendMessage(
-                        ChatColor.translateAlternateColorCodes(
-                            '&',
-                            TheHunter.instance.settingsFile.settingsMap["prefix"] as String
-                        ) + "§aCreating own database-file..."
+                        Component.text(TheHunter.instance.settingsFile.settingsMap["prefix"] as String).append(
+                            Component.text("Creating own database-file...", NamedTextColor.GREEN)
+                        )
                     )
 
                 }
@@ -93,12 +91,10 @@ class DatabaseHandler {
             }
         } else {
             Bukkit.getConsoleSender().sendMessage(
-                ChatColor.translateAlternateColorCodes(
-                    '&',
-                    TheHunter.instance.settingsFile.settingsMap["prefix"] as String
-                ) + "§aUsing MySQL database connection!"
+                Component.text(TheHunter.instance.settingsFile.settingsMap["prefix"] as String).append(
+                    Component.text("Using MySQL database connection!", NamedTextColor.GREEN)
+                )
             )
-
         }
 
         val host = TheHunter.instance.settingsFile.settingsMap["mysql-host"] as String
@@ -111,10 +107,9 @@ class DatabaseHandler {
             if (TheHunter.instance.settingsFile.settingsMap["sqlite-enable"] as Boolean) DriverManager.getConnection("jdbc:sqlite:${databaseFile.absolutePath}")
             else DriverManager.getConnection("jdbc:mysql://$host:$port/$database?useSSL=false", username, password)
         Bukkit.getConsoleSender().sendMessage(
-            ChatColor.translateAlternateColorCodes(
-                '&',
-                TheHunter.instance.settingsFile.settingsMap["prefix"] as String
-            ) + "§aConnected to database!"
+            Component.text(TheHunter.instance.settingsFile.settingsMap["prefix"] as String).append(
+                Component.text("Connected to database!", NamedTextColor.GREEN)
+            )
         )
 
         createTableStatsPlayer()
@@ -145,12 +140,10 @@ class DatabaseHandler {
         val statement = connection.prepareStatement(sqlCommand)
         statement.execute()
         Bukkit.getConsoleSender().sendMessage(
-            ChatColor.translateAlternateColorCodes(
-                '&',
-                TheHunter.instance.settingsFile.settingsMap["prefix"] as String
-            ) + "§aCreating table statsPlayer..."
+            Component.text(TheHunter.instance.settingsFile.settingsMap["prefix"] as String).append(
+                Component.text("Creating table statsPlayer...", NamedTextColor.GREEN)
+            )
         )
-
     }
 
     /**
@@ -180,10 +173,9 @@ class DatabaseHandler {
 
         }
         Bukkit.getConsoleSender().sendMessage(
-            ChatColor.translateAlternateColorCodes(
-                '&',
-                TheHunter.instance.settingsFile.settingsMap["prefix"] as String
-            ) + "§aAdded all players from database to playerlist..."
+            Component.text(TheHunter.instance.settingsFile.settingsMap["prefix"] as String).append(
+                Component.text("Added all players from database to playerlist...", NamedTextColor.GREEN)
+            )
         )
 
         return true
