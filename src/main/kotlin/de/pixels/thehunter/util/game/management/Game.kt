@@ -143,6 +143,16 @@ class Game(var name: String) {
      */
     lateinit var itemSettings: ItemSettings
 
+    /**
+     * Stores the perk settings for a specific user.
+     *
+     * This variable is used to hold an instance of the [PerkSettings] class, which represents the perk
+     * settings for a user. It is declared with the `lateinit` modifier, indicating that it will be
+     * initialized at a later point in the code execution.
+     *
+     * @property perkSettings Holds an instance of the [PerkSettings] class representing the perk settings
+     *                        for a user.
+     */
     lateinit var perkSettings: PerkSettings
     
     /**
@@ -414,6 +424,7 @@ class Game(var name: String) {
         gameEntities.clear()
         countdowns.clear()
         gameStates.clear()
+        perkSettings.settingsMap.clear()
         itemSettings.settingsMap.clear()
         gameChest.chests.clear()
         deathChest.deathChests.clear()
@@ -521,8 +532,6 @@ class Game(var name: String) {
             }
             
         }
-
-
     }
 
 
@@ -624,6 +633,7 @@ class Game(var name: String) {
         gameItems.saveAllItems()
         gameItems.loadAllItems()
         itemSettings.addData()
+        perkSettings.addData()
         gameItems.loadAllGunSettings()
         GamesHandler.games.add(this)
         GameSigns.updateGameSigns(this)

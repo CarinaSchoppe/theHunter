@@ -49,7 +49,7 @@ class LobbyInteraction : Listener {
                 event.isCancelled = true
                 event.damage = 0.0
 
-                if ((event.damager as Player).inventory.itemInMainHand.itemMeta != Items.leaveItem.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead.itemMeta)
+                if ((event.damager as Player).inventory.itemInMainHand.itemMeta != Items.leaveItem.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != Items.perkMenuItem.itemMeta)
                     TheHunter.instance.messagesFile.messagesMap["no-lobby-damage"]?.let { event.damager.sendMessage(it) }
 
             }
@@ -64,10 +64,16 @@ class LobbyInteraction : Listener {
     @EventHandler
     fun onPlayerLeavesGame(event: PlayerInteractEvent) {
         if (event.item == null || event.item?.hasItemMeta() == false || event.item?.itemMeta != Items.leaveItem.itemMeta || event.action.isLeftClick) return
-  
+
         event.player.performCommand("thehunter leave")
     }
 
+
+    @EventHandler
+    fun onPlayerOpensPerkMenuItem(event: PlayerInteractEvent) {
+        if (event.item == null || event.item?.hasItemMeta() == false || event.item?.itemMeta != Items.perkMenuItem.itemMeta || event.action.isLeftClick) return
+        event.player.performCommand("thehunter perkmenu")
+    }
     /**
      * Cancels damage to players in the lobby.
      *

@@ -41,6 +41,27 @@ object Inventories {
             .build()
     ).create()
 
+
+    /**
+     * Variable representing the perks inventory.
+     *
+     * This inventory is created using an instance of the InventoryBuilder class and initialized with the prefix "TheHunter§6Perks"
+     * and a size of 27 slots. It sets specific items at the desired slots using the setItem() method of the InventoryBuilder instance.
+     * The items are retrieved from the Items class and include the batPerkItem, kangarooPerkItem, bearPerkItem, sonicPerkItem,
+     * backpackerPerkItem, bloodhoundPerkItem, bombermanPerkItem, ninjaPerkItem, pigPerkItem, piratePerkItem, angelPerkItem,
+     * and gamblerPerkItem.
+     *
+     * The inventory is then filled with a white stained glass pane item, created using the ItemBuilder class, with no display name
+     * and an enchantment of DURABILITY level 1. This is accomplished using the fillInventory() method of the InventoryBuilder instance.
+     *
+     * Finally, the inventory is created with the create() method of the InventoryBuilder instance and assigned to the perksInventory variable.
+     */
+    val perksInventory = InventoryBuilder(TheHunter.prefix + "§6Perks", 27).setItem(1, Items.batPerkItem).setItem(3, Items.kangarooPerkItem).setItem(5, Items.bearPerkItem).setItem(7, Items.sonicPerkItem).setItem(10, Items.backpackerPerkItem).setItem(12, Items.bloodhoundPerkItem).setItem(14, Items.bombermanPerkItem).setItem(18, Items.ninjaPerkItem).setItem(20, Items.pigPerkItem).setItem(22, Items.piratePerkItem).setItem(26, Items.angelPerkItem).setItem(30, Items.gamblerPerkItem)
+        .fillInventory(
+            ItemBuilder(Material.WHITE_STAINED_GLASS_PANE).addDisplayName("").addEnchantment(Enchantment.DURABILITY, 1)
+                .build()
+        ).create()
+
     /**
      * Creates an inventory for game settings.
      *

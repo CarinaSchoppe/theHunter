@@ -8,8 +8,8 @@ import de.pixels.thehunter.guns.Minigun
 import de.pixels.thehunter.guns.Pistol
 import de.pixels.thehunter.guns.Rifle
 import de.pixels.thehunter.guns.Sniper
-import de.pixels.thehunter.items.general.AmmoItems
-import de.pixels.thehunter.items.special.Knife
+import de.pixels.thehunter.items.chestitems.Knife
+import de.pixels.thehunter.items.util.AmmoItems
 import de.pixels.thehunter.util.game.management.GamesHandler
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener

@@ -19,6 +19,8 @@ object Permissions {
      */
     const val MAPRESET_COMMAND = "mapreset"
 
+    const val PERKS_MENU_COMMAND = "perksMenu"
+
     /**
      * Constant variable representing the join command.
      * The join command is used to join a specific group or channel.
