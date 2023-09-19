@@ -4,7 +4,7 @@
 package de.pixels.thehunter.guns
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.items.general.AmmoItems
+import de.pixels.thehunter.items.util.AmmoItems
 import de.pixels.thehunter.util.builder.ItemBuilder
 import de.pixels.thehunter.util.misc.ConstantStrings
 import org.bukkit.Material

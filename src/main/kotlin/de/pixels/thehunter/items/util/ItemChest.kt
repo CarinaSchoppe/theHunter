@@ -4,8 +4,7 @@
 package de.pixels.thehunter.items.util
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.items.general.AmmoItems
-import de.pixels.thehunter.items.special.*
+import de.pixels.thehunter.items.chestitems.*
 import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer

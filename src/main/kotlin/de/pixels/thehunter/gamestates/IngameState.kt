@@ -8,7 +8,7 @@ import de.pixels.thehunter.guns.Minigun
 import de.pixels.thehunter.guns.Pistol
 import de.pixels.thehunter.guns.Rifle
 import de.pixels.thehunter.guns.Sniper
-import de.pixels.thehunter.items.special.Knife
+import de.pixels.thehunter.items.chestitems.Knife
 import de.pixels.thehunter.util.builder.Items
 import de.pixels.thehunter.util.game.ingame.general.PlayerDropping
 import de.pixels.thehunter.util.game.ingame.general.PlayerHiding

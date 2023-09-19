@@ -4,8 +4,8 @@
 
 package de.pixels.thehunter
 
-import de.pixels.thehunter.commands.util.BaseCommand
 import de.pixels.thehunter.commands.ingame.StartCommand
+import de.pixels.thehunter.commands.util.BaseCommand
 import de.pixels.thehunter.events.gameconfigurator.GameConfigurator
 import de.pixels.thehunter.events.gameconfigurator.SettingsConfigurator
 import de.pixels.thehunter.events.ingame.misc.DeathChestHandler
@@ -18,18 +18,18 @@ import de.pixels.thehunter.events.misc.PlayerDisconnectHandler
 import de.pixels.thehunter.events.misc.ServerJoinHandler
 import de.pixels.thehunter.events.player.*
 import de.pixels.thehunter.guns.GunHandler
-import de.pixels.thehunter.items.special.*
+import de.pixels.thehunter.items.chestitems.*
 import de.pixels.thehunter.util.files.BaseFile
 import de.pixels.thehunter.util.files.MessagesFile
 import de.pixels.thehunter.util.files.SettingsFile
-import de.pixels.thehunter.util.misc.GameSigns
+import de.pixels.thehunter.util.game.ingame.achievements.AchievementManager
 import de.pixels.thehunter.util.game.ingame.general.GamesInventoryList
 import de.pixels.thehunter.util.game.ingame.general.PlayerTeamHead
-import de.pixels.thehunter.util.game.ingame.achievements.AchievementManager
 import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.game.management.StatsSystem
 import de.pixels.thehunter.util.misc.Autoupdater
+import de.pixels.thehunter.util.misc.GameSigns
 import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin

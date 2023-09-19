@@ -8,12 +8,12 @@ import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.commands.util.CommandUtil
 import de.pixels.thehunter.countdowns.LobbyCountdown
 import de.pixels.thehunter.util.builder.Items
-import de.pixels.thehunter.util.misc.GameSigns
 import de.pixels.thehunter.util.game.ingame.general.PlayerHiding
 import de.pixels.thehunter.util.game.ingame.general.PlayerTeamHead
 import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler
 import de.pixels.thehunter.util.misc.ConstantStrings
+import de.pixels.thehunter.util.misc.GameSigns
 import de.pixels.thehunter.util.misc.Permissions
 import org.bukkit.GameMode
 import org.bukkit.Sound
