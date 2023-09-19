@@ -27,14 +27,14 @@ class Scoreboard(val game: Game) {
      * @property serverName The translated server name.
      */
     private val serverName =
-        ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["server-name"] as String)
+        ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settingsFile.settingsMap["server-name"] as String)
 
     /**
      * Private variable representing the tsIP.
      * The tsIP is a translated string obtained from the "ts-ip" value in the settings map.
      */
     private val tsIP =
-        ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settings.settingsMap["ts-ip"] as String)
+        ChatColor.translateAlternateColorCodes('&', TheHunter.instance.settingsFile.settingsMap["ts-ip"] as String)
 
     /**
      * Creates a new scoreboard for the specified player.

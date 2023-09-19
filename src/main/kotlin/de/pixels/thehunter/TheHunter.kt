@@ -15,8 +15,9 @@ import de.pixels.thehunter.events.player.*
 import de.pixels.thehunter.guns.GunHandler
 import de.pixels.thehunter.items.special.*
 import de.pixels.thehunter.util.files.BaseFile
-import de.pixels.thehunter.util.files.Messages
-import de.pixels.thehunter.util.files.Settings
+import de.pixels.thehunter.util.files.MessagesFile
+import de.pixels.thehunter.util.files.PerksConfigurationFile
+import de.pixels.thehunter.util.files.SettingsFile
 import de.pixels.thehunter.util.game.ingame.GameSigns
 import de.pixels.thehunter.util.game.ingame.GamesInventoryList
 import de.pixels.thehunter.util.game.ingame.PlayerTeamHead
@@ -33,8 +34,8 @@ import java.io.File
 /**
  * This class represents the main plugin class for The Hunter game.
  *
- * @property settings The settings object used for configuration.
- * @property messages The messages object used for storing messages.
+ * @property settingsFile The settings object used for configuration.
+ * @property messagesFile The messages object used for storing messages.
  * @property statsSystem The stats system object for managing player statistics.
  * @property version The version of the plugin.
  */
@@ -70,16 +71,18 @@ class TheHunter : JavaPlugin() {
      * The values of the settings are initialized lazily using the "lateinit" modifier, meaning they will be
      * initialized when first accessed.
      *
-     * @property settings An instance of the Settings class that contains the configuration settings for the application.
+     * @property settingsFile An instance of the Settings class that contains the configuration settings for the application.
      */
-    lateinit var settings: Settings
+    lateinit var settingsFile: SettingsFile
 
     /**
      * Contains a collection of messages.
      *
-     * @property messages The collection of messages.
+     * @property messagesFile The collection of messages.
      */
-    lateinit var messages: Messages
+    lateinit var messagesFile: MessagesFile
+
+    lateinit var perksConfigurationFile: PerksConfigurationFile
 
     /**
      * Represents a system for managing and tracking statistics.
@@ -103,13 +106,14 @@ class TheHunter : JavaPlugin() {
      */
     override fun onEnable() {
         instance = this
-        settings = Settings("config.yml").addData()
-        messages = Messages("messages.yml").addData()
+        settingsFile = SettingsFile("config.yml").addData()
+        messagesFile = MessagesFile("messages.yml").addData()
+        perksConfigurationFile = PerksConfigurationFile("perks.yml").addData()
         statsSystem = StatsSystem()
         StatsSystem.loadStatsPlayersFromFile()
         initialize(Bukkit.getPluginManager())
-        prefix = settings.getColorCodedString("prefix")
-        messages.sendMessageToConsole("start-up-message-successfully")
+        prefix = settingsFile.getColorCodedString("prefix")
+        messagesFile.sendMessageToConsole("start-up-message-successfully")
     }
 
     /**
@@ -119,7 +123,7 @@ class TheHunter : JavaPlugin() {
     override fun onDisable() {
         StatsSystem.saveAllStatsPlayerToFiles()
         resetAllGames()
-        messages.sendMessageToConsole("shutdown-message-successfully")
+        messagesFile.sendMessageToConsole("shutdown-message-successfully")
     }
 
     /**

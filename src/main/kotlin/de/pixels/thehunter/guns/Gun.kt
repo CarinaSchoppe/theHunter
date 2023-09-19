@@ -171,7 +171,7 @@ abstract class Gun {
      */
     private fun checkAmmoPossible(player: Player): Boolean {
         if (!player.inventory.containsAtLeast(ammo, 1)) {
-            TheHunter.instance.messages.messagesMap["gun-out-of-ammo"]?.let { player.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["gun-out-of-ammo"]?.let { player.sendMessage(it) }
             return false
         }
         return true
@@ -192,13 +192,13 @@ abstract class Gun {
             return
         player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
         if (reloading[player] == true) {
-            TheHunter.instance.messages.messagesMap["gun-reloading"]?.let { player.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["gun-reloading"]?.let { player.sendMessage(it) }
             return
         }
         if (!checkAmmoPossible(player))
             return
 
-        TheHunter.instance.messages.messagesMap["gun-reloading"]?.let { player.sendMessage(it) }
+        TheHunter.instance.messagesFile.messagesMap["gun-reloading"]?.let { player.sendMessage(it) }
         reloading[player] = true
         Bukkit.getScheduler().scheduleSyncDelayedTask(TheHunter.instance, {
             reloading[player] = false
@@ -216,7 +216,7 @@ abstract class Gun {
 
             player.playSound(player.location, Sound.BLOCK_ANVIL_USE, 1f, 1f)
 
-            TheHunter.instance.messages.messagesMap["gun-reload-done"]?.let { player.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["gun-reload-done"]?.let { player.sendMessage(it) }
         }, 20L * (GamesHandler.playerInGames[player]?.gameItems?.guns?.get("$gunName-reload") ?: return))
     }
 

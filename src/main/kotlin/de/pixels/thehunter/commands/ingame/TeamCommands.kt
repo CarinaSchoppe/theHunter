@@ -35,7 +35,7 @@ class TeamCommands {
             return
 
         if (!GamesHandler.playerInGames.containsKey(sender) && !GamesHandler.spectatorInGames.containsKey(sender)) {
-            TheHunter.instance.messages.messagesMap["player-own-not-in-game"]?.let { sender.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["player-own-not-in-game"]?.let { sender.sendMessage(it) }
             return
         }
         when {
@@ -70,7 +70,7 @@ class TeamCommands {
     private fun promote(sender: Player, args: Array<out String>) {
         val player = Bukkit.getPlayer(args[1])
         if (player == null) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let {
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.PLAYER_PERCENT,
@@ -92,7 +92,7 @@ class TeamCommands {
      */
     private fun argumentChecker(sender: Player, args: Array<out String>): Boolean {
         if (args.size <= 1) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.ARGUMENTS_PERCENT,
@@ -104,7 +104,7 @@ class TeamCommands {
         }
         val player = Bukkit.getPlayer(args[1])
         if (player == null) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let {
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.PLAYER_PERCENT,
@@ -139,14 +139,14 @@ class TeamCommands {
     private fun accept(sender: Player, args: Array<out String>) {
         val game = GamesHandler.playerInGames[sender] ?: GamesHandler.spectatorInGames[sender] ?: return
         if (game.teams.find { it.teamMembers.contains(sender) } != null) {
-            TheHunter.instance.messages.messagesMap["player-already-in-team"]?.let { sender.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["player-already-in-team"]?.let { sender.sendMessage(it) }
             return
         }
 
 
 
         if (args.size <= 1) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.ARGUMENTS_PERCENT,
@@ -158,7 +158,7 @@ class TeamCommands {
         }
         val player = Bukkit.getPlayer(args[1])
         if (player == null) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let {
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.PLAYER_PERCENT,
@@ -172,18 +172,18 @@ class TeamCommands {
         val team = (GamesHandler.playerInGames[sender]
             ?: GamesHandler.spectatorInGames[sender])?.teams?.find { it.teamLeader.name == player.name }
         if (team == null) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let { sender.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let { sender.sendMessage(it) }
             return
         }
 
         if (!team.invites.contains(sender)) {
-            TheHunter.instance.messages.messagesMap["player-own-not-invited"]?.let { sender.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["player-own-not-invited"]?.let { sender.sendMessage(it) }
             return
         }
 
         team.invites.remove(sender)
         team.teamMembers.forEach {
-            TheHunter.instance.messages.messagesMap["player-joined-team-all"]?.let { str ->
+            TheHunter.instance.messagesFile.messagesMap["player-joined-team-all"]?.let { str ->
                 it.sendMessage(
                     str.replace(
                         ConstantStrings.PLAYER_PERCENT,
@@ -193,7 +193,7 @@ class TeamCommands {
             }
         }
         team.teamMembers.add(sender)
-        TheHunter.instance.messages.messagesMap["player-joined-team"]?.let { sender.sendMessage(it) }
+        TheHunter.instance.messagesFile.messagesMap["player-joined-team"]?.let { sender.sendMessage(it) }
     }
 
 

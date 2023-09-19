@@ -65,7 +65,7 @@ class StatsSystem : BaseFile("stats.yml") {
          */
         fun saveAllStatsPlayerToFiles() {
             for (player in playerStats.keys) {
-                if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+                if (TheHunter.instance.settingsFile.settingsMap["mysql"] as Boolean) {
                     DatabaseHandler.connection.prepareStatement(
                         "REPLACE INTO statsPlayer(uuid, kills, deaths, points, kdr, wins,loses,games) VALUES ('$player', '${playerStats[player]?.kills}', '${playerStats[player]?.deaths}', '${playerStats[player]?.points}', '${playerStats[player]?.kdr}', '${playerStats[player]?.wins}', '${playerStats[player]?.loses}', '${playerStats[player]?.games}')"
                     )?.executeUpdate()
@@ -84,7 +84,7 @@ class StatsSystem : BaseFile("stats.yml") {
                     ]
                     TheHunter.instance.statsSystem.yml["$player.Games", playerStats[player]?.games]
                     TheHunter.instance.statsSystem.addData()
-                    TheHunter.instance.messages.sendMessageToConsole("stats-system-saved")
+                    TheHunter.instance.messagesFile.sendMessageToConsole("stats-system-saved")
                 }
             }
         }
@@ -93,7 +93,7 @@ class StatsSystem : BaseFile("stats.yml") {
          * Loads players' statistics from a file or database.
          */
         fun loadStatsPlayersFromFile() {
-            if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+            if (TheHunter.instance.settingsFile.settingsMap["mysql"] as Boolean) {
                 val resultSet = DatabaseHandler.connection.prepareStatement("SELECT * FROM statsPlayer")?.executeQuery()
                 while (resultSet?.next() ?: return) {
                     val uuid = UUID.fromString(resultSet.getString("uuid"))
@@ -134,7 +134,7 @@ class StatsSystem : BaseFile("stats.yml") {
      * @param player The player for whom the statistics are to be generated.
      */
     fun generateNewStatsPlayer(player: Player) {
-        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+        if (TheHunter.instance.settingsFile.settingsMap["mysql"] as Boolean) {
             //check if player is not allready in database
 
             if (!DatabaseHandler.connection.prepareStatement("SELECT * FROM statsPLayer WHERE uuid = '${player.uniqueId}' LIMIT 1")
@@ -174,7 +174,7 @@ class StatsSystem : BaseFile("stats.yml") {
             (playerStats[dead.uniqueId]?.kills?.toDouble() ?: 1.0) / (playerStats[dead.uniqueId]?.deaths?.toDouble() ?: 1.0)
 
 
-        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+        if (TheHunter.instance.settingsFile.settingsMap["mysql"] as Boolean) {
             DatabaseHandler.connection.prepareStatement(
                 "UPDATE statsPlayer SET kills = '${playerStats[killer.uniqueId]?.kills}',  points = '${playerStats[killer.uniqueId]?.points}', kdr = '${playerStats[killer.uniqueId]?.kdr}' WHERE uuid = '${killer.uniqueId}'"
             )?.executeUpdate()
@@ -203,7 +203,7 @@ class StatsSystem : BaseFile("stats.yml") {
     fun playerWon(player: Player) {
         playerStats[player.uniqueId]?.wins = playerStats[player.uniqueId]?.wins?.plus(1) ?: return
         playerStats[player.uniqueId]?.points = playerStats[player.uniqueId]?.points?.plus(15) ?: return
-        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+        if (TheHunter.instance.settingsFile.settingsMap["mysql"] as Boolean) {
             DatabaseHandler.connection.prepareStatement(
                 "UPDATE statsPlayer SET wins='${playerStats[player.uniqueId]?.wins}', points='${playerStats[player.uniqueId]?.points}' WHERE uuid='${player.uniqueId}'"
             )?.executeUpdate()
@@ -224,7 +224,7 @@ class StatsSystem : BaseFile("stats.yml") {
         playerStats[player.uniqueId]?.deaths = playerStats[player.uniqueId]?.deaths?.plus(1) ?: return
         playerStats[player.uniqueId]?.kdr =
             (playerStats[player.uniqueId]?.kills?.toDouble() ?: 1.0) / (playerStats[player.uniqueId]?.deaths?.toDouble() ?: 1.0)
-        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+        if (TheHunter.instance.settingsFile.settingsMap["mysql"] as Boolean) {
             DatabaseHandler.connection.prepareStatement(
                 "UPDATE statsPlayer SET deaths = '${playerStats[player.uniqueId]?.deaths}',points='${playerStats[player.uniqueId]?.points}', kdr = '${playerStats[player.uniqueId]?.kdr}' WHERE uuid = '${player.uniqueId}'"
             )?.executeUpdate()
@@ -255,7 +255,7 @@ class StatsSystem : BaseFile("stats.yml") {
      */
     fun playerPlaysGame(player: Player) {
         playerStats[player.uniqueId]?.games = playerStats[player.uniqueId]?.games?.plus(1) ?: return
-        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+        if (TheHunter.instance.settingsFile.settingsMap["mysql"] as Boolean) {
             DatabaseHandler.connection.prepareStatement("UPDATE statsPlayer SET games='${playerStats[player.uniqueId]?.games}' WHERE uuid='${player.uniqueId}'")
                 ?.executeUpdate()
         } else {
@@ -273,7 +273,7 @@ class StatsSystem : BaseFile("stats.yml") {
      */
     fun generateStatsMessageForPlayer(sender: Player, player: Player): Boolean {
         if (playerStats[player.uniqueId] == null) {
-            TheHunter.instance.messages.messagesMap["stats-not-found"]?.replace(
+            TheHunter.instance.messagesFile.messagesMap["stats-not-found"]?.replace(
                 ConstantStrings.PLAYER_SPAWN,
                 player.name
             )?.let {
@@ -286,7 +286,7 @@ class StatsSystem : BaseFile("stats.yml") {
 
         if (sender.uniqueId == player.uniqueId)
 
-            TheHunter.instance.messages.messagesMap["stats-message-own"].let {
+            TheHunter.instance.messagesFile.messagesMap["stats-message-own"].let {
                 it?.replace(
                     "%kills%",
                     playerStats[player.uniqueId]?.kills.toString()
@@ -302,7 +302,7 @@ class StatsSystem : BaseFile("stats.yml") {
                     }
             }
         else
-            TheHunter.instance.messages.messagesMap["stats-message-other"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["stats-message-other"]?.let {
                 sender.sendMessage(
                     it
                         .replace("%kills%", playerStats[player.uniqueId]?.kills.toString())

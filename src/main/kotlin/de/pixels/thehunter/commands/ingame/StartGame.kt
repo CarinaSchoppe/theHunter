@@ -34,7 +34,7 @@ class StartGame {
             return
         if (game.currentCountdown.duration > 5) {
             game.currentCountdown.duration = 5
-            TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_SPEEDUP]?.let { sender.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.GAME_SPEEDUP]?.let { sender.sendMessage(it) }
         }
 
     }

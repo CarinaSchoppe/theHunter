@@ -46,7 +46,7 @@ class Healer : Listener {
             event.player.health = 20.0
         ItemHandler.removeOneItemOfPlayer(event.player)
 
-        TheHunter.instance.messages.messagesMap["healer-message"]?.let {
+        TheHunter.instance.messagesFile.messagesMap["healer-message"]?.let {
             LegacyComponentSerializer.legacySection().deserialize(
                 it.replace(
                     "%heal%",

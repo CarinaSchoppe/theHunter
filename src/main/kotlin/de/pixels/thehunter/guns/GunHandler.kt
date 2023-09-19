@@ -123,7 +123,7 @@ class GunHandler : Listener {
         if (!event.itemDrop.itemStack.hasItemMeta()) return
         if (event.itemDrop.itemStack.itemMeta == Rifle.gun.itemMeta || event.itemDrop.itemStack.itemMeta == Minigun.gun.itemMeta || event.itemDrop.itemStack.itemMeta == Sniper.gun.itemMeta || event.itemDrop.itemStack.itemMeta == Pistol.gun.itemMeta) {
             event.isCancelled = true
-            TheHunter.instance.messages.messagesMap["cant-drop-item"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["cant-drop-item"]?.let {
                 event.player.sendMessage(
                     it.replace(
                         "%item%", event.itemDrop.itemStack.type.toString()

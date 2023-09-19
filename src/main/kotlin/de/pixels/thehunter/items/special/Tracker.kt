@@ -51,7 +51,7 @@ class Tracker : Listener {
         }
 
         event.player.compassTarget = closest.location
-        TheHunter.instance.messages.messagesMap["tracker-distance"]?.replace(
+        TheHunter.instance.messagesFile.messagesMap["tracker-distance"]?.replace(
             ConstantStrings.PLAYER_PERCENT,
             closest.name
         )?.let {

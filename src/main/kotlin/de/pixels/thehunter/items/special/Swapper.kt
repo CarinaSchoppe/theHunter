@@ -64,7 +64,7 @@ class Swapper : Listener {
         event.player.teleport(targetLocation ?: return)
         event.player.playSound(event.player, Sound.BLOCK_BIG_DRIPLEAF_BREAK, 1f, 1f)
         target.playSound(target, Sound.BLOCK_BIG_DRIPLEAF_BREAK, 1f, 1f)
-        TheHunter.instance.messages.messagesMap["player-swapped"]?.let {
+        TheHunter.instance.messagesFile.messagesMap["player-swapped"]?.let {
             target.sendMessage(
                 it.replace(
                     ConstantStrings.PLAYER_PERCENT,
@@ -72,7 +72,7 @@ class Swapper : Listener {
                 )
             )
         }
-        TheHunter.instance.messages.messagesMap["player-swapped"]?.let {
+        TheHunter.instance.messagesFile.messagesMap["player-swapped"]?.let {
             event.player.sendMessage(
                 it.replace(
                     ConstantStrings.PLAYER_PERCENT,

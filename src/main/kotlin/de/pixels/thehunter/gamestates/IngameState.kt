@@ -103,7 +103,7 @@ class IngameState(game: Game) : GameState(game) {
                         it.isInvulnerable = false
                         it.playSound(it.location, Sound.ENTITY_ENDER_DRAGON_GROWL, 1F, 1F)
 
-                        TheHunter.instance.messages.messagesMap["immunity-off"]?.let { str -> it.sendMessage(str) }
+                        TheHunter.instance.messagesFile.messagesMap["immunity-off"]?.let { str -> it.sendMessage(str) }
                         task.cancel()
                     }
                 }
@@ -112,7 +112,7 @@ class IngameState(game: Game) : GameState(game) {
                     game.players.forEach {
                         it.isInvulnerable = true
                         it.playSound(it.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
-                        TheHunter.instance.messages.messagesMap["immunity-message"]?.let { str ->
+                        TheHunter.instance.messagesFile.messagesMap["immunity-message"]?.let { str ->
                             it.sendMessage(
                                 str.replace(
                                     ConstantStrings.TIME_PERCENT,

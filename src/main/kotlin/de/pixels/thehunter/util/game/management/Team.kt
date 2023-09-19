@@ -59,16 +59,16 @@ class Team(var teamLeader: Player) {
      */
     private fun inviteTeamMember(playerToAdd: Player, leader: Player, game: Game): Boolean {
         if (!game.teamsAllowed) {
-            TheHunter.instance.messages.sendMessageToPlayer(leader, "teams-not-allowed")
+            TheHunter.instance.messagesFile.sendMessageToPlayer(leader, "teams-not-allowed")
             return false
         }
 
         if (teamLeader != leader) {
-            TheHunter.instance.messages.sendMessageToPlayer(leader, "team-player-not-leader")
+            TheHunter.instance.messagesFile.sendMessageToPlayer(leader, "team-player-not-leader")
             return false
         }
         if (teamMembers.contains(playerToAdd)) {
-            TheHunter.instance.messages.sendMessageToPlayer(
+            TheHunter.instance.messagesFile.sendMessageToPlayer(
                 leader,
                 "team-player-already-in-own-team".replace(ConstantStrings.PLAYER_PERCENT, playerToAdd.name)
             )
@@ -79,7 +79,7 @@ class Team(var teamLeader: Player) {
                 playerToAdd
             )
         ) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let {
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.PLAYER_NOT_IN_GAME]?.let {
                 leader.sendMessage(
                     it.replace(
                         ConstantStrings.PLAYER_SPAWN,
@@ -92,7 +92,7 @@ class Team(var teamLeader: Player) {
 
         (GamesHandler.playerInGames[playerToAdd] ?: GamesHandler.spectatorInGames[playerToAdd])?.teams?.forEach {
             if (it.teamMembers.contains(playerToAdd)) {
-                TheHunter.instance.messages.messagesMap["team-player-already-in-other-team"]?.let { message ->
+                TheHunter.instance.messagesFile.messagesMap["team-player-already-in-other-team"]?.let { message ->
                     leader.sendMessage(
                         message.replace(
                             ConstantStrings.PLAYER_PERCENT,
@@ -104,13 +104,13 @@ class Team(var teamLeader: Player) {
             }
         }
         if (!leader.hasPermission(Permissions.TEAM_COMMAND)) {
-            TheHunter.instance.messages.sendMessageToPlayer(leader, "player-not-permissions")
+            TheHunter.instance.messagesFile.sendMessageToPlayer(leader, "player-not-permissions")
             return false
         }
 
 
         if (invites.contains(playerToAdd)) {
-            TheHunter.instance.messages.messagesMap["player-already-invited"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["player-already-invited"]?.let {
                 leader.sendMessage(
                     it.replace(
                         ConstantStrings.PLAYER_PERCENT,
@@ -122,12 +122,12 @@ class Team(var teamLeader: Player) {
         }
 
         if (teamMembers.size >= game.teamMaxSize) {
-            TheHunter.instance.messages.messagesMap["team-full"]?.let { leader.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["team-full"]?.let { leader.sendMessage(it) }
             return false
         }
 
         invites.add(playerToAdd)
-        TheHunter.instance.messages.messagesMap["player-is-invited"]?.let {
+        TheHunter.instance.messagesFile.messagesMap["player-is-invited"]?.let {
             playerToAdd.sendMessage(
                 it.replace(
                     "%leader%",
@@ -135,7 +135,7 @@ class Team(var teamLeader: Player) {
                 )
             )
         }
-        TheHunter.instance.messages.messagesMap["player-invited"]?.let {
+        TheHunter.instance.messagesFile.messagesMap["player-invited"]?.let {
             leader.sendMessage(
                 it.replace(
                     ConstantStrings.PLAYER_PERCENT,
@@ -155,7 +155,7 @@ class Team(var teamLeader: Player) {
      */
     private fun promoteTeamLeader(player: Player, leader: Player) {
         if (!teamMembers.contains(player)) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_TEAM]?.let {
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.PLAYER_NOT_IN_TEAM]?.let {
                 leader.sendMessage(
                     it.replace(
                         ConstantStrings.PLAYER_PERCENT,
@@ -166,11 +166,11 @@ class Team(var teamLeader: Player) {
             return
         }
         if (teamLeader != leader) {
-            TheHunter.instance.messages.messagesMap["team-player-not-leader"]?.let { leader.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["team-player-not-leader"]?.let { leader.sendMessage(it) }
             return
         }
 
-        TheHunter.instance.messages.messagesMap["player-promote-leader"]?.let {
+        TheHunter.instance.messagesFile.messagesMap["player-promote-leader"]?.let {
             teamLeader.sendMessage(
                 it.replace(
                     ConstantStrings.PLAYER_PERCENT,
@@ -179,9 +179,9 @@ class Team(var teamLeader: Player) {
             )
         }
         teamLeader = player
-        TheHunter.instance.messages.messagesMap["player-new-leader"]?.let { teamLeader.sendMessage(it) }
+        TheHunter.instance.messagesFile.messagesMap["player-new-leader"]?.let { teamLeader.sendMessage(it) }
         teamMembers.filter { it.name != player.name && it.name != leader.name }.forEach {
-            TheHunter.instance.messages.messagesMap["player-new-leader-all"]?.let { message ->
+            TheHunter.instance.messagesFile.messagesMap["player-new-leader-all"]?.let { message ->
                 it.sendMessage(
                     message.replace(
                         ConstantStrings.PLAYER_PERCENT,
@@ -219,24 +219,24 @@ class Team(var teamLeader: Player) {
             val game = GamesHandler.playerInGames[player] ?: GamesHandler.spectatorInGames[player] ?: return
             val team = game.teams.find { it.teamMembers.contains(player) }
             if (team == null) {
-                TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_TEAM]?.let { player.sendMessage(it) }
+                TheHunter.instance.messagesFile.messagesMap[ConstantStrings.PLAYER_NOT_IN_TEAM]?.let { player.sendMessage(it) }
                 return
             }
             if (leader != player && team.teamLeader != leader) {
-                TheHunter.instance.messages.messagesMap["player-not-leader"]?.let { leader.sendMessage(it) }
+                TheHunter.instance.messagesFile.messagesMap["player-not-leader"]?.let { leader.sendMessage(it) }
                 return
             }
             team.teamMembers.remove(player)
-            TheHunter.instance.messages.messagesMap["player-left-team"]?.let { player.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["player-left-team"]?.let { player.sendMessage(it) }
             if (team.teamMembers.isEmpty()) {
                 (GamesHandler.playerInGames[player] ?: GamesHandler.spectatorInGames[player])?.teams?.remove(team)
                 return
             }
             if (team.teamLeader == player) {
                 team.teamLeader = team.teamMembers.first()
-                TheHunter.instance.messages.messagesMap["player-new-leader"]?.let { team.teamLeader.sendMessage(it) }
+                TheHunter.instance.messagesFile.messagesMap["player-new-leader"]?.let { team.teamLeader.sendMessage(it) }
                 team.teamMembers.forEach {
-                    TheHunter.instance.messages.messagesMap["player-new-leader-all"]?.let { message ->
+                    TheHunter.instance.messagesFile.messagesMap["player-new-leader-all"]?.let { message ->
                         it.sendMessage(
                             message.replace(
                                 ConstantStrings.PLAYER_PERCENT,
@@ -247,7 +247,7 @@ class Team(var teamLeader: Player) {
                 }
             } else {
                 team.teamMembers.forEach {
-                    TheHunter.instance.messages.messagesMap["player-left-team-all"]?.let { message ->
+                    TheHunter.instance.messagesFile.messagesMap["player-left-team-all"]?.let { message ->
                         it.sendMessage(
                             message.replace(
                                 ConstantStrings.PLAYER_PERCENT,
@@ -304,7 +304,7 @@ class Team(var teamLeader: Player) {
             if (team != null) {
                 team.promoteTeamLeader(player, leader)
             } else {
-                TheHunter.instance.messages.messagesMap[ConstantStrings.PLAYER_NOT_IN_TEAM]?.let { player.sendMessage(it) }
+                TheHunter.instance.messagesFile.messagesMap[ConstantStrings.PLAYER_NOT_IN_TEAM]?.let { player.sendMessage(it) }
             }
         }
 

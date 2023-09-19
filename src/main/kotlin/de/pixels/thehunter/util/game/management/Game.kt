@@ -453,7 +453,7 @@ class Game(var name: String) {
         ymlLocations.options().copyDefaults(true)
         ymlLocations.save(fileLocations)
         ymlSettings.save(fileSettings)
-        TheHunter.instance.messages.messagesMap["game-successfully-saved"]?.let {
+        TheHunter.instance.messagesFile.messagesMap["game-successfully-saved"]?.let {
             Bukkit.getConsoleSender().sendMessage(
                 it.replace(
                     ConstantStrings.GAME_PERCENT,
@@ -506,8 +506,8 @@ class Game(var name: String) {
             game?.spectatorLocation = ymlLocations.getLocation("spectator-location")
             game?.finish()
             game?.currentGameState = game?.gameStates?.get(GameStates.LOBBY_STATE.id) ?: return
-            game.currentGameState?.start()
-            game.worldBoarderController?.resetWorldBoarder()
+            game.currentGameState.start()
+            game.worldBoarderController.resetWorldBoarder()
         }
 
 
@@ -522,7 +522,7 @@ class Game(var name: String) {
     fun checkWinning(): Boolean {
         return when (players.size) {
             0 -> {
-                val message = TheHunter.instance.messages.messagesMap["game-over"]
+                val message = TheHunter.instance.messagesFile.messagesMap["game-over"]
                 for (spectator in spectators)
                     message?.let { spectator.sendMessage(it) }
                 true
@@ -533,7 +533,7 @@ class Game(var name: String) {
                     it.teamMembers.containsAll(players)
                 }
                 if (team == null && players.size == 1) {
-                    val message = TheHunter.instance.messages.messagesMap["player-won"]?.replace(
+                    val message = TheHunter.instance.messagesFile.messagesMap["player-won"]?.replace(
                         "%player%",
                         players.first().name
                     )
@@ -543,7 +543,7 @@ class Game(var name: String) {
                     return true
                 } else if (team == null) return false
                 val message =
-                    TheHunter.instance.messages.messagesMap["team-won"]?.replace("%leader%", team.teamLeader.name)
+                    TheHunter.instance.messagesFile.messagesMap["team-won"]?.replace("%leader%", team.teamLeader.name)
                 for (spectator in spectators) message?.let { spectator.sendMessage(it) }
                 players.forEach {
                     message?.let { message -> it.sendMessage(message) }
@@ -596,7 +596,7 @@ class Game(var name: String) {
      */
     fun finish() {
         if (isGameInvalidConfigured()) {
-            TheHunter.instance.messages.messagesMap["wrong-config"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["wrong-config"]?.let {
                 Bukkit.getConsoleSender()
                     .sendMessage(it.replace("%game%", name))
             }
@@ -614,7 +614,7 @@ class Game(var name: String) {
         gameItems.loadAllGunSettings()
         GamesHandler.games.add(this)
         GameSigns.updateGameSigns(this)
-        TheHunter.instance.messages.messagesMap["loaded-game-successfully"]?.let {
+        TheHunter.instance.messagesFile.messagesMap["loaded-game-successfully"]?.let {
             Bukkit.getConsoleSender()
                 .sendMessage(it.replace("%game%", name))
         }

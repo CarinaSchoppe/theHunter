@@ -50,7 +50,7 @@ class LobbyInteraction : Listener {
                 event.damage = 0.0
 
                 if ((event.damager as Player).inventory.itemInMainHand.itemMeta != Items.leaveItem.itemMeta && (event.damager as Player).inventory.itemInMainHand.itemMeta != PlayerTeamHead.createPlayerHead.itemMeta)
-                    TheHunter.instance.messages.messagesMap["no-lobby-damage"]?.let { event.damager.sendMessage(it) }
+                    TheHunter.instance.messagesFile.messagesMap["no-lobby-damage"]?.let { event.damager.sendMessage(it) }
 
             }
         }

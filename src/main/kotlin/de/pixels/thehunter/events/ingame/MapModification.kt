@@ -31,7 +31,7 @@ class MapModification : Listener {
 
         if (GamesHandler.playerInGames[player]?.currentGameState !is IngameState) {
             event.isCancelled = true
-            TheHunter.instance.messages.messagesMap["cant-break-block"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["cant-break-block"]?.let {
                 player.sendMessage(
                     it.replace(
                         ConstantStrings.BLOCK_PERCENT,
@@ -43,7 +43,7 @@ class MapModification : Listener {
         }
         if (GamesHandler.playerInGames[player]?.mapModify == false) {
             event.isCancelled = true
-            TheHunter.instance.messages.messagesMap["cant-break-block"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["cant-break-block"]?.let {
                 player.sendMessage(
                     it.replace(
                         ConstantStrings.BLOCK_PERCENT,
@@ -74,7 +74,7 @@ class MapModification : Listener {
 
         if (GamesHandler.playerInGames[player]?.currentGameState !is IngameState) {
             event.isCancelled = true
-            TheHunter.instance.messages.messagesMap["cant-place-block"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["cant-place-block"]?.let {
                 player.sendMessage(
                     it.replace(
                         ConstantStrings.BLOCK_PERCENT,
@@ -86,7 +86,7 @@ class MapModification : Listener {
         }
         if (GamesHandler.playerInGames[player]?.mapModify == false) {
             event.isCancelled = true
-            TheHunter.instance.messages.messagesMap["cant-place-block"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["cant-place-block"]?.let {
                 player.sendMessage(
                     it.replace(
                         ConstantStrings.BLOCK_PERCENT,

@@ -41,7 +41,7 @@ class EggBomb : Listener {
         fun eggBomb(game: Game) = ItemBuilder(Material.EGG).addDisplayName(TheHunter.prefix + "§eEggBomb")
             .addEnchantment(Enchantment.DURABILITY, 1).addLore(
                 listOf(
-                    TheHunter.instance.messages.messagesMap["egg-bomb-message"]?.replace(
+                    TheHunter.instance.messagesFile.messagesMap["egg-bomb-message"]?.replace(
                         ConstantStrings.POWER_PERCENT,
                         game.itemSettings.settingsMap["egg-bomb-radius"].toString()
                     ) ?: "",

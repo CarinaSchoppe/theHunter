@@ -8,7 +8,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-class Messages(filePath: String) : BaseFile(filePath) {
+class MessagesFile(filePath: String) : BaseFile(filePath) {
 
     /**
      * A mutable map of messages where each message is associated with a unique key.
@@ -26,7 +26,7 @@ class Messages(filePath: String) : BaseFile(filePath) {
      *
      * @return The Messages object
      */
-    override fun addData(): Messages {
+    override fun addData(): MessagesFile {
         yml.addDefault("start-up-message-successfully", "&aThe Plugin was successfully loaded!")
         yml.addDefault("shutdown-message-successfully", "&cThe Plugin was successfully unloaded!")
         yml.addDefault("team-player-not-leader", "&cYou are not the leader of a team!")

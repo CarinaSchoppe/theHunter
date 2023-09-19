@@ -42,7 +42,7 @@ class LeaveGame {
                 sender
             )
         ) {
-            TheHunter.instance.messages.messagesMap["player-not-in-game"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["player-not-in-game"]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.PLAYER_PERCENT,
@@ -103,7 +103,7 @@ class LeaveGame {
         if (team != null)
             Team.removePlayerFromTeam(player, player)
 
-        TheHunter.instance.messages.messagesMap["player-own-quit"]?.let { player.sendMessage(it) }
+        TheHunter.instance.messagesFile.messagesMap["player-own-quit"]?.let { player.sendMessage(it) }
 
         PlayerHiding.showOnlyNonPlayingPlayersToPlayer(player)
         PlayerHiding.showPlayerOnlyToNonPlayingPlayers(player)

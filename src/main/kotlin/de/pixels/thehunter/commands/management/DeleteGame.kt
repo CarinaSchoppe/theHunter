@@ -38,7 +38,7 @@ class DeleteGame {
 
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {
-            TheHunter.instance.messages.messagesMap["game-not-exists"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["game-not-exists"]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.GAME_PERCENT,
@@ -57,14 +57,14 @@ class DeleteGame {
         GamesHandler.games.remove(game)
         val file = File(BaseFile.GAME_FOLDER + "/arenas/${game.name}")
         if (file.deleteRecursively())
-            TheHunter.instance.messages.messagesMap["game-successfully-removed"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["game-successfully-removed"]?.let {
                 sender.sendMessage(
                     it
                         .replace(ConstantStrings.GAME_PERCENT, args[0])
                 )
             }
         else
-            TheHunter.instance.messages.messagesMap["game-could-not-delete"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["game-could-not-delete"]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.GAME_PERCENT,

@@ -87,7 +87,7 @@ class DeathHandler(private val player: Player) {
         }
 
         game.players.forEach {
-            TheHunter.instance.messages.messagesMap["player-died"]?.let { message ->
+            TheHunter.instance.messagesFile.messagesMap["player-died"]?.let { message ->
                 it.sendMessage(
                     message.replace(
                         ConstantStrings.PLAYER_PERCENT,
@@ -97,7 +97,7 @@ class DeathHandler(private val player: Player) {
             }
         }
         game.spectators.filter { it.name != player.name }.forEach {
-            TheHunter.instance.messages.messagesMap["player-died"]?.let { message ->
+            TheHunter.instance.messagesFile.messagesMap["player-died"]?.let { message ->
                 it.sendMessage(
                     message.replace(
                         ConstantStrings.PLAYER_PERCENT,
@@ -107,7 +107,7 @@ class DeathHandler(private val player: Player) {
             }
         }
 
-        TheHunter.instance.messages.messagesMap["player-own-died"]?.let { player.sendMessage(it) }
+        TheHunter.instance.messagesFile.messagesMap["player-own-died"]?.let { player.sendMessage(it) }
      
 
         return this
@@ -121,7 +121,7 @@ class DeathHandler(private val player: Player) {
      */
     private fun deathMessageKilledToAll(): DeathHandler {
         game.players.forEach {
-            TheHunter.instance.messages.messagesMap["player-killed-by-other"]?.replace(
+            TheHunter.instance.messagesFile.messagesMap["player-killed-by-other"]?.replace(
                 ConstantStrings.PLAYER_PERCENT,
                 player.name
             )?.let { str ->
@@ -132,7 +132,7 @@ class DeathHandler(private val player: Player) {
 
         }
         game.spectators.filter { it.name != player.name }.forEach {
-            TheHunter.instance.messages.messagesMap["player-killed-by-other"]?.replace(
+            TheHunter.instance.messagesFile.messagesMap["player-killed-by-other"]?.replace(
                 ConstantStrings.PLAYER_PERCENT,
                 player.name
             )?.let { str ->
@@ -142,7 +142,7 @@ class DeathHandler(private val player: Player) {
             }
 
         }
-        TheHunter.instance.messages.messagesMap["player-own-killed-by-other"]?.let {
+        TheHunter.instance.messagesFile.messagesMap["player-own-killed-by-other"]?.let {
             player.sendMessage(
                 it.replace(
                     ConstantStrings.PLAYER_PERCENT,

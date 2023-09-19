@@ -75,7 +75,7 @@ class JumpStick : Listener {
         event.isCancelled = true
         player.playSound(player, Sound.BLOCK_POINTED_DRIPSTONE_DRIP_WATER_INTO_CAULDRON, 1f, 1f)
         if (uses.containsKey(player) && GamesHandler.playerInGames[player]?.gameItems?.items?.get("jump-stick-uses") as Int <= (uses[player] ?: return)) {
-            TheHunter.instance.messages.messagesMap["jump-stick-broke"]?.let { player.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["jump-stick-broke"]?.let { player.sendMessage(it) }
             ItemHandler.removeOneItemOfPlayer(event.player)
             player.playSound(player, Sound.BLOCK_ANVIL_BREAK, 1f, 1f)
             uses[player] = 0

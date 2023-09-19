@@ -43,7 +43,7 @@ class JoinGame {
 
         val game = GamesHandler.games.find { it.name == args[0] }
         if (game == null) {
-            TheHunter.instance.messages.messagesMap["game-not-exists"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["game-not-exists"]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.GAME_PERCENT,
@@ -80,11 +80,11 @@ class JoinGame {
      */
     private fun playerAddingAndMessaging(player: Player, game: Game): Boolean {
         if (GamesHandler.playerInGames.containsKey(player) || GamesHandler.spectatorInGames.containsKey(player)) {
-            TheHunter.instance.messages.messagesMap["player-already-in-game"]?.let { player.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["player-already-in-game"]?.let { player.sendMessage(it) }
             return false
         }
         if (game.players.size + 1 <= game.maxPlayers) {
-            TheHunter.instance.messages.messagesMap["join-game-successfully"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["join-game-successfully"]?.let {
                 player.sendMessage(
                     it.replace(
                         ConstantStrings.GAME_PERCENT,
@@ -93,7 +93,7 @@ class JoinGame {
                 )
             }
             game.players.forEach {
-                TheHunter.instance.messages.messagesMap["player-joined-game"]?.let { message ->
+                TheHunter.instance.messagesFile.messagesMap["player-joined-game"]?.let { message ->
                     it.sendMessage(
                         message.replace(
                             ConstantStrings.PLAYER_PERCENT,
@@ -107,7 +107,7 @@ class JoinGame {
             GamesHandler.playerInGames[player] = game
             game.lobbyLocation?.let { player.teleport(it) }
             game.spectators.forEach {
-                TheHunter.instance.messages.messagesMap["player-joined-game"]?.let { message ->
+                TheHunter.instance.messagesFile.messagesMap["player-joined-game"]?.let { message ->
                     it.sendMessage(
                         message.replace(
                             ConstantStrings.PLAYER_PERCENT,
@@ -120,7 +120,7 @@ class JoinGame {
             GamesHandler.spectatorInGames[player] = game
             game.spectators.add(player)
             player.allowFlight = false
-            TheHunter.instance.messages.messagesMap["game-full-spectator"]?.let { player.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap["game-full-spectator"]?.let { player.sendMessage(it) }
             game.lobbyLocation?.let { player.teleport(it) }
         }
         return true

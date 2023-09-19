@@ -30,7 +30,7 @@ object CommandUtil {
         permissions: String
     ): Boolean {
         if (sender !is org.bukkit.entity.Player) {
-            TheHunter.instance.messages.sendMessageToConsole(ConstantStrings.NOT_A_PLAYER)
+            TheHunter.instance.messagesFile.sendMessageToConsole(ConstantStrings.NOT_A_PLAYER)
             return false
         }
 
@@ -40,7 +40,7 @@ object CommandUtil {
         val player: org.bukkit.entity.Player = sender
 
         if (args.size < minArgs) {
-            TheHunter.instance.messages.messagesMap["not-enough-arguments"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["not-enough-arguments"]?.let {
                 player.sendMessage(
                     it.replace(
                         ConstantStrings.ARGUMENTS_PERCENT,
@@ -52,7 +52,7 @@ object CommandUtil {
         }
 
         if (!player.hasPermission(Permissions.PERMISSION_PREFIX + permissions)) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.NO_PERMISSION]?.let { player.sendMessage(it) }
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.NO_PERMISSION]?.let { player.sendMessage(it) }
             return false
         }
 

@@ -33,7 +33,7 @@ class BaseCommand : CommandExecutor {
      */
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.isEmpty()) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.ARGUMENTS_PERCENT,
@@ -103,7 +103,7 @@ class BaseCommand : CommandExecutor {
             }
         }
 
-        TheHunter.instance.messages.messagesMap["no-command-found"]?.let {
+        TheHunter.instance.messagesFile.messagesMap["no-command-found"]?.let {
             sender.sendMessage(
                 it.replace(
                     "%command%",

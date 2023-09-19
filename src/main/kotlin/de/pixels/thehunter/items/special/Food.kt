@@ -57,7 +57,7 @@ class Food : Listener {
         else
             event.player.foodLevel = 20
         ItemHandler.removeOneItemOfPlayer(event.player)
-        TheHunter.instance.messages.messagesMap[ConstantStrings.FOOD_RECHARGE]?.let {
+        TheHunter.instance.messagesFile.messagesMap[ConstantStrings.FOOD_RECHARGE]?.let {
             event.player.sendMessage(
                 it.replace(
                     "%recharge%",

@@ -17,7 +17,7 @@ class Autoupdater {
      * @param resourceId the ID of the resource to check for updates
      */
     fun checkUpdate(resourceId: String) {
-        if (TheHunter.instance.settings.settingsMap["updater"] as Boolean) {
+        if (TheHunter.instance.settingsFile.settingsMap["updater"] as Boolean) {
             try {
                 val con: HttpsURLConnection = URL("https://www.spigotmc.org/api/general.php")
                     .openConnection() as HttpsURLConnection
@@ -30,12 +30,12 @@ class Autoupdater {
                 val version: String = BufferedReader(InputStreamReader(con.inputStream)).readLine()
                 if (version != TheHunter.instance.version) {
 
-                    TheHunter.instance.messages.messagesMap["autoupdate"]?.let { Bukkit.getConsoleSender().sendMessage(it) }
+                    TheHunter.instance.messagesFile.messagesMap["autoupdate"]?.let { Bukkit.getConsoleSender().sendMessage(it) }
                 } else {
-                    TheHunter.instance.messages.messagesMap["update-true"]?.let { Bukkit.getConsoleSender().sendMessage(it) }
+                    TheHunter.instance.messagesFile.messagesMap["update-true"]?.let { Bukkit.getConsoleSender().sendMessage(it) }
                 }
             } catch (ex: Exception) {
-                TheHunter.instance.messages.messagesMap["update-error"]?.let { Bukkit.getConsoleSender().sendMessage(it) }
+                TheHunter.instance.messagesFile.messagesMap["update-error"]?.let { Bukkit.getConsoleSender().sendMessage(it) }
             }
         }
     }

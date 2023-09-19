@@ -43,7 +43,7 @@ class EndCountdown(game: Game) : Countdown(game) {
      * @see duration
      */
     override fun start() {
-        duration = TheHunter.instance.settings.settingsMap[ConstantStrings.ENDCOUNTDOWN_DURATION] as Int
+        duration = TheHunter.instance.settingsFile.settingsMap[ConstantStrings.ENDCOUNTDOWN_DURATION] as Int
         Bukkit.getScheduler().runTaskTimer(TheHunter.instance, Consumer {
             if (game.players.isEmpty() && game.spectators.isEmpty()) {
                 stop()
@@ -56,7 +56,7 @@ class EndCountdown(game: Game) : Countdown(game) {
 
                 in 1 until 10 -> {
                     this.game.players.forEach { player ->
-                        TheHunter.instance.messages.messagesMap[ConstantStrings.ENDCOUNTDOWN_MESSAGE]?.let { message ->
+                        TheHunter.instance.messagesFile.messagesMap[ConstantStrings.ENDCOUNTDOWN_MESSAGE]?.let { message ->
                             player.sendMessage(
                                 message.replace(
                                     "%time%",
@@ -68,7 +68,7 @@ class EndCountdown(game: Game) : Countdown(game) {
                         player.playSound(player.location, Sound.BLOCK_LAVA_POP, 1F, 1F)
                     }
                     game.spectators.forEach { spectator ->
-                        TheHunter.instance.messages.messagesMap[ConstantStrings.ENDCOUNTDOWN_MESSAGE]?.let { message ->
+                        TheHunter.instance.messagesFile.messagesMap[ConstantStrings.ENDCOUNTDOWN_MESSAGE]?.let { message ->
                             spectator.sendMessage(
                                 message.replace(
                                     "%time%",

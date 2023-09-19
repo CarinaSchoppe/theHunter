@@ -19,7 +19,7 @@ import java.util.*
 class DatabaseHandler {
 
     init {
-        if (TheHunter.instance.settings.settingsMap["mysql"] as Boolean) {
+        if (TheHunter.instance.settingsFile.settingsMap["mysql"] as Boolean) {
             createDatabaseIfNotExists()
         }
     }
@@ -43,11 +43,11 @@ class DatabaseHandler {
      * @return True if the database was created or already exists, false if not.
      */
     private fun createDatabaseIfNotExists(): Boolean {
-        if (!(TheHunter.instance.settings.settingsMap["mysql"] as Boolean)) {
+        if (!(TheHunter.instance.settingsFile.settingsMap["mysql"] as Boolean)) {
             Bukkit.getConsoleSender().sendMessage(
                 ChatColor.translateAlternateColorCodes(
                     '&',
-                    TheHunter.instance.settings.settingsMap["prefix"] as String
+                    TheHunter.instance.settingsFile.settingsMap["prefix"] as String
                 ) + "§7Using YML-Settings file"
             )
 
@@ -59,17 +59,17 @@ class DatabaseHandler {
         //get plugins folderpath
 
         lateinit var databaseFile: File
-        if (TheHunter.instance.settings.settingsMap["sqlite-enable"] as Boolean) {
+        if (TheHunter.instance.settingsFile.settingsMap["sqlite-enable"] as Boolean) {
             Bukkit.getConsoleSender().sendMessage(
                 ChatColor.translateAlternateColorCodes(
                     '&',
-                    TheHunter.instance.settings.settingsMap["prefix"] as String
+                    TheHunter.instance.settingsFile.settingsMap["prefix"] as String
                 ) + "§aUsing SQLite-Settings file"
             )
 
             databaseFile = try {
                 val databaseFile =
-                    File(TheHunter.instance.settings.settingsMap[ConstantStrings.SQLITE_PATH] as String)
+                    File(TheHunter.instance.settingsFile.settingsMap[ConstantStrings.SQLITE_PATH] as String)
                 if (!databaseFile.exists()) {
                     databaseFile.createNewFile()
                 }
@@ -78,13 +78,13 @@ class DatabaseHandler {
                 val file = File(BaseFile.GAME_FOLDER + "/database.db")
                 if (!file.exists()) {
                     file.createNewFile()
-                    TheHunter.instance.settings.settingsMap[ConstantStrings.SQLITE_PATH] = file.absolutePath
-                    TheHunter.instance.settings.yml[ConstantStrings.SQLITE_PATH, file.absolutePath]
-                    TheHunter.instance.settings.yml.save(TheHunter.instance.settings.file)
+                    TheHunter.instance.settingsFile.settingsMap[ConstantStrings.SQLITE_PATH] = file.absolutePath
+                    TheHunter.instance.settingsFile.yml[ConstantStrings.SQLITE_PATH, file.absolutePath]
+                    TheHunter.instance.settingsFile.yml.save(TheHunter.instance.settingsFile.file)
                     Bukkit.getConsoleSender().sendMessage(
                         ChatColor.translateAlternateColorCodes(
                             '&',
-                            TheHunter.instance.settings.settingsMap["prefix"] as String
+                            TheHunter.instance.settingsFile.settingsMap["prefix"] as String
                         ) + "§aCreating own database-file..."
                     )
 
@@ -95,25 +95,25 @@ class DatabaseHandler {
             Bukkit.getConsoleSender().sendMessage(
                 ChatColor.translateAlternateColorCodes(
                     '&',
-                    TheHunter.instance.settings.settingsMap["prefix"] as String
+                    TheHunter.instance.settingsFile.settingsMap["prefix"] as String
                 ) + "§aUsing MySQL database connection!"
             )
 
         }
 
-        val host = TheHunter.instance.settings.settingsMap["mysql-host"] as String
-        val port = TheHunter.instance.settings.settingsMap["mysql-port"] as Int
-        val database = TheHunter.instance.settings.settingsMap["mysql-database"] as String
-        val username = TheHunter.instance.settings.settingsMap["mysql-user"] as String
-        val password = TheHunter.instance.settings.settingsMap["mysql-password"] as String
+        val host = TheHunter.instance.settingsFile.settingsMap["mysql-host"] as String
+        val port = TheHunter.instance.settingsFile.settingsMap["mysql-port"] as Int
+        val database = TheHunter.instance.settingsFile.settingsMap["mysql-database"] as String
+        val username = TheHunter.instance.settingsFile.settingsMap["mysql-user"] as String
+        val password = TheHunter.instance.settingsFile.settingsMap["mysql-password"] as String
         //create a connection to the mysql database
         connection =
-            if (TheHunter.instance.settings.settingsMap["sqlite-enable"] as Boolean) DriverManager.getConnection("jdbc:sqlite:${databaseFile.absolutePath}")
+            if (TheHunter.instance.settingsFile.settingsMap["sqlite-enable"] as Boolean) DriverManager.getConnection("jdbc:sqlite:${databaseFile.absolutePath}")
             else DriverManager.getConnection("jdbc:mysql://$host:$port/$database?useSSL=false", username, password)
         Bukkit.getConsoleSender().sendMessage(
             ChatColor.translateAlternateColorCodes(
                 '&',
-                TheHunter.instance.settings.settingsMap["prefix"] as String
+                TheHunter.instance.settingsFile.settingsMap["prefix"] as String
             ) + "§aConnected to database!"
         )
 
@@ -147,7 +147,7 @@ class DatabaseHandler {
         Bukkit.getConsoleSender().sendMessage(
             ChatColor.translateAlternateColorCodes(
                 '&',
-                TheHunter.instance.settings.settingsMap["prefix"] as String
+                TheHunter.instance.settingsFile.settingsMap["prefix"] as String
             ) + "§aCreating table statsPlayer..."
         )
 
@@ -159,7 +159,7 @@ class DatabaseHandler {
      * @return true if the players were successfully added, false otherwise.
      */
     private fun addAllPlayersFromDataBaseToPLayerList(): Boolean {
-        if (!(TheHunter.instance.settings.settingsMap["mysql"] as Boolean))
+        if (!(TheHunter.instance.settingsFile.settingsMap["mysql"] as Boolean))
             return false
 
 
@@ -182,7 +182,7 @@ class DatabaseHandler {
         Bukkit.getConsoleSender().sendMessage(
             ChatColor.translateAlternateColorCodes(
                 '&',
-                TheHunter.instance.settings.settingsMap["prefix"] as String
+                TheHunter.instance.settingsFile.settingsMap["prefix"] as String
             ) + "§aAdded all players from database to playerlist..."
         )
 

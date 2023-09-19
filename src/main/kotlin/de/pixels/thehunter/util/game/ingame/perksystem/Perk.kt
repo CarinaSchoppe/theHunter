@@ -1,28 +1,24 @@
 package de.pixels.thehunter.util.game.ingame.perksystem
 
-enum class Perk {
+enum class Perk(val path: String) {
 
-    KANGAROO("kangoorooCost"),
-    BAT("batCost"),
-    BEAR("bearCost"),
-    SONIC("sonicCost"),
-    BACKPACKER("backpackerCost"),
-    BLOODHOUND("bloodhoundCost"),
-    BOMBERMAN("bombermanCost"),
-    NINJA("ninjaCost"),
-    PIG("pigCost"),
-    PIRATE("pirateCost"),
-    GAMBLER("gamblerCost");
+    KANGAROO("kangoorooPerk"),
+    BAT("batPerk"),
+    BEAR("bearPerk"),
+    SONIC("sonicPerk"),
+    BACKPACKER("backpackerPerk"),
+    BLOODHOUND("bloodhoundPerk"),
+    BOMBERMAN("bombermanPerk"),
+    NINJA("ninjaPerk"),
+    PIG("pigPerk"),
+    PIRATE("piratePerk"),
+    GAMBLER("gamblerPerk"),
+    FEATHER("featherPerk"),
 
-    var cost: Int = 10000
 
-    constructor(cost: String) {
-        this.cost = cost.toInt()
-    }
+    //create an enum with the path as the variable
+    //create a function that returns the value of the path
 
-    constructor(cost: Int) {
-        this.cost = cost
-    }
 
 
 }

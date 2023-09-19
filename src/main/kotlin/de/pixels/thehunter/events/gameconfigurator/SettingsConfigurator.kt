@@ -125,7 +125,7 @@ class SettingsConfigurator : Listener {
         if (type) {
             if (Util.currentGameSelected[player]?.teamsAllowed == true)
                 return
-            TheHunter.instance.messages.messagesMap["teams-allowed-enabled"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["teams-allowed-enabled"]?.let {
                 player.sendMessage(
                     it.replace(
                         ConstantStrings.GAME_PERCENT,
@@ -138,7 +138,7 @@ class SettingsConfigurator : Listener {
             if (Util.currentGameSelected[player]?.teamsAllowed == false)
                 return
             Util.currentGameSelected[player]?.teamsAllowed = false
-            TheHunter.instance.messages.messagesMap["teams-allowed-disabled"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["teams-allowed-disabled"]?.let {
                 player.sendMessage(
                     it.replace(
                         ConstantStrings.GAME_PERCENT,
@@ -163,7 +163,7 @@ class SettingsConfigurator : Listener {
             if (Util.currentGameSelected[player]?.teamDamage == true)
                 return
             Util.currentGameSelected[player]?.teamDamage = true
-            TheHunter.instance.messages.messagesMap["team-damage-enabled"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["team-damage-enabled"]?.let {
                 player.sendMessage(
                     it.replace(
                         ConstantStrings.GAME_PERCENT,
@@ -175,7 +175,7 @@ class SettingsConfigurator : Listener {
             if (Util.currentGameSelected[player]?.teamDamage == false)
                 return
             Util.currentGameSelected[player]?.teamDamage = false
-            TheHunter.instance.messages.messagesMap["team-damage-disabled"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["team-damage-disabled"]?.let {
                 player.sendMessage(
                     it.replace(
                         ConstantStrings.GAME_PERCENT,
@@ -197,7 +197,7 @@ class SettingsConfigurator : Listener {
     private fun teamSize(type: Boolean, player: Player) {
         if (type) {
             if ((Util.currentGameSelected[player]?.teamMaxSize ?: return) + 1 > TEAM_SIZE) {
-                TheHunter.instance.messages.messagesMap["teams-size-to-high"]?.replace(
+                TheHunter.instance.messagesFile.messagesMap["teams-size-to-high"]?.replace(
                     ConstantStrings.SIZE_PERCENT,
                     TEAM_SIZE.toString()
                 )?.let {
@@ -208,7 +208,7 @@ class SettingsConfigurator : Listener {
                 return
             }
             Util.currentGameSelected[player]?.teamMaxSize = Util.currentGameSelected[player]?.teamMaxSize?.plus(1) ?: return
-            TheHunter.instance.messages.messagesMap["teams-size-increased"]?.replace(
+            TheHunter.instance.messagesFile.messagesMap["teams-size-increased"]?.replace(
                 ConstantStrings.SIZE_PERCENT,
                 Util.currentGameSelected[player]?.teamMaxSize?.toString() ?: ""
             )?.let {
@@ -219,7 +219,7 @@ class SettingsConfigurator : Listener {
 
         } else {
             if ((Util.currentGameSelected[player]?.teamMaxSize ?: return) - 1 < TEAM_SIZE_LOW) {
-                TheHunter.instance.messages.messagesMap["teams-size-to-low"]?.replace(
+                TheHunter.instance.messagesFile.messagesMap["teams-size-to-low"]?.replace(
                     ConstantStrings.SIZE_PERCENT,
                     TEAM_SIZE_LOW.toString()
                 )?.let {
@@ -230,7 +230,7 @@ class SettingsConfigurator : Listener {
                 return
             }
             Util.currentGameSelected[player]?.teamMaxSize = Util.currentGameSelected[player]?.teamMaxSize?.minus(1) ?: return
-            TheHunter.instance.messages.messagesMap["teams-size-reduced"]?.replace(
+            TheHunter.instance.messagesFile.messagesMap["teams-size-reduced"]?.replace(
                 ConstantStrings.SIZE_PERCENT,
                 Util.currentGameSelected[player]?.teamMaxSize.toString()
             )?.let {
@@ -253,7 +253,7 @@ class SettingsConfigurator : Listener {
     private fun minPlayers(type: Boolean, player: Player) {
         if (type) {
             if (MIN_PLAYER_HEIGHT < (Util.currentGameSelected[player]?.minPlayers?.plus(1) ?: return)) {
-                TheHunter.instance.messages.messagesMap["min-players-to-high"]?.replace(
+                TheHunter.instance.messagesFile.messagesMap["min-players-to-high"]?.replace(
                     ConstantStrings.PLAYERS_PERCENT,
                     MIN_PLAYER_HEIGHT.toString()
                 )?.let {
@@ -264,7 +264,7 @@ class SettingsConfigurator : Listener {
                 return
             }
             Util.currentGameSelected[player]?.minPlayers = Util.currentGameSelected[player]?.minPlayers?.plus(1) ?: return
-            TheHunter.instance.messages.messagesMap["min-players-increased"]?.replace(
+            TheHunter.instance.messagesFile.messagesMap["min-players-increased"]?.replace(
                 ConstantStrings.PLAYERS_PERCENT,
                 Util.currentGameSelected[player]?.minPlayers.toString()
             )?.let {
@@ -275,7 +275,7 @@ class SettingsConfigurator : Listener {
 
         } else {
             if (MIN_PLAYERS_LOW > (Util.currentGameSelected[player]?.minPlayers?.minus(1) ?: return)) {
-                TheHunter.instance.messages.messagesMap["min-players-to-low"]?.replace(
+                TheHunter.instance.messagesFile.messagesMap["min-players-to-low"]?.replace(
                     ConstantStrings.PLAYERS_PERCENT,
                     MIN_PLAYERS_LOW.toString()
                 )?.let {
@@ -286,7 +286,7 @@ class SettingsConfigurator : Listener {
                 return
             }
             Util.currentGameSelected[player]?.minPlayers = Util.currentGameSelected[player]?.minPlayers?.minus(1) ?: return
-            TheHunter.instance.messages.messagesMap["min-players-reduced"]?.replace(
+            TheHunter.instance.messagesFile.messagesMap["min-players-reduced"]?.replace(
                 ConstantStrings.PLAYER_PERCENT,
                 Util.currentGameSelected[player]?.minPlayers.toString()
             )?.let {
@@ -307,7 +307,7 @@ class SettingsConfigurator : Listener {
     private fun maxPlayers(type: Boolean, player: Player) {
         if (type) {
             if (MAX_PLAYERS_HEIGHT < (Util.currentGameSelected[player]?.maxPlayers?.plus(1) ?: return)) {
-                TheHunter.instance.messages.messagesMap["max-players-to-high"]?.replace(
+                TheHunter.instance.messagesFile.messagesMap["max-players-to-high"]?.replace(
                     ConstantStrings.PLAYERS_PERCENT,
                     MAX_PLAYERS_HEIGHT.toString()
                 )?.let {
@@ -318,7 +318,7 @@ class SettingsConfigurator : Listener {
                 return
             }
             Util.currentGameSelected[player]?.maxPlayers = Util.currentGameSelected[player]?.maxPlayers?.plus(1) ?: return
-            TheHunter.instance.messages.messagesMap["max-players-increased"]?.replace(
+            TheHunter.instance.messagesFile.messagesMap["max-players-increased"]?.replace(
                 ConstantStrings.PLAYERS_PERCENT,
                 Util.currentGameSelected[player]?.maxPlayers.toString()
             )?.let {
@@ -329,7 +329,7 @@ class SettingsConfigurator : Listener {
 
         } else {
             if ((Util.currentGameSelected[player]?.maxPlayers ?: return) - 1 < MAX_PLAYERS_LOW) {
-                TheHunter.instance.messages.messagesMap["max-players-to-low"]?.replace(
+                TheHunter.instance.messagesFile.messagesMap["max-players-to-low"]?.replace(
                     ConstantStrings.PLAYERS_PERCENT,
                     MAX_PLAYERS_LOW.toString()
                 )?.let {
@@ -340,7 +340,7 @@ class SettingsConfigurator : Listener {
                 return
             }
             Util.currentGameSelected[player]?.maxPlayers = Util.currentGameSelected[player]?.maxPlayers?.minus(1) ?: return
-            TheHunter.instance.messages.messagesMap["max-players-reduced"]?.replace(
+            TheHunter.instance.messagesFile.messagesMap["max-players-reduced"]?.replace(
                 ConstantStrings.PLAYERS_PERCENT,
                 Util.currentGameSelected[player]?.maxPlayers.toString()
             )?.let {
@@ -361,7 +361,7 @@ class SettingsConfigurator : Listener {
     private fun borderSize(type: Boolean, player: Player) {
         if (type) {
             if ((Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize ?: return) + 10 > WorldboarderController.TO_HIGH) {
-                TheHunter.instance.messages.messagesMap["border-size-to-high"]?.replace(
+                TheHunter.instance.messagesFile.messagesMap["border-size-to-high"]?.replace(
                     ConstantStrings.SIZE_PERCENT,
                     WorldboarderController.TO_HIGH.toString()
                 )?.let {
@@ -372,7 +372,7 @@ class SettingsConfigurator : Listener {
                 return
             }
             Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize = Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize?.plus(10) ?: return
-            TheHunter.instance.messages.messagesMap["border-size-plus"]?.replace(
+            TheHunter.instance.messagesFile.messagesMap["border-size-plus"]?.replace(
                 ConstantStrings.SIZE_PERCENT,
                 Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize.toString()
             )?.let {
@@ -382,7 +382,7 @@ class SettingsConfigurator : Listener {
             }
         } else {
             if (WorldboarderController.TO_LOW > (Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize?.minus(10) ?: return)) {
-                TheHunter.instance.messages.messagesMap["border-size-to-low"]?.replace(
+                TheHunter.instance.messagesFile.messagesMap["border-size-to-low"]?.replace(
                     ConstantStrings.SIZE_PERCENT,
                     WorldboarderController.TO_LOW.toString()
                 )?.let {
@@ -393,7 +393,7 @@ class SettingsConfigurator : Listener {
                 return
             }
             Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize = Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize?.minus(10) ?: return
-            TheHunter.instance.messages.messagesMap["border-size-minus"]?.replace(
+            TheHunter.instance.messagesFile.messagesMap["border-size-minus"]?.replace(
                 ConstantStrings.SIZE_PERCENT,
                 Util.currentGameSelected[player]?.worldBoarderController?.worldBoarderSize.toString()
             )?.let {

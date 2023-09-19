@@ -9,7 +9,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 
-class Settings(filePath: String) : BaseFile(filePath) {
+class SettingsFile(filePath: String) : BaseFile(filePath) {
 
 
     /**
@@ -54,7 +54,7 @@ class Settings(filePath: String) : BaseFile(filePath) {
      *
      * @return The updated Settings object.
      */
-    override fun addData(): Settings {
+    override fun addData(): SettingsFile {
         yml.addDefault("prefix", "&7[&bTheHunter&7] &f")
         yml.addDefault("debug", false)
         yml.addDefault("duration-lobby", 60)

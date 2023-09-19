@@ -40,7 +40,7 @@ class CreateGame {
         when (args[0].lowercase()) {
             ConstantStrings.CREATE_COMMAND -> {
                 if (GamesHandler.games.find { it.name == args[1] } != null) {
-                    TheHunter.instance.messages.messagesMap["game-already-exists"]?.let {
+                    TheHunter.instance.messagesFile.messagesMap["game-already-exists"]?.let {
                         sender.sendMessage(
                             it.replace(
                                 ConstantStrings.GAME_PERCENT,
@@ -63,7 +63,7 @@ class CreateGame {
                 game.create()
                 Util.currentGameSelected[sender as Player] = game
                 sender.playSound(sender.location, Sound.BLOCK_ANVIL_USE, 1f, 1f)
-                TheHunter.instance.messages.messagesMap["game-successfully-created"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-successfully-created"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -77,7 +77,7 @@ class CreateGame {
             ConstantStrings.SELECT_COMMAND -> {
                 val game = GamesHandler.games.find { it.name == args[1] }
                 if (game == null) {
-                    TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_NOT_EXISTS]?.let {
+                    TheHunter.instance.messagesFile.messagesMap[ConstantStrings.GAME_NOT_EXISTS]?.let {
                         sender.sendMessage(
                             it.replace(
                                 ConstantStrings.GAME_PERCENT,
@@ -101,7 +101,7 @@ class CreateGame {
             }
 
             else -> {
-                TheHunter.instance.messages.messagesMap[ConstantStrings.COMMAND_NOT_FOUND]?.let {
+                TheHunter.instance.messagesFile.messagesMap[ConstantStrings.COMMAND_NOT_FOUND]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.COMMAND_PERCENT,
@@ -122,7 +122,7 @@ class CreateGame {
      */
     private fun removeLocation(args: Array<out String>, sender: CommandSender) {
         if (args.size != 3) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.NOT_ENOUGH_ARGUMENTS]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.ARGUMENTS_PERCENT,
@@ -134,7 +134,7 @@ class CreateGame {
         }
         val game = GamesHandler.setupGames.find { it.name == args[2] }
         if (game == null) {
-            TheHunter.instance.messages.messagesMap[ConstantStrings.GAME_NOT_EXISTS]?.let {
+            TheHunter.instance.messagesFile.messagesMap[ConstantStrings.GAME_NOT_EXISTS]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.GAME_PERCENT,
@@ -148,7 +148,7 @@ class CreateGame {
         when (args[1].lowercase()) {
             ConstantStrings.LOBBY_SPAWN -> {
                 game.lobbyLocation = null
-                TheHunter.instance.messages.messagesMap["game-lobby-removed"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-lobby-removed"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -160,7 +160,7 @@ class CreateGame {
 
             ConstantStrings.SPECTATOR_SPAWN -> {
                 game.spectatorLocation = null
-                TheHunter.instance.messages.messagesMap["game-spectator-removed"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-spectator-removed"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -172,7 +172,7 @@ class CreateGame {
 
             ConstantStrings.BACK_SPAWN -> {
                 game.backLocation = null
-                TheHunter.instance.messages.messagesMap["game-back-removed"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-back-removed"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -184,7 +184,7 @@ class CreateGame {
 
             ConstantStrings.END_SPAWN -> {
                 game.endLocation = null
-                TheHunter.instance.messages.messagesMap["game-end-removed"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-end-removed"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -196,7 +196,7 @@ class CreateGame {
 
             ConstantStrings.ARENA_CENTER -> {
                 game.arenaCenter = null
-                TheHunter.instance.messages.messagesMap["game-arena-center-removed"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-arena-center-removed"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -209,7 +209,7 @@ class CreateGame {
 
             ConstantStrings.PLAYER_SPAWN -> {
                 if (game.playerSpawns.isNotEmpty()) game.playerSpawns.remove(game.playerSpawns.last())
-                TheHunter.instance.messages.messagesMap["game-spawn-removed"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-spawn-removed"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -229,7 +229,7 @@ class CreateGame {
      */
     private fun configGame(args: Array<out String>, sender: CommandSender) {
         if (args.size != 3) {
-            TheHunter.instance.messages.messagesMap["not-enough-arguments"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["not-enough-arguments"]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.ARGUMENTS_PERCENT,
@@ -241,7 +241,7 @@ class CreateGame {
         }
         val game = GamesHandler.setupGames.find { it.name == args[2] }
         if (game == null) {
-            TheHunter.instance.messages.messagesMap["game-not-exists"]?.let {
+            TheHunter.instance.messagesFile.messagesMap["game-not-exists"]?.let {
                 sender.sendMessage(
                     it.replace(
                         ConstantStrings.GAME_PERCENT,
@@ -256,7 +256,7 @@ class CreateGame {
         when (args[1].lowercase()) {
             ConstantStrings.LOBBY_SPAWN -> {
                 game.lobbyLocation = (sender).location
-                TheHunter.instance.messages.messagesMap["game-lobby-set"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-lobby-set"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -268,7 +268,7 @@ class CreateGame {
 
             ConstantStrings.SPECTATOR_SPAWN -> {
                 game.spectatorLocation = (sender).location
-                TheHunter.instance.messages.messagesMap["game-spectator-set"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-spectator-set"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -280,7 +280,7 @@ class CreateGame {
 
             ConstantStrings.BACK_SPAWN -> {
                 game.backLocation = (sender).location
-                TheHunter.instance.messages.messagesMap["game-back-set"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-back-set"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -292,7 +292,7 @@ class CreateGame {
 
             ConstantStrings.END_SPAWN -> {
                 game.endLocation = (sender).location
-                TheHunter.instance.messages.messagesMap["game-end-set"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-end-set"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -304,7 +304,7 @@ class CreateGame {
 
             ConstantStrings.ARENA_CENTER -> {
                 game.arenaCenter = (sender).location
-                TheHunter.instance.messages.messagesMap["game-arena-center-set"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-arena-center-set"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -318,7 +318,7 @@ class CreateGame {
             ConstantStrings.PLAYER_SPAWN -> {
                 if (game.playerSpawns.size < game.maxPlayers) {
                     game.playerSpawns.add((sender).location)
-                    TheHunter.instance.messages.messagesMap["game-spawn-set"]?.replace(
+                    TheHunter.instance.messagesFile.messagesMap["game-spawn-set"]?.replace(
                         "%id%",
                         (game.playerSpawns.size - 1).toString()
                     )?.let {
@@ -326,7 +326,7 @@ class CreateGame {
                             it.replace("%game%", args[2])
                         )
                     }
-                } else TheHunter.instance.messages.messagesMap["game-spawns-to-much"]?.replace(
+                } else TheHunter.instance.messagesFile.messagesMap["game-spawns-to-much"]?.replace(
                     ConstantStrings.GAME_PERCENT,
                     args[2]
                 )?.let {
@@ -338,7 +338,7 @@ class CreateGame {
 
             ConstantStrings.FINISH_COMMAND -> {
                 if (game.isGameInvalidConfigured()) {
-                    TheHunter.instance.messages.messagesMap["wrong-config"]?.let {
+                    TheHunter.instance.messagesFile.messagesMap["wrong-config"]?.let {
                         sender.sendMessage(
                             it.replace(
                                 ConstantStrings.GAME_PERCENT,
@@ -349,7 +349,7 @@ class CreateGame {
                     return
                 }
                 game.finish()
-                TheHunter.instance.messages.messagesMap["game-successfully-created"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-successfully-created"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
@@ -357,7 +357,7 @@ class CreateGame {
                         )
                     )
                 }
-                TheHunter.instance.messages.messagesMap["game-successfully-saved"]?.let {
+                TheHunter.instance.messagesFile.messagesMap["game-successfully-saved"]?.let {
                     sender.sendMessage(
                         it.replace(
                             ConstantStrings.GAME_PERCENT,
