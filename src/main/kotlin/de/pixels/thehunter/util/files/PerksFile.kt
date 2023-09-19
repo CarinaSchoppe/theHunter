@@ -1,3 +1,5 @@
 package de.pixels.thehunter.util.files
 
-class PerksFile : BaseFile
+import de.pixels.thehunter.util.files.BaseFile
+
+class PerksFile(filePath: String) : BaseFile(filePath)
