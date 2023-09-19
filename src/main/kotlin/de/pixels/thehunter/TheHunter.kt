@@ -48,9 +48,9 @@ class TheHunter : JavaPlugin() {
     /*
     TODO: PlainTextComponentSerializer -> Legacy muss alles geändert werden wo das auftritt & ChatColor.translateAlternateColorCodes auch veraltet
     TODO: Villager Clickable somehow
-    TODO: Perks
+    TODO: Perks Element classes: Messages when adding and removing as well as check if even allowed
     TODO: Achievements
-    TODO: Premium join
+
     TODO: grenade makes no damage
     TODO: Legacy code umändern 
     TODO: Empty gamestate array

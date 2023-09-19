@@ -264,7 +264,6 @@ class Game(var name: String) {
      */
     val signs = mutableSetOf<Sign>()
 
-
     /**
      * Represents a flag indicating whether a random player drop is enabled.
      *

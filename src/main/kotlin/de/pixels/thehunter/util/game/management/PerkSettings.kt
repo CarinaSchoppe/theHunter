@@ -11,7 +11,10 @@ class PerkSettings(val game: Game) : BaseFile("/arenas/${game.name}/perk-setting
      * This variable is a mutable map that stores key-value pairs, where the key is of type String and the value is of type Baseperk.
      * It is used to store various settings or configurations in the form of key-value pairs.
      */
-    val settingsMap = mutableMapOf<String, Baseperk>()
+    val settingsMap = mutableMapOf<String, BasePerk>()
+
+
+    val availablePerks = mutableMapOf<AvailablePerks, BasePerk>()
 
     /**
      * Fills the settings map with available perks.
@@ -20,20 +23,82 @@ class PerkSettings(val game: Game) : BaseFile("/arenas/${game.name}/perk-setting
         for (key in yml.getKeys(false)) {
             settingsMap[key] =
                 when (key) {
-                    AvailablePerks.KANGAROO.pathName -> Kangaroo(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
-                    AvailablePerks.BAT.pathName -> Bat(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
-                    AvailablePerks.ANGEL.pathName -> Angel(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
-                    AvailablePerks.BACKPACKER.pathName -> Backpacker(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
-                    AvailablePerks.PIG.pathName -> Pig(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
-                    AvailablePerks.BEAR.pathName -> Bear(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
-                    AvailablePerks.BLOODHOUND.pathName -> Bloodhound(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
-                    AvailablePerks.BOMBERMAN.pathName -> Bomberman(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
-                    AvailablePerks.GAMBLER.pathName -> Gambler(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
-                    AvailablePerks.NINJA.pathName -> Ninja(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
-                    AvailablePerks.PIRATE.pathName -> Pirate(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
-                    AvailablePerks.SONIC.pathName -> Sonic(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                    AvailablePerks.KANGAROO.pathName -> {
+                        val perk = KangarooPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.KANGAROO] = perk
+                        perk
+                    }
+
+                    AvailablePerks.BAT.pathName -> {
+                        val perk = BatPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.BAT] = perk
+                        perk
+
+                    }
+
+                    AvailablePerks.ANGEL.pathName -> {
+                        val perk = AngelPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.ANGEL] = perk
+                        perk
+                    }
+
+                    AvailablePerks.BACKPACKER.pathName -> {
+                        val perk = BackpackerPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.BACKPACKER] = perk
+                        perk
+                    }
+
+                    AvailablePerks.PIG.pathName -> {
+                        val perk = PigPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.PIG] = perk
+                        perk
+                    }
+
+                    AvailablePerks.BEAR.pathName -> {
+                        val perk = BearPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.BEAR] = perk
+                        perk
+                    }
+
+                    AvailablePerks.BLOODHOUND.pathName -> {
+                        val perk = BloodhoundPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.BLOODHOUND] = perk
+                        perk
+                    }
+
+                    AvailablePerks.BOMBERMAN.pathName -> {
+                        val perk = BombermanPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.BOMBERMAN] = perk
+                        perk
+                    }
+
+                    AvailablePerks.GAMBLER.pathName -> {
+                        val perk = GamblerPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.GAMBLER] = perk
+                        perk
+                    }
+
+                    AvailablePerks.NINJA.pathName -> {
+                        val perk = NinjaPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.NINJA] = perk
+                        perk
+                    }
+
+                    AvailablePerks.PIRATE.pathName -> {
+                        val perk = PiratePerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.PIRATE] = perk
+                    }
+
+                    AvailablePerks.SONIC.pathName -> {
+                        val perk = SonicPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
+                        availablePerks[AvailablePerks.SONIC] = perk
+                        perk
+                    }
+
                     else -> throw IllegalArgumentException("Perk not found")
-                }
+                } as BasePerk
+
+
         }
     }
 
