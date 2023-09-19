@@ -87,16 +87,17 @@ class PerkSettings(val game: Game) : BaseFile("/arenas/${game.name}/perk-setting
                     AvailablePerks.PIRATE.pathName -> {
                         val perk = PiratePerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
                         availablePerks[AvailablePerks.PIRATE] = perk
+                        perk
                     }
 
                     AvailablePerks.SONIC.pathName -> {
                         val perk = SonicPerk(game, yml.getInt(key.plus(".cost")), yml.getBoolean(key.plus(".active")), yml.getString(key.plus(".name"))!!, yml.getString(key.plus(".description"))!!)
                         availablePerks[AvailablePerks.SONIC] = perk
-                        perk
+                        perk 
                     }
 
-                    else -> throw IllegalArgumentException("Perk not found")
-                } as BasePerk
+                    else -> throw IllegalArgumentException("Unknown perk: $key")
+                } 
 
 
         }
