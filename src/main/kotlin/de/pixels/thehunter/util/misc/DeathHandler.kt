@@ -1,11 +1,11 @@
-package de.pixels.thehunter.util.game.ingame
+package de.pixels.thehunter.util.misc
 
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.gamestates.IngameState
 import de.pixels.thehunter.util.builder.Items
+import de.pixels.thehunter.util.game.ingame.general.PlayerHiding
 import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler
-import de.pixels.thehunter.util.misc.ConstantStrings
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.entity.Player

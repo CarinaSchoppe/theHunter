@@ -12,7 +12,12 @@ import de.pixels.thehunter.gamestates.*
 import de.pixels.thehunter.items.util.ItemChest
 import de.pixels.thehunter.util.files.BaseFile
 import de.pixels.thehunter.util.game.ingame.*
+import de.pixels.thehunter.util.game.ingame.general.DeathChest
+import de.pixels.thehunter.util.game.ingame.general.Scoreboard
 import de.pixels.thehunter.util.misc.ConstantStrings
+import de.pixels.thehunter.util.misc.GameSigns
+import de.pixels.thehunter.util.misc.MapResetter
+import de.pixels.thehunter.util.misc.WorldboarderController
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.block.Sign
@@ -138,6 +143,8 @@ class Game(var name: String) {
      */
     lateinit var itemSettings: ItemSettings
 
+    lateinit var perkSettings: PerkSettings
+    
     /**
      * Represents a game chest containing items.
      *
@@ -580,6 +587,7 @@ class Game(var name: String) {
         mapResetter = MapResetter(this)
         gameItems = GameItems(this)
         itemSettings = ItemSettings(this)
+        perkSettings = PerkSettings(this)
         gameChest = ItemChest(this)
         deathChest = DeathChest(this)
         GamesHandler.setupGames.add(this)

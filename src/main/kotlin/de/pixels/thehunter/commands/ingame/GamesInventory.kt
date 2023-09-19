@@ -3,7 +3,7 @@
  */
 package de.pixels.thehunter.commands.ingame
 
-import de.pixels.thehunter.commands.CommandUtil
+import de.pixels.thehunter.commands.util.CommandUtil
 import de.pixels.thehunter.util.builder.Inventories
 import de.pixels.thehunter.util.misc.ConstantStrings
 import de.pixels.thehunter.util.misc.Permissions

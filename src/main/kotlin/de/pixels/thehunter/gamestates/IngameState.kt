@@ -10,8 +10,8 @@ import de.pixels.thehunter.guns.Rifle
 import de.pixels.thehunter.guns.Sniper
 import de.pixels.thehunter.items.special.Knife
 import de.pixels.thehunter.util.builder.Items
-import de.pixels.thehunter.util.game.ingame.PlayerDropping
-import de.pixels.thehunter.util.game.ingame.PlayerHiding
+import de.pixels.thehunter.util.game.ingame.general.PlayerDropping
+import de.pixels.thehunter.util.game.ingame.general.PlayerHiding
 import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.misc.ConstantStrings
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer

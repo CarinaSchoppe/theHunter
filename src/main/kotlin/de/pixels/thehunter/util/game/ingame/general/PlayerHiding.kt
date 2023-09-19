@@ -1,4 +1,4 @@
-package de.pixels.thehunter.util.game.ingame
+package de.pixels.thehunter.util.game.ingame.general
 
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.util.game.management.Game

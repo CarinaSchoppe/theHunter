@@ -1,6 +1,6 @@
 package de.pixels.thehunter.util.game.ingame.perksystem
 
-enum class Perk(val path: String) {
+enum class AvailablePerks(val path: String) {
 
     KANGAROO("kangoorooPerk"),
     BAT("batPerk"),
@@ -13,7 +13,7 @@ enum class Perk(val path: String) {
     PIG("pigPerk"),
     PIRATE("piratePerk"),
     GAMBLER("gamblerPerk"),
-    FEATHER("featherPerk"),
+    ANGEL("angelPerk"),
 
 
     //create an enum with the path as the variable

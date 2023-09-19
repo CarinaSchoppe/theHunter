@@ -4,7 +4,7 @@
 
 package de.pixels.thehunter.events.player
 
-import de.pixels.thehunter.util.game.ingame.DeathHandler
+import de.pixels.thehunter.util.misc.DeathHandler
 import de.pixels.thehunter.util.game.management.GamesHandler
 import net.kyori.adventure.text.Component
 import org.bukkit.Sound

@@ -5,7 +5,7 @@
 package de.pixels.thehunter.commands.management
 
 import de.pixels.thehunter.TheHunter
-import de.pixels.thehunter.commands.CommandUtil
+import de.pixels.thehunter.commands.util.CommandUtil
 import de.pixels.thehunter.util.builder.Inventories.setupGameInventory
 import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler

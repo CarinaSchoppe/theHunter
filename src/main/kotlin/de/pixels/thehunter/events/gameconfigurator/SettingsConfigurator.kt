@@ -7,7 +7,7 @@ package de.pixels.thehunter.events.gameconfigurator
 import de.pixels.thehunter.TheHunter
 import de.pixels.thehunter.util.builder.Inventories
 import de.pixels.thehunter.util.builder.Items
-import de.pixels.thehunter.util.game.ingame.WorldboarderController
+import de.pixels.thehunter.util.misc.WorldboarderController
 import de.pixels.thehunter.util.misc.ConstantStrings
 import de.pixels.thehunter.util.misc.Permissions
 import de.pixels.thehunter.util.misc.Util

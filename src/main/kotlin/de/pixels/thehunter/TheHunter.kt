@@ -4,11 +4,16 @@
 
 package de.pixels.thehunter
 
-import de.pixels.thehunter.commands.BaseCommand
+import de.pixels.thehunter.commands.util.BaseCommand
 import de.pixels.thehunter.commands.ingame.StartCommand
 import de.pixels.thehunter.events.gameconfigurator.GameConfigurator
 import de.pixels.thehunter.events.gameconfigurator.SettingsConfigurator
-import de.pixels.thehunter.events.ingame.*
+import de.pixels.thehunter.events.ingame.misc.DeathChestHandler
+import de.pixels.thehunter.events.ingame.misc.FallingBlocks
+import de.pixels.thehunter.events.ingame.playercaused.LobbyInteraction
+import de.pixels.thehunter.events.ingame.playercaused.LootChestHandler
+import de.pixels.thehunter.events.ingame.playercaused.MapModification
+import de.pixels.thehunter.events.ingame.playercaused.WeaponInteraction
 import de.pixels.thehunter.events.misc.PlayerDisconnectHandler
 import de.pixels.thehunter.events.misc.ServerJoinHandler
 import de.pixels.thehunter.events.player.*
@@ -16,11 +21,10 @@ import de.pixels.thehunter.guns.GunHandler
 import de.pixels.thehunter.items.special.*
 import de.pixels.thehunter.util.files.BaseFile
 import de.pixels.thehunter.util.files.MessagesFile
-import de.pixels.thehunter.util.files.PerksConfigurationFile
 import de.pixels.thehunter.util.files.SettingsFile
-import de.pixels.thehunter.util.game.ingame.GameSigns
-import de.pixels.thehunter.util.game.ingame.GamesInventoryList
-import de.pixels.thehunter.util.game.ingame.PlayerTeamHead
+import de.pixels.thehunter.util.misc.GameSigns
+import de.pixels.thehunter.util.game.ingame.general.GamesInventoryList
+import de.pixels.thehunter.util.game.ingame.general.PlayerTeamHead
 import de.pixels.thehunter.util.game.ingame.achievements.AchievementManager
 import de.pixels.thehunter.util.game.management.Game
 import de.pixels.thehunter.util.game.management.GamesHandler
@@ -83,7 +87,8 @@ class TheHunter : JavaPlugin() {
      */
     lateinit var messagesFile: MessagesFile
 
-    lateinit var perksConfigurationFile: PerksConfigurationFile
+    
+    
 
     /**
      * Represents a system for managing and tracking statistics.
@@ -109,7 +114,6 @@ class TheHunter : JavaPlugin() {
         instance = this
         settingsFile = SettingsFile("config.yml").addData()
         messagesFile = MessagesFile("messages.yml").addData()
-        perksConfigurationFile = PerksConfigurationFile("perks.yml").addData()
         statsSystem = StatsSystem()
         StatsSystem.loadStatsPlayersFromFile()
         initialize(Bukkit.getPluginManager())
