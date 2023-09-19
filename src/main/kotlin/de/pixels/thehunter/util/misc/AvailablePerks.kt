@@ -1,4 +1,4 @@
-package de.pixels.thehunter.util.game.ingame.perksystem
+package de.pixels.thehunter.util.misc
 
 enum class AvailablePerks(val pathName: String) {
 

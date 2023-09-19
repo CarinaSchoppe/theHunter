@@ -112,6 +112,17 @@ object ConstantStrings {
     const val START_COMMAND = "start"
 
     /**
+     * Represents the command string for accessing the menu of perks.
+     *
+     * Use this constant to access the menu of perks.
+     *
+     * Usage:
+     * ```
+     * val command = PERK_MENU_COMAND
+     * ```
+     */
+    const val PERK_MENU_COMAND = "perks"
+    /**
      * The STATS_COMMAND constant represents the command keyword used to request statistical information.
      */
     const val STATS_COMMAND = "stats"

@@ -2,7 +2,7 @@ package de.pixels.thehunter.util.game.management
 
 import de.pixels.thehunter.events.ingame.perks.*
 import de.pixels.thehunter.util.files.BaseFile
-import de.pixels.thehunter.util.game.ingame.perksystem.AvailablePerks
+import de.pixels.thehunter.util.misc.AvailablePerks
 
 class PerkSettings(val game: Game) : BaseFile("/arenas/${game.name}/perk-settings.yml") {
     /**

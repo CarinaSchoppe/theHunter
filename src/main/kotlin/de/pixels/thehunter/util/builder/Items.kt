@@ -10,12 +10,31 @@ import org.bukkit.enchantments.Enchantment
 
 object Items {
     /**
+     * The gamblerPerkItem represents an item that grants the gambler perk to the game.
+     *
+     * It is a valuable item made of gold ingot with a special display name and lore.
+     * When clicked, it adds the gambler perk to the game.
+     */
+    val gamblerPerkItem = ItemBuilder(Material.GOLD_INGOT).addDisplayName("§6Gambler")
+        .addLore("§7Click to add the gambler perk to the game").build()
+
+    /**
      * Represents the settings for the "Green Wool" option.
      *
      * @property settingsWoolGreen The configuration for the "Green Wool" option.
      */
     val settingsWoolGreen = ItemBuilder(Material.GREEN_WOOL).addLore("§7Click here to activate the setting")
 
+    /**
+     * Creates a [perkMenuItem] variable which represents a menu item for the "Perks" menu.
+     * The [perkMenuItem] is a book item with the display name "§6Perks" and the lore "§7Click to open the perks menu".
+     *
+     * @property perkMenuItem The menu item representing the "Perks" menu.
+     *
+     * @see ItemBuilder
+     * @see Material
+     */
+    val perkMenuItem = ItemBuilder(Material.BOOK).addDisplayName("§6Perks").addLore("§7Click to open the perks menu").build()
     /**
      * WoolRed Settings
      *
@@ -47,6 +66,123 @@ object Items {
      */
     val addLobbyButton = ItemBuilder(Material.DIAMOND).addDisplayName("§6Lobby Location")
         .addLore("§7Click to add the spawn of the lobby to the game").build()
+
+    /**
+     * Represents the kangaroo perk item.
+     */
+    val kangarooPerkItem = ItemBuilder(Material.RABBIT_FOOT).addDisplayName("§6Kangaroo")
+        .addLore("§7Click to add the kangaroo perk to the game").build()
+
+    /**
+     * Represents a bat perk item.
+     *
+     * This item is used to add the bat perk to the game when clicked.
+     * The item is a spawn egg with a display name of "§6Bat" and a lore of "§7Click to add the bat perk to the game".
+     */
+    val batPerkItem = ItemBuilder(Material.BAT_SPAWN_EGG).addDisplayName("§6Bat")
+        .addLore("§7Click to add the bat perk to the game").build()
+
+    /**
+     * Represents a perk item for the bear player class.
+     *
+     * @property bearPerkItem The bear perk item.
+     */
+    val bearPerkItem = ItemBuilder(Material.GOAT_HORN).addDisplayName("§6Bear")
+        .addLore("§7Click to add the bear perk to the game").build()
+
+    /**
+     * Represents a sonic perk item.
+     *
+     * This item can be added to the game to provide players with the sonic perk.
+     * When used, it allows players to move at increased speed for a certain duration.
+     */
+    val sonicPerkItem = ItemBuilder(Material.SUGAR).addDisplayName("§6Sonic")
+        .addLore("§7Click to add the sonic perk to the game").build()
+
+    /**
+     * Represents a backpacker perk item.
+     *
+     * This item is used to add the backpacker perk to the game.
+     *
+     * @property backpackerPerkItem The ItemStack representing the backpacker perk item.
+     * @constructor Creates a backpacker perk item.
+     * @param material The material of the item.
+     */
+    val backpackerPerkItem = ItemBuilder(Material.CHEST).addDisplayName("§6Backpacker")
+        .addLore("§7Click to add the backpacker perk to the game").build()
+
+    /**
+     * A variable that represents the bloodhound perk item.
+     *
+     * This item is used to add the bloodhound perk to the game when clicked.
+     *
+     * Usage example:
+     * ```
+     * val bloodhoundPerkItem = ItemBuilder(Material.BONE).addDisplayName("§6Bloodhound")
+     *     .addLore("§7Click to add the bloodhound perk to the game").build()
+     * ```
+     *
+     * @see ItemBuilder
+     * @see Material
+     */
+    val bloodhoundPerkItem = ItemBuilder(Material.BONE).addDisplayName("§6Bloodhound")
+        .addLore("§7Click to add the bloodhound perk to the game").build()
+
+    /**
+     * Represents an item used for the Bomberman perk in the game.
+     *
+     * @property bombermanPerkItem The Bomberman perk item.
+     *
+     * @constructor Creates a BombermanPerkItem object.
+     */
+    val bombermanPerkItem = ItemBuilder(Material.TNT).addDisplayName("§6Bomberman")
+        .addLore("§7Click to add the bomberman perk to the game").build()
+
+    /**
+     * Represents the ninja perk item.
+     *
+     * @property ninjaPerkItem The ninja perk item instance.
+     */
+    val ninjaPerkItem = ItemBuilder(Material.NETHERITE_SWORD).addDisplayName("§6Ninja")
+        .addLore("§7Click to add the ninja perk to the game").build()
+
+    /**
+     * Represents a pig perk item.
+     *
+     * This class provides a builder pattern to create a pig perk item with specific properties.
+     * The pig perk item is an item that can be used to add the "pig perk" to the game.
+     *
+     * Use the builder methods to customize the pig perk item.
+     *
+     * @param material The material type of the pig perk item.
+     * @param displayName The display name of the pig perk item.
+     * @param lore The lore description of the pig perk item.
+     *
+     * @constructor Creates a new instance of the pig perk item.
+     */
+    val pigPerkItem = ItemBuilder(Material.PORKCHOP).addDisplayName("§6Pig")
+        .addLore("§7Click to add the pig perk to the game").build()
+
+    /**
+     * The piratePerkItem variable represents an item with the pirate perk.
+     * It is built using the ItemBuilder class from the org.bukkit.inventory package.
+     * The item is of type Material.PAPER and has a display name of "§6Pirate".
+     * It also has a lore message of "§7Click to add the pirate perk to the game".
+     *
+     * @see ItemBuilder
+     */
+    val piratePerkItem = ItemBuilder(Material.PAPER).addDisplayName("§6Pirate")
+        .addLore("§7Click to add the pirate perk to the game").build()
+
+    /**
+     * Represents the angel perk item.
+     *
+     * This item is used to add the angel perk to the game.
+     * When clicked, it will activate the angel perk.
+     */
+    val angelPerkItem = ItemBuilder(Material.FEATHER).addDisplayName("§6Angel")
+        .addLore("§7Click to add the angel perk to the game").build()
+
 
     /**
      * Represents the button used to add the spectator location to the game.

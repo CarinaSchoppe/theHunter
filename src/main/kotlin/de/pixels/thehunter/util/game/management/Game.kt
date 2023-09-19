@@ -532,8 +532,6 @@ class Game(var name: String) {
             }
             
         }
-
-
     }
 
 

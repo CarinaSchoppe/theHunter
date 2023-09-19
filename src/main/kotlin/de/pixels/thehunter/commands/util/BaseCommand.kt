@@ -52,6 +52,11 @@ class BaseCommand : CommandExecutor {
                 return true
             }
 
+            ConstantStrings.PERK_MENU_COMAND -> {
+                PerksMenu().openPerkMenu(sender, commandName, arguments)
+                return true
+            }
+
             ConstantStrings.STATS_COMMAND -> {
                 StatsPlayer().stats(sender, commandName, arguments)
                 return true
